@@ -1,0 +1,4 @@
+Id;Title;Summary;Estimate
+1;Als PO möchte ich PBIs aus einer CSV-Datei importieren und als PBL in einer Tabelle anzeigen können;"Akzeptanzkriterien:
+- Id, Title, Summary und Estimate";3
+2;Als PO möchte ich den zeitlichen Verlauf des Gesamtaufwands von mehrere Versionen des PBLs darstellen können.;;
