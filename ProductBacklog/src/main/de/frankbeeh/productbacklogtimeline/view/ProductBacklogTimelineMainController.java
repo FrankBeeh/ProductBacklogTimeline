@@ -12,12 +12,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.ProductBacklogFromCsvReader;
 import de.frankbeeh.productbacklogtimeline.ProductBacklogItem;
 
 public class ProductBacklogTimelineMainController {
-    private static final String PBL_CSV_FILE = "PBL3.csv";
+    private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
     @FXML
     private TableView<ProductBacklogItem> productBacklogTable;
@@ -35,6 +37,7 @@ public class ProductBacklogTimelineMainController {
     private TableColumn<ProductBacklogItem, String> estimateColumn;
 
     private ObservableList<ProductBacklogItem> model;
+    private Stage primaryStage;
 
     @FXML
     private void initialize() {
@@ -45,16 +48,34 @@ public class ProductBacklogTimelineMainController {
     }
 
     @FXML
-    public void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
-        final ProductBacklogFromCsvReader productBacklogFromCsvReader = new ProductBacklogFromCsvReader();
-        final ProductBacklog productBacklog = productBacklogFromCsvReader.readProductBacklog(new FileReader(new File(PBL_CSV_FILE)));
-        initModel(productBacklog);
+    private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
+        final File selectedFile = selectCsvFileForImport();
+        if (selectedFile != null) {
+            final ProductBacklogFromCsvReader productBacklogFromCsvReader = new ProductBacklogFromCsvReader();
+            final ProductBacklog productBacklog = productBacklogFromCsvReader.readProductBacklog(new FileReader(selectedFile));
+            initModel(productBacklog);
+        }
+    }
+
+    public void initControler(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 
     public void initModel(ProductBacklog productBacklog) {
-        model = FXCollections.<ProductBacklogItem> observableArrayList();
-        model.addAll(productBacklog.getItems());
+        createModel(productBacklog);
         this.productBacklogTable.setItems(model);
     }
 
+    private void createModel(ProductBacklog productBacklog) {
+        model = FXCollections.<ProductBacklogItem> observableArrayList();
+        model.addAll(productBacklog.getItems());
+    }
+
+    private File selectCsvFileForImport() {
+        final FileChooser fileChooser = new FileChooser();
+        final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialDirectory(CSV_DIRECTORY);
+        return fileChooser.showOpenDialog(primaryStage);
+    }
 }

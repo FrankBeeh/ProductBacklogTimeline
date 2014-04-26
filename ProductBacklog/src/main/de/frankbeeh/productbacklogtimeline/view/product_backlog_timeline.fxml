@@ -10,7 +10,7 @@
   <center>
     <TableView fx:id="productBacklogTable" prefHeight="743.0" prefWidth="1023.0" BorderPane.alignment="CENTER">
       <columnResizePolicy>
-        <TableView fx:constant="UNCONSTRAINED_RESIZE_POLICY" />
+        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
       <columns>
         <TableColumn editable="false" maxWidth="70.0" minWidth="20.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn" />
