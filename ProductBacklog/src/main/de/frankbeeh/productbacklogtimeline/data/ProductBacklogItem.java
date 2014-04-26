@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklogtimeline;
+package de.frankbeeh.productbacklogtimeline.data;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

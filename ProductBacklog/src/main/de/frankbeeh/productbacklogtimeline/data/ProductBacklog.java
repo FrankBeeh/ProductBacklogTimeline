@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklogtimeline;
+package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.LinkedList;
 import java.util.List;

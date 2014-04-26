@@ -1,15 +1,16 @@
-package de.frankbeeh.productbacklogtimeline.view;
+package de.frankbeeh.productbacklogtimeline;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import de.frankbeeh.productbacklogtimeline.view.ProductBacklogTimelineMainController;
 
 public class ProductBacklogTimelineApplication extends Application {
 
     private static final String APPLICATION_TITLE = "Product Backlog Timeline";
-    private static final String APPLICATION_FXML = "product_backlog_timeline.fxml";
+    private static final String APPLICATION_FXML = "view/product_backlog_timeline.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception {

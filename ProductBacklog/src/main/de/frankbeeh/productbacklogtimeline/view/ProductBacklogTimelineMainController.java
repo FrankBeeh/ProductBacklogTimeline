@@ -14,9 +14,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.ProductBacklogFromCsvReader;
-import de.frankbeeh.productbacklogtimeline.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.service.ProductBacklogFromCsvImporter;
 
 public class ProductBacklogTimelineMainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
@@ -51,8 +51,8 @@ public class ProductBacklogTimelineMainController {
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
-            final ProductBacklogFromCsvReader productBacklogFromCsvReader = new ProductBacklogFromCsvReader();
-            final ProductBacklog productBacklog = productBacklogFromCsvReader.readProductBacklog(new FileReader(selectedFile));
+            final ProductBacklogFromCsvImporter productBacklogFromCsvImporter = new ProductBacklogFromCsvImporter();
+            final ProductBacklog productBacklog = productBacklogFromCsvImporter.importProductBacklog(new FileReader(selectedFile));
             initModel(productBacklog);
         }
     }
