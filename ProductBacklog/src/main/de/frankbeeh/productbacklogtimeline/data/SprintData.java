@@ -1,9 +1,13 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+
+import de.frankbeeh.productbacklogtimeline.service.SprintDataVisitor;
 
 public class SprintData {
 
@@ -14,6 +18,7 @@ public class SprintData {
     private final Double effortForecast;
     private final Double capacityDone;
     private final Double effortDone;
+    private final Map<String, Double> effortForecastBasedOnHistory;
 
     public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
         this.name = name;
@@ -23,6 +28,7 @@ public class SprintData {
         this.effortForecast = effortForecast;
         this.capacityDone = capacityDone;
         this.effortDone = effortDone;
+        this.effortForecastBasedOnHistory = new HashMap<String, Double>();
     }
 
     public String getName() {
@@ -56,5 +62,17 @@ public class SprintData {
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+
+    public Double getEffortForecastBasedOnHistory(String historyName) {
+        return effortForecastBasedOnHistory.get(historyName);
+    }
+
+    public void setEffortForecastBasedOnHistory(String historyName, Double effortForecast) {
+        effortForecastBasedOnHistory.put(historyName, effortForecast);
+    }
+
+    public void accept(SprintDataVisitor visitor) {
+        visitor.visit(this);
     }
 }
