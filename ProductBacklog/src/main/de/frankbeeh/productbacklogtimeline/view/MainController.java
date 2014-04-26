@@ -6,43 +6,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.SprintsFromCsvImporter;
 
 public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
-    @FXML
-    private TableView<ProductBacklogItem> productBacklogTable;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> idColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> titleColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> descriptionColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> estimateColumn;
 
-    private ObservableList<ProductBacklogItem> model;
+    @FXML
+    private SprintsTableController sprintsTableController;
+    @FXML
+    private ProductBacklogTableController productBacklogTableController;
+
     private Stage primaryStage;
-
-    @FXML
-    private void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("id"));
-        estimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("estimate"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("description"));
-    }
 
     @FXML
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
@@ -50,7 +30,7 @@ public class MainController {
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
             final ProductBacklog productBacklog = importer.importData(new FileReader(selectedFile));
-            initModel(productBacklog);
+            productBacklogTableController.initModel(productBacklog);
         }
     }
 
@@ -60,21 +40,12 @@ public class MainController {
         if (selectedFile != null) {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
             final Sprints sprints = importer.importData(new FileReader(selectedFile));
+            sprintsTableController.initModel(sprints);
         }
     }
 
     public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-    }
-
-    public void initModel(ProductBacklog productBacklog) {
-        createModel(productBacklog);
-        this.productBacklogTable.setItems(model);
-    }
-
-    private void createModel(ProductBacklog productBacklog) {
-        model = FXCollections.<ProductBacklogItem> observableArrayList();
-        model.addAll(productBacklog.getItems());
     }
 
     private File selectCsvFileForImport() {

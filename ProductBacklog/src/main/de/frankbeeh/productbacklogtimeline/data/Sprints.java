@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sprints {
-
     private final List<SprintData> sprints;
 
     public Sprints() {
@@ -18,5 +17,4 @@ public class Sprints {
     public void addItem(SprintData sprint) {
         sprints.add(sprint);
     }
-
 }

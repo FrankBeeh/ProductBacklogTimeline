@@ -1,3 +1,3 @@
-SprintName;StartDate;EndDate;PlannedCapacity;PlannedEffort;ActualCapacity;EffortDone
+SprintName;StartDate;EndDate;CapacityForecast;EffortForecast;CapacityDone;EffortDone
 Sprint 1;25.04.2014;25.04.2014;4;4;6;0.5
 Sprint 2;26.04.2014;26.04.2014;8;6.5;;

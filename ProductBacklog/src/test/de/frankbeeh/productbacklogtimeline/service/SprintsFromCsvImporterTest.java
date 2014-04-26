@@ -18,7 +18,7 @@ public class SprintsFromCsvImporterTest {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
-    private static final String HEADER = "SprintName;StartDate;EndDate;PlannedCapacity;PlannedEffort;ActualCapacity;EffortDone\r\n";
+    private static final String HEADER = "SprintName;StartDate;EndDate;CapacityForecast;EffortForecast;CapacityDone;EffortDone\r\n";
 
     private DataFromCsvImporter<Sprints> importer;
 

@@ -10,18 +10,18 @@ public class SprintData {
     private final String name;
     private final Date startDate;
     private final Date endDate;
-    private final Double plannedCapacity;
-    private final Double plannedEffort;
-    private final Double actualCapacity;
+    private final Double capacityForecast;
+    private final Double effortForecast;
+    private final Double capacityDone;
     private final Double effortDone;
 
-    public SprintData(String name, Date startDate, Date endDate, Double plannedCapacity, Double plannedEffort, Double actualCapacity, Double effortDone) {
+    public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.plannedCapacity = plannedCapacity;
-        this.plannedEffort = plannedEffort;
-        this.actualCapacity = actualCapacity;
+        this.capacityForecast = capacityForecast;
+        this.effortForecast = effortForecast;
+        this.capacityDone = capacityDone;
         this.effortDone = effortDone;
     }
 
@@ -37,16 +37,16 @@ public class SprintData {
         return endDate;
     }
 
-    public Double getPlannedCapacity() {
-        return plannedCapacity;
+    public Double getCapacityForecast() {
+        return capacityForecast;
     }
 
-    public Double getPlannedEffort() {
-        return plannedEffort;
+    public Double getEffortForecast() {
+        return effortForecast;
     }
 
-    public Double getActualCapacity() {
-        return actualCapacity;
+    public Double getCapacityDone() {
+        return capacityDone;
     }
 
     public Double getEffortDone() {
@@ -57,5 +57,4 @@ public class SprintData {
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
-
 }
