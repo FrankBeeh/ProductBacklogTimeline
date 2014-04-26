@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class ProductBacklog {
 
@@ -10,15 +11,11 @@ public class ProductBacklog {
         items = new LinkedList<ProductBacklogItem>();
     }
 
-    public int size() {
-        return items.size();
-    }
-
     public void addItem(ProductBacklogItem productBacklogItem) {
         items.add(productBacklogItem);
     }
 
-    public ProductBacklogItem getItem(int index) {
-        return items.get(index);
+    public List<ProductBacklogItem> getItems() {
+        return items;
     }
 }
