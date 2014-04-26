@@ -18,5 +18,6 @@
 		<TableColumn editable="false" maxWidth="100.0" minWidth="20.0" prefWidth="100.0" resizable="true" sortable="false" text="Effort Forecast" fx:id="effortForecastColumn" />
 		<TableColumn editable="false" maxWidth="100.0" minWidth="20.0" prefWidth="100.0" resizable="true" sortable="false" text="Capacity Done" fx:id="capacityDoneColumn" />
 		<TableColumn editable="false" maxWidth="100.0" minWidth="20.0" prefWidth="100.0" resizable="true" sortable="false" text="Effort Done" fx:id="effortDoneColumn" />
+		<TableColumn editable="false" maxWidth="100.0" minWidth="20.0" prefWidth="100.0" resizable="true" sortable="false" text="Avg. Vel. Forecast" fx:id="forecastByAverageVelocityColumn" />
 	</columns>
 </TableView>

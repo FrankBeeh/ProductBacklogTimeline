@@ -171,7 +171,7 @@ public class ComputeEffortForecastByAverageVelocityTest {
     }
 
     private void assertEqualsEffortForecastBasedOnHistory(Double expectedEffortForecast, final SprintData sprintData) {
-        assertEquals(expectedEffortForecast, sprintData.getEffortForecastBasedOnHistory(visitor.getHistoryForecastName()));
+        assertEquals(expectedEffortForecast, sprintData.getEffortForecastBasedOnHistory(ComputeEffortForecastByAverageVelocity.getHistoryForecastName()));
     }
 
     private double getExpectedVelocity(final double... velocities) {

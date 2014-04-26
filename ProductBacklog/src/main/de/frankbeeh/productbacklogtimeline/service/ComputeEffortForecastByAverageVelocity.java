@@ -18,7 +18,7 @@ public class ComputeEffortForecastByAverageVelocity extends SprintDataVisitor {
         clientCount = 0;
     }
 
-    public String getHistoryForecastName() {
+    public static String getHistoryForecastName() {
         return HISTORY_FORECAST_NAME;
     }
 
@@ -26,7 +26,7 @@ public class ComputeEffortForecastByAverageVelocity extends SprintDataVisitor {
     public void visit(SprintData sprintData) {
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
-        sprintData.setEffortForecastBasedOnHistory(HISTORY_FORECAST_NAME, computeEffortForecast(sprintData, velocityOfThisSprint));
+        sprintData.setEffortForecastBasedOnHistory(getHistoryForecastName(), computeEffortForecast(sprintData, velocityOfThisSprint));
     }
 
     private Double computeResultingVelocity(Double velocityOfThisSprint) {

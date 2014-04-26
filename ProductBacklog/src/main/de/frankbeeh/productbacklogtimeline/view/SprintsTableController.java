@@ -1,13 +1,18 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.service.ComputeEffortForecastByAverageVelocity;
 
 public class SprintsTableController {
     @FXML
@@ -26,6 +31,8 @@ public class SprintsTableController {
     private TableColumn<SprintData, String> capacityDoneColumn;
     @FXML
     private TableColumn<SprintData, String> effortDoneColumn;
+    @FXML
+    private TableColumn<SprintData, String> forecastByAverageVelocityColumn;
 
     private ObservableList<SprintData> model;
 
@@ -38,6 +45,12 @@ public class SprintsTableController {
         effortForecastColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortForecast"));
         capacityDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("capacityDone"));
         effortDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortDone"));
+        forecastByAverageVelocityColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(CellDataFeatures<SprintData, String> arg0) {
+                return new SimpleStringProperty(arg0.getValue().getEffortForecastBasedOnHistory(ComputeEffortForecastByAverageVelocity.getHistoryForecastName()).toString());
+            }
+        });
     }
 
     public void initModel(Sprints sprints) {
