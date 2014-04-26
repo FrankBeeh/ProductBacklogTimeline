@@ -6,7 +6,7 @@ import org.easymock.Mock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.service.ComputeEffortForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
 
 @RunWith(EasyMockRunner.class)
 public class SprintsTest extends EasyMockSupport {

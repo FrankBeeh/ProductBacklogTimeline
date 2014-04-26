@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklogtimeline.service;
+package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import static junit.framework.Assert.assertEquals;
 

@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklogtimeline.service;
+package de.frankbeeh.productbacklogtimeline.service.importer;
 
 import java.text.ParseException;
 import java.util.Date;

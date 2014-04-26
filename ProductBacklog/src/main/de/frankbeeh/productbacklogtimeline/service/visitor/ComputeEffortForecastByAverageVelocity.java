@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklogtimeline.service;
+package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 

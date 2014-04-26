@@ -3,7 +3,7 @@ package de.frankbeeh.productbacklogtimeline.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.frankbeeh.productbacklogtimeline.service.ComputeEffortForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
 
 public class Sprints {
     private final List<SprintData> sprints;

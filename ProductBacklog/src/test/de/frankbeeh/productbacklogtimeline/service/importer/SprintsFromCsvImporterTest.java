@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklogtimeline.service;
+package de.frankbeeh.productbacklogtimeline.service.importer;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.service.importer.DataFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
 public class SprintsFromCsvImporterTest {
 

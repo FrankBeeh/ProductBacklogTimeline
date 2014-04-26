@@ -11,8 +11,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
-import de.frankbeeh.productbacklogtimeline.service.ProductBacklogFromCsvImporter;
-import de.frankbeeh.productbacklogtimeline.service.SprintsFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
 public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));

@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import de.frankbeeh.productbacklogtimeline.service.SprintDataVisitor;
+import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
 
