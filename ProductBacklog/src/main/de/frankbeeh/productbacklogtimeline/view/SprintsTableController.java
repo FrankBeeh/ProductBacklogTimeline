@@ -13,8 +13,22 @@ import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
 
 public class SprintsTableController {
+    private final class EfforForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
+        private final String historyForecastName;
+
+        public EfforForecastPropertyValueFactory(String historyForecastName) {
+            this.historyForecastName = historyForecastName;
+        }
+
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<SprintData, String> cellDataFeatures) {
+            return new SimpleStringProperty(cellDataFeatures.getValue().getEffortForecastBasedOnHistory(historyForecastName).toString());
+        }
+    }
+
     @FXML
     private TableView<SprintData> sprintsTable;
     @FXML
@@ -33,6 +47,8 @@ public class SprintsTableController {
     private TableColumn<SprintData, String> effortDoneColumn;
     @FXML
     private TableColumn<SprintData, String> forecastByAverageVelocityColumn;
+    @FXML
+    private TableColumn<SprintData, String> forecastByMinimumVelocityColumn;
 
     private ObservableList<SprintData> model;
 
@@ -45,12 +61,8 @@ public class SprintsTableController {
         effortForecastColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortForecast"));
         capacityDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("capacityDone"));
         effortDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortDone"));
-        forecastByAverageVelocityColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<SprintData, String> arg0) {
-                return new SimpleStringProperty(arg0.getValue().getEffortForecastBasedOnHistory(ComputeEffortForecastByAverageVelocity.getHistoryForecastName()).toString());
-            }
-        });
+        forecastByAverageVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByAverageVelocity.HISTORY_FORECAST_NAME));
+        forecastByMinimumVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByMinimumVelocity.HISTORY_FORECAST_NAME));
     }
 
     public void initModel(Sprints sprints) {

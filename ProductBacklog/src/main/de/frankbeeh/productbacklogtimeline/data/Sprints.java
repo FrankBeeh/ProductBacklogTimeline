@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByHistory;
 
 public class Sprints {
     private final List<SprintData> sprints;
-    private final ComputeEffortForecastByAverageVelocity computeEffortForecastByAverageVelocity;
+    private final ComputeEffortForecastByHistory[] visitors;
 
     public Sprints() {
-        this(new ComputeEffortForecastByAverageVelocity());
+        this(new ComputeEffortForecastByAverageVelocity(), new ComputeEffortForecastByMinimumVelocity());
     }
 
     // Visible for testing
-    Sprints(ComputeEffortForecastByAverageVelocity computeEffortForecastByAverageVelocity) {
+    Sprints(ComputeEffortForecastByHistory... visitors) {
+        this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
-        this.computeEffortForecastByAverageVelocity = computeEffortForecastByAverageVelocity;
     }
 
     public List<SprintData> getSprints() {
@@ -28,9 +30,11 @@ public class Sprints {
     }
 
     public void computeEffortForecasts() {
-        computeEffortForecastByAverageVelocity.reset();
-        for (final SprintData sprintData : sprints) {
-            sprintData.accept(computeEffortForecastByAverageVelocity);
+        for (final ComputeEffortForecastByHistory visitor : visitors) {
+            visitor.reset();
+            for (final SprintData sprintData : sprints) {
+                sprintData.accept(visitor);
+            }
         }
     }
 }
