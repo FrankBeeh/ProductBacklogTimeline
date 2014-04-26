@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByHistory;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMaximumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
 
 public class Sprints {
     private final List<SprintData> sprints;
     private final ComputeEffortForecastByHistory[] visitors;
 
     public Sprints() {
-        this(new ComputeEffortForecastByAverageVelocity(), new ComputeEffortForecastByMinimumVelocity());
+        this(new ComputeEffortForecastByAverageVelocity(), new ComputeEffortForecastByMinimumVelocity(), new ComputeEffortForecastByMaximumVelocity());
     }
 
     // Visible for testing

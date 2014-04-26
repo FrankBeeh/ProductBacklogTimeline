@@ -13,6 +13,7 @@ import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMaximumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
 
 public class SprintsTableController {
@@ -49,6 +50,8 @@ public class SprintsTableController {
     private TableColumn<SprintData, String> forecastByAverageVelocityColumn;
     @FXML
     private TableColumn<SprintData, String> forecastByMinimumVelocityColumn;
+    @FXML
+    private TableColumn<SprintData, String> forecastByMaximumVelocityColumn;
 
     private ObservableList<SprintData> model;
 
@@ -63,6 +66,7 @@ public class SprintsTableController {
         effortDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortDone"));
         forecastByAverageVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByAverageVelocity.HISTORY_FORECAST_NAME));
         forecastByMinimumVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByMinimumVelocity.HISTORY_FORECAST_NAME));
+        forecastByMaximumVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByMaximumVelocity.HISTORY_FORECAST_NAME));
     }
 
     public void initModel(Sprints sprints) {
