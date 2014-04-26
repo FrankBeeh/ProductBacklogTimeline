@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklog;
+package de.frankbeeh.productbacklogtimeline;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -6,6 +6,10 @@ import java.io.StringReader;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import de.frankbeeh.productbacklogtimeline.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.ProductBacklogFromCsvReader;
+import de.frankbeeh.productbacklogtimeline.ProductBacklogItem;
 
 public class ProductBacklogFromCsvReaderTest {
 

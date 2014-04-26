@@ -1,4 +1,4 @@
-package de.frankbeeh.productbacklog;
+package de.frankbeeh.productbacklogtimeline;
 
 import java.io.BufferedReader;
 import java.io.IOException;
