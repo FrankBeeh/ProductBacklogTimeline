@@ -5,12 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.view.ProductBacklogTimelineMainController;
+import de.frankbeeh.productbacklogtimeline.view.MainController;
 
 public class ProductBacklogTimelineApplication extends Application {
 
     private static final String APPLICATION_TITLE = "Product Backlog Timeline";
-    private static final String APPLICATION_FXML = "view/product_backlog_timeline.fxml";
+    private static final String APPLICATION_FXML = "view/main.fxml";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -23,7 +23,7 @@ public class ProductBacklogTimelineApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        final ProductBacklogTimelineMainController controller = loader.getController();
+        final MainController controller = loader.getController();
         controller.initController(primaryStage);
     }
 

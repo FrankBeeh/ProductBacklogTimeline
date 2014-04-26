@@ -20,7 +20,7 @@ import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.SprintsFromCsvImporter;
 
-public class ProductBacklogTimelineMainController {
+public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
     @FXML
     private TableView<ProductBacklogItem> productBacklogTable;
