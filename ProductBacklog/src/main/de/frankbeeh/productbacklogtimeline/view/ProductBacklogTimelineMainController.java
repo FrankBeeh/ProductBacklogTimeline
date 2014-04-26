@@ -16,24 +16,20 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.service.DataFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.ProductBacklogFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.SprintsFromCsvImporter;
 
 public class ProductBacklogTimelineMainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
-
     @FXML
     private TableView<ProductBacklogItem> productBacklogTable;
-
     @FXML
     private TableColumn<ProductBacklogItem, String> idColumn;
-
     @FXML
     private TableColumn<ProductBacklogItem, String> titleColumn;
-
     @FXML
     private TableColumn<ProductBacklogItem, String> descriptionColumn;
-
     @FXML
     private TableColumn<ProductBacklogItem, String> estimateColumn;
 
@@ -52,13 +48,22 @@ public class ProductBacklogTimelineMainController {
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
-            final DataFromCsvImporter<ProductBacklog> productBacklogFromCsvImporter = new ProductBacklogFromCsvImporter();
-            final ProductBacklog productBacklog = productBacklogFromCsvImporter.importData(new FileReader(selectedFile));
+            final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
+            final ProductBacklog productBacklog = importer.importData(new FileReader(selectedFile));
             initModel(productBacklog);
         }
     }
 
-    public void initControler(Stage primaryStage) {
+    @FXML
+    private void importSprints() throws IOException, ParseException, FileNotFoundException {
+        final File selectedFile = selectCsvFileForImport();
+        if (selectedFile != null) {
+            final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
+            final Sprints sprints = importer.importData(new FileReader(selectedFile));
+        }
+    }
+
+    public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 

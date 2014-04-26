@@ -24,7 +24,7 @@ public class ProductBacklogTimelineApplication extends Application {
         primaryStage.show();
 
         final ProductBacklogTimelineMainController controller = loader.getController();
-        controller.initControler(primaryStage);
+        controller.initController(primaryStage);
     }
 
     public static void main(String[] args) {
