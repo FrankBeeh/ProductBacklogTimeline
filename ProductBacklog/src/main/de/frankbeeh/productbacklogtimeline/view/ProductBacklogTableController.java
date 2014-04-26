@@ -20,6 +20,8 @@ public class ProductBacklogTableController {
     private TableColumn<ProductBacklogItem, String> descriptionColumn;
     @FXML
     private TableColumn<ProductBacklogItem, String> estimateColumn;
+    @FXML
+    private TableColumn<ProductBacklogItem, String> stateColumn;
 
     private ObservableList<ProductBacklogItem> model;
 
@@ -29,6 +31,7 @@ public class ProductBacklogTableController {
         estimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("estimate"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("description"));
+        stateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("state"));
     }
 
     public void initModel(ProductBacklog productBacklog) {

@@ -12,14 +12,31 @@ import java.util.Locale;
 import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
+import de.frankbeeh.productbacklogtimeline.data.State;
 
 public abstract class DataFromCsvImporter<T> {
 
+    private static final String CANCELED_STATE = "Canceled";
+    private static final String DONE_STATE = "Done";
+    private static final String IN_PROGRESS_STATE = "In Progress";
+    private static final String TODO_STATE = "Todo";
+
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.getDefault());
-    private static final char SPLIT_BY = ';';
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
+    private static final char SPLIT_BY = ';';
+
+    private final Map<String, State> stateMap;
+
     private Map<String, Integer> mapColumnNameToColumnIndex;
     private String[] values;
+
+    protected DataFromCsvImporter() {
+        stateMap = new HashMap<String, State>();
+        stateMap.put(TODO_STATE, State.Todo);
+        stateMap.put(IN_PROGRESS_STATE, State.InProgress);
+        stateMap.put(DONE_STATE, State.Done);
+        stateMap.put(CANCELED_STATE, State.Canceled);
+    }
 
     protected abstract T createContainer();
 
@@ -61,6 +78,10 @@ public abstract class DataFromCsvImporter<T> {
             return null;
         }
         return DATE_FORMAT.parse(value);
+    }
+
+    protected final State getState(String columnName) {
+        return stateMap.get(getString(columnName));
     }
 
     private Map<String, Integer> mapColumnNameToColumnIndex(String[] columnNames) {

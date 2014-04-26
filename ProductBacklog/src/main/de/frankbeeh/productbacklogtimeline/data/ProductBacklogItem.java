@@ -9,12 +9,14 @@ public class ProductBacklogItem {
     private final String title;
     private final String description;
     private final Double estimate;
+    private final State state;
 
-    public ProductBacklogItem(String id, String title, String description, Double estimate) {
+    public ProductBacklogItem(String id, String title, String description, Double estimate, State state) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.estimate = estimate;
+        this.state = state;
     }
 
     public String getId() {
@@ -31,6 +33,10 @@ public class ProductBacklogItem {
 
     public Double getEstimate() {
         return estimate;
+    }
+
+    public State getState() {
+        return state;
     }
 
     @Override
