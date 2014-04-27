@@ -11,7 +11,7 @@ public class ComputeEffortForecastByMaximumVelocityTest extends ComputeEffortFor
     }
 
     @Override
-    public ComputeEffortForecastByHistory createVisitor() {
-        return new ComputeEffortForecastByMaximumVelocity();
+    public ComputeProgressForecastByHistory createVisitor() {
+        return new ComputeProgressForecastByMaximumVelocity();
     }
 }

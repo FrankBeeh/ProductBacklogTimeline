@@ -29,7 +29,7 @@ public abstract class ComputeEffortForecastBaseTest {
     private static final double EFFORT_DONE_3 = 12d;
     private static final double CAPACITY_DONE_3 = 9d;
     private static final double VELOCITY_DONE_3 = EFFORT_DONE_3 / CAPACITY_DONE_3;
-    private ComputeEffortForecastByHistory visitor;
+    private ComputeProgressForecastByHistory visitor;
 
     public ComputeEffortForecastBaseTest() {
         super();
@@ -37,7 +37,7 @@ public abstract class ComputeEffortForecastBaseTest {
 
     protected abstract double getExpectedVelocity(final double... velocities);
 
-    protected abstract ComputeEffortForecastByHistory createVisitor();
+    protected abstract ComputeProgressForecastByHistory createVisitor();
 
     @Test
     public void visitFirst_capacityForecastMissing() {

@@ -6,30 +6,30 @@ import org.easymock.Mock;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByHistory;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByHistory;
 
 @RunWith(EasyMockRunner.class)
 public class SprintsTest extends EasyMockSupport {
 
     @Mock
-    private ComputeEffortForecastByHistory averageVelocityMock;
+    private ComputeProgressForecastByHistory velocityMock1;
     @Mock
-    private ComputeEffortForecastByHistory minimumVelocityMock;
+    private ComputeProgressForecastByHistory velocityMock2;
 
     @Test
     public void computeEffortForecasts() {
-        final Sprints sprints = new Sprints(averageVelocityMock, minimumVelocityMock);
+        final Sprints sprints = new Sprints(velocityMock1, velocityMock2);
         final SprintData sprint1 = new SprintData("Sprint 1", null, null, null, null, null, null);
         sprints.addItem(sprint1);
         final SprintData sprint2 = new SprintData("Sprint 2", null, null, null, null, null, null);
         sprints.addItem(sprint2);
 
-        averageVelocityMock.reset();
-        averageVelocityMock.visit(sprint1);
-        averageVelocityMock.visit(sprint2);
-        minimumVelocityMock.reset();
-        minimumVelocityMock.visit(sprint1);
-        minimumVelocityMock.visit(sprint2);
+        velocityMock1.reset();
+        velocityMock1.visit(sprint1);
+        velocityMock1.visit(sprint2);
+        velocityMock2.reset();
+        velocityMock2.visit(sprint1);
+        velocityMock2.visit(sprint2);
         replayAll();
         sprints.computeEffortForecasts();
         verifyAll();

@@ -1,10 +1,10 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-public class ComputeEffortForecastByAverageVelocity extends ComputeEffortForecastByHistory {
+public class ComputeProgressForecastByAverageVelocity extends ComputeProgressForecastByHistory {
 
-    public static final String HISTORY_FORECAST_NAME = "Average Velocity";
+    public static final String HISTORY_FORECAST_NAME = "Avg. Vel.";
 
-    public ComputeEffortForecastByAverageVelocity() {
+    public ComputeProgressForecastByAverageVelocity() {
         super(HISTORY_FORECAST_NAME);
     }
 

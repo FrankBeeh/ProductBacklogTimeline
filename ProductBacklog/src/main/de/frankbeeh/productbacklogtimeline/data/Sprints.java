@@ -3,21 +3,21 @@ package de.frankbeeh.productbacklogtimeline.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByHistory;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMaximumVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByHistory;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
 
 public class Sprints {
     private final List<SprintData> sprints;
-    private final ComputeEffortForecastByHistory[] visitors;
+    private final ComputeProgressForecastByHistory[] visitors;
 
     public Sprints() {
-        this(new ComputeEffortForecastByAverageVelocity(), new ComputeEffortForecastByMinimumVelocity(), new ComputeEffortForecastByMaximumVelocity());
+        this(new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity());
     }
 
     // Visible for testing
-    Sprints(ComputeEffortForecastByHistory... visitors) {
+    Sprints(ComputeProgressForecastByHistory... visitors) {
         this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
     }
@@ -31,7 +31,7 @@ public class Sprints {
     }
 
     public void computeEffortForecasts() {
-        for (final ComputeEffortForecastByHistory visitor : visitors) {
+        for (final ComputeProgressForecastByHistory visitor : visitors) {
             visitor.reset();
             for (final SprintData sprintData : sprints) {
                 sprintData.accept(visitor);

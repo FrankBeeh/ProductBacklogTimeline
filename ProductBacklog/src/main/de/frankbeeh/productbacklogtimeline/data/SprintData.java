@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByHistory;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByHistory;
 
 public class SprintData {
 
@@ -72,7 +72,7 @@ public class SprintData {
         effortForecastBasedOnHistory.put(historyName, effortForecast);
     }
 
-    public void accept(ComputeEffortForecastByHistory visitor) {
+    public void accept(ComputeProgressForecastByHistory visitor) {
         visitor.visit(this);
     }
 }

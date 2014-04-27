@@ -26,11 +26,11 @@
         <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Effort" fx:id="effortDoneColumn" />
       </columns>
     </TableColumn>
-    <TableColumn prefWidth="75.0" text="Forecast per Sprint">
+    <TableColumn prefWidth="75.0" text="Progress Forecast per Sprint">
       <columns>
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Min. Vel." fx:id="forecastByMinimumVelocityColumn" />
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="forecastByAverageVelocityColumn" />
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Max. Vel." fx:id="forecastByMaximumVelocityColumn" />
+        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Min. Vel." fx:id="forecastPerSprintByMinVelColumn" />
+        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="forecastPerSprintByAvgVelColumn" />
+        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Max. Vel." fx:id="forecastPerSprintByMaxVelColumn" />
       </columns>
     </TableColumn>
   </columns>

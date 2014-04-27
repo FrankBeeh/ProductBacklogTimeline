@@ -1,10 +1,10 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-public class ComputeEffortForecastByMaximumVelocity extends ComputeEffortForecastByHistory {
+public class ComputeProgressForecastByMaximumVelocity extends ComputeProgressForecastByHistory {
 
-    public static final String HISTORY_FORECAST_NAME = "Maximum Velocity";
+    public static final String HISTORY_FORECAST_NAME = "Max. Vel.";
 
-    public ComputeEffortForecastByMaximumVelocity() {
+    public ComputeProgressForecastByMaximumVelocity() {
         super(HISTORY_FORECAST_NAME);
     }
 

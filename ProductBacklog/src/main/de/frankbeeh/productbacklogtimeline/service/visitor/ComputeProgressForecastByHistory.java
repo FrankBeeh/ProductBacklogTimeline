@@ -2,12 +2,12 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
-public abstract class ComputeEffortForecastByHistory {
+public abstract class ComputeProgressForecastByHistory {
     private final String historyForecastName;
     private int clientCount;
     private Double historicVelocity;
 
-    protected ComputeEffortForecastByHistory(String historyForecastName) {
+    protected ComputeProgressForecastByHistory(String historyForecastName) {
         this.historyForecastName = historyForecastName;
         reset();
     }
@@ -26,7 +26,7 @@ public abstract class ComputeEffortForecastByHistory {
     public void visit(SprintData sprintData) {
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
-        sprintData.setEffortForecastBasedOnHistory(getHistoryForecastName(), computeEffortForecast(sprintData, velocityOfThisSprint));
+        sprintData.setEffortForecastBasedOnHistory(getHistoryForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
     }
 
     private Double getResultingVelocity(Double velocityOfThisSprint) {
@@ -39,19 +39,19 @@ public abstract class ComputeEffortForecastByHistory {
         return computeResultingVelocity(velocityOfThisSprint.doubleValue(), historicVelocity.doubleValue(), clientCount);
     }
 
-    private Double computeEffortForecast(SprintData sprintData, Double velocityOfThisSprint) {
+    private Double computeProgressForecastOfThisSprint(SprintData sprintData, Double velocityOfThisSprint) {
         historicVelocity = getResultingVelocity(velocityOfThisSprint);
         Double effortForecast = null;
         if (historicVelocity != null) {
-            effortForecast = computeEffortForecast(historicVelocity, sprintData.getCapacityDone());
+            effortForecast = computeProgressForecast(historicVelocity, sprintData.getCapacityDone());
             if (effortForecast == null) {
-                effortForecast = computeEffortForecast(historicVelocity, sprintData.getCapacityForecast());
+                effortForecast = computeProgressForecast(historicVelocity, sprintData.getCapacityForecast());
             }
         }
         return effortForecast;
     }
 
-    private Double computeEffortForecast(Double velocity, Double capacity) {
+    private Double computeProgressForecast(Double velocity, Double capacity) {
         if (capacity == null) {
             return null;
         }

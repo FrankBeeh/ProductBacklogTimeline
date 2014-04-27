@@ -17,9 +17,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMaximumVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeEffortForecastByMinimumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
 
 public class SprintsTableController {
     private static final NumberFormat NUMBER_FORMAT = new DecimalFormat("0.0");
@@ -51,10 +51,10 @@ public class SprintsTableController {
         }
     }
 
-    private static final class EfforForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
+    private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
         private final String historyForecastName;
 
-        public EfforForecastPropertyValueFactory(String historyForecastName) {
+        public ProgressForecastPropertyValueFactory(String historyForecastName) {
             this.historyForecastName = historyForecastName;
         }
 
@@ -82,11 +82,11 @@ public class SprintsTableController {
     @FXML
     private TableColumn<SprintData, String> effortDoneColumn;
     @FXML
-    private TableColumn<SprintData, String> forecastByAverageVelocityColumn;
+    private TableColumn<SprintData, String> forecastPerSprintByAvgVelColumn;
     @FXML
-    private TableColumn<SprintData, String> forecastByMinimumVelocityColumn;
+    private TableColumn<SprintData, String> forecastPerSprintByMinVelColumn;
     @FXML
-    private TableColumn<SprintData, String> forecastByMaximumVelocityColumn;
+    private TableColumn<SprintData, String> forecastPerSprintByMaxVelColumn;
 
     private ObservableList<SprintData> model;
 
@@ -100,12 +100,12 @@ public class SprintsTableController {
         effortForecastColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortForecast"));
         capacityDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("capacityDone"));
         effortDoneColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("effortDone"));
-        forecastByAverageVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByAverageVelocity.HISTORY_FORECAST_NAME));
-        forecastByAverageVelocityColumn.setCellFactory(alignmentCellFactory);
-        forecastByMinimumVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByMinimumVelocity.HISTORY_FORECAST_NAME));
-        forecastByMinimumVelocityColumn.setCellFactory(alignmentCellFactory);
-        forecastByMaximumVelocityColumn.setCellValueFactory(new EfforForecastPropertyValueFactory(ComputeEffortForecastByMaximumVelocity.HISTORY_FORECAST_NAME));
-        forecastByMaximumVelocityColumn.setCellFactory(alignmentCellFactory);
+        forecastPerSprintByAvgVelColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME));
+        forecastPerSprintByAvgVelColumn.setCellFactory(alignmentCellFactory);
+        forecastPerSprintByMinVelColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME));
+        forecastPerSprintByMinVelColumn.setCellFactory(alignmentCellFactory);
+        forecastPerSprintByMaxVelColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME));
+        forecastPerSprintByMaxVelColumn.setCellFactory(alignmentCellFactory);
     }
 
     public void initModel(Sprints sprints) {

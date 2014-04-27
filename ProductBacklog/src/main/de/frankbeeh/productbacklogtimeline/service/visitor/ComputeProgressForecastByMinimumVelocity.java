@@ -1,10 +1,10 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-public class ComputeEffortForecastByMinimumVelocity extends ComputeEffortForecastByHistory {
+public class ComputeProgressForecastByMinimumVelocity extends ComputeProgressForecastByHistory {
 
-    public static final String HISTORY_FORECAST_NAME = "Minimum Velocity";
+    public static final String HISTORY_FORECAST_NAME = "Min. Vel.";
 
-    public ComputeEffortForecastByMinimumVelocity() {
+    public ComputeProgressForecastByMinimumVelocity() {
         super(HISTORY_FORECAST_NAME);
     }
 
