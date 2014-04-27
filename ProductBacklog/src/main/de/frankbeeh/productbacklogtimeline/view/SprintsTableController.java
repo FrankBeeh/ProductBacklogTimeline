@@ -15,15 +15,15 @@ import de.frankbeeh.productbacklogtimeline.data.Sprints;
 
 public class SprintsTableController {
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
-        private final String historyForecastName;
+        private final String progressForecastName;
 
-        public ProgressForecastPropertyValueFactory(String historyForecastName) {
-            this.historyForecastName = historyForecastName;
+        public ProgressForecastPropertyValueFactory(String progressForecastName) {
+            this.progressForecastName = progressForecastName;
         }
 
         @Override
         public ObservableValue<String> call(CellDataFeatures<SprintData, String> cellDataFeatures) {
-            final Double progressForecastBasedOnHistory = cellDataFeatures.getValue().getProgressForecastBasedOnHistory(historyForecastName);
+            final Double progressForecastBasedOnHistory = cellDataFeatures.getValue().getProgressForecastBasedOnHistory(progressForecastName);
             if (progressForecastBasedOnHistory == null) {
                 return null;
             }
@@ -32,15 +32,15 @@ public class SprintsTableController {
     }
 
     private static final class AccumulatedProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
-        private final String historyForecastName;
+        private final String progressForecastName;
 
-        public AccumulatedProgressForecastPropertyValueFactory(String historyForecastName) {
-            this.historyForecastName = historyForecastName;
+        public AccumulatedProgressForecastPropertyValueFactory(String progressForecastName) {
+            this.progressForecastName = progressForecastName;
         }
 
         @Override
         public ObservableValue<String> call(CellDataFeatures<SprintData, String> cellDataFeatures) {
-            final Double progressForecastBasedOnHistory = cellDataFeatures.getValue().getAccumulatedProgressForecastBasedOnHistory(historyForecastName);
+            final Double progressForecastBasedOnHistory = cellDataFeatures.getValue().getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
             if (progressForecastBasedOnHistory == null) {
                 return null;
             }

@@ -18,5 +18,17 @@
 		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="State" fx:id="stateColumn" />
 		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="-1.0" resizable="true" sortable="false" text="Title" fx:id="titleColumn" />
 		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="-1.0" resizable="true" sortable="false" text="Description" fx:id="descriptionColumn" />
+		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est." fx:id="accumulatedEstimateColumn" >
+          <cellFactory>
+            <AlignRightCellFactory />
+      	  </cellFactory>
+        </TableColumn>
+		<TableColumn prefWidth="75.0" text="Completion Forecast">
+          <columns>
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Min. Vel." fx:id="completionForecastByMinVelColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="completionForecastByAvgVelColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Max. Vel." fx:id="completionForecastByMaxVelColumn" />
+          </columns>
+        </TableColumn>
 	</columns>
 </TableView>

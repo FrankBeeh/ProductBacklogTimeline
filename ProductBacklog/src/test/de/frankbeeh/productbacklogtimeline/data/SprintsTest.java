@@ -17,7 +17,7 @@ public class SprintsTest extends EasyMockSupport {
     private SprintDataVisitor visitorMock2;
 
     @Test
-    public void computeProgressForecasts() {
+    public void visitAllSprints() {
         final Sprints sprints = new Sprints(visitorMock1, visitorMock2);
         final SprintData sprint1 = new SprintData("Sprint 1", null, null, null, null, null, null);
         sprints.addItem(sprint1);

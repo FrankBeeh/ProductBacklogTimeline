@@ -30,6 +30,7 @@ public class MainController {
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
             final ProductBacklog productBacklog = importer.importData(new FileReader(selectedFile));
+            productBacklog.visitAllItems();
             productBacklogTableController.initModel(productBacklog);
         }
     }
