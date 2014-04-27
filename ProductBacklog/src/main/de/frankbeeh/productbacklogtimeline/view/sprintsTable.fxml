@@ -14,23 +14,39 @@
     <TableColumn editable="false" maxWidth="100.0" minWidth="40.0" prefWidth="100.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn" />
     <TableColumn editable="false" maxWidth="100.0" minWidth="40.0" prefWidth="100.0" resizable="true" sortable="false" text="Start Date" fx:id="startDateColumn" />
     <TableColumn editable="false" maxWidth="100.0" minWidth="40.0" prefWidth="100.0" resizable="true" sortable="false" text="End Date" fx:id="endDateColumn" />
-    <TableColumn prefWidth="75.0" text="Forecast">
+    <TableColumn prefWidth="75.0" text="Per Sprint">
       <columns>
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Capacity" fx:id="capacityForecastColumn" />
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Effort" fx:id="effortForecastColumn" />
+        <TableColumn prefWidth="75.0" text="Planned">
+          <columns>
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Capacity" fx:id="capacityForecastColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Effort" fx:id="effortForecastColumn" />
+          </columns>
+        </TableColumn>
+        <TableColumn prefWidth="75.0" text="Done">
+          <columns>
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Capacity" fx:id="capacityDoneColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Effort" fx:id="effortDoneColumn" />
+          </columns>
+        </TableColumn>
+        <TableColumn prefWidth="75.0" text="Progress Forecast">
+          <columns>
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Min. Vel." fx:id="forecastPerSprintByMinVelColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="forecastPerSprintByAvgVelColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Max. Vel." fx:id="forecastPerSprintByMaxVelColumn" />
+          </columns>
+        </TableColumn>
       </columns>
     </TableColumn>
-    <TableColumn prefWidth="75.0" text="Done">
+    <TableColumn prefWidth="75.0" text="Accumulated">
       <columns>
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Capacity" fx:id="capacityDoneColumn" />
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Effort" fx:id="effortDoneColumn" />
-      </columns>
-    </TableColumn>
-    <TableColumn prefWidth="75.0" text="Progress Forecast per Sprint">
-      <columns>
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Min. Vel." fx:id="forecastPerSprintByMinVelColumn" />
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="forecastPerSprintByAvgVelColumn" />
-        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Max. Vel." fx:id="forecastPerSprintByMaxVelColumn" />
+        <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Done" fx:id="accumulatedEffortDoneColumn" />
+        <TableColumn prefWidth="75.0" text="Progress Forecast">
+          <columns>
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Min. Vel." fx:id="accumulatedForecastByMinVelColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="accumulatedForecastByAvgVelColumn" />
+            <TableColumn editable="false" maxWidth="60.0" minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false" text="Max. Vel." fx:id="accumulatedForecastByMaxVelColumn" />
+          </columns>
+        </TableColumn>
       </columns>
     </TableColumn>
   </columns>

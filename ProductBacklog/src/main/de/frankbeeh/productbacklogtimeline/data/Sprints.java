@@ -3,21 +3,22 @@ package de.frankbeeh.productbacklogtimeline.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByHistory;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class Sprints {
     private final List<SprintData> sprints;
-    private final ComputeProgressForecastByHistory[] visitors;
+    private final SprintDataVisitor[] visitors;
 
     public Sprints() {
         this(new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity());
     }
 
     // Visible for testing
-    Sprints(ComputeProgressForecastByHistory... visitors) {
+    Sprints(SprintDataVisitor... visitors) {
         this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
     }
@@ -31,11 +32,18 @@ public class Sprints {
     }
 
     public void computeEffortForecasts() {
-        for (final ComputeProgressForecastByHistory visitor : visitors) {
+        for (final SprintDataVisitor visitor : visitors) {
             visitor.reset();
             for (final SprintData sprintData : sprints) {
                 sprintData.accept(visitor);
             }
+        }
+    }
+
+    public void computeAccumumatedEffort() {
+        final AccumulateEffortDone visitor = new AccumulateEffortDone();
+        for (final SprintData sprintData : sprints) {
+            sprintData.accept(visitor);
         }
     }
 }

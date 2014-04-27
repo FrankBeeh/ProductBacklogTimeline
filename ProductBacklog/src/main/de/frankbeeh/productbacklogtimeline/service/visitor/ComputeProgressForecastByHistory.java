@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
-public abstract class ComputeProgressForecastByHistory {
+public abstract class ComputeProgressForecastByHistory implements SprintDataVisitor {
     private final String historyForecastName;
     private int clientCount;
     private Double historicVelocity;
@@ -18,11 +18,13 @@ public abstract class ComputeProgressForecastByHistory {
         return historyForecastName;
     }
 
+    @Override
     public final void reset() {
         historicVelocity = null;
         clientCount = 0;
     }
 
+    @Override
     public void visit(SprintData sprintData) {
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
