@@ -18,7 +18,8 @@ public class SprintData {
     private final Double capacityDone;
     private final Double effortDone;
 
-    private final Map<String, Double> effortForecastBasedOnHistory;
+    private final Map<String, Double> progressForecastBasedOnHistory;
+    private final Map<String, Double> accumulatedProgressForecastBasedOnHistory;
     private Double accumulatedEffortDone;
 
     public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
@@ -30,7 +31,8 @@ public class SprintData {
         this.capacityDone = capacityDone;
         this.effortDone = effortDone;
         this.accumulatedEffortDone = null;
-        this.effortForecastBasedOnHistory = new HashMap<String, Double>();
+        this.progressForecastBasedOnHistory = new HashMap<String, Double>();
+        this.accumulatedProgressForecastBasedOnHistory = new HashMap<String, Double>();
     }
 
     public String getName() {
@@ -61,24 +63,32 @@ public class SprintData {
         return effortDone;
     }
 
+    public void setAccumulatedEffortDone(Double accumulatedEffortDone) {
+        this.accumulatedEffortDone = accumulatedEffortDone;
+    }
+
     public Double getAccumulatedEffortDone() {
         return accumulatedEffortDone;
     }
 
-    public Double getEffortForecastBasedOnHistory(String historyName) {
-        return effortForecastBasedOnHistory.get(historyName);
+    public void setProgressForecastBasedOnHistory(String historyName, Double progressForecast) {
+        progressForecastBasedOnHistory.put(historyName, progressForecast);
     }
 
-    public void setEffortForecastBasedOnHistory(String historyName, Double effortForecast) {
-        effortForecastBasedOnHistory.put(historyName, effortForecast);
+    public Double getProgressForecastBasedOnHistory(String historyName) {
+        return progressForecastBasedOnHistory.get(historyName);
+    }
+
+    public void setAccumulatedProgressForecastBasedOnHistory(String historyName, Double progressForecast) {
+        accumulatedProgressForecastBasedOnHistory.put(historyName, progressForecast);
+    }
+
+    public Double getAccumulatedProgressForecastBasedOnHistory(String historyName) {
+        return accumulatedProgressForecastBasedOnHistory.get(historyName);
     }
 
     public void accept(SprintDataVisitor visitor) {
         visitor.visit(this);
-    }
-
-    public void setAccumulatedEffortDone(Double accumulatedEffortDone) {
-        this.accumulatedEffortDone = accumulatedEffortDone;
     }
 
     @Override

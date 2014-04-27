@@ -1,5 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
+import java.text.DecimalFormat;
+
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 public abstract class ComputeProgressForecastByHistory implements SprintDataVisitor {
@@ -28,7 +30,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
     public void visit(SprintData sprintData) {
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
-        sprintData.setEffortForecastBasedOnHistory(getHistoryForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
+        sprintData.setProgressForecastBasedOnHistory(getHistoryForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
     }
 
     private Double getResultingVelocity(Double velocityOfThisSprint) {
@@ -57,7 +59,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
         if (capacity == null) {
             return null;
         }
-        return velocity.doubleValue() * capacity.doubleValue();
+        return round(velocity.doubleValue() * capacity.doubleValue());
     }
 
     private Double computeVelocityOfThisSprint(SprintData sprintData) {
@@ -76,5 +78,9 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
             return null;
         }
         return effort.doubleValue() / capacity.doubleValue();
+    }
+
+    private Double round(double value) {
+        return Double.parseDouble(new DecimalFormat("#.#").format(value));
     }
 }

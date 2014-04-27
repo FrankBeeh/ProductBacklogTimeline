@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAccumulatedProgressForecastByAverageVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAccumulatedProgressForecastByMaximumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAccumulatedProgressForecastByMinimumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;

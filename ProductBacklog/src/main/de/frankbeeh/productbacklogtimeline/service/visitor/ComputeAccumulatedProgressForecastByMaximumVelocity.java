@@ -1,6 +1,6 @@
-package de.frankbeeh.productbacklogtimeline.data;
+package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
+import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 public class ComputeAccumulatedProgressForecastByMaximumVelocity implements SprintDataVisitor {
 

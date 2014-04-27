@@ -1,8 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,8 +17,6 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForeca
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
 
 public class SprintsTableController {
-    private static final NumberFormat NUMBER_FORMAT = new DecimalFormat("0.0");
-
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
         private final String historyForecastName;
 
@@ -31,8 +26,28 @@ public class SprintsTableController {
 
         @Override
         public ObservableValue<String> call(CellDataFeatures<SprintData, String> cellDataFeatures) {
-            final Double effortForecastBasedOnHistory = cellDataFeatures.getValue().getEffortForecastBasedOnHistory(historyForecastName);
-            return new SimpleStringProperty(NUMBER_FORMAT.format(effortForecastBasedOnHistory.doubleValue()));
+            final Double progressForecastBasedOnHistory = cellDataFeatures.getValue().getProgressForecastBasedOnHistory(historyForecastName);
+            if (progressForecastBasedOnHistory == null) {
+                return null;
+            }
+            return new SimpleStringProperty(progressForecastBasedOnHistory.toString());
+        }
+    }
+
+    private static final class AccumulatedProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
+        private final String historyForecastName;
+
+        public AccumulatedProgressForecastPropertyValueFactory(String historyForecastName) {
+            this.historyForecastName = historyForecastName;
+        }
+
+        @Override
+        public ObservableValue<String> call(CellDataFeatures<SprintData, String> cellDataFeatures) {
+            final Double progressForecastBasedOnHistory = cellDataFeatures.getValue().getAccumulatedProgressForecastBasedOnHistory(historyForecastName);
+            if (progressForecastBasedOnHistory == null) {
+                return null;
+            }
+            return new SimpleStringProperty(progressForecastBasedOnHistory.toString());
         }
     }
 
@@ -60,6 +75,8 @@ public class SprintsTableController {
     private TableColumn<SprintData, String> forecastPerSprintByMinVelColumn;
     @FXML
     private TableColumn<SprintData, String> forecastPerSprintByMaxVelColumn;
+    @FXML
+    private TableColumn<SprintData, String> accumulatedForecastByAvgVelColumn;
 
     private ObservableList<SprintData> model;
 
@@ -76,6 +93,7 @@ public class SprintsTableController {
         setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
         setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
         setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
     }
 
     public void initModel(Sprints sprints) {
@@ -90,6 +108,10 @@ public class SprintsTableController {
 
     private void setCellValueFactoryForForecast(TableColumn<SprintData, String> tableColumn, String historyForecastName) {
         tableColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(historyForecastName));
+    }
+
+    private void setCellValueFactoryForAccumulatedForecast(TableColumn<SprintData, String> tableColumn, String historyForecastName) {
+        tableColumn.setCellValueFactory(new AccumulatedProgressForecastPropertyValueFactory(historyForecastName));
     }
 
     private void setCellValueFactoryForDouble(TableColumn<SprintData, Double> tableColumn, String propertyName) {

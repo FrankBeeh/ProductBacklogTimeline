@@ -2,6 +2,8 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import static junit.framework.Assert.assertEquals;
 
+import java.text.DecimalFormat;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -174,8 +176,14 @@ public abstract class ComputeEffortForecastBaseTest {
         visitor = createVisitor();
     }
 
-    private void assertEqualsEffortForecastBasedOnHistory(Double expectedEffortForecast, final SprintData sprintData) {
-        assertEquals(expectedEffortForecast, sprintData.getEffortForecastBasedOnHistory(visitor.getHistoryForecastName()));
+    private void assertEqualsEffortForecastBasedOnHistory(Double expectedProgressForecast, final SprintData sprintData) {
+        assertEquals(round(expectedProgressForecast), sprintData.getProgressForecastBasedOnHistory(visitor.getHistoryForecastName()));
     }
 
+    private Double round(Double value) {
+        if (value == null) {
+            return null;
+        }
+        return Double.parseDouble(new DecimalFormat("#.#").format(value));
+    }
 }

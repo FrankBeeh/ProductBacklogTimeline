@@ -7,12 +7,12 @@ public class AccumulateEffortDone implements SprintDataVisitor {
     private Double accumulatedEffortDone;
 
     public AccumulateEffortDone() {
-        accumulatedEffortDone = null;
+        reset();
     }
 
     @Override
     public void reset() {
-        // TODO Auto-generated method stub
+        accumulatedEffortDone = null;
     }
 
     @Override
