@@ -4,22 +4,26 @@ import java.text.DecimalFormat;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
-public abstract class ComputeProgressForecastByHistory implements SprintDataVisitor {
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Compute the progress forecast using <b>velocity</b> by visiting {@link SprintData}.
+ * <li>Delegate the computation of the velocity to {@link ComputeVelocityStrategy}.
+ * </ul>
+ */
+public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
     private final String progressForecastName;
-    private int clientCount;
-    private Double historicVelocity;
+    private final ComputeVelocityStrategy computeVelocityStrategy;
     private SprintDataVisitor computeAccumulatedProgressForecast;
 
-    protected ComputeProgressForecastByHistory(String progressForecastName) {
+    private int clientCount;
+    private Double historicVelocity;
+
+    public ComputeProgressForecastByVelocity(String progressForecastName, ComputeVelocityStrategy computeVelocityStrategy) {
         this.progressForecastName = progressForecastName;
-        computeAccumulatedProgressForecast = new ComputeAccumulatedProgressForecast(progressForecastName);
+        this.computeAccumulatedProgressForecast = new ComputeAccumulatedProgressForecast(progressForecastName);
+        this.computeVelocityStrategy = computeVelocityStrategy;
         reset();
-    }
-
-    protected abstract double computeResultingVelocity(double velocityOfThisSprint, double historicVelocity, int clientCount);
-
-    public final String getProgressForecastName() {
-        return progressForecastName;
     }
 
     @Override
@@ -33,7 +37,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
     public void visit(SprintData sprintData) {
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
-        sprintData.setProgressForecastBasedOnHistory(getProgressForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
+        sprintData.setProgressForecastBasedOnHistory(progressForecastName, computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
         computeAccumulatedProgressForecast.visit(sprintData);
     }
 
@@ -44,7 +48,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
         if (velocityOfThisSprint == null) {
             return historicVelocity;
         }
-        return computeResultingVelocity(velocityOfThisSprint.doubleValue(), historicVelocity.doubleValue(), clientCount);
+        return computeVelocityStrategy.computeVelocity(velocityOfThisSprint, historicVelocity, clientCount);
     }
 
     private Double computeProgressForecastOfThisSprint(SprintData sprintData, Double velocityOfThisSprint) {
@@ -63,7 +67,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
         if (capacity == null) {
             return null;
         }
-        return round(velocity.doubleValue() * capacity.doubleValue());
+        return roundToOneDecimal(velocity.doubleValue() * capacity.doubleValue());
     }
 
     private Double computeVelocityOfThisSprint(SprintData sprintData) {
@@ -84,7 +88,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
         return effort.doubleValue() / capacity.doubleValue();
     }
 
-    private Double round(double value) {
+    private Double roundToOneDecimal(double value) {
         return Double.parseDouble(new DecimalFormat("#.#").format(value));
     }
 

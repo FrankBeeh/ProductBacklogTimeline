@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAverageVelocityStrategy;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeMaximumVelocityStrategy;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeMinimumVelocityStrategy;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class Sprints {
@@ -18,8 +19,8 @@ public class Sprints {
     private final SprintDataVisitor[] visitors;
 
     public Sprints() {
-        this(new AccumulateEffortDone(), new ComputeProgressForecastByAverageVelocity(AVERAGE_VELOCITY_FORECAST), new ComputeProgressForecastByMinimumVelocity(MINIMUM_VELOCITY_FORECAST),
-                new ComputeProgressForecastByMaximumVelocity(MAXIMUM_VELOCITY_FORECAST));
+        this(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()), new ComputeProgressForecastByVelocity(
+                MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST, new ComputeMaximumVelocityStrategy()));
     }
 
     // Visible for testing

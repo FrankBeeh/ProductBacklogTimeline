@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 @RunWith(EasyMockRunner.class)
-public abstract class ComputeEffortForecastBaseTest extends EasyMockSupport {
+public class ComputeProgressForecastByVelocityTest extends EasyMockSupport {
 
     private static final double EFFORT_FORECAST_1 = 7d;
     private static final double CAPACITY_FORECAST_1 = 11d;
@@ -37,18 +37,14 @@ public abstract class ComputeEffortForecastBaseTest extends EasyMockSupport {
     private static final double EFFORT_DONE_3 = 12d;
     private static final double CAPACITY_DONE_3 = 9d;
     private static final double VELOCITY_DONE_3 = EFFORT_DONE_3 / CAPACITY_DONE_3;
-    private ComputeProgressForecastByHistory visitor;
+    private ComputeProgressForecastByVelocity visitor;
 
     @Mock
     private SprintDataVisitor computeAccumulatedProgressForecastMock;
 
-    public ComputeEffortForecastBaseTest() {
+    public ComputeProgressForecastByVelocityTest() {
         super();
     }
-
-    protected abstract double getExpectedVelocity(final double... velocities);
-
-    protected abstract ComputeProgressForecastByHistory createVisitor();
 
     @Test
     public void visitFirst_capacityForecastMissing() {
@@ -207,7 +203,7 @@ public abstract class ComputeEffortForecastBaseTest extends EasyMockSupport {
     }
 
     private void assertEqualsEffortForecastBasedOnHistory(Double expectedProgressForecast, final SprintData sprintData) {
-        assertEquals(round(expectedProgressForecast), sprintData.getProgressForecastBasedOnHistory(visitor.getProgressForecastName()));
+        assertEquals(round(expectedProgressForecast), sprintData.getProgressForecastBasedOnHistory(""));
     }
 
     private Double round(Double value) {
@@ -215,5 +211,17 @@ public abstract class ComputeEffortForecastBaseTest extends EasyMockSupport {
             return null;
         }
         return Double.parseDouble(new DecimalFormat("#.#").format(value));
+    }
+
+    protected double getExpectedVelocity(final double... velocities) {
+        double averageVelocity = 0d;
+        for (final double velocity : velocities) {
+            averageVelocity += velocity;
+        }
+        return averageVelocity / velocities.length;
+    }
+
+    public ComputeProgressForecastByVelocity createVisitor() {
+        return new ComputeProgressForecastByVelocity("", new ComputeAverageVelocityStrategy());
     }
 }
