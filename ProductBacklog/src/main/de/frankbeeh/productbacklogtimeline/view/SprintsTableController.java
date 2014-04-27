@@ -77,6 +77,10 @@ public class SprintsTableController {
     private TableColumn<SprintData, String> forecastPerSprintByMaxVelColumn;
     @FXML
     private TableColumn<SprintData, String> accumulatedForecastByAvgVelColumn;
+    @FXML
+    private TableColumn<SprintData, String> accumulatedForecastByMinVelColumn;
+    @FXML
+    private TableColumn<SprintData, String> accumulatedForecastByMaxVelColumn;
 
     private ObservableList<SprintData> model;
 
@@ -94,6 +98,8 @@ public class SprintsTableController {
         setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
         setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
     }
 
     public void initModel(Sprints sprints) {

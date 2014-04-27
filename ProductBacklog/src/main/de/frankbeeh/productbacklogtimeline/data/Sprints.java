@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAccumulatedProgressForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAccumulatedProgressForecastByMaximumVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAccumulatedProgressForecastByMinimumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
@@ -17,8 +14,7 @@ public class Sprints {
     private final SprintDataVisitor[] visitors;
 
     public Sprints() {
-        this(new AccumulateEffortDone(), new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity(),
-                new ComputeAccumulatedProgressForecastByAverageVelocity(), new ComputeAccumulatedProgressForecastByMinimumVelocity(), new ComputeAccumulatedProgressForecastByMaximumVelocity());
+        this(new AccumulateEffortDone(), new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity());
     }
 
     // Visible for testing

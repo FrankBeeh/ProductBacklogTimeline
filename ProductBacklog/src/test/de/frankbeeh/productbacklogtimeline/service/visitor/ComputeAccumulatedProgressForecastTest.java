@@ -7,16 +7,16 @@ import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
-public class ComputeAccumulatedProgressForecastByAverageVelocityTest {
+public class ComputeAccumulatedProgressForecastTest {
 
     private static final double EFFORT_DONE_1 = 10d;
     private static final double PROGRESS_FORECAST_1 = 5d;
     private static final double PROGRESS_FORECAST_2 = 6d;
     private static final Double PROGRESS_FORECAST_3 = 7d;
     private static final double PROGRESS_FORECAST_5 = 8d;
-    private static final String HISTORY_NAME = "Avg. Vel.";
+    private static final String HISTORY_NAME = "history";
 
-    private ComputeAccumulatedProgressForecastByAverageVelocity visitor;
+    private ComputeAccumulatedProgressForecast visitor;
 
     @Test
     public void visit() {
@@ -56,7 +56,7 @@ public class ComputeAccumulatedProgressForecastByAverageVelocityTest {
 
     @Before
     public void setUp() {
-        visitor = new ComputeAccumulatedProgressForecastByAverageVelocity();
+        visitor = new ComputeAccumulatedProgressForecast(HISTORY_NAME);
     }
 
     private SprintData createSprintData(Double accumulatedEffortDone, Double progressForecast) {

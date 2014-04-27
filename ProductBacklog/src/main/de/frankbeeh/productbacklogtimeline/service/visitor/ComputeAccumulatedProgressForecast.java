@@ -2,10 +2,13 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
-public class ComputeAccumulatedProgressForecastByAverageVelocity implements SprintDataVisitor {
-
-    private static final String HISTORY_NAME = "Avg. Vel.";
+public class ComputeAccumulatedProgressForecast implements SprintDataVisitor {
     private Double accumulatedProgressForecast;
+    private final String historyName;
+
+    public ComputeAccumulatedProgressForecast(String historyName) {
+        this.historyName = historyName;
+    }
 
     @Override
     public void reset() {
@@ -15,11 +18,11 @@ public class ComputeAccumulatedProgressForecastByAverageVelocity implements Spri
     @Override
     public void visit(SprintData sprintData) {
         final Double accumulatedEffortDone = sprintData.getAccumulatedEffortDone();
-        final Double progressForecast = sprintData.getProgressForecastBasedOnHistory(HISTORY_NAME);
+        final Double progressForecast = sprintData.getProgressForecastBasedOnHistory(historyName);
         if (accumulatedEffortDone == null) {
             if (progressForecast != null) {
                 accumulatedProgressForecast = addProgressForecast(progressForecast.doubleValue());
-                sprintData.setAccumulatedProgressForecastBasedOnHistory(HISTORY_NAME, accumulatedProgressForecast);
+                sprintData.setAccumulatedProgressForecastBasedOnHistory(historyName, accumulatedProgressForecast);
             }
         } else {
             accumulatedProgressForecast = accumulatedEffortDone;

@@ -8,9 +8,11 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
     private final String historyForecastName;
     private int clientCount;
     private Double historicVelocity;
+    private SprintDataVisitor computeAccumulatedProgressForecast;
 
     protected ComputeProgressForecastByHistory(String historyForecastName) {
         this.historyForecastName = historyForecastName;
+        computeAccumulatedProgressForecast = new ComputeAccumulatedProgressForecast(historyForecastName);
         reset();
     }
 
@@ -24,6 +26,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
     public final void reset() {
         historicVelocity = null;
         clientCount = 0;
+        computeAccumulatedProgressForecast.reset();
     }
 
     @Override
@@ -31,6 +34,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
         sprintData.setProgressForecastBasedOnHistory(getHistoryForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
+        computeAccumulatedProgressForecast.visit(sprintData);
     }
 
     private Double getResultingVelocity(Double velocityOfThisSprint) {
@@ -82,5 +86,10 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
 
     private Double round(double value) {
         return Double.parseDouble(new DecimalFormat("#.#").format(value));
+    }
+
+    // Visible for testing
+    void setComputeAccumulatedProcessForecastVisitor(SprintDataVisitor computeAccumulatedProgressForecastMock) {
+        computeAccumulatedProgressForecast = computeAccumulatedProgressForecastMock;
     }
 }

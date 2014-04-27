@@ -1,15 +1,21 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import static junit.framework.Assert.assertEquals;
+import static org.easymock.EasyMock.same;
 
 import java.text.DecimalFormat;
 
+import org.easymock.EasyMockRunner;
+import org.easymock.EasyMockSupport;
+import org.easymock.Mock;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
-public abstract class ComputeEffortForecastBaseTest {
+@RunWith(EasyMockRunner.class)
+public abstract class ComputeEffortForecastBaseTest extends EasyMockSupport {
 
     private static final double EFFORT_FORECAST_1 = 7d;
     private static final double CAPACITY_FORECAST_1 = 11d;
@@ -32,6 +38,9 @@ public abstract class ComputeEffortForecastBaseTest {
     private static final double CAPACITY_DONE_3 = 9d;
     private static final double VELOCITY_DONE_3 = EFFORT_DONE_3 / CAPACITY_DONE_3;
     private ComputeProgressForecastByHistory visitor;
+
+    @Mock
+    private SprintDataVisitor computeAccumulatedProgressForecastMock;
 
     public ComputeEffortForecastBaseTest() {
         super();
@@ -169,6 +178,27 @@ public abstract class ComputeEffortForecastBaseTest {
         final SprintData sprintData = new SprintData(null, null, null, CAPACITY_FORECAST_3, EFFORT_FORECAST_3, CAPACITY_DONE_3, EFFORT_DONE_3);
         visitor.visit(sprintData);
         assertEqualsEffortForecastBasedOnHistory(CAPACITY_DONE_3 * getExpectedVelocity(VELOCITY_DONE_2, VELOCITY_DONE_3), sprintData);
+    }
+
+    @Test
+    public void reset_callsComputeAccumulatedProcessForecastVisitor() throws Exception {
+        visitor.setComputeAccumulatedProcessForecastVisitor(computeAccumulatedProgressForecastMock);
+
+        computeAccumulatedProgressForecastMock.reset();
+        replayAll();
+        visitor.reset();
+        verifyAll();
+    }
+
+    @Test
+    public void visit_callsComputeAccumulatedProcessForecastVisitor() throws Exception {
+        final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
+        visitor.setComputeAccumulatedProcessForecastVisitor(computeAccumulatedProgressForecastMock);
+
+        computeAccumulatedProgressForecastMock.visit(same(sprintData));
+        replayAll();
+        visitor.visit(sprintData);
+        verifyAll();
     }
 
     @Before
