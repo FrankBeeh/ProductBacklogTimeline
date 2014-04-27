@@ -40,8 +40,7 @@ public class MainController {
         if (selectedFile != null) {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
             final Sprints sprints = importer.importData(new FileReader(selectedFile));
-            sprints.computeEffortForecasts();
-            sprints.computeAccumumatedEffort();
+            sprints.visitAllSprints();
             sprintsTableController.initModel(sprints);
         }
     }

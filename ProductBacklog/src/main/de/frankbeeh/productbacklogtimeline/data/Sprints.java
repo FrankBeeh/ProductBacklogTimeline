@@ -14,7 +14,8 @@ public class Sprints {
     private final SprintDataVisitor[] visitors;
 
     public Sprints() {
-        this(new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity());
+        this(new AccumulateEffortDone(), new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity(),
+                new ComputeAccumulatedProgressForecastByAverageVelocity(), new ComputeAccumulatedProgressForecastByMinimumVelocity(), new ComputeAccumulatedProgressForecastByMaximumVelocity());
     }
 
     // Visible for testing
@@ -31,19 +32,12 @@ public class Sprints {
         sprints.add(sprint);
     }
 
-    public void computeEffortForecasts() {
+    public void visitAllSprints() {
         for (final SprintDataVisitor visitor : visitors) {
             visitor.reset();
             for (final SprintData sprintData : sprints) {
                 sprintData.accept(visitor);
             }
-        }
-    }
-
-    public void computeAccumumatedEffort() {
-        final AccumulateEffortDone visitor = new AccumulateEffortDone();
-        for (final SprintData sprintData : sprints) {
-            sprintData.accept(visitor);
         }
     }
 }

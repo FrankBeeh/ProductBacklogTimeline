@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import static junit.framework.Assert.assertEquals;
-
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
@@ -14,44 +12,26 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 public class SprintsTest extends EasyMockSupport {
 
     @Mock
-    private SprintDataVisitor velocityMock1;
+    private SprintDataVisitor visitorMock1;
     @Mock
-    private SprintDataVisitor velocityMock2;
+    private SprintDataVisitor visitorMock2;
 
     @Test
-    public void computeEffortForecasts() {
-        final Sprints sprints = new Sprints(velocityMock1, velocityMock2);
+    public void computeProgressForecasts() {
+        final Sprints sprints = new Sprints(visitorMock1, visitorMock2);
         final SprintData sprint1 = new SprintData("Sprint 1", null, null, null, null, null, null);
         sprints.addItem(sprint1);
         final SprintData sprint2 = new SprintData("Sprint 2", null, null, null, null, null, null);
         sprints.addItem(sprint2);
 
-        velocityMock1.reset();
-        velocityMock1.visit(sprint1);
-        velocityMock1.visit(sprint2);
-        velocityMock2.reset();
-        velocityMock2.visit(sprint1);
-        velocityMock2.visit(sprint2);
+        visitorMock1.reset();
+        visitorMock1.visit(sprint1);
+        visitorMock1.visit(sprint2);
+        visitorMock2.reset();
+        visitorMock2.visit(sprint1);
+        visitorMock2.visit(sprint2);
         replayAll();
-        sprints.computeEffortForecasts();
+        sprints.visitAllSprints();
         verifyAll();
     }
-
-    @Test
-    public void computeAccumumatedEffort() throws Exception {
-        final double effortDone1 = 10d;
-        final double effortDone2 = 12d;
-
-        final Sprints sprints = new Sprints();
-        final SprintData sprint1 = new SprintData("Sprint 1", null, null, null, null, null, effortDone1);
-        sprints.addItem(sprint1);
-        final SprintData sprint2 = new SprintData("Sprint 2", null, null, null, null, null, effortDone2);
-        sprints.addItem(sprint2);
-
-        sprints.computeAccumumatedEffort();
-
-        assertEquals(Double.valueOf(effortDone1), sprint1.getAccumulatedEffortDone());
-        assertEquals(Double.valueOf(effortDone1 + effortDone2), sprint2.getAccumulatedEffortDone());
-    }
-
 }
