@@ -8,8 +8,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -22,36 +20,7 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForeca
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
 
 public class SprintsTableController {
-    private static final AlignmentCellFactory<Double> ALIGN_DOUBLE_RIGHT_CELL_FACTORY = new AlignmentCellFactory<Double>(Pos.CENTER_RIGHT);
-    private static final AlignmentCellFactory<String> ALIGN_FORECAST_RIGHT_CELL_FACTORY = new AlignmentCellFactory<String>(Pos.CENTER_RIGHT);
     private static final NumberFormat NUMBER_FORMAT = new DecimalFormat("0.0");
-
-    private static final class AlignmentCellFactory<T> implements Callback<TableColumn<SprintData, T>, TableCell<SprintData, T>> {
-        private final Pos alignment;
-
-        public AlignmentCellFactory(Pos alignment) {
-            this.alignment = alignment;
-        }
-
-        @Override
-        public TableCell<SprintData, T> call(TableColumn<SprintData, T> arg0) {
-            final TableCell<SprintData, T> tableCell = new TableCell<SprintData, T>() {
-                @Override
-                public void updateItem(T item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty ? null : getString());
-                    setGraphic(null);
-                }
-
-                private String getString() {
-                    return getItem() == null ? "" : getItem().toString();
-                }
-            };
-
-            tableCell.setAlignment(alignment);
-            return tableCell;
-        }
-    }
 
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
         private final String historyForecastName;
@@ -99,24 +68,14 @@ public class SprintsTableController {
         nameColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("name"));
         startDateColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("startDate"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<SprintData, String>("endDate"));
-        setCellAndCellValueFactory(capacityForecastColumn, "capacityForecast");
-        setCellAndCellValueFactory(effortForecastColumn, "effortForecast");
-        setCellAndCellValueFactory(capacityDoneColumn, "capacityDone");
-        setCellAndCellValueFactory(effortDoneColumn, "effortDone");
-        setCellAndCellValueFactory(accumulatedEffortDoneColumn, "accumulatedEffortDone");
-        setCellAndCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
-        setCellAndCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
-        setCellAndCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
-    }
-
-    public void setCellAndCellValueFactoryForForecast(TableColumn<SprintData, String> tableColumn, String historyForecastName) {
-        tableColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(historyForecastName));
-        tableColumn.setCellFactory(ALIGN_FORECAST_RIGHT_CELL_FACTORY);
-    }
-
-    public void setCellAndCellValueFactory(TableColumn<SprintData, Double> tableColumn, String propertyName) {
-        tableColumn.setCellValueFactory(new PropertyValueFactory<SprintData, Double>(propertyName));
-        tableColumn.setCellFactory(ALIGN_DOUBLE_RIGHT_CELL_FACTORY);
+        setCellValueFactoryForDouble(capacityForecastColumn, "capacityForecast");
+        setCellValueFactoryForDouble(effortForecastColumn, "effortForecast");
+        setCellValueFactoryForDouble(capacityDoneColumn, "capacityDone");
+        setCellValueFactoryForDouble(effortDoneColumn, "effortDone");
+        setCellValueFactoryForDouble(accumulatedEffortDoneColumn, "accumulatedEffortDone");
+        setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
+        setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
+        setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
     }
 
     public void initModel(Sprints sprints) {
@@ -129,4 +88,11 @@ public class SprintsTableController {
         model.addAll(sprints.getSprints());
     }
 
+    private void setCellValueFactoryForForecast(TableColumn<SprintData, String> tableColumn, String historyForecastName) {
+        tableColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(historyForecastName));
+    }
+
+    private void setCellValueFactoryForDouble(TableColumn<SprintData, Double> tableColumn, String propertyName) {
+        tableColumn.setCellValueFactory(new PropertyValueFactory<SprintData, Double>(propertyName));
+    }
 }
