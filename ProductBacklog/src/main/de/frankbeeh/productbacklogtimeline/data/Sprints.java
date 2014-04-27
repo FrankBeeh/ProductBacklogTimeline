@@ -10,11 +10,16 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForeca
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class Sprints {
+    public static final String AVERAGE_VELOCITY_FORECAST = "Avg. Vel.";
+    public static final String MINIMUM_VELOCITY_FORECAST = "Min. Vel.";
+    public static final String MAXIMUM_VELOCITY_FORECAST = "Max. Vel.";
+
     private final List<SprintData> sprints;
     private final SprintDataVisitor[] visitors;
 
     public Sprints() {
-        this(new AccumulateEffortDone(), new ComputeProgressForecastByAverageVelocity(), new ComputeProgressForecastByMinimumVelocity(), new ComputeProgressForecastByMaximumVelocity());
+        this(new AccumulateEffortDone(), new ComputeProgressForecastByAverageVelocity(AVERAGE_VELOCITY_FORECAST), new ComputeProgressForecastByMinimumVelocity(MINIMUM_VELOCITY_FORECAST),
+                new ComputeProgressForecastByMaximumVelocity(MAXIMUM_VELOCITY_FORECAST));
     }
 
     // Visible for testing

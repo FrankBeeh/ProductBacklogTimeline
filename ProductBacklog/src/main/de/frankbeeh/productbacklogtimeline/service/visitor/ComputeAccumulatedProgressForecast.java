@@ -4,10 +4,10 @@ import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 public class ComputeAccumulatedProgressForecast implements SprintDataVisitor {
     private Double accumulatedProgressForecast;
-    private final String historyName;
+    private final String progressForecastName;
 
-    public ComputeAccumulatedProgressForecast(String historyName) {
-        this.historyName = historyName;
+    public ComputeAccumulatedProgressForecast(String progressForecastName) {
+        this.progressForecastName = progressForecastName;
     }
 
     @Override
@@ -18,11 +18,11 @@ public class ComputeAccumulatedProgressForecast implements SprintDataVisitor {
     @Override
     public void visit(SprintData sprintData) {
         final Double accumulatedEffortDone = sprintData.getAccumulatedEffortDone();
-        final Double progressForecast = sprintData.getProgressForecastBasedOnHistory(historyName);
+        final Double progressForecast = sprintData.getProgressForecastBasedOnHistory(progressForecastName);
         if (accumulatedEffortDone == null) {
             if (progressForecast != null) {
                 accumulatedProgressForecast = addProgressForecast(progressForecast.doubleValue());
-                sprintData.setAccumulatedProgressForecastBasedOnHistory(historyName, accumulatedProgressForecast);
+                sprintData.setAccumulatedProgressForecastBasedOnHistory(progressForecastName, accumulatedProgressForecast);
             }
         } else {
             accumulatedProgressForecast = accumulatedEffortDone;

@@ -207,7 +207,7 @@ public abstract class ComputeEffortForecastBaseTest extends EasyMockSupport {
     }
 
     private void assertEqualsEffortForecastBasedOnHistory(Double expectedProgressForecast, final SprintData sprintData) {
-        assertEquals(round(expectedProgressForecast), sprintData.getProgressForecastBasedOnHistory(visitor.getHistoryForecastName()));
+        assertEquals(round(expectedProgressForecast), sprintData.getProgressForecastBasedOnHistory(visitor.getProgressForecastName()));
     }
 
     private Double round(Double value) {

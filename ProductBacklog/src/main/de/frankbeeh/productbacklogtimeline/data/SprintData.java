@@ -71,20 +71,20 @@ public class SprintData {
         return accumulatedEffortDone;
     }
 
-    public void setProgressForecastBasedOnHistory(String historyName, Double progressForecast) {
-        progressForecastBasedOnHistory.put(historyName, progressForecast);
+    public void setProgressForecastBasedOnHistory(String progressForecastName, Double progressForecast) {
+        progressForecastBasedOnHistory.put(progressForecastName, progressForecast);
     }
 
-    public Double getProgressForecastBasedOnHistory(String historyName) {
-        return progressForecastBasedOnHistory.get(historyName);
+    public Double getProgressForecastBasedOnHistory(String progressForecastName) {
+        return progressForecastBasedOnHistory.get(progressForecastName);
     }
 
-    public void setAccumulatedProgressForecastBasedOnHistory(String historyName, Double progressForecast) {
-        accumulatedProgressForecastBasedOnHistory.put(historyName, progressForecast);
+    public void setAccumulatedProgressForecastBasedOnHistory(String progressForecastName, Double progressForecast) {
+        accumulatedProgressForecastBasedOnHistory.put(progressForecastName, progressForecast);
     }
 
-    public Double getAccumulatedProgressForecastBasedOnHistory(String historyName) {
-        return accumulatedProgressForecastBasedOnHistory.get(historyName);
+    public Double getAccumulatedProgressForecastBasedOnHistory(String progressForecastName) {
+        return accumulatedProgressForecastBasedOnHistory.get(progressForecastName);
     }
 
     public void accept(SprintDataVisitor visitor) {

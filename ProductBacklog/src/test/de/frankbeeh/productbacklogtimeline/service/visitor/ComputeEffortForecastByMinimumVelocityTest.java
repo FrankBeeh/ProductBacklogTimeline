@@ -12,6 +12,6 @@ public class ComputeEffortForecastByMinimumVelocityTest extends ComputeEffortFor
 
     @Override
     public ComputeProgressForecastByHistory createVisitor() {
-        return new ComputeProgressForecastByMinimumVelocity();
+        return new ComputeProgressForecastByMinimumVelocity("");
     }
 }

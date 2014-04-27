@@ -12,9 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByAverageVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMaximumVelocity;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByMinimumVelocity;
 
 public class SprintsTableController {
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>> {
@@ -94,12 +91,12 @@ public class SprintsTableController {
         setCellValueFactoryForDouble(capacityDoneColumn, "capacityDone");
         setCellValueFactoryForDouble(effortDoneColumn, "effortDone");
         setCellValueFactoryForDouble(accumulatedEffortDoneColumn, "accumulatedEffortDone");
-        setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
-        setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
-        setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
-        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, ComputeProgressForecastByAverageVelocity.HISTORY_FORECAST_NAME);
-        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, ComputeProgressForecastByMinimumVelocity.HISTORY_FORECAST_NAME);
-        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, ComputeProgressForecastByMaximumVelocity.HISTORY_FORECAST_NAME);
+        setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, Sprints.AVERAGE_VELOCITY_FORECAST);
+        setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, Sprints.MINIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, Sprints.MAXIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, Sprints.AVERAGE_VELOCITY_FORECAST);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, Sprints.MINIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, Sprints.MAXIMUM_VELOCITY_FORECAST);
     }
 
     public void initModel(Sprints sprints) {

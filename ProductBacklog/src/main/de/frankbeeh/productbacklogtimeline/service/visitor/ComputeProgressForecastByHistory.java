@@ -5,21 +5,21 @@ import java.text.DecimalFormat;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 public abstract class ComputeProgressForecastByHistory implements SprintDataVisitor {
-    private final String historyForecastName;
+    private final String progressForecastName;
     private int clientCount;
     private Double historicVelocity;
     private SprintDataVisitor computeAccumulatedProgressForecast;
 
-    protected ComputeProgressForecastByHistory(String historyForecastName) {
-        this.historyForecastName = historyForecastName;
-        computeAccumulatedProgressForecast = new ComputeAccumulatedProgressForecast(historyForecastName);
+    protected ComputeProgressForecastByHistory(String progressForecastName) {
+        this.progressForecastName = progressForecastName;
+        computeAccumulatedProgressForecast = new ComputeAccumulatedProgressForecast(progressForecastName);
         reset();
     }
 
     protected abstract double computeResultingVelocity(double velocityOfThisSprint, double historicVelocity, int clientCount);
 
-    public final String getHistoryForecastName() {
-        return historyForecastName;
+    public final String getProgressForecastName() {
+        return progressForecastName;
     }
 
     @Override
@@ -33,7 +33,7 @@ public abstract class ComputeProgressForecastByHistory implements SprintDataVisi
     public void visit(SprintData sprintData) {
         clientCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
-        sprintData.setProgressForecastBasedOnHistory(getHistoryForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
+        sprintData.setProgressForecastBasedOnHistory(getProgressForecastName(), computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
         computeAccumulatedProgressForecast.visit(sprintData);
     }
 

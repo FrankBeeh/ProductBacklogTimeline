@@ -12,6 +12,6 @@ public class ComputeEffortForecastByAverageVelocityTest extends ComputeEffortFor
 
     @Override
     public ComputeProgressForecastByHistory createVisitor() {
-        return new ComputeProgressForecastByAverageVelocity();
+        return new ComputeProgressForecastByAverageVelocity("");
     }
 }
