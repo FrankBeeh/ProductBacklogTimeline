@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import java.text.SimpleDateFormat;
-
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
@@ -14,10 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class SprintsTableController {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
-
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, Double>, ObservableValue<Double>> {
         private final String progressForecastName;
 
@@ -96,7 +93,7 @@ public class SprintsTableController {
                 return new ObservableValueBase<String>() {
                     @Override
                     public String getValue() {
-                        return DATE_FORMAT.format(cellDataFeatures.getValue().getStartDate());
+                        return FormatUtility.formatDate(cellDataFeatures.getValue().getStartDate());
                     }
                 };
             }
@@ -107,7 +104,7 @@ public class SprintsTableController {
                 return new ObservableValueBase<String>() {
                     @Override
                     public String getValue() {
-                        return DATE_FORMAT.format(cellDataFeatures.getValue().getEndDate());
+                        return FormatUtility.formatDate(cellDataFeatures.getValue().getEndDate());
                     }
                 };
             }

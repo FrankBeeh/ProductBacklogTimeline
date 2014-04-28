@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,6 +12,7 @@ import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
 import de.frankbeeh.productbacklogtimeline.data.State;
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public abstract class DataFromCsvImporter<T> {
 
@@ -22,7 +22,6 @@ public abstract class DataFromCsvImporter<T> {
     private static final String TODO_STATE = "Todo";
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.getDefault());
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     private static final char SPLIT_BY = ';';
 
     private final Map<String, State> stateMap;
@@ -77,7 +76,7 @@ public abstract class DataFromCsvImporter<T> {
         if (value.isEmpty()) {
             return null;
         }
-        return DATE_FORMAT.parse(value);
+        return FormatUtility.parseDate(value);
     }
 
     protected final State getState(String columnName) {
