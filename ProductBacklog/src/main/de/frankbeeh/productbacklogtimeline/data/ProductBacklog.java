@@ -36,11 +36,11 @@ public class ProductBacklog {
         return items;
     }
 
-    public void visitAllItems() {
+    public void visitAllItems(Sprints sprints) {
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
-                visitor.visit(item);
+                visitor.visit(item, sprints);
             }
         }
     }

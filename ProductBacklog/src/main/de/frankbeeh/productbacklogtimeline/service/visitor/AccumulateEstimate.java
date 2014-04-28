@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.data.Sprints;
 
 /**
  * Responsibility:
@@ -20,7 +21,7 @@ public class AccumulateEstimate implements ProductBacklogItemVisitor {
         accumulatedEstimate = 0d;
     }
 
-    public void visit(ProductBacklogItem productBacklogItem) {
+    public void visit(ProductBacklogItem productBacklogItem, Sprints sprints) {
         final Double estimateOfThisItem = productBacklogItem.getEstimate();
         if (estimateOfThisItem != null) {
             accumulatedEstimate += estimateOfThisItem;

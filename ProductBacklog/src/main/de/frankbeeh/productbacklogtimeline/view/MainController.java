@@ -23,14 +23,16 @@ public class MainController {
     private ProductBacklogTableController productBacklogTableController;
 
     private Stage primaryStage;
+    private Sprints sprints = new Sprints();
+    private ProductBacklog productBacklog = new ProductBacklog();
 
     @FXML
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
-            final ProductBacklog productBacklog = importer.importData(new FileReader(selectedFile));
-            productBacklog.visitAllItems();
+            productBacklog = importer.importData(new FileReader(selectedFile));
+            productBacklog.visitAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
         }
     }
@@ -40,8 +42,9 @@ public class MainController {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
-            final Sprints sprints = importer.importData(new FileReader(selectedFile));
+            sprints = importer.importData(new FileReader(selectedFile));
             sprints.visitAllSprints();
+            productBacklog.visitAllItems(sprints);
             sprintsTableController.initModel(sprints);
         }
     }

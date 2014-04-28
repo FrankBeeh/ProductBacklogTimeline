@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.data.Sprints;
 
 /**
  * Responsibility:
@@ -11,5 +12,5 @@ import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 public interface ProductBacklogItemVisitor {
     void reset();
 
-    void visit(ProductBacklogItem productBacklogItem);
+    void visit(ProductBacklogItem productBacklogItem, Sprints sprints);
 }

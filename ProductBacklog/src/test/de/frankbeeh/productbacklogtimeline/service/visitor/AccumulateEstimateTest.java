@@ -14,7 +14,7 @@ public class AccumulateEstimateTest {
     @Test
     public void visitFirst_noEstimate() {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null);
-        visitor.visit(productBacklogItem);
+        visitor.visit(productBacklogItem, null);
         assertEquals(0d, productBacklogItem.getAccumulatedEstimate());
     }
 
@@ -22,7 +22,7 @@ public class AccumulateEstimateTest {
     public void visitFirst_withEstimate() {
         final Double estimate = Double.valueOf(1d);
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, estimate, null);
-        visitor.visit(productBacklogItem);
+        visitor.visit(productBacklogItem, null);
         assertEquals(estimate, productBacklogItem.getAccumulatedEstimate());
     }
 
@@ -30,11 +30,11 @@ public class AccumulateEstimateTest {
     public void visitSecond_withEstimate() {
         final Double estimate1 = Double.valueOf(1d);
         final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem(null, null, null, estimate1, null);
-        visitor.visit(productBacklogItem1);
+        visitor.visit(productBacklogItem1, null);
 
         final Double estimate2 = Double.valueOf(2d);
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem(null, null, null, estimate2, null);
-        visitor.visit(productBacklogItem2);
+        visitor.visit(productBacklogItem2, null);
         assertEquals(estimate1 + estimate2, productBacklogItem2.getAccumulatedEstimate());
     }
 
@@ -42,10 +42,10 @@ public class AccumulateEstimateTest {
     public void visitSecond_noEstimate() {
         final Double estimate1 = Double.valueOf(1d);
         final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem(null, null, null, estimate1, null);
-        visitor.visit(productBacklogItem1);
+        visitor.visit(productBacklogItem1, null);
 
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem(null, null, null, null, null);
-        visitor.visit(productBacklogItem2);
+        visitor.visit(productBacklogItem2, null);
         assertEquals(estimate1, productBacklogItem2.getAccumulatedEstimate());
     }
 
@@ -53,13 +53,13 @@ public class AccumulateEstimateTest {
     public void reset() {
         final Double estimate1 = Double.valueOf(1d);
         final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem(null, null, null, estimate1, null);
-        visitor.visit(productBacklogItem1);
+        visitor.visit(productBacklogItem1, null);
 
         visitor.reset();
 
         final Double estimate2 = Double.valueOf(2d);
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem(null, null, null, estimate2, null);
-        visitor.visit(productBacklogItem2);
+        visitor.visit(productBacklogItem2, null);
         assertEquals(estimate2, productBacklogItem2.getAccumulatedEstimate());
     }
 

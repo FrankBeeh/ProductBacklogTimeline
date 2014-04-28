@@ -1,5 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import static org.easymock.EasyMock.same;
+
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
@@ -17,7 +19,8 @@ public class ProductBacklogTest extends EasyMockSupport {
     private AccumulateEstimate visitorMock2;
 
     @Test
-    public void visitAllSprints() {
+    public void visitAllItems_noSprints() {
+        final Sprints sprints = new Sprints();
         final ProductBacklog productBacklog = new ProductBacklog(visitorMock1, visitorMock2);
         final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", null, null, null, null);
         productBacklog.addItem(productBacklogItem1);
@@ -25,13 +28,13 @@ public class ProductBacklogTest extends EasyMockSupport {
         productBacklog.addItem(productBacklogItem2);
 
         visitorMock1.reset();
-        visitorMock1.visit(productBacklogItem1);
-        visitorMock1.visit(productBacklogItem2);
+        visitorMock1.visit(same(productBacklogItem1), same(sprints));
+        visitorMock1.visit(same(productBacklogItem2), same(sprints));
         visitorMock2.reset();
-        visitorMock2.visit(productBacklogItem1);
-        visitorMock2.visit(productBacklogItem2);
+        visitorMock2.visit(same(productBacklogItem1), same(sprints));
+        visitorMock2.visit(same(productBacklogItem2), same(sprints));
         replayAll();
-        productBacklog.visitAllItems();
+        productBacklog.visitAllItems(sprints);
         verifyAll();
     }
 }
