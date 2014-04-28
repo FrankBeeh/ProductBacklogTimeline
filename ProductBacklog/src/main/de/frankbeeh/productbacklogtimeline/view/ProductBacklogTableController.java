@@ -37,11 +37,11 @@ public class ProductBacklogTableController {
     @FXML
     private TableColumn<ProductBacklogItem, String> descriptionColumn;
     @FXML
-    private TableColumn<ProductBacklogItem, String> estimateColumn;
+    private TableColumn<ProductBacklogItem, Double> estimateColumn;
     @FXML
     private TableColumn<ProductBacklogItem, String> stateColumn;
     @FXML
-    private TableColumn<ProductBacklogItem, String> accumulatedEstimateColumn;
+    private TableColumn<ProductBacklogItem, Double> accumulatedEstimateColumn;
     @FXML
     private TableColumn<ProductBacklogItem, String> completionForecastByMinVelColumn;
     @FXML
@@ -54,11 +54,11 @@ public class ProductBacklogTableController {
     @FXML
     private void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("id"));
-        estimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("estimate"));
+        estimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, Double>("estimate"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("title"));
         descriptionColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("description"));
         stateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("state"));
-        accumulatedEstimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("accumulatedEstimate"));
+        accumulatedEstimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, Double>("accumulatedEstimate"));
         completionForecastByAvgVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.AVERAGE_VELOCITY_FORECAST));
         completionForecastByMinVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MINIMUM_VELOCITY_FORECAST));
         completionForecastByMaxVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MAXIMUM_VELOCITY_FORECAST));
