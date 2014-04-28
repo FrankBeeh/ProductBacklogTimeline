@@ -20,7 +20,8 @@ public class ProductBacklog {
     private final ProductBacklogItemVisitor[] visitors;
 
     public ProductBacklog() {
-        this(new AccumulateEstimate(), new ForecastCompletionSprint(Sprints.AVERAGE_VELOCITY_FORECAST));
+        this(new AccumulateEstimate(), new ForecastCompletionSprint(Sprints.AVERAGE_VELOCITY_FORECAST), new ForecastCompletionSprint(Sprints.MINIMUM_VELOCITY_FORECAST), new ForecastCompletionSprint(
+                Sprints.MAXIMUM_VELOCITY_FORECAST));
     }
 
     // Visible for testing

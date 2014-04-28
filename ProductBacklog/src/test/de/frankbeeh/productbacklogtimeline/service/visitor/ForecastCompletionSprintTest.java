@@ -3,6 +3,8 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 import static junit.framework.Assert.assertEquals;
 import static org.easymock.EasyMock.expect;
 
+import java.text.SimpleDateFormat;
+
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
@@ -16,6 +18,7 @@ import de.frankbeeh.productbacklogtimeline.data.Sprints;
 
 @RunWith(EasyMockRunner.class)
 public class ForecastCompletionSprintTest extends EasyMockSupport {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     private static final String FORECAST_NAME = "forecast name";
 
     @Mock
@@ -24,9 +27,10 @@ public class ForecastCompletionSprintTest extends EasyMockSupport {
     private ForecastCompletionSprint visitor;
 
     @Test
-    public void visit() {
+    public void visit() throws Exception {
         final String sprintName = "Sprint 1";
-        final SprintData sprintData = new SprintData(sprintName, null, null, null, null, null, null);
+        final String date = "01.02.2003";
+        final SprintData sprintData = new SprintData(sprintName, null, DATE_FORMAT.parse(date), null, null, null, null);
         final double accumulatedEstimate = 10d;
         final ProductBacklogItem productBacklogItem = createProductBacklogItem(accumulatedEstimate);
 
@@ -36,7 +40,7 @@ public class ForecastCompletionSprintTest extends EasyMockSupport {
         visitor.visit(productBacklogItem, sprints);
         verifyAll();
 
-        assertEquals(sprintName, productBacklogItem.getCompletionForecast(FORECAST_NAME));
+        assertEquals(sprintName + "\n" + date, productBacklogItem.getCompletionForecast(FORECAST_NAME));
     }
 
     @Before

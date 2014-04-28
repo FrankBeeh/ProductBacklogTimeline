@@ -1,5 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class ProductBacklogItem {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     private final String id;
     private final String title;
     private final String description;
@@ -61,7 +64,14 @@ public class ProductBacklogItem {
         if (sprintData == null) {
             completionForecast.put(progressForecastName, null);
         } else {
-            completionForecast.put(progressForecastName, sprintData.getName());
+            final StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(sprintData.getName());
+            final Date endDate = sprintData.getEndDate();
+            if (endDate != null) {
+                stringBuilder.append("\n");
+                stringBuilder.append(DATE_FORMAT.format(endDate));
+            }
+            completionForecast.put(progressForecastName, stringBuilder.toString());
         }
     }
 
