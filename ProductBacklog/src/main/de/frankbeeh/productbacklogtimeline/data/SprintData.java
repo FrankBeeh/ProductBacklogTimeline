@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -72,7 +73,7 @@ public class SprintData {
     }
 
     public void setProgressForecastBasedOnHistory(String progressForecastName, Double progressForecast) {
-        progressForecastBasedOnHistory.put(progressForecastName, progressForecast);
+        progressForecastBasedOnHistory.put(progressForecastName, roundToOneDecimal(progressForecast));
     }
 
     public Double getProgressForecastBasedOnHistory(String progressForecastName) {
@@ -80,7 +81,7 @@ public class SprintData {
     }
 
     public void setAccumulatedProgressForecastBasedOnHistory(String progressForecastName, Double progressForecast) {
-        accumulatedProgressForecastBasedOnHistory.put(progressForecastName, progressForecast);
+        accumulatedProgressForecastBasedOnHistory.put(progressForecastName, roundToOneDecimal(progressForecast));
     }
 
     public Double getAccumulatedProgressForecastBasedOnHistory(String progressForecastName) {
@@ -102,5 +103,12 @@ public class SprintData {
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+
+    private Double roundToOneDecimal(Double value) {
+        if (value == null) {
+            return value;
+        }
+        return Double.parseDouble(new DecimalFormat("#.#").format(value));
     }
 }

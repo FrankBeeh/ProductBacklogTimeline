@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import java.text.DecimalFormat;
-
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 /**
@@ -67,7 +65,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
         if (capacity == null) {
             return null;
         }
-        return roundToOneDecimal(velocity.doubleValue() * capacity.doubleValue());
+        return velocity.doubleValue() * capacity.doubleValue();
     }
 
     private Double computeVelocityOfThisSprint(SprintData sprintData) {
@@ -86,10 +84,6 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
             return null;
         }
         return effort.doubleValue() / capacity.doubleValue();
-    }
-
-    private Double roundToOneDecimal(double value) {
-        return Double.parseDouble(new DecimalFormat("#.#").format(value));
     }
 
     // Visible for testing
