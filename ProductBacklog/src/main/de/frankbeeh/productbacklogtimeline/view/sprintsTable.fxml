@@ -13,8 +13,8 @@
   </columnResizePolicy>
   <columns>
     <TableColumn editable="false" maxWidth="100.0" minWidth="40.0" prefWidth="100.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn" />
-    <TableColumn editable="false" maxWidth="100.0" minWidth="40.0" prefWidth="100.0" resizable="true" sortable="false" text="Start Date" fx:id="startDateColumn" />
-    <TableColumn editable="false" maxWidth="100.0" minWidth="40.0" prefWidth="100.0" resizable="true" sortable="false" text="End Date" fx:id="endDateColumn" />
+    <TableColumn editable="false" maxWidth="65.0" minWidth="40.0" prefWidth="65.0" resizable="true" sortable="false" text="Start Date" fx:id="startDateColumn" />
+    <TableColumn editable="false" maxWidth="65.0" minWidth="40.0" prefWidth="65.0" resizable="true" sortable="false" text="End Date" fx:id="endDateColumn" />
     <TableColumn prefWidth="75.0" text="Per Sprint">
       <columns>
         <TableColumn prefWidth="75.0" text="Planned">
