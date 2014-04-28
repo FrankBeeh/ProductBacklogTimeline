@@ -45,4 +45,14 @@ public class Sprints {
             }
         }
     }
+
+    public SprintData getCompletionSprintForecast(String progressForecastName, double accumulatedEstimate) {
+        for (final SprintData sprint : sprints) {
+            final Double accumulatedEffortDoneOrProgressForcast = sprint.getAccumulatedEffortDoneOrProgressForcast(progressForecastName);
+            if (accumulatedEffortDoneOrProgressForcast != null && accumulatedEstimate <= accumulatedEffortDoneOrProgressForcast) {
+                return sprint;
+            }
+        }
+        return null;
+    }
 }

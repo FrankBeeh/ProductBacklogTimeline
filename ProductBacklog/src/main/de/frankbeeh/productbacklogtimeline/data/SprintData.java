@@ -91,6 +91,14 @@ public class SprintData {
         visitor.visit(this);
     }
 
+    public Double getAccumulatedEffortDoneOrProgressForcast(String progressForecastName) {
+        final Double accumulatedEffortDone = getAccumulatedEffortDone();
+        if (accumulatedEffortDone != null) {
+            return accumulatedEffortDone;
+        }
+        return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
+    }
+
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();

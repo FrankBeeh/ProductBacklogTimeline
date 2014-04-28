@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ForecastCompletionSprint;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVisitor;
 
 /**
@@ -19,7 +20,7 @@ public class ProductBacklog {
     private final ProductBacklogItemVisitor[] visitors;
 
     public ProductBacklog() {
-        this(new AccumulateEstimate());
+        this(new AccumulateEstimate(), new ForecastCompletionSprint(Sprints.AVERAGE_VELOCITY_FORECAST));
     }
 
     // Visible for testing

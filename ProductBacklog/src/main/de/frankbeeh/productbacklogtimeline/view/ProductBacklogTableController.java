@@ -66,6 +66,8 @@ public class ProductBacklogTableController {
 
     public void initModel(ProductBacklog productBacklog) {
         createModel(productBacklog);
+        // FIXME this doesn't work properly!
+        this.productBacklogTable.setItems(FXCollections.<ProductBacklogItem> observableArrayList());
         this.productBacklogTable.setItems(model);
     }
 

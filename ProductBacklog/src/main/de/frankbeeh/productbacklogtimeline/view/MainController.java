@@ -32,8 +32,7 @@ public class MainController {
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
             productBacklog = importer.importData(new FileReader(selectedFile));
-            productBacklog.visitAllItems(sprints);
-            productBacklogTableController.initModel(productBacklog);
+            updateProductBacklog();
         }
     }
 
@@ -44,8 +43,8 @@ public class MainController {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
             sprints = importer.importData(new FileReader(selectedFile));
             sprints.visitAllSprints();
-            productBacklog.visitAllItems(sprints);
             sprintsTableController.initModel(sprints);
+            updateProductBacklog();
         }
     }
 
@@ -59,5 +58,10 @@ public class MainController {
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setInitialDirectory(CSV_DIRECTORY);
         return fileChooser.showOpenDialog(primaryStage);
+    }
+
+    private void updateProductBacklog() {
+        productBacklog.visitAllItems(sprints);
+        productBacklogTableController.initModel(productBacklog);
     }
 }
