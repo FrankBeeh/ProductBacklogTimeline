@@ -49,7 +49,7 @@ public class ProductBacklogTableController {
     @FXML
     private TableColumn<ProductBacklogItem, String> completionForecastByMaxVelColumn;
 
-    private ObservableList<ProductBacklogItem> model;
+    private final ObservableList<ProductBacklogItem> model = FXCollections.<ProductBacklogItem> observableArrayList();
 
     @FXML
     private void initialize() {
@@ -62,17 +62,16 @@ public class ProductBacklogTableController {
         completionForecastByAvgVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.AVERAGE_VELOCITY_FORECAST));
         completionForecastByMinVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MINIMUM_VELOCITY_FORECAST));
         completionForecastByMaxVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        productBacklogTable.setItems(model);
     }
 
     public void initModel(ProductBacklog productBacklog) {
-        createModel(productBacklog);
-        // FIXME this doesn't work properly!
-        this.productBacklogTable.setItems(FXCollections.<ProductBacklogItem> observableArrayList());
-        this.productBacklogTable.setItems(model);
+        model.removeAll(model);
+        model.addAll(productBacklog.getItems());
     }
 
-    private void createModel(ProductBacklog productBacklog) {
-        model = FXCollections.<ProductBacklogItem> observableArrayList();
-        model.addAll(productBacklog.getItems());
+    public void updateView() {
+        productBacklogTable.getColumns().get(0).setVisible(false);
+        productBacklogTable.getColumns().get(0).setVisible(true);
     }
 }
