@@ -1,5 +1,8 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class Release {
     private final String name;
     private final String criteria;
@@ -15,5 +18,10 @@ public class Release {
 
     public String getCriteria() {
         return criteria;
+    }
+
+    @Override
+    public String toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
 }
