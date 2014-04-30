@@ -5,14 +5,17 @@ import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 
 public class ReleaseTableController {
-
+    @FXML
+    private TableView<ProductBacklogItem> releasesTable;
     @FXML
     private TableColumn<ProductBacklogItem, String> nameColumn;
 
@@ -25,6 +28,10 @@ public class ReleaseTableController {
     public void initModel(ProductBacklog productBacklog) {
         model.removeAll(model);
         model.addAll(productBacklog.getItems());
+    }
+
+    public Parent getView() {
+        return releasesTable;
     }
 
 }

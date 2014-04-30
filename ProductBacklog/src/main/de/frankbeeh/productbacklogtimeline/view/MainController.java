@@ -8,6 +8,7 @@ import java.text.ParseException;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
@@ -24,6 +25,8 @@ public class MainController {
     private SprintsTableController sprintsTableController;
     @FXML
     private ProductBacklogTableController productBacklogTableController;
+    @FXML
+    private Tab releasesTab;
 
     private Stage primaryStage;
     private Sprints sprints = new Sprints();
@@ -57,12 +60,16 @@ public class MainController {
 
     public void initController(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
+        initReleaseTableController(primaryStage);
+    }
+
+    private void initReleaseTableController(Stage primaryStage) throws IOException {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(RELEASES_TABLE_FXML));
-        final Object root = loader.getRoot();
-        this.releaseTableController = loader.getController();
+        ReleaseTableController controller = loader.getController();
+        this.releaseTableController = controller;
 
+        this.releasesTab.setContent(this.releaseTableController.getView());
         this.releaseTableController.initController(primaryStage);
-
     }
 
     private File selectCsvFileForImport() {
