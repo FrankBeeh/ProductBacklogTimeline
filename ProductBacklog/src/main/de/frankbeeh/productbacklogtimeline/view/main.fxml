@@ -41,6 +41,15 @@
             </ScrollPane>
           </content>
         </Tab>
+        <Tab text="Releases">
+          <content>
+            <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+              <content>
+                <fx:include source="releasesTable.fxml" />
+              </content>
+            </ScrollPane>
+          </content>
+        </Tab>
       </tabs>
     </TabPane>
   </center>

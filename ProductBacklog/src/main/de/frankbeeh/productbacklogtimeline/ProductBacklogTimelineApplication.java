@@ -14,6 +14,11 @@ public class ProductBacklogTimelineApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        final FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/releasesTable.fxml"));
+        // FIXME why is this null?
+        final Object controller2 = fxmlLoader.getController();
+        final Object root2 = fxmlLoader.getRoot();
+
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(APPLICATION_FXML));
         final Parent root = (Parent) loader.load();
 

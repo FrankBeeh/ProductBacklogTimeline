@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
@@ -15,6 +16,8 @@ import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCs
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
 public class MainController {
+    private static final String RELEASES_TABLE_FXML = "view/releasesTable.fxml";
+
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
     @FXML
@@ -25,6 +28,8 @@ public class MainController {
     private Stage primaryStage;
     private Sprints sprints = new Sprints();
     private ProductBacklog productBacklog = new ProductBacklog();
+
+    private ReleaseTableController releaseTableController;
 
     @FXML
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
@@ -50,8 +55,14 @@ public class MainController {
         }
     }
 
-    public void initController(Stage primaryStage) {
+    public void initController(Stage primaryStage) throws IOException {
         this.primaryStage = primaryStage;
+        final FXMLLoader loader = new FXMLLoader(getClass().getResource(RELEASES_TABLE_FXML));
+        final Object root = loader.getRoot();
+        this.releaseTableController = loader.getController();
+
+        this.releaseTableController.initController(primaryStage);
+
     }
 
     private File selectCsvFileForImport() {
