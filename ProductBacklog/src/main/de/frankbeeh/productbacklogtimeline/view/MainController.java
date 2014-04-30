@@ -11,6 +11,8 @@ import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.data.Release;
+import de.frankbeeh.productbacklogtimeline.data.Releases;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
@@ -28,14 +30,21 @@ public class MainController {
     private Stage primaryStage;
     private Sprints sprints = new Sprints();
     private ProductBacklog productBacklog = new ProductBacklog();
-
+    private Releases releases = new Releases();
     private ReleaseTableController releaseTableController;
     private final ControllerFactory controllerFactory = new ControllerFactory();
 
+
+    public void initController(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
     @FXML
     private void initialize() throws IOException {
-        this.releaseTableController = controllerFactory.createReleaseTableController();
-        this.releasesTab.setContent(this.releaseTableController.getView());
+        releaseTableController = controllerFactory.createReleaseTableController();
+        releasesTab.setContent(this.releaseTableController.getView());
+        createReleases();
+        releaseTableController.initModel(releases);
     }
 
     @FXML
@@ -46,7 +55,6 @@ public class MainController {
             productBacklog = importer.importData(new FileReader(selectedFile));
             productBacklog.visitAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
-            releaseTableController.initModel(productBacklog);
         }
     }
 
@@ -63,15 +71,16 @@ public class MainController {
         }
     }
 
-    public void initController(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
     private File selectCsvFileForImport() {
         final FileChooser fileChooser = new FileChooser();
         final FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("CSV files (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setInitialDirectory(CSV_DIRECTORY);
         return fileChooser.showOpenDialog(primaryStage);
+    }
+    
+    private void createReleases() {
+        releases.addRelease(new Release("Release 0.1", "id=10"));
+        releases.addRelease(new Release("Release 0.2", "id=13"));
     }
 }

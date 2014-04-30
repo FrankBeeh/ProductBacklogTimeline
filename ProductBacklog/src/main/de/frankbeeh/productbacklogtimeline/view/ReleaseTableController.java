@@ -7,29 +7,32 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.data.Release;
+import de.frankbeeh.productbacklogtimeline.data.Releases;
 
 public class ReleaseTableController {
     @FXML
-    private TableView<ProductBacklogItem> releasesTable;
+    private TableView<Release> releasesTable;
     @FXML
-    private TableColumn<ProductBacklogItem, String> nameColumn;
+    private TableColumn<Release, String> nameColumn;
     @FXML
-    private TableColumn<ProductBacklogItem, Double> accumulatedEstimateColumn;
+    private TableColumn<Release, String> criteriaColumn;
+    @FXML
+    private TableColumn<Release, Double> accumulatedEstimateColumn;
 
-    private final ObservableList<ProductBacklogItem> model = FXCollections.<ProductBacklogItem> observableArrayList();
+    private final ObservableList<Release> model = FXCollections.<Release> observableArrayList();
 
     @FXML
     private void initialize() {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("title"));
-        accumulatedEstimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, Double>("accumulatedEstimate"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<Release, String>("name"));
+        criteriaColumn.setCellValueFactory(new PropertyValueFactory<Release, String>("criteria"));
+        accumulatedEstimateColumn.setCellValueFactory(new PropertyValueFactory<Release, Double>("accumulatedEstimate"));
         releasesTable.setItems(model);
     }
 
-    public void initModel(ProductBacklog productBacklog) {
+    public void initModel(Releases releases) {
         model.removeAll(model);
-        model.addAll(productBacklog.getItems());
+        model.addAll(releases.getReleases());
     }
 
     public Parent getView() {
