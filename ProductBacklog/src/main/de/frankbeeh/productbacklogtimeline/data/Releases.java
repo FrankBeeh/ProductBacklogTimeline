@@ -1,8 +1,10 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortForRelease;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ReleaseVisitor;
 
 public class Releases {
@@ -11,7 +13,7 @@ public class Releases {
     private final List<ReleaseVisitor> visitors;
 
     public Releases() {
-        this(new ArrayList<ReleaseVisitor>());
+        this(Arrays.asList((ReleaseVisitor) new AccumulateEffortForRelease()));
     }
 
     public void addRelease(Release release) {

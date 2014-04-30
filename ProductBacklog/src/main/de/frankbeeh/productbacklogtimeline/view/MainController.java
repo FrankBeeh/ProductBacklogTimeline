@@ -14,6 +14,7 @@ import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.Release;
 import de.frankbeeh.productbacklogtimeline.data.Releases;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemIdIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
@@ -26,14 +27,14 @@ public class MainController {
     private ProductBacklogTableController productBacklogTableController;
     @FXML
     private Tab releasesTab;
+    private ReleaseTableController releaseTableController;
 
+    private final ControllerFactory controllerFactory = new ControllerFactory();
     private Stage primaryStage;
+    
     private Sprints sprints = new Sprints();
     private ProductBacklog productBacklog = new ProductBacklog();
-    private Releases releases = new Releases();
-    private ReleaseTableController releaseTableController;
-    private final ControllerFactory controllerFactory = new ControllerFactory();
-
+    private final Releases releases = new Releases();
 
     public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -43,7 +44,7 @@ public class MainController {
     private void initialize() throws IOException {
         releaseTableController = controllerFactory.createReleaseTableController();
         releasesTab.setContent(this.releaseTableController.getView());
-        createReleases();
+        createDummyReleases();
         releaseTableController.initModel(releases);
     }
 
@@ -55,6 +56,8 @@ public class MainController {
             productBacklog = importer.importData(new FileReader(selectedFile));
             productBacklog.updateAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
+            releases.updateAll(productBacklog);
+            releaseTableController.updateView();
         }
     }
 
@@ -78,9 +81,10 @@ public class MainController {
         fileChooser.setInitialDirectory(CSV_DIRECTORY);
         return fileChooser.showOpenDialog(primaryStage);
     }
-    
-    private void createReleases() {
-        releases.addRelease(new Release("Release 0.1", "id=10"));
-        releases.addRelease(new Release("Release 0.2", "id=13"));
+
+    private void createDummyReleases() {
+        releases.addRelease(new Release("Release 0.1", new ProductBacklogItemIdIsEqual("10")));
+        releases.addRelease(new Release("Release 0.2", new ProductBacklogItemIdIsEqual("13")));
+        releases.addRelease(new Release("Release 0.2", new ProductBacklogItemIdIsEqual("20")));
     }
 }

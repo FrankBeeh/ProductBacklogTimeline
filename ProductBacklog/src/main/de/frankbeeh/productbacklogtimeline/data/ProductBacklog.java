@@ -3,6 +3,7 @@ package de.frankbeeh.productbacklogtimeline.data;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ForecastCompletionSprint;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVisitor;
@@ -45,5 +46,15 @@ public class ProductBacklog {
                 visitor.visit(item, sprints);
             }
         }
+    }
+
+    public Double getAccumulatedEstimate(Criteria criteria) {
+        Double accumulatedEstimate = null;
+        for (final ProductBacklogItem item : items) {
+            if (criteria.isMatching(item)) {
+                accumulatedEstimate = item.getAccumulatedEstimate();
+            }
+        }
+        return accumulatedEstimate;
     }
 }

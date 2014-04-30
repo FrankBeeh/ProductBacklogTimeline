@@ -38,4 +38,9 @@ public class ReleaseTableController {
     public Parent getView() {
         return releasesTable;
     }
+
+    public void updateView() {
+        releasesTable.getColumns().get(0).setVisible(false);
+        releasesTable.getColumns().get(0).setVisible(true);
+    }
 }

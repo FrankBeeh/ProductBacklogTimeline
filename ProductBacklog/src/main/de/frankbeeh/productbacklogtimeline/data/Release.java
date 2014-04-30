@@ -3,11 +3,14 @@ package de.frankbeeh.productbacklogtimeline.data;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+
 public class Release {
     private final String name;
-    private final String criteria;
+    private final Criteria criteria;
+    private Double accumulatedEstimate;
 
-    public Release(String name, String criteria) {
+    public Release(String name, Criteria criteria) {
         this.name = name;
         this.criteria = criteria;
     }
@@ -16,8 +19,16 @@ public class Release {
         return name;
     }
 
-    public String getCriteria() {
+    public Criteria getCriteria() {
         return criteria;
+    }
+
+    public Double getAccumulatedEstimate() {
+        return accumulatedEstimate;
+    }
+
+    public void setAccumulatedEstimate(Double accumulatedEstimate) {
+        this.accumulatedEstimate = accumulatedEstimate;
     }
 
     @Override
