@@ -41,6 +41,8 @@
             </ScrollPane>
           </content>
         </Tab>
+        <Tab fx:id="releasesTab" text="Releases">
+        </Tab>
       </tabs>
     </TabPane>
   </center>

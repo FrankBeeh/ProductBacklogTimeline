@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
@@ -21,10 +22,21 @@ public class MainController {
     private SprintsTableController sprintsTableController;
     @FXML
     private ProductBacklogTableController productBacklogTableController;
+    @FXML
+    private Tab releasesTab;
 
     private Stage primaryStage;
     private Sprints sprints = new Sprints();
     private ProductBacklog productBacklog = new ProductBacklog();
+
+    private ReleaseTableController releaseTableController;
+    private final ControllerFactory controllerFactory = new ControllerFactory();
+
+    @FXML
+    private void initialize() throws IOException {
+        this.releaseTableController = controllerFactory.createReleaseTableController();
+        this.releasesTab.setContent(this.releaseTableController.getView());
+    }
 
     @FXML
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
@@ -34,6 +46,7 @@ public class MainController {
             productBacklog = importer.importData(new FileReader(selectedFile));
             productBacklog.visitAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
+            releaseTableController.initModel(productBacklog);
         }
     }
 

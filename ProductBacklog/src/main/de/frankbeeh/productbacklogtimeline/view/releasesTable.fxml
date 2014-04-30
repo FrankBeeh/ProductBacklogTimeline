@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import de.frankbeeh.productbacklogtimeline.view.*?>
+<?scenebuilder-classpath-element ../../../../../../bin?>
+
+<ScrollPane fx:id="releaseTab" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ReleaseTableController">
+	<TableView fx:id="releasesTable" prefHeight="800" prefWidth="1200">
+		<columns>
+			<TableColumn editable="false" maxWidth="200.0" minWidth="80.0" prefWidth="200.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn" />
+			<TableColumn editable="false" maxWidth="200.0" minWidth="80.0" prefWidth="200.0" resizable="true" sortable="false" text="Criteria" fx:id="criteriaColumn" />
+			<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est." fx:id="accumulatedEstimateColumn">
+				<cellFactory>
+					<AlignRightCellFactory />
+				</cellFactory>
+			</TableColumn>
+			<TableColumn prefWidth="75.0" text="Completion Forecast">
+				<columns>
+					<TableColumn editable="false" maxWidth="80.0" minWidth="20.0" prefWidth="80.0" resizable="true" sortable="false" text="Min. Vel." fx:id="completionForecastByMinVelColumn" />
+					<TableColumn editable="false" maxWidth="80.0" minWidth="20.0" prefWidth="80.0" resizable="true" sortable="false" text="Avg. Vel." fx:id="completionForecastByAvgVelColumn" />
+					<TableColumn editable="false" maxWidth="80.0" minWidth="20.0" prefWidth="80.0" resizable="true" sortable="false" text="Max. Vel." fx:id="completionForecastByMaxVelColumn" />
+				</columns>
+			</TableColumn>
+		</columns>
+	</TableView>
+</ScrollPane>
+		
