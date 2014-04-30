@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -17,8 +16,6 @@ import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCs
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
 public class MainController {
-    private static final String RELEASES_TABLE_FXML = "view/releasesTable.fxml";
-
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
     @FXML
@@ -33,6 +30,13 @@ public class MainController {
     private ProductBacklog productBacklog = new ProductBacklog();
 
     private ReleaseTableController releaseTableController;
+    private final ControllerFactory controllerFactory = new ControllerFactory();
+
+    @FXML
+    private void initialize() throws IOException {
+        this.releaseTableController = controllerFactory.createReleaseTableController();
+        this.releasesTab.setContent(this.releaseTableController.getView());
+    }
 
     @FXML
     private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
@@ -42,6 +46,7 @@ public class MainController {
             productBacklog = importer.importData(new FileReader(selectedFile));
             productBacklog.visitAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
+            releaseTableController.initModel(productBacklog);
         }
     }
 
@@ -58,18 +63,8 @@ public class MainController {
         }
     }
 
-    public void initController(Stage primaryStage) throws IOException {
+    public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        initReleaseTableController(primaryStage);
-    }
-
-    private void initReleaseTableController(Stage primaryStage) throws IOException {
-        final FXMLLoader loader = new FXMLLoader(getClass().getResource(RELEASES_TABLE_FXML));
-        ReleaseTableController controller = loader.getController();
-        this.releaseTableController = controller;
-
-        this.releasesTab.setContent(this.releaseTableController.getView());
-        this.releaseTableController.initController(primaryStage);
     }
 
     private File selectCsvFileForImport() {
