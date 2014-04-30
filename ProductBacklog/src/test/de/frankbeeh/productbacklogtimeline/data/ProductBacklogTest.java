@@ -19,7 +19,7 @@ public class ProductBacklogTest extends EasyMockSupport {
     private AccumulateEstimate visitorMock2;
 
     @Test
-    public void visitAllItems_noSprints() {
+    public void updateAllItems() {
         final Sprints sprints = new Sprints();
         final ProductBacklog productBacklog = new ProductBacklog(visitorMock1, visitorMock2);
         final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", null, null, null, null);
@@ -34,7 +34,7 @@ public class ProductBacklogTest extends EasyMockSupport {
         visitorMock2.visit(same(productBacklogItem1), same(sprints));
         visitorMock2.visit(same(productBacklogItem2), same(sprints));
         replayAll();
-        productBacklog.visitAllItems(sprints);
+        productBacklog.updateAllItems(sprints);
         verifyAll();
     }
 }

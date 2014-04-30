@@ -38,7 +38,7 @@ public class ProductBacklog {
         return items;
     }
 
-    public void visitAllItems(Sprints sprints) {
+    public void updateAllItems(Sprints sprints) {
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {

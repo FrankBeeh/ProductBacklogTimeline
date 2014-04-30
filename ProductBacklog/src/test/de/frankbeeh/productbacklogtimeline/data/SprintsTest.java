@@ -29,7 +29,7 @@ public class SprintsTest extends EasyMockSupport {
     private Sprints sprints;
 
     @Test
-    public void visitAllSprints() {
+    public void updateAllSprints() {
         sprints = new Sprints(visitorMock1, visitorMock2);
         sprints.addItem(sprint1);
         sprints.addItem(sprint2);
@@ -40,7 +40,7 @@ public class SprintsTest extends EasyMockSupport {
         visitorMock2.visit(sprint1);
         visitorMock2.visit(sprint2);
         replayAll();
-        sprints.visitAllSprints();
+        sprints.updateAllSprints();
         verifyAll();
     }
 

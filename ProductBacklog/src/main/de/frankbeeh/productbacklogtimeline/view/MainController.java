@@ -53,7 +53,7 @@ public class MainController {
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
             productBacklog = importer.importData(new FileReader(selectedFile));
-            productBacklog.visitAllItems(sprints);
+            productBacklog.updateAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
         }
     }
@@ -64,9 +64,9 @@ public class MainController {
         if (selectedFile != null) {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
             sprints = importer.importData(new FileReader(selectedFile));
-            sprints.visitAllSprints();
+            sprints.updateAllSprints();
             sprintsTableController.initModel(sprints);
-            productBacklog.visitAllItems(sprints);
+            productBacklog.updateAllItems(sprints);
             productBacklogTableController.updateView();
         }
     }

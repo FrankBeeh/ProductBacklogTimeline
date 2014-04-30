@@ -37,7 +37,7 @@ public class Sprints {
         sprints.add(sprint);
     }
 
-    public void visitAllSprints() {
+    public void updateAllSprints() {
         for (final SprintDataVisitor visitor : visitors) {
             visitor.reset();
             for (final SprintData sprintData : sprints) {
