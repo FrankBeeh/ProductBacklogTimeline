@@ -21,7 +21,7 @@ public abstract class DataFromCsvImporter<T> {
     private static final String IN_PROGRESS_STATE = "In Progress";
     private static final String TODO_STATE = "Todo";
 
-    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.getDefault());
+    private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.UK);
     private static final char SPLIT_BY = ';';
 
     private final Map<String, State> stateMap;
