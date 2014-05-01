@@ -1,9 +1,11 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.same;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
@@ -16,8 +18,6 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
 
 @RunWith(EasyMockRunner.class)
 public class ProductBacklogTest extends EasyMockSupport {
-    private static final double ACCUMULATED_ESTIMATE_1 = 7d;
-    private static final double ACCUMULATED_ESTIMATE_2 = 11d;
     @Mock
     private AccumulateEstimate visitorMock1;
     @Mock
@@ -50,50 +50,46 @@ public class ProductBacklogTest extends EasyMockSupport {
     }
 
     @Test
-    public void getAccumulatedEstimate_noProductBacklogItemIsMatching() throws Exception {
+    public void getMatchingProductBacklogItems_noneIsMatching() throws Exception {
         final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
 
         expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(false);
         expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(false);
         replayAll();
-        assertNull(productBacklog.getAccumulatedEstimate(criteriaMock));
+        assertEquals(new ArrayList<ProductBacklogItem>(), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
-    public void getAccumulatedEstimate_firstProductBacklogItemIsMatching() throws Exception {
+    public void getMatchingProductBacklogItems_firstIsMatching() throws Exception {
         final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
 
         expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(true);
-        expect(productBacklogItemMock1.getAccumulatedEstimate()).andReturn(ACCUMULATED_ESTIMATE_2);
         expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(false);
         replayAll();
-        assertEquals(ACCUMULATED_ESTIMATE_2, productBacklog.getAccumulatedEstimate(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemMock1), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
-    public void getAccumulatedEstimate_secondProductBacklogItemIsMatching() throws Exception {
+    public void getMatchingProductBacklogItems_secondIsMatching() throws Exception {
         final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
 
         expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(false);
         expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(true);
-        expect(productBacklogItemMock2.getAccumulatedEstimate()).andReturn(ACCUMULATED_ESTIMATE_2);
         replayAll();
-        assertEquals(ACCUMULATED_ESTIMATE_2, productBacklog.getAccumulatedEstimate(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemMock2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
-    public void getAccumulatedEstimate_bothProductBacklogItemIsMatching() throws Exception {
+    public void getMatchingProductBacklogItems_bothAreMatching() throws Exception {
         final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
 
         expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(true);
-        expect(productBacklogItemMock1.getAccumulatedEstimate()).andReturn(ACCUMULATED_ESTIMATE_1);
         expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(true);
-        expect(productBacklogItemMock2.getAccumulatedEstimate()).andReturn(ACCUMULATED_ESTIMATE_2);
         replayAll();
-        assertEquals(ACCUMULATED_ESTIMATE_2, productBacklog.getAccumulatedEstimate(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemMock1, productBacklogItemMock2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 

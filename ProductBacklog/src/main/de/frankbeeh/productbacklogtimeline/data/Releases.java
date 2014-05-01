@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortForRelease;
+import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeForecastForRelease;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ReleaseVisitor;
 
 public class Releases {
@@ -13,7 +13,7 @@ public class Releases {
     private final List<ReleaseVisitor> visitors;
 
     public Releases() {
-        this(Arrays.asList((ReleaseVisitor) new AccumulateEffortForRelease()));
+        this(Arrays.asList((ReleaseVisitor) new ComputeForecastForRelease()));
     }
 
     public void addRelease(Release release) {

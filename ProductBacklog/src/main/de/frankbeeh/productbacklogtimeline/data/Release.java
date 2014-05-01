@@ -1,5 +1,8 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -8,6 +11,7 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 public class Release {
     private final String name;
     private final Criteria criteria;
+    private final Map<String, String> completionForecast = new HashMap<String, String>();
     private Double accumulatedEstimate;
 
     public Release(String name, Criteria criteria) {
@@ -29,6 +33,14 @@ public class Release {
 
     public void setAccumulatedEstimate(Double accumulatedEstimate) {
         this.accumulatedEstimate = accumulatedEstimate;
+    }
+
+    public String getCompletionForecast(String progressForecastName) {
+        return completionForecast.get(progressForecastName);
+    }
+
+    public void setCompletionForecast(String progressForecastName, String completionForecast) {
+        this.completionForecast.put(progressForecastName, completionForecast);
     }
 
     @Override

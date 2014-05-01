@@ -1,13 +1,10 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class ProductBacklogItem {
 
@@ -64,14 +61,7 @@ public class ProductBacklogItem {
         if (sprintData == null) {
             completionForecast.put(progressForecastName, null);
         } else {
-            final StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(sprintData.getName());
-            final Date endDate = sprintData.getEndDate();
-            if (endDate != null) {
-                stringBuilder.append("\n");
-                stringBuilder.append(FormatUtility.formatDate(endDate));
-            }
-            completionForecast.put(progressForecastName, stringBuilder.toString());
+            completionForecast.put(progressForecastName, sprintData.getDescription());
         }
     }
 

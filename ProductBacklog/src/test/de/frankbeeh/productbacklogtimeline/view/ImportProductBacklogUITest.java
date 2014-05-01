@@ -56,7 +56,7 @@ public class ImportProductBacklogUITest extends GuiTest {
     }
 
     private TabPane getTabPane() {
-        return this.<TabPane> getNode("#mainTabPane");
+        return getNode("#mainTabPane");
     }
 
     private void importBacklogFile() {

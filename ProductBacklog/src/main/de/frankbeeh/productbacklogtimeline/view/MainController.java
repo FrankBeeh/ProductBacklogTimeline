@@ -31,7 +31,7 @@ public class MainController {
 
     private final ControllerFactory controllerFactory = new ControllerFactory();
     private Stage primaryStage;
-    
+
     private Sprints sprints = new Sprints();
     private ProductBacklog productBacklog = new ProductBacklog();
     private final Releases releases = new Releases();
@@ -56,8 +56,7 @@ public class MainController {
             productBacklog = importer.importData(new FileReader(selectedFile));
             productBacklog.updateAllItems(sprints);
             productBacklogTableController.initModel(productBacklog);
-            releases.updateAll(productBacklog);
-            releaseTableController.updateView();
+            updateReleases();
         }
     }
 
@@ -71,7 +70,13 @@ public class MainController {
             sprintsTableController.initModel(sprints);
             productBacklog.updateAllItems(sprints);
             productBacklogTableController.updateView();
+            updateReleases();
         }
+    }
+
+    private void updateReleases() {
+        releases.updateAll(productBacklog);
+        releaseTableController.updateView();
     }
 
     private File selectCsvFileForImport() {
@@ -85,6 +90,6 @@ public class MainController {
     private void createDummyReleases() {
         releases.addRelease(new Release("Release 0.1", new ProductBacklogItemIdIsEqual("10")));
         releases.addRelease(new Release("Release 0.2", new ProductBacklogItemIdIsEqual("13")));
-        releases.addRelease(new Release("Release 0.2", new ProductBacklogItemIdIsEqual("20")));
+        releases.addRelease(new Release("Release 0.3", new ProductBacklogItemIdIsEqual("20")));
     }
 }

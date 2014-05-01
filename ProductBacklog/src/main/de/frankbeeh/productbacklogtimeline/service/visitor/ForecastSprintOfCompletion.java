@@ -4,11 +4,11 @@ import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
 
-public class ForecastCompletionSprint implements ProductBacklogItemVisitor {
+public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
 
     private final String progressForecastName;
 
-    public ForecastCompletionSprint(String progressForecastName) {
+    public ForecastSprintOfCompletion(String progressForecastName) {
         this.progressForecastName = progressForecastName;
     }
 

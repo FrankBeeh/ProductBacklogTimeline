@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
@@ -97,6 +98,17 @@ public class SprintData {
             return accumulatedEffortDone;
         }
         return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
+    }
+
+    public String getDescription() {
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getName());
+        final Date endDate = getEndDate();
+        if (endDate != null) {
+            stringBuilder.append("\n");
+            stringBuilder.append(FormatUtility.formatDate(endDate));
+        }
+        return stringBuilder.toString();
     }
 
     @Override

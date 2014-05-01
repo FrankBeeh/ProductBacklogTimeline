@@ -16,13 +16,13 @@ import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 @RunWith(EasyMockRunner.class)
-public class ForecastCompletionSprintTest extends EasyMockSupport {
+public class ForecastSprintCompletionTest extends EasyMockSupport {
     private static final String FORECAST_NAME = "forecast name";
 
     @Mock
     private Sprints sprints;
 
-    private ForecastCompletionSprint visitor;
+    private ForecastSprintOfCompletion visitor;
 
     @Test
     public void visit() throws Exception {
@@ -43,7 +43,7 @@ public class ForecastCompletionSprintTest extends EasyMockSupport {
 
     @Before
     public void setUp() {
-        visitor = new ForecastCompletionSprint(FORECAST_NAME);
+        visitor = new ForecastSprintOfCompletion(FORECAST_NAME);
     }
 
     private ProductBacklogItem createProductBacklogItem(Double accumulatedEstimate) {
