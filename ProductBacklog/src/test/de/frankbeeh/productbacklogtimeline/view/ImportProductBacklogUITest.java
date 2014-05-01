@@ -2,41 +2,30 @@ package de.frankbeeh.productbacklogtimeline.view;
 
 import static org.junit.Assert.assertEquals;
 
-import java.io.IOException;
+import java.net.URL;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 
 import org.junit.Test;
-import org.loadui.testfx.GuiTest;
 
-public class ImportProductBacklogUITest extends GuiTest {
-
-    private static final String APPLICATION_FXML = "main.fxml";
+public class ImportProductBacklogUITest extends AbstractBaseUITest {
 
     @Override
-    protected Parent getRootNode() {
-        final FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource(APPLICATION_FXML));
-        try {
-            fxmlLoader.load();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        return fxmlLoader.getRoot();
+    protected URL getFXMLResourceURL() {
+        return MainController.class.getResource("main.fxml");
     }
 
     @Test
     public void importBacklog() throws Exception {
-        importBacklogFile();
+        openPBLImportDialog();
         enterFileName();
         selectPBLTab();
     }
 
     @Test
     public void cancelImportBacklog() throws Exception {
-        importBacklogFile();
+        openPBLImportDialog();
         closeDialog();
         selectPBLTab();
     }
@@ -59,7 +48,7 @@ public class ImportProductBacklogUITest extends GuiTest {
         return this.<TabPane> getNode("#mainTabPane");
     }
 
-    private void importBacklogFile() {
+    private void openPBLImportDialog() {
         click("File");
         click("Import PBL");
     }
@@ -70,8 +59,4 @@ public class ImportProductBacklogUITest extends GuiTest {
         release(KeyCode.ALT);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T getNode(final String theSelector) {
-        return (T) find(theSelector);
-    }
 }
