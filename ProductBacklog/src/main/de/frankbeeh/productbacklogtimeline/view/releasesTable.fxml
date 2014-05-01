@@ -6,17 +6,29 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import de.frankbeeh.productbacklogtimeline.view.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
 
 <ScrollPane fx:id="releaseTab" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ReleaseTableController">
 	<TableView fx:id="releasesTable" prefHeight="800" prefWidth="1200">
 		<columns>
-			<TableColumn editable="false" maxWidth="200.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn" />
-			<TableColumn editable="false" maxWidth="200.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Criteria" fx:id="criteriaColumn" />
+			<TableColumn editable="false" maxWidth="200.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn">
+              <cellValueFactory>
+                <PropertyValueFactory property="name"/>
+              </cellValueFactory>
+            </TableColumn>
+			<TableColumn editable="false" maxWidth="200.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Criteria" fx:id="criteriaColumn">
+              <cellValueFactory>
+                <PropertyValueFactory property="criteria"/>
+              </cellValueFactory>
+            </TableColumn>
 			<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est." fx:id="accumulatedEstimateColumn">
-				<cellFactory>
-					<AlignRightCellFactory />
-				</cellFactory>
+              <cellFactory>
+		        <AlignRightCellFactory />
+			  </cellFactory>
+              <cellValueFactory>
+                <PropertyValueFactory property="accumulatedEstimate"/>
+              </cellValueFactory>
 			</TableColumn>
 			<TableColumn prefWidth="240.0" minWidth="240" text="Completion Forecast">
 				<columns>

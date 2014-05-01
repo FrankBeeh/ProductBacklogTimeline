@@ -6,22 +6,46 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import de.frankbeeh.productbacklogtimeline.view.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?scenebuilder-classpath-element ../../../../../../bin?>
 
 <TableView fx:id="productBacklogTable" prefHeight="800" prefWidth="1200" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ProductBacklogTableController">
 	<columns>
-		<TableColumn editable="false" maxWidth="70.0" minWidth="20.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn" />
+		<TableColumn editable="false" maxWidth="70.0" minWidth="20.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn">
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="id"/>
+      	  </cellValueFactory>
+		</TableColumn>
 		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="Estimate" fx:id="estimateColumn" >
           <cellFactory>
             <AlignRightCellFactory />
       	  </cellFactory>
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="estimate"/>
+      	  </cellValueFactory>
         </TableColumn>
-		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="State" fx:id="stateColumn" />
-		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="400.0" resizable="true" sortable="false" text="Title" fx:id="titleColumn" />
-		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="-1.0" resizable="true" sortable="false" text="Description" fx:id="descriptionColumn" />
+		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="State" fx:id="stateColumn">
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="state"/>
+      	  </cellValueFactory>
+		</TableColumn>
+		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="400.0" resizable="true" sortable="false" text="Title" fx:id="titleColumn">
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="title"/>
+      	  </cellValueFactory>
+		</TableColumn>
+		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="-1.0" resizable="true" sortable="false" text="Description" fx:id="descriptionColumn">
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="description"/>
+      	  </cellValueFactory>
+		</TableColumn>
 		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est." fx:id="accumulatedEstimateColumn" >
           <cellFactory>
             <AlignRightCellFactory />
       	  </cellFactory>
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="acculumatedEstimate"/>
+      	  </cellValueFactory>
         </TableColumn>
 		<TableColumn prefWidth="75.0" text="Completion Forecast">
           <columns>

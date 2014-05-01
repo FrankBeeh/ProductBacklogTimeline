@@ -9,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.Release;
 import de.frankbeeh.productbacklogtimeline.data.Releases;
@@ -32,12 +31,6 @@ public class ReleaseTableController {
     @FXML
     private TableView<Release> releasesTable;
     @FXML
-    private TableColumn<Release, String> nameColumn;
-    @FXML
-    private TableColumn<Release, String> criteriaColumn;
-    @FXML
-    private TableColumn<Release, Double> accumulatedEstimateColumn;
-    @FXML
     private TableColumn<Release, String> completionForecastByMinVelColumn;
     @FXML
     private TableColumn<Release, String> completionForecastByAvgVelColumn;
@@ -48,9 +41,6 @@ public class ReleaseTableController {
 
     @FXML
     private void initialize() {
-        nameColumn.setCellValueFactory(new PropertyValueFactory<Release, String>("name"));
-        criteriaColumn.setCellValueFactory(new PropertyValueFactory<Release, String>("criteria"));
-        accumulatedEstimateColumn.setCellValueFactory(new PropertyValueFactory<Release, Double>("accumulatedEstimate"));
         completionForecastByAvgVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.AVERAGE_VELOCITY_FORECAST));
         completionForecastByMinVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MINIMUM_VELOCITY_FORECAST));
         completionForecastByMaxVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MAXIMUM_VELOCITY_FORECAST));

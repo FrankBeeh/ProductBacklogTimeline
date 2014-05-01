@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
@@ -31,18 +30,6 @@ public class ProductBacklogTableController {
     @FXML
     private TableView<ProductBacklogItem> productBacklogTable;
     @FXML
-    private TableColumn<ProductBacklogItem, String> idColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> titleColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> descriptionColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, Double> estimateColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, String> stateColumn;
-    @FXML
-    private TableColumn<ProductBacklogItem, Double> accumulatedEstimateColumn;
-    @FXML
     private TableColumn<ProductBacklogItem, String> completionForecastByMinVelColumn;
     @FXML
     private TableColumn<ProductBacklogItem, String> completionForecastByAvgVelColumn;
@@ -53,12 +40,6 @@ public class ProductBacklogTableController {
 
     @FXML
     private void initialize() {
-        idColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("id"));
-        estimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, Double>("estimate"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("description"));
-        stateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, String>("state"));
-        accumulatedEstimateColumn.setCellValueFactory(new PropertyValueFactory<ProductBacklogItem, Double>("accumulatedEstimate"));
         completionForecastByAvgVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.AVERAGE_VELOCITY_FORECAST));
         completionForecastByMinVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MINIMUM_VELOCITY_FORECAST));
         completionForecastByMaxVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MAXIMUM_VELOCITY_FORECAST));
