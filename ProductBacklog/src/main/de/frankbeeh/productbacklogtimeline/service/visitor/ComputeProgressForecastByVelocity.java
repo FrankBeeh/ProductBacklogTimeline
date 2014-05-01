@@ -14,7 +14,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
     private final ComputeVelocityStrategy computeVelocityStrategy;
     private SprintDataVisitor computeAccumulatedProgressForecast;
 
-    private int clientCount;
+    private int clientsVisitedCount;
     private Double historicVelocity;
 
     public ComputeProgressForecastByVelocity(String progressForecastName, ComputeVelocityStrategy computeVelocityStrategy) {
@@ -27,13 +27,13 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
     @Override
     public final void reset() {
         historicVelocity = null;
-        clientCount = 0;
+        clientsVisitedCount = 0;
         computeAccumulatedProgressForecast.reset();
     }
 
     @Override
     public void visit(SprintData sprintData) {
-        clientCount++;
+        clientsVisitedCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
         sprintData.setProgressForecastBasedOnHistory(progressForecastName, computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
         computeAccumulatedProgressForecast.visit(sprintData);
@@ -46,7 +46,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
         if (velocityOfThisSprint == null) {
             return historicVelocity;
         }
-        return computeVelocityStrategy.computeVelocity(velocityOfThisSprint, historicVelocity, clientCount);
+        return computeVelocityStrategy.computeVelocity(velocityOfThisSprint, historicVelocity, clientsVisitedCount);
     }
 
     private Double computeProgressForecastOfThisSprint(SprintData sprintData, Double velocityOfThisSprint) {

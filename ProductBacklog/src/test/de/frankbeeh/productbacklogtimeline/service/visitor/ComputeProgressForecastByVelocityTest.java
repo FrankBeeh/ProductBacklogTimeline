@@ -3,8 +3,6 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 import static junit.framework.Assert.assertEquals;
 import static org.easymock.EasyMock.same;
 
-import java.text.DecimalFormat;
-
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
@@ -210,7 +208,7 @@ public class ComputeProgressForecastByVelocityTest extends EasyMockSupport {
         if (value == null) {
             return null;
         }
-        return Double.parseDouble(new DecimalFormat("#.#").format(value));
+        return Math.round(value * 10.0) / 10.0;
     }
 
     protected double getExpectedVelocity(final double... velocities) {

@@ -17,7 +17,6 @@ public class ComputeAverageVelocityStrategyTest {
 
     @Test
     public void computeVelocity_thirdVisit() {
-        setUp();
         final double historicVelocity = 10d;
         final double velocityOfThisSprint = 5d;
         assertEquals((2 * historicVelocity + velocityOfThisSprint) / 3, strategy.computeVelocity(velocityOfThisSprint, historicVelocity, 3));

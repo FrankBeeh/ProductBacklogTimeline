@@ -1,6 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -109,6 +108,6 @@ public class SprintData {
         if (value == null) {
             return value;
         }
-        return Double.parseDouble(new DecimalFormat("#.#").format(value));
+        return Math.round(value.doubleValue() * 10.0) / 10.0;
     }
 }
