@@ -21,7 +21,7 @@
     </MenuBar>
   </top>
   <center>
-    <TabPane prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
+    <TabPane fx:id="mainTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
         <Tab text="PBL">
           <content>
