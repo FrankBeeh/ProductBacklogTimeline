@@ -15,7 +15,7 @@ import de.frankbeeh.productbacklogtimeline.data.Sprints;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class SprintsFromCsvImporterTest {
-    private static final String HEADER = "Sprint Name;Start Date;End Date;Capacity Forecast;Effort Forecast;Capacity Done;Effort Done\r\n";
+    private static final String HEADER = "SprintName;StartDate;EndDate;CapacityForecast;EffortForecast;CapacityDone;EffortDone\r\n";
 
     private DataFromCsvImporter<Sprints> importer;
 

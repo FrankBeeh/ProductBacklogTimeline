@@ -60,11 +60,7 @@ public abstract class DataFromCsvImporter<T> {
     }
 
     protected final String getString(String columnName) {
-        final Integer columnIndex = mapColumnNameToColumnIndex.get(columnName);
-        if (columnIndex == null) {
-            throw new RuntimeException("Column '" + columnName + "' missing!");
-        }
-        return values[columnIndex];
+        return values[mapColumnNameToColumnIndex.get(columnName)];
     }
 
     protected final Double getDouble(String columnName) throws ParseException {

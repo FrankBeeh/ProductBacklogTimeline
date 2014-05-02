@@ -17,14 +17,14 @@ public class ImportSprintUITest extends AbstractBaseUITest {
     }
 
     @Test
-    public void importSprints() throws Exception {
+    public void importBacklog() throws Exception {
         openSprintImportDialog();
         enterFileName();
         selectSprintsTab();
     }
 
     private void enterFileName() {
-        type("Sprints5.csv");
+        type("Sprints.csv");
         type(KeyCode.ENTER);
     }
 

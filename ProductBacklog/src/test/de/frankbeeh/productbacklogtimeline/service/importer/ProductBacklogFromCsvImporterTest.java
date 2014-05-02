@@ -13,10 +13,12 @@ import org.junit.Test;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.State;
+import de.frankbeeh.productbacklogtimeline.service.importer.DataFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 
 public class ProductBacklogFromCsvImporterTest {
 
-    private static final String HEADER = "Key;Summary;Description;Story Points;Status\r\n";
+    private static final String HEADER = "Id;Title;Summary;Estimate;State\r\n";
     private DataFromCsvImporter<ProductBacklog> importer;
 
     @Test
@@ -36,7 +38,7 @@ public class ProductBacklogFromCsvImporterTest {
 
     @Test
     public void importProductBacklogItemInDifferentRowOrder() throws Exception {
-        final ProductBacklog productBacklog = importer.importData(new StringReader("Status;Story Points;Description;Summary;Key\r\n" + "Canceled;0.5;Beschreibung 1;Titel 1;Id 1\r\n"));
+        final ProductBacklog productBacklog = importer.importData(new StringReader("State;Estimate;Summary;Title;Id\r\n" + "Canceled;0.5;Beschreibung 1;Titel 1;Id 1\r\n"));
         assertEquals(Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Beschreibung 1", 0.5, State.Canceled)).toString(), productBacklog.getItems().toString());
     }
 

@@ -1,4 +1,4 @@
-Key;Summary;Description;Story Points;Status
+Id;Title;Summary;Estimate;State
 1;Als Entwickler möchte ich einen initialen Projektsetup haben;"Akzeptanzkriterien:
 - Eclipse-Projekt
 - Git-Repo";1;Todo

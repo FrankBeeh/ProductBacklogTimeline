@@ -8,11 +8,11 @@ import de.frankbeeh.productbacklogtimeline.data.State;
 
 public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBacklog> {
 
-    private static final String NAME_OF_ID_COLUMN = "Key";
-    private static final String NAME_OF_TITLE_COLUMN = "Summary";
-    private static final String NAME_OF_DESCRIPTION_COLUMN = "Description";
-    private static final String NAME_OF_ESTIMATE_COLUMN = "Story Points";
-    private static final String NAME_OF_STATE_COLUMN = "Status";
+    private static final String NAME_OF_ID_COLUMN = "Id";
+    private static final String NAME_OF_TITLE_COLUMN = "Title";
+    private static final String NAME_OF_DESCRIPTION_COLUMN = "Summary";
+    private static final String NAME_OF_ESTIMATE_COLUMN = "Estimate";
+    private static final String NAME_OF_STATE_COLUMN = "State";
 
     @Override
     public void addItem(final ProductBacklog productBacklog) throws ParseException {

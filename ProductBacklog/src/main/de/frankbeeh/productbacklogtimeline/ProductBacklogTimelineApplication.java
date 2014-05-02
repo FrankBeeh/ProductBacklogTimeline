@@ -17,7 +17,7 @@ public class ProductBacklogTimelineApplication extends Application {
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(APPLICATION_FXML));
         final Parent root = (Parent) loader.load();
 
-        final Scene scene = new Scene(root, 1200, 800);
+        final Scene scene = new Scene(root, 1024, 768);
 
         primaryStage.setTitle(APPLICATION_TITLE);
         primaryStage.setScene(scene);
