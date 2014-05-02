@@ -9,12 +9,25 @@ Key;Summary;Description;Story Points;Status
 6;Als PO möchte ich den Status eines PBIs verwenden können;"Akzeptanzkriterien:
 - aus dem CSV laden, im PBL anzeigen
 - Status: Todo, In Progress, Done, Canceled";0.5;Done;Sprint 2
-10;Als PO möchte ich den Effort-Forecast für jeden Sprint sehen können.;"Akzeptanzkriterien:
+10;Als PO möchte ich den Progress-Forecast für jeden Sprint sehen können.;"Akzeptanzkriterien:
 - Zur Berechnung wird die normierte Geschwindigkeit verwendet:
 -- Abgeschlossener Sprint: EffortDone/CapacityDone
 -- Laufender Sprint: EffortForecast/CapacityForecast
 - Diese wird mit der Kapazität des Sprints multipliziert.
-- Der Forecast ergibt sich aus den  normierten Geschwindigkeiten aller vorherigen Sprints multipliziert mit der Forecast-Kapazität des Sprints.";2;Todo;Sprint 2
+- Der Forecast ergibt sich aus den  normierten Geschwindigkeiten aller vorherigen Sprints multipliziert mit der Forecast-Kapazität des Sprints.";2;Done;Sprint 2
+11;Als PO möchte ich den akkumulieren Progress-Forecast bis zu jedem Sprint sehen können.;"Akzeptanzkriterien:
+- Die Geschwindigkeiten werden wie bei [10] berechnet.
+- Der akkumulierte Forecast ergibt sich aus dem akkumulierten Forecast des vorherigen Sprints plus dem
+Progress-Forecast dieses Sprints
+- Für abgeschlossene Sprints wird kein Progress-Forecast angezeigt.";3;Done;Sprint 3
+12;Als PO möchte ich für jedes PBI einen Forecast bis zu welchem Sprint dieses fertiggestellt wird.;"Akzeptanzkritrien:
+- Hierzu werden die akkumulierten Effort-Forecast aus [11] verwendet.
+- Der Sprint-Forecast wird im PBL dargestellt";2;Done;Sprint 3, Sprint 4
+13;Als PO möchte ich Releases durch die Angabe der ID eines PBIs definieren können. Für diese Releases werden die Forecasts berechnet, bis zu welchen Sprint diese fertiggestellt sind.;"Akzeptanzkriteren:
+- Die Releases werden in einer Tabelle auf einem neuen Tab dargestellt.
+";3;Done;Sprint 5
+15;Als PO möchte ich einen PBL-Export aus Jira als CSV einlesen können;"Akzeptanzkriterien:
+- Die PBIs werden sortiert nach Sprint-Nummer und dann nach Rank";2;Todo;Sprint 5
 7;Als PO möchte ich eine Trendlinie mit der durchschnittlichen Geschwindigkeit im Burnup anzeigen lassen können;"Akzeptanzkriterien:
 - Trendlinie gerücksichtigt die Kapazität.";2;Todo;
 8;Als PO möchte ich Trendlinien mit minimaler und maximaler Geschwindigkeit im Burnup anzeigen lassen können;;1;Todo;
@@ -27,3 +40,4 @@ Key;Summary;Description;Story Points;Status
 - Als Zeitstempel wird das Datum der CSV-Datei verwendet.";2;Todo;
 4;Als PO möchte ich mehrere zeitliche Versionen des PBLs persistieren und wieder laden können;"Offene Punkte:
 - Wohin persistieren?";3;Todo;
+14;Als PO möchte ich Releases erfassen, editieren und abspeichern können.;;3;Todo;

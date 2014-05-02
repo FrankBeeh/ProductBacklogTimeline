@@ -8,13 +8,13 @@ import de.frankbeeh.productbacklogtimeline.data.Sprints;
 
 public class SprintsFromCsvImporter extends DataFromCsvImporter<Sprints> {
 
-    private static final String EFFORT_DONE_COLUMN_NAME = "EffortDone";
-    private static final String ACTUAL_CAPACITY_COLUMN_NAME = "CapacityDone";
-    private static final String EFFORT_FORECAST_COLUMN_NAME = "EffortForecast";
-    private static final String CAPACITY_FORECAST_COLUMN_NAME = "CapacityForecast";
-    private static final String END_DATE_COLUMN_NAME = "EndDate";
-    private static final String START_DATE_COLUMN_NAME = "StartDate";
-    private static final String SPRINT_COLUMN_NAME = "SprintName";
+    private static final String EFFORT_DONE_COLUMN_NAME = "Effort Done";
+    private static final String ACTUAL_CAPACITY_COLUMN_NAME = "Capacity Done";
+    private static final String EFFORT_FORECAST_COLUMN_NAME = "Effort Forecast";
+    private static final String CAPACITY_FORECAST_COLUMN_NAME = "Capacity Forecast";
+    private static final String END_DATE_COLUMN_NAME = "End Date";
+    private static final String START_DATE_COLUMN_NAME = "Start Date";
+    private static final String SPRINT_COLUMN_NAME = "Sprint Name";
 
     @Override
     protected Sprints createContainer() {
