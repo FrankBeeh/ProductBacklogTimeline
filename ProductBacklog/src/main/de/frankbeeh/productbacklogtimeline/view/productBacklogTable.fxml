@@ -9,9 +9,9 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
 
-<TableView fx:id="productBacklogTable" prefHeight="800" prefWidth="1200" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ProductBacklogTableController">
+<TableView fx:id="productBacklogTable" prefHeight="743" prefWidth="1198" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ProductBacklogTableController">
 	<columns>
-		<TableColumn editable="false" maxWidth="70.0" minWidth="20.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn">
+		<TableColumn editable="false" maxWidth="70.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn">
 		  <cellValueFactory>
       	    <PropertyValueFactory property="id"/>
       	  </cellValueFactory>
@@ -44,7 +44,7 @@
             <AlignRightCellFactory />
       	  </cellFactory>
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="acculumatedEstimate"/>
+      	    <PropertyValueFactory property="accumulatedEstimate"/>
       	  </cellValueFactory>
         </TableColumn>
 		<TableColumn prefWidth="75.0" text="Completion Forecast">
