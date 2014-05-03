@@ -14,14 +14,18 @@ public class ProductBacklogItem {
     private final Double estimate;
     private final State state;
     private final Map<String, String> completionForecast;
+    private final String sprint;
+    private final Integer rank;
     private Double accumulatedEstimate;
 
-    public ProductBacklogItem(String id, String title, String description, Double estimate, State state) {
+    public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String sprint, Integer rank) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.estimate = estimate;
         this.state = state;
+        this.sprint = sprint;
+        this.rank = rank;
         this.completionForecast = new HashMap<String, String>();
     }
 
@@ -65,9 +69,16 @@ public class ProductBacklogItem {
         }
     }
 
+    public String getSprint() {
+        return sprint;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
-
 }

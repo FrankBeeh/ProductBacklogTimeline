@@ -33,9 +33,9 @@ public class ProductBacklogTest extends EasyMockSupport {
     public void updateAllItems() {
         final Sprints sprints = new Sprints();
         final ProductBacklog productBacklog = new ProductBacklog(visitorMock1, visitorMock2);
-        final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", null, null, null, null);
+        final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", null, null, null, null, "", 1);
         productBacklog.addItem(productBacklogItem1);
-        final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem("ID 2", null, null, null, null);
+        final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem("ID 2", null, null, null, null, "", 2);
         productBacklog.addItem(productBacklogItem2);
 
         visitorMock1.reset();

@@ -47,6 +47,11 @@
       	    <PropertyValueFactory property="accumulatedEstimate"/>
       	  </cellValueFactory>
         </TableColumn>
+		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Sprint" fx:id="sprintColumn" >
+		  <cellValueFactory>
+      	    <PropertyValueFactory property="sprint"/>
+      	  </cellValueFactory>
+        </TableColumn>
 		<TableColumn prefWidth="75.0" text="Completion Forecast">
           <columns>
             <TableColumn editable="false" maxWidth="80.0" minWidth="20.0" prefWidth="80.0" resizable="true" sortable="false" text="Min. Vel." fx:id="completionForecastByMinVelColumn" />

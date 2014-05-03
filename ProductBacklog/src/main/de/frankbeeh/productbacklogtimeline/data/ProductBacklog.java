@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class ProductBacklog {
     }
 
     public void updateAllItems(Sprints sprints) {
+        Collections.sort(items, new ProductBacklogItemComparator(sprints));
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {

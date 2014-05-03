@@ -31,7 +31,7 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
     }
 
     private void enterFileName() {
-        type("PBL11.csv");
+        type("PBL.csv");
         type(KeyCode.ENTER);
     }
 

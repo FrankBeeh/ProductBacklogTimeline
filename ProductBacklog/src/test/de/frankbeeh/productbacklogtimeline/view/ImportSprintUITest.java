@@ -24,7 +24,7 @@ public class ImportSprintUITest extends AbstractBaseUITest {
     }
 
     private void enterFileName() {
-        type("Sprints5.csv");
+        type("Sprints.csv");
         type(KeyCode.ENTER);
     }
 

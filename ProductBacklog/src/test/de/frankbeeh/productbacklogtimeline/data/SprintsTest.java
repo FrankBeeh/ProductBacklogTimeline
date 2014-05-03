@@ -29,6 +29,14 @@ public class SprintsTest extends EasyMockSupport {
     private Sprints sprints;
 
     @Test
+    public void getSortIndex() throws Exception {
+        assertEquals(1, sprints.getSortIndex(sprint1.getName()));
+        assertEquals(2, sprints.getSortIndex(sprint2.getName()));
+        assertEquals(2, sprints.getSortIndex(sprint1.getName() + ", " + sprint2.getName()));
+        assertEquals(Integer.MAX_VALUE, sprints.getSortIndex("other name"));
+    }
+
+    @Test
     public void updateAllSprints() {
         sprints = new Sprints(visitorMock1, visitorMock2);
         sprints.addItem(sprint1);

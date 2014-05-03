@@ -69,6 +69,7 @@ public class MainController {
             sprints.updateAllSprints();
             sprintsTableController.initModel(sprints);
             productBacklog.updateAllItems(sprints);
+            productBacklogTableController.initModel(productBacklog);
             productBacklogTableController.updateView();
             updateReleases();
         }
@@ -88,8 +89,9 @@ public class MainController {
     }
 
     private void createDummyReleases() {
-        releases.addRelease(new Release("Release 0.1", new ProductBacklogItemIdIsEqual("10")));
-        releases.addRelease(new Release("Release 0.2", new ProductBacklogItemIdIsEqual("13")));
-        releases.addRelease(new Release("Release 0.3", new ProductBacklogItemIdIsEqual("20")));
+        releases.addRelease(new Release("Release 0.8", new ProductBacklogItemIdIsEqual("CRM-793")));
+        releases.addRelease(new Release("Release 0.9", new ProductBacklogItemIdIsEqual("CRM-560")));
+        releases.addRelease(new Release("Release 1.0", new ProductBacklogItemIdIsEqual("CRM-771")));
+        releases.addRelease(new Release("Release 1.2", new ProductBacklogItemIdIsEqual("CRM-554")));
     }
 }

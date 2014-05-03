@@ -1,7 +1,9 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAverageVelocityStrategy;
@@ -17,6 +19,7 @@ public class Sprints {
 
     private final List<SprintData> sprints;
     private final SprintDataVisitor[] visitors;
+    private final Map<String, Integer> sortIndexMap;
 
     public Sprints() {
         this(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()), new ComputeProgressForecastByVelocity(
@@ -27,6 +30,7 @@ public class Sprints {
     Sprints(SprintDataVisitor... visitors) {
         this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
+        this.sortIndexMap = new HashMap<String, Integer>();
     }
 
     public List<SprintData> getSprints() {
@@ -35,6 +39,7 @@ public class Sprints {
 
     public void addItem(SprintData sprint) {
         sprints.add(sprint);
+        sortIndexMap.put(sprint.getName(), sprints.size());
     }
 
     public void updateAllSprints() {
@@ -54,5 +59,14 @@ public class Sprints {
             }
         }
         return null;
+    }
+
+    public int getSortIndex(String sprintNames) {
+        final String[] splittedSprintNames = sprintNames.split(", ");
+        final Integer sortIndex = sortIndexMap.get(splittedSprintNames[splittedSprintNames.length - 1]);
+        if (sortIndex == null) {
+            return Integer.MAX_VALUE;
+        }
+        return sortIndex;
     }
 }

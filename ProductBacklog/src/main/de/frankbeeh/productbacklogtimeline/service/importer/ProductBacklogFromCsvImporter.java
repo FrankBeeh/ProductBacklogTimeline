@@ -13,6 +13,8 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
     private static final String NAME_OF_DESCRIPTION_COLUMN = "Description";
     private static final String NAME_OF_ESTIMATE_COLUMN = "Story Points";
     private static final String NAME_OF_STATE_COLUMN = "Status";
+    private static final String NAME_OF_SPRINT_COLUMN = "Sprint";
+    private static final String NAME_OF_RANK_COLUMN = "Rank";
 
     @Override
     public void addItem(final ProductBacklog productBacklog) throws ParseException {
@@ -21,7 +23,9 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
         final String description = getString(NAME_OF_DESCRIPTION_COLUMN);
         final Double estimate = getDouble(NAME_OF_ESTIMATE_COLUMN);
         final State state = getState(NAME_OF_STATE_COLUMN);
-        productBacklog.addItem(new ProductBacklogItem(id, title, description, estimate, state));
+        final String sprint = getString(NAME_OF_SPRINT_COLUMN);
+        final Integer rank = getInteger(NAME_OF_RANK_COLUMN);
+        productBacklog.addItem(new ProductBacklogItem(id, title, description, estimate, state, sprint, rank));
     }
 
     @Override

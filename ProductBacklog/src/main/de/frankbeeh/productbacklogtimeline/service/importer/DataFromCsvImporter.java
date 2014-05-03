@@ -75,6 +75,14 @@ public abstract class DataFromCsvImporter<T> {
         return NUMBER_FORMAT.parse(value).doubleValue();
     }
 
+    protected Integer getInteger(String columnName) {
+        final String value = getString(columnName);
+        if (value.isEmpty()) {
+            return null;
+        }
+        return Integer.parseInt(value);
+    }
+
     protected final Date getDate(String columnName) throws ParseException {
         final String value = getString(columnName);
         if (value.isEmpty()) {
