@@ -27,17 +27,19 @@ Progress-Forecast dieses Sprints
 - Die Releases werden in einer Tabelle auf einem neuen Tab dargestellt.
 ";3;Fixed;Sprint 5;8
 15;Als PO möchte ich einen PBL-Export aus Jira als CSV einlesen können;"Akzeptanzkriterien:
-- Die PBIs werden sortiert nach Sprint-Nummer und dann nach Rank";2;Unresolved;Sprint 5;9
+- Die PBIs werden sortiert nach Sprint-Nummer und dann nach Rank";2;Fixed;Sprint 5;9
 7;Als PO möchte ich eine Trendlinie mit der durchschnittlichen Geschwindigkeit im Burnup anzeigen lassen können;"Akzeptanzkriterien:
-- Trendlinie gerücksichtigt die Kapazität.";2;Unresolved;;10
-8;Als PO möchte ich Trendlinien mit minimaler und maximaler Geschwindigkeit im Burnup anzeigen lassen können;;1;Unresolved;;11
+- Trendlinie gerücksichtigt die Kapazität.";2;Unresolved;;11
+8;Als PO möchte ich Trendlinien mit minimaler und maximaler Geschwindigkeit im Burnup anzeigen lassen können;;1;Unresolved;;12
 9;Als PO möchte ich Sprint-Daten editieren, speichern und wieder laden können.;"Akzeptanzkriterien:
 - Alle Felder aus [5] können editiert werden.
 - Sprints können gelöscht werden.
 - Neue Sprints können hinzugefügt werden.
-- Die Persistierung erfolgt als XML-Datei.";3;Unresolved;;12
+- Die Persistierung erfolgt als XML-Datei.";3;Unresolved;Sprint 5;10
 3;Als PO möchte ich mehrere Versionen des PBLs als CSV laden und den zeitlichen Verlauf des Gesamtaufwands darstellen können.;"Akzeptanzkriterien:
 - Als Zeitstempel wird das Datum der CSV-Datei verwendet.";2;Unresolved;;13
 4;Als PO möchte ich mehrere zeitliche Versionen des PBLs persistieren und wieder laden können;"Offene Punkte:
 - Wohin persistieren?";3;Unresolved;;14
 14;Als PO möchte ich Releases erfassen, editieren und abspeichern können.;;3;Unresolved;;15
+16;Als PO möchte ich Sprints hinzufügen und löschen können.;"Akzeptanzkriterien:
+Die Sprints werden nach aufsteigendem Start-Datum sortiert";3;Unresolved;;16
