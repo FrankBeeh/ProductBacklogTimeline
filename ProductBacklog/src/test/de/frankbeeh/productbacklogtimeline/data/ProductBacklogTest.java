@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
 
 @RunWith(EasyMockRunner.class)
@@ -27,17 +28,20 @@ public class ProductBacklogTest extends EasyMockSupport {
     @Mock
     private ProductBacklogItem productBacklogItemMock2;
     @Mock
+    private ProductBacklogSortingStrategy sortingStrategyMock;
+    @Mock
     private Criteria criteriaMock;
 
     @Test
     public void updateAllItems() {
         final Sprints sprints = new Sprints();
-        final ProductBacklog productBacklog = new ProductBacklog(visitorMock1, visitorMock2);
+        final ProductBacklog productBacklog = new ProductBacklog(sortingStrategyMock, visitorMock1, visitorMock2);
         final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", null, null, null, null, "", 1);
         productBacklog.addItem(productBacklogItem1);
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem("ID 2", null, null, null, null, "", 2);
         productBacklog.addItem(productBacklogItem2);
 
+        sortingStrategyMock.sortProductBacklog(same(productBacklog), same(sprints));
         visitorMock1.reset();
         visitorMock1.visit(same(productBacklogItem1), same(sprints));
         visitorMock1.visit(same(productBacklogItem2), same(sprints));

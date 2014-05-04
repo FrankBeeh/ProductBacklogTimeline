@@ -1,11 +1,12 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+import de.frankbeeh.productbacklogtimeline.service.sort.JiraProductBacklogSortingStrategy;
+import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ForecastSprintOfCompletion;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVisitor;
@@ -21,14 +22,16 @@ public class ProductBacklog {
 
     private final LinkedList<ProductBacklogItem> items;
     private final ProductBacklogItemVisitor[] visitors;
+    private final ProductBacklogSortingStrategy sortingStrategy;
 
     public ProductBacklog() {
-        this(new AccumulateEstimate(), new ForecastSprintOfCompletion(Sprints.AVERAGE_VELOCITY_FORECAST), new ForecastSprintOfCompletion(Sprints.MINIMUM_VELOCITY_FORECAST),
-                new ForecastSprintOfCompletion(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        this(new JiraProductBacklogSortingStrategy(), new AccumulateEstimate(), new ForecastSprintOfCompletion(Sprints.AVERAGE_VELOCITY_FORECAST), new ForecastSprintOfCompletion(
+                Sprints.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(Sprints.MAXIMUM_VELOCITY_FORECAST));
     }
 
     // Visible for testing
-    ProductBacklog(ProductBacklogItemVisitor... visitorMocks) {
+    ProductBacklog(ProductBacklogSortingStrategy sortingStrategy, ProductBacklogItemVisitor... visitorMocks) {
+        this.sortingStrategy = sortingStrategy;
         this.visitors = visitorMocks;
         this.items = new LinkedList<ProductBacklogItem>();
     }
@@ -42,7 +45,7 @@ public class ProductBacklog {
     }
 
     public void updateAllItems(Sprints sprints) {
-        Collections.sort(items, new ProductBacklogItemComparator(sprints));
+        sortingStrategy.sortProductBacklog(this, sprints);
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
