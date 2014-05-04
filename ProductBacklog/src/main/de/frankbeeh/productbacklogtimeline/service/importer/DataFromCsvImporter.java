@@ -16,10 +16,10 @@ import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public abstract class DataFromCsvImporter<T> {
 
-    private static final String CANCELED_STATE = "Canceled";
-    private static final String DONE_STATE = "Done";
-    private static final String IN_PROGRESS_STATE = "In Progress";
-    private static final String TODO_STATE = "Todo";
+    private static final String RESOLUTION_FIXED = "Fixed";
+    private static final String RESOLUTION_UNRESOLVED = "Unresolved";
+    private static final String RESOLUTION_WONT_FIX = "Won't Fix";
+    private static final String RESOLUTION_DUPLICATE = "Duplicat3";
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.UK);
     private static final char SPLIT_BY = ';';
@@ -31,10 +31,10 @@ public abstract class DataFromCsvImporter<T> {
 
     protected DataFromCsvImporter() {
         stateMap = new HashMap<String, State>();
-        stateMap.put(TODO_STATE, State.Todo);
-        stateMap.put(IN_PROGRESS_STATE, State.InProgress);
-        stateMap.put(DONE_STATE, State.Done);
-        stateMap.put(CANCELED_STATE, State.Canceled);
+        stateMap.put(RESOLUTION_FIXED, State.Done);
+        stateMap.put(RESOLUTION_UNRESOLVED, State.Todo);
+        stateMap.put(RESOLUTION_WONT_FIX, State.Canceled);
+        stateMap.put(RESOLUTION_DUPLICATE, State.Canceled);
     }
 
     protected abstract T createContainer();

@@ -12,7 +12,7 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
     private static final String NAME_OF_TITLE_COLUMN = "Summary";
     private static final String NAME_OF_DESCRIPTION_COLUMN = "Description";
     private static final String NAME_OF_ESTIMATE_COLUMN = "Story Points";
-    private static final String NAME_OF_STATE_COLUMN = "Status";
+    private static final String NAME_OF_RESOLUTION_COLUMN = "Resolution";
     private static final String NAME_OF_SPRINT_COLUMN = "Sprint";
     private static final String NAME_OF_RANK_COLUMN = "Rank";
 
@@ -22,7 +22,7 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
         final String title = getString(NAME_OF_TITLE_COLUMN);
         final String description = getString(NAME_OF_DESCRIPTION_COLUMN);
         final Double estimate = getDouble(NAME_OF_ESTIMATE_COLUMN);
-        final State state = getState(NAME_OF_STATE_COLUMN);
+        final State state = getState(NAME_OF_RESOLUTION_COLUMN);
         final String sprint = getString(NAME_OF_SPRINT_COLUMN);
         final Integer rank = getInteger(NAME_OF_RANK_COLUMN);
         productBacklog.addItem(new ProductBacklogItem(id, title, description, estimate, state, sprint, rank));
