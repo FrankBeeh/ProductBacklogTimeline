@@ -11,7 +11,7 @@ public class ProductBacklogItem {
     private final String id;
     private final String title;
     private final String description;
-    private final Double estimate;
+    private Double estimate;
     private final State state;
     private final Map<String, String> completionForecast;
     private final String sprint;
@@ -43,6 +43,10 @@ public class ProductBacklogItem {
 
     public Double getEstimate() {
         return estimate;
+    }
+
+    public void setEstimate(Double estimate) {
+        this.estimate = estimate;
     }
 
     public State getState() {

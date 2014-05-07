@@ -63,4 +63,13 @@ public class ProductBacklog {
         }
         return matchingProductBacklogItems;
     }
+
+    public boolean containsId(String id) {
+        for (final ProductBacklogItem item : items) {
+            if (item.getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
