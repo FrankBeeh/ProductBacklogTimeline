@@ -1,5 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 /**
@@ -86,7 +88,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
         return effort.doubleValue() / capacity.doubleValue();
     }
 
-    // Visible for testing
+    @VisibleForTesting
     void setComputeAccumulatedProcessForecastVisitor(SprintDataVisitor computeAccumulatedProgressForecastMock) {
         computeAccumulatedProgressForecast = computeAccumulatedProgressForecastMock;
     }
