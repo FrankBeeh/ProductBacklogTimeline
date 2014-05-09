@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 import de.frankbeeh.productbacklogtimeline.service.sort.JiraProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
@@ -29,7 +31,7 @@ public class ProductBacklog {
                 Sprints.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(Sprints.MAXIMUM_VELOCITY_FORECAST));
     }
 
-    // Visible for testing
+    @VisibleForTesting
     ProductBacklog(ProductBacklogSortingStrategy sortingStrategy, ProductBacklogItemVisitor... visitorMocks) {
         this.sortingStrategy = sortingStrategy;
         this.visitors = visitorMocks;

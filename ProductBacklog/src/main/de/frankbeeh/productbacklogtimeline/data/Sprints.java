@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAverageVelocityStrategy;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeMaximumVelocityStrategy;
@@ -26,7 +28,7 @@ public class Sprints {
                 MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST, new ComputeMaximumVelocityStrategy()));
     }
 
-    // Visible for testing
+    @VisibleForTesting
     Sprints(SprintDataVisitor... visitors) {
         this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
