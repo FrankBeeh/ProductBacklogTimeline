@@ -38,6 +38,12 @@ public class ProductBacklog {
         this.items = new LinkedList<ProductBacklogItem>();
     }
 
+    @VisibleForTesting
+    public ProductBacklog(List<ProductBacklogItem> items) {
+        this();
+        items = new LinkedList<ProductBacklogItem>(items);
+    }
+
     public void addItem(ProductBacklogItem productBacklogItem) {
         items.add(productBacklogItem);
     }

@@ -22,7 +22,7 @@ public abstract class ProductBacklogChange {
         return iterateToId(referenceId, productBacklogItems);
     }
 
-    protected ListIterator<ProductBacklogItem> iterateToId(String idToFind, List<ProductBacklogItem> productBacklogItems) {
+    public static ListIterator<ProductBacklogItem> iterateToId(String idToFind, List<ProductBacklogItem> productBacklogItems) {
         final ListIterator<ProductBacklogItem> iterator = productBacklogItems.listIterator();
         if (idToFind == null) {
             return iterator;

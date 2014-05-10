@@ -95,7 +95,7 @@ public class ProductBacklogDiffTest {
         toProductBacklog.addItem(PRODUCT_BACKLOG_ITEM_1);
         toProductBacklog.addItem(PRODUCT_BACKLOG_ITEM_2);
         final List<ProductBacklogChange> changes = productBacklogDiff.computeChanges(fromProductBacklog, toProductBacklog);
-        assertEquals(Arrays.asList(new MoveProductBacklogItemsAfterId(ID_1, ID_3, 1), new MoveProductBacklogItemsAfterId(ID_2, ID_1, 1)).toString(), changes.toString());
+        assertEquals(Arrays.asList(new MoveProductBacklogItemsAfterId(ID_3, null, 1)).toString(), changes.toString());
     }
 
     @Test

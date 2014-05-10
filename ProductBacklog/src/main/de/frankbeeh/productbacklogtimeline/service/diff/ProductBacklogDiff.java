@@ -9,43 +9,35 @@ import com.google.common.annotations.VisibleForTesting;
 import de.frankbeeh.productbacklogtimeline.data.ChangeEstimateOfProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.DeleteProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.InsertProductBacklogItemAfterId;
-import de.frankbeeh.productbacklogtimeline.data.MoveProductBacklogItemsAfterId;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogChange;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 
 public class ProductBacklogDiff {
-    private final ProductBacklogItemsMoveStrategy productBacklogItemsMoveStrategy = new ProductBacklogItemsMoveStrategy();
+    private final FindProductBacklogItemsMoveStrategy findProductBacklogItemsMoveStrategy = new FindProductBacklogItemsMoveStrategy();
 
-    public List<ProductBacklogChange> computeChanges(ProductBacklog fromProductBacklog, ProductBacklog toProductBacklog) {
+    public List<ProductBacklogChange> computeChanges(ProductBacklog sourceProductBacklog, ProductBacklog targetProductBacklog) {
         final List<ProductBacklogChange> changes = new ArrayList<ProductBacklogChange>();
-        changes.addAll(findDeletes(fromProductBacklog, toProductBacklog));
-        changes.addAll(findInserts(fromProductBacklog, toProductBacklog));
-        final List<ProductBacklogItem> changedFromProductBacklogItems = applyChanges(fromProductBacklog.getItems(), changes);
-        final List<ProductBacklogItem> toProductBacklogItems = toProductBacklog.getItems();
-        changes.addAll(findMoves(changedFromProductBacklogItems, toProductBacklogItems));
-        changes.addAll(findChangedEstimates(changedFromProductBacklogItems, toProductBacklogItems));
+        changes.addAll(findDeletes(sourceProductBacklog, targetProductBacklog));
+        changes.addAll(findInserts(sourceProductBacklog, targetProductBacklog));
+        final LinkedList<ProductBacklogItem> changedFromProductBacklogItems = applyChanges(sourceProductBacklog.getItems(), changes);
+        final LinkedList<ProductBacklogItem> toProductBacklogItems = new LinkedList<ProductBacklogItem>(targetProductBacklog.getItems());
+        final List<ProductBacklogChange> moves = findMoves(changedFromProductBacklogItems, toProductBacklogItems);
+        changes.addAll(moves);
+        changes.addAll(findChangedEstimates(applyChanges(changedFromProductBacklogItems, moves), toProductBacklogItems));
         return changes;
     }
 
-    private List<ProductBacklogChange> findMoves(List<ProductBacklogItem> fromProductBacklogItems, List<ProductBacklogItem> toProductBacklogItems) {
-        final List<ProductBacklogChange> changes = new ArrayList<ProductBacklogChange>();
-        String idOfNextItemToMove;
-        while ((idOfNextItemToMove = productBacklogItemsMoveStrategy.findIdOfNextItemToMove(fromProductBacklogItems, toProductBacklogItems)) != null) {
-            final String toPredecessorId = productBacklogItemsMoveStrategy.findPredecessorId(idOfNextItemToMove, toProductBacklogItems);
-            final MoveProductBacklogItemsAfterId move = new MoveProductBacklogItemsAfterId(idOfNextItemToMove, toPredecessorId, 1);
-            changes.add(move);
-            move.applyTo(fromProductBacklogItems);
-        }
-        return changes;
+    private List<ProductBacklogChange> findMoves(LinkedList<ProductBacklogItem> sourceProductBacklogItems, LinkedList<ProductBacklogItem> targetProductBacklogItems) {
+        return findProductBacklogItemsMoveStrategy.findMoves(sourceProductBacklogItems, targetProductBacklogItems);
     }
 
     @VisibleForTesting
-    List<ProductBacklogChange> findChangedEstimates(List<ProductBacklogItem> fromProductBacklogItems, List<ProductBacklogItem> toProductBacklogItems) {
+    List<ProductBacklogChange> findChangedEstimates(List<ProductBacklogItem> sourceProductBacklogItems, List<ProductBacklogItem> targetProductBacklogItems) {
         final List<ProductBacklogChange> changes = new ArrayList<ProductBacklogChange>();
-        for (int index = 0; index < fromProductBacklogItems.size(); index++) {
-            final ProductBacklogItem toProductBacklogItem = toProductBacklogItems.get(index);
-            final ProductBacklogItem fromProductBacklogItem = fromProductBacklogItems.get(index);
+        for (int index = 0; index < sourceProductBacklogItems.size(); index++) {
+            final ProductBacklogItem toProductBacklogItem = targetProductBacklogItems.get(index);
+            final ProductBacklogItem fromProductBacklogItem = sourceProductBacklogItems.get(index);
             if (!fromProductBacklogItem.getId().equals(toProductBacklogItem.getId())) {
                 throw new IllegalArgumentException("IDs are different for items at position " + (index + 1) + ": '" + fromProductBacklogItem.getId() + "' vs. '" + toProductBacklogItem.getId() + "'!");
             }
@@ -56,18 +48,18 @@ public class ProductBacklogDiff {
         return changes;
     }
 
-    private boolean notEqual(Object fromValue, Object toValue) {
-        if (fromValue == null) {
-            return toValue != null;
+    private boolean notEqual(Object sourceValue, Object targetValue) {
+        if (sourceValue == null) {
+            return targetValue != null;
         }
-        return !fromValue.equals(toValue);
+        return !sourceValue.equals(targetValue);
     }
 
-    private List<ProductBacklogChange> findInserts(ProductBacklog fromProductBacklog, ProductBacklog toProductBacklog) {
+    private List<ProductBacklogChange> findInserts(ProductBacklog sourceProductBacklog, ProductBacklog targetProductBacklog) {
         final List<ProductBacklogChange> changes = new ArrayList<ProductBacklogChange>();
         String previousProductBacklogItemId = null;
-        for (final ProductBacklogItem productBacklogItem : toProductBacklog.getItems()) {
-            if (!fromProductBacklog.containsId(productBacklogItem.getId())) {
+        for (final ProductBacklogItem productBacklogItem : targetProductBacklog.getItems()) {
+            if (!sourceProductBacklog.containsId(productBacklogItem.getId())) {
                 changes.add(new InsertProductBacklogItemAfterId(previousProductBacklogItemId, productBacklogItem));
             }
             previousProductBacklogItemId = productBacklogItem.getId();
@@ -75,19 +67,19 @@ public class ProductBacklogDiff {
         return changes;
     }
 
-    private List<ProductBacklogChange> findDeletes(ProductBacklog fromProductBacklog, ProductBacklog toProductBacklog) {
+    private List<ProductBacklogChange> findDeletes(ProductBacklog sourceProductBacklog, ProductBacklog targetProductBacklog) {
         final List<ProductBacklogChange> changes = new ArrayList<ProductBacklogChange>();
-        for (final ProductBacklogItem productBacklogItem : fromProductBacklog.getItems()) {
+        for (final ProductBacklogItem productBacklogItem : sourceProductBacklog.getItems()) {
             final String id = productBacklogItem.getId();
-            if (!toProductBacklog.containsId(id)) {
+            if (!targetProductBacklog.containsId(id)) {
                 changes.add(new DeleteProductBacklogItem(id));
             }
         }
         return changes;
     }
 
-    private List<ProductBacklogItem> applyChanges(List<ProductBacklogItem> items, List<ProductBacklogChange> changes) {
-        final List<ProductBacklogItem> linkedList = new LinkedList<ProductBacklogItem>(items);
+    private LinkedList<ProductBacklogItem> applyChanges(List<ProductBacklogItem> items, List<ProductBacklogChange> changes) {
+        final LinkedList<ProductBacklogItem> linkedList = new LinkedList<ProductBacklogItem>(items);
         for (final ProductBacklogChange change : changes) {
             change.applyTo(linkedList);
         }
