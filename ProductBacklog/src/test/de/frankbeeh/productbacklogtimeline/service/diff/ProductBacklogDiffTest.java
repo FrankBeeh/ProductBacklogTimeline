@@ -13,7 +13,7 @@ import org.junit.Test;
 import de.frankbeeh.productbacklogtimeline.data.ChangeEstimateOfProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.DeleteProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.InsertProductBacklogItemAfterId;
-import de.frankbeeh.productbacklogtimeline.data.MoveProductBacklogItemAfterId;
+import de.frankbeeh.productbacklogtimeline.data.MoveProductBacklogItemsAfterId;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogChange;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
@@ -83,7 +83,7 @@ public class ProductBacklogDiffTest {
         toProductBacklog.addItem(PRODUCT_BACKLOG_ITEM_3);
         toProductBacklog.addItem(PRODUCT_BACKLOG_ITEM_1);
         final List<ProductBacklogChange> changes = productBacklogDiff.computeChanges(fromProductBacklog, toProductBacklog);
-        assertEquals(Arrays.asList(new MoveProductBacklogItemAfterId(ID_1, ID_3)).toString(), changes.toString());
+        assertEquals(Arrays.asList(new MoveProductBacklogItemsAfterId(ID_1, ID_3, 1)).toString(), changes.toString());
     }
 
     @Test
@@ -95,7 +95,7 @@ public class ProductBacklogDiffTest {
         toProductBacklog.addItem(PRODUCT_BACKLOG_ITEM_1);
         toProductBacklog.addItem(PRODUCT_BACKLOG_ITEM_2);
         final List<ProductBacklogChange> changes = productBacklogDiff.computeChanges(fromProductBacklog, toProductBacklog);
-        assertEquals(Arrays.asList(new MoveProductBacklogItemAfterId(ID_1, ID_3), new MoveProductBacklogItemAfterId(ID_2, ID_1)).toString(), changes.toString());
+        assertEquals(Arrays.asList(new MoveProductBacklogItemsAfterId(ID_1, ID_3, 1), new MoveProductBacklogItemsAfterId(ID_2, ID_1, 1)).toString(), changes.toString());
     }
 
     @Test

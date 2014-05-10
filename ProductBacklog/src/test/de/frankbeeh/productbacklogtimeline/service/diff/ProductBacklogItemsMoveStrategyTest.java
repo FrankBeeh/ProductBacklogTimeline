@@ -31,7 +31,7 @@ public class ProductBacklogItemsMoveStrategyTest {
     }
 
     @Test
-    public void hasSameSequence_secodIdDifferent() throws Exception {
+    public void hasSameSequence_secondIdDifferent() throws Exception {
         assertFalse(productBacklogItemsMoveStrategy.hasSameSequence(Arrays.asList(PRODUCT_BACKLOG_ITEM_1, PRODUCT_BACKLOG_ITEM_2),
                 Arrays.asList(OTHER_PRODUCT_BACKLOG_ITEM_1, OTHER_PRODUCT_BACKLOG_ITEM_3)));
     }

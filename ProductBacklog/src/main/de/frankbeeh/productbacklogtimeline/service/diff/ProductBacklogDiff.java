@@ -9,7 +9,7 @@ import com.google.common.annotations.VisibleForTesting;
 import de.frankbeeh.productbacklogtimeline.data.ChangeEstimateOfProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.DeleteProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.InsertProductBacklogItemAfterId;
-import de.frankbeeh.productbacklogtimeline.data.MoveProductBacklogItemAfterId;
+import de.frankbeeh.productbacklogtimeline.data.MoveProductBacklogItemsAfterId;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogChange;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
@@ -33,7 +33,7 @@ public class ProductBacklogDiff {
         String idOfNextItemToMove;
         while ((idOfNextItemToMove = productBacklogItemsMoveStrategy.findIdOfNextItemToMove(fromProductBacklogItems, toProductBacklogItems)) != null) {
             final String toPredecessorId = productBacklogItemsMoveStrategy.findPredecessorId(idOfNextItemToMove, toProductBacklogItems);
-            final MoveProductBacklogItemAfterId move = new MoveProductBacklogItemAfterId(idOfNextItemToMove, toPredecessorId);
+            final MoveProductBacklogItemsAfterId move = new MoveProductBacklogItemsAfterId(idOfNextItemToMove, toPredecessorId, 1);
             changes.add(move);
             move.applyTo(fromProductBacklogItems);
         }
