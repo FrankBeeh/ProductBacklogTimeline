@@ -22,7 +22,7 @@ public class ProductBacklogItem {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.estimate = estimate;
+        this.setEstimate(estimate);
         this.state = state;
         this.sprint = sprint;
         this.rank = rank;

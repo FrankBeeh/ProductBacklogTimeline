@@ -1,8 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.same;
 
@@ -12,31 +10,36 @@ import java.util.Arrays;
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
-import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVisitor;
+import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
 
 @RunWith(EasyMockRunner.class)
 public class ProductBacklogTest extends EasyMockSupport {
-    private static final String ID_2 = "ID 2";
-    private static final String ID_1 = "ID 1";
+    @Mock
+    private AccumulateEstimate visitorMock1;
+    @Mock
+    private AccumulateEstimate visitorMock2;
+    @Mock
+    private ProductBacklogItem productBacklogItemMock1;
+    @Mock
+    private ProductBacklogItem productBacklogItemMock2;
+    @Mock
+    private ProductBacklogSortingStrategy sortingStrategyMock;
     @Mock
     private Criteria criteriaMock;
-    private ProductBacklogSortingStrategy sortingStrategyMock;
-    private ProductBacklogItemVisitor visitorMock1;
-    private ProductBacklogItemVisitor visitorMock2;
-
-    private ProductBacklogItem productBacklogItem1;
-    private ProductBacklogItem productBacklogItem2;
-    private ProductBacklog productBacklog;
 
     @Test
     public void updateAllItems() {
         final Sprints sprints = new Sprints();
+        final ProductBacklog productBacklog = new ProductBacklog(sortingStrategyMock, visitorMock1, visitorMock2);
+        final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", null, null, null, null, "", 1);
+        productBacklog.addItem(productBacklogItem1);
+        final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem("ID 2", null, null, null, null, "", 2);
+        productBacklog.addItem(productBacklogItem2);
 
         sortingStrategyMock.sortProductBacklog(same(productBacklog), same(sprints));
         visitorMock1.reset();
@@ -52,8 +55,10 @@ public class ProductBacklogTest extends EasyMockSupport {
 
     @Test
     public void getMatchingProductBacklogItems_noneIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(false);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(false);
+        final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
+
+        expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(false);
+        expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(false);
         replayAll();
         assertEquals(new ArrayList<ProductBacklogItem>(), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
@@ -61,47 +66,41 @@ public class ProductBacklogTest extends EasyMockSupport {
 
     @Test
     public void getMatchingProductBacklogItems_firstIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(true);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(false);
+        final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
+
+        expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(true);
+        expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(false);
         replayAll();
-        assertEquals(Arrays.asList(productBacklogItem1), productBacklog.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemMock1), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
     public void getMatchingProductBacklogItems_secondIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(false);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(true);
+        final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
+
+        expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(false);
+        expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(true);
         replayAll();
-        assertEquals(Arrays.asList(productBacklogItem2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemMock2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
     public void getMatchingProductBacklogItems_bothAreMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(true);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(true);
+        final ProductBacklog productBacklog = createProductBacklogWithMockedItems();
+
+        expect(criteriaMock.isMatching(productBacklogItemMock1)).andReturn(true);
+        expect(criteriaMock.isMatching(productBacklogItemMock2)).andReturn(true);
         replayAll();
-        assertEquals(Arrays.asList(productBacklogItem1, productBacklogItem2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemMock1, productBacklogItemMock2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
-    @Test
-    public void containsId() throws Exception {
-        assertTrue(productBacklog.containsId(ID_1));
-        assertFalse(productBacklog.containsId("Unknown ID"));
-        assertTrue(productBacklog.containsId(ID_2));
-    }
-
-    @Before
-    public void setUp() {
-        sortingStrategyMock = createMock(ProductBacklogSortingStrategy.class);
-        visitorMock1 = createMock(ProductBacklogItemVisitor.class);
-        visitorMock2 = createMock(ProductBacklogItemVisitor.class);
-        productBacklog = new ProductBacklog(sortingStrategyMock, visitorMock1, visitorMock2);
-        productBacklogItem1 = new ProductBacklogItem(ID_1, null, null, null, null, "", 1);
-        productBacklog.addItem(productBacklogItem1);
-        productBacklogItem2 = new ProductBacklogItem(ID_2, null, null, null, null, "", 2);
-        productBacklog.addItem(productBacklogItem2);
+    private ProductBacklog createProductBacklogWithMockedItems() {
+        final ProductBacklog productBacklog = new ProductBacklog();
+        productBacklog.addItem(productBacklogItemMock1);
+        productBacklog.addItem(productBacklogItemMock2);
+        return productBacklog;
     }
 }

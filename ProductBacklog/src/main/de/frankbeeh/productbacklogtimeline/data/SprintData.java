@@ -11,9 +11,9 @@ import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
-    private final String name;
-    private final Date startDate;
-    private final Date endDate;
+    private String name;
+    private Date startDate;
+    private Date endDate;
     private final Double capacityForecast;
     private final Double effortForecast;
     private final Double capacityDone;
@@ -26,7 +26,7 @@ public class SprintData {
     public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
         this.name = name;
         this.startDate = startDate;
-        this.endDate = endDate;
+        this.setEndDate(endDate);
         this.capacityForecast = capacityForecast;
         this.effortForecast = effortForecast;
         this.capacityDone = capacityDone;
@@ -44,8 +44,16 @@ public class SprintData {
         return startDate;
     }
 
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
     public Date getEndDate() {
         return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public Double getCapacityForecast() {
