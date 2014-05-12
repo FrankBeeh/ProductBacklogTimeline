@@ -10,11 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.Release;
-import de.frankbeeh.productbacklogtimeline.data.Releases;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
-import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemIdIsEqual;
+import de.frankbeeh.productbacklogtimeline.data.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
@@ -32,9 +28,7 @@ public class MainController {
     private final ControllerFactory controllerFactory = new ControllerFactory();
     private Stage primaryStage;
 
-    private Sprints sprints = new Sprints();
-    private ProductBacklog productBacklog = new ProductBacklog();
-    private final Releases releases = new Releases();
+    private final ProductTimeline productTimeline = new ProductTimeline();
 
     public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -44,8 +38,7 @@ public class MainController {
     private void initialize() throws IOException {
         releaseTableController = controllerFactory.createReleaseTableController();
         releasesTab.setContent(this.releaseTableController.getView());
-        createDummyReleases();
-        releaseTableController.initModel(releases);
+        releaseTableController.initModel(productTimeline.getReleases());
     }
 
     @FXML
@@ -53,10 +46,9 @@ public class MainController {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
-            productBacklog = importer.importData(new FileReader(selectedFile));
-            productBacklog.updateAllItems(sprints);
-            productBacklogTableController.initModel(productBacklog);
-            updateReleases();
+            productTimeline.addProductBacklog(importer.importData(new FileReader(selectedFile)));
+            productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
+            releaseTableController.updateView();
         }
     }
 
@@ -65,19 +57,12 @@ public class MainController {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
-            sprints = importer.importData(new FileReader(selectedFile));
-            sprints.updateAllSprints();
-            sprintsTableController.initModel(sprints);
-            productBacklog.updateAllItems(sprints);
-            productBacklogTableController.initModel(productBacklog);
+            productTimeline.setSprints(importer.importData(new FileReader(selectedFile)));
+            sprintsTableController.initModel(productTimeline.getSprints());
+            productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
             productBacklogTableController.updateView();
-            updateReleases();
+            releaseTableController.updateView();
         }
-    }
-
-    private void updateReleases() {
-        releases.updateAll(productBacklog);
-        releaseTableController.updateView();
     }
 
     private File selectCsvFileForImport() {
@@ -88,10 +73,4 @@ public class MainController {
         return fileChooser.showOpenDialog(primaryStage);
     }
 
-    private void createDummyReleases() {
-        releases.addRelease(new Release("Release 0.8", new ProductBacklogItemIdIsEqual("CRM-793")));
-        releases.addRelease(new Release("Release 0.9", new ProductBacklogItemIdIsEqual("CRM-560")));
-        releases.addRelease(new Release("Release 1.0", new ProductBacklogItemIdIsEqual("CRM-771")));
-        releases.addRelease(new Release("Release 1.2", new ProductBacklogItemIdIsEqual("CRM-554")));
-    }
 }
