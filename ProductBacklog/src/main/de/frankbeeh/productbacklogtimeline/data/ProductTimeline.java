@@ -16,7 +16,7 @@ public class ProductTimeline {
     private final Releases releases;
     private final ProductBacklog emptyProductBacklog = new ProductBacklog();
     private String selectedName = null;
-    private String referenceName;;
+    private String referenceName;
 
     public ProductTimeline() {
         this(new Releases());
