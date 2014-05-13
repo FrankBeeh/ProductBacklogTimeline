@@ -22,7 +22,7 @@ public class FindProductBacklogItemsMoveStrategy {
         final DoubleLinkedBlocks doubleLinkedBlocks = createDoubleLinkedBlocks(blocks);
         final Map<String, DoubleLinkedBlocks> mapFromLastIdToBlock = createMapFromLastIdToBlock(doubleLinkedBlocks);
         final SortedSet<DoubleLinkedBlocks> sortedBlocks = sortBlocksBySize(doubleLinkedBlocks);
-        return findMovesInternal(sortedBlocks, mapFromLastIdToBlock);
+        return findMovesInternally(sortedBlocks, mapFromLastIdToBlock);
     }
 
     @VisibleForTesting
@@ -42,7 +42,7 @@ public class FindProductBacklogItemsMoveStrategy {
         return blocks;
     }
 
-    private List<ProductBacklogChange> findMovesInternal(final SortedSet<DoubleLinkedBlocks> sortedBlocks, final Map<String, DoubleLinkedBlocks> mapFromLastIdToBlock) {
+    private List<ProductBacklogChange> findMovesInternally(final SortedSet<DoubleLinkedBlocks> sortedBlocks, final Map<String, DoubleLinkedBlocks> mapFromLastIdToBlock) {
         final List<ProductBacklogChange> changes = new ArrayList<ProductBacklogChange>();
         for (final DoubleLinkedBlocks sortedBlock : sortedBlocks) {
             final Block block = sortedBlock.getBlock();

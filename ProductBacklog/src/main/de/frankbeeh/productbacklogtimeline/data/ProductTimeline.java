@@ -15,7 +15,8 @@ public class ProductTimeline {
     private Sprints sprints = new Sprints();
     private final Releases releases;
     private final ProductBacklog emptyProductBacklog = new ProductBacklog();
-    private String selectedName = null;;
+    private String selectedName = null;
+    private String referenceName;;
 
     public ProductTimeline() {
         this(new Releases());
@@ -44,6 +45,12 @@ public class ProductTimeline {
         updateReleases();
     }
 
+    public void selectReferenceProductBacklog(String productBacklogName) {
+        referenceName = productBacklogName;
+        updateProductBacklog();
+        updateReleases();
+    }
+
     public void setSprints(Sprints sprints) {
         this.sprints = sprints;
         this.sprints.updateAllSprints();
@@ -62,9 +69,16 @@ public class ProductTimeline {
     public List<String> getProductBacklogNames() {
         return new ArrayList<String>(productBacklogs.keySet());
     }
-    
+
     private void updateProductBacklog() {
-        getSelectedProductBacklog().updateAllItems(getSprints());
+        getSelectedProductBacklog().updateAllItems(getSprints(), getReferenceProductBacklog());
+    }
+
+    private ProductBacklog getReferenceProductBacklog() {
+        if (referenceName == null) {
+            return emptyProductBacklog;
+        }
+        return productBacklogs.get(referenceName);
     }
 
     private void updateReleases() {

@@ -20,7 +20,6 @@ import de.frankbeeh.productbacklogtimeline.data.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
-// FIMXE The release Tab is not updated when another PBL is selected.
 public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
@@ -32,6 +31,8 @@ public class MainController {
     private Tab releasesTab;
     @FXML
     private ComboBox<String> selectedProductBacklog;
+    @FXML
+    private ComboBox<String> selectedReferenceProductBacklog;
 
     private final ObjectProperty<ObservableList<String>> selectProductBacklogItems = new SimpleObjectProperty<>();
     private ReleaseTableController releaseTableController;
@@ -51,6 +52,7 @@ public class MainController {
         releasesTab.setContent(this.releaseTableController.getView());
         releaseTableController.initModel(productTimeline.getReleases());
         selectedProductBacklog.itemsProperty().bind(selectProductBacklogItems);
+        selectedReferenceProductBacklog.itemsProperty().bind(selectProductBacklogItems);
         selectProductBacklogItems.set(FXCollections.<String> observableArrayList());
     }
 
@@ -62,12 +64,9 @@ public class MainController {
             final ProductBacklog importData = importer.importData(new FileReader(selectedFile));
             final String name = selectedFile.getName();
             productTimeline.addProductBacklog(name, importData);
-            productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
-            selectProductBacklogItems.getValue().clear();
-            selectProductBacklogItems.getValue().addAll(productTimeline.getProductBacklogNames());
+            setSelectableProductBacklogNames();
             changeSelectedProductBacklog(name);
-            releaseTableController.initModel(productTimeline.getReleases());
-            releaseTableController.updateView();
+            updateProductBacklogAndReleaseTable();
         }
     }
 
@@ -78,10 +77,7 @@ public class MainController {
             final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
             productTimeline.setSprints(importer.importData(new FileReader(selectedFile)));
             sprintsTableController.initModel(productTimeline.getSprints());
-            productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
-            productBacklogTableController.updateView();
-            releaseTableController.initModel(productTimeline.getReleases());
-            releaseTableController.updateView();
+            updateProductBacklogAndReleaseTable();
         }
     }
 
@@ -94,6 +90,12 @@ public class MainController {
         releaseTableController.updateView();
     }
 
+    @FXML
+    private void selectReferenceProductBacklog() {
+        productTimeline.selectReferenceProductBacklog(selectedReferenceProductBacklog.selectionModelProperty().get().getSelectedItem());
+        updateProductBacklogAndReleaseTable();
+    }
+
     private void changeSelectedProductBacklog(final String productBacklogName) {
         selectedProductBacklog.selectionModelProperty().get().select(productBacklogName);
     }
@@ -104,5 +106,17 @@ public class MainController {
         fileChooser.getExtensionFilters().add(extFilter);
         fileChooser.setInitialDirectory(CSV_DIRECTORY);
         return fileChooser.showOpenDialog(primaryStage);
+    }
+
+    private void setSelectableProductBacklogNames() {
+        selectProductBacklogItems.getValue().clear();
+        selectProductBacklogItems.getValue().addAll(productTimeline.getProductBacklogNames());
+    }
+
+    private void updateProductBacklogAndReleaseTable() {
+        productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
+        productBacklogTableController.updateView();
+        releaseTableController.initModel(productTimeline.getReleases());
+        releaseTableController.updateView();
     }
 }

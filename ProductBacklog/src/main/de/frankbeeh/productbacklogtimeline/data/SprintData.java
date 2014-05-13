@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -100,13 +101,29 @@ public class SprintData {
         return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
     }
 
-    public String getDescription() {
+    public String getDescription(SprintData referenceSprintData) {
         final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getName());
+        final String sprintName = getName();
+        stringBuilder.append(sprintName);
+        if (referenceSprintData != null) {
+            final String referenceSprintName = referenceSprintData.getName();
+            if (!sprintName.equals(referenceSprintName)) {
+                stringBuilder.append("\n(").append(referenceSprintName).append(")");
+            }
+        }
         final Date endDate = getEndDate();
         if (endDate != null) {
             stringBuilder.append("\n");
             stringBuilder.append(FormatUtility.formatDate(endDate));
+            if (referenceSprintData != null) {
+                final Date referenceEndDate = referenceSprintData.getEndDate();
+                if (referenceEndDate != null) {
+                    final long diffDays = (endDate.getTime() - referenceEndDate.getTime()) / (1000 * 60 * 60 * 24);
+                    if (diffDays != 0) {
+                        stringBuilder.append("\n(").append(new DecimalFormat("+0;-0").format(diffDays)).append("d)");
+                    }
+                }
+            }
         }
         return stringBuilder.toString();
     }

@@ -65,11 +65,11 @@ public class ProductBacklogItem {
         return completionForecast.get(progressForecastName);
     }
 
-    public void setCompletionForecast(String progressForecastName, SprintData sprintData) {
+    public void setCompletionForecast(String progressForecastName, SprintData sprintData, SprintData referenceSprintData) {
         if (sprintData == null) {
             completionForecast.put(progressForecastName, null);
         } else {
-            completionForecast.put(progressForecastName, sprintData.getDescription());
+            completionForecast.put(progressForecastName, sprintData.getDescription(referenceSprintData));
         }
     }
 

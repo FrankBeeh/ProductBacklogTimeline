@@ -55,7 +55,7 @@ public class Sprints {
         }
     }
 
-    public SprintData getCompletionSprintForecast(String progressForecastName, double accumulatedEstimate) {
+    public SprintData getCompletionSprintForecast(String progressForecastName, Double accumulatedEstimate) {
         for (final SprintData sprint : sprints) {
             final Double accumulatedEffortDoneOrProgressForcast = sprint.getAccumulatedEffortDoneOrProgressForcast(progressForecastName);
             if (accumulatedEffortDoneOrProgressForcast != null && accumulatedEstimate <= accumulatedEffortDoneOrProgressForcast) {

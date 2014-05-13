@@ -104,9 +104,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     private ProductBacklogItem createProductBacklogItem(double accumulatedEstimate, String minVelSprintName, String avgVelSprintName, String maxVelSprintName) {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
         productBacklogItem.setAccumulatedEstimate(accumulatedEstimate);
-        productBacklogItem.setCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST, createSprintData(minVelSprintName));
-        productBacklogItem.setCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST, createSprintData(avgVelSprintName));
-        productBacklogItem.setCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST, createSprintData(maxVelSprintName));
+        productBacklogItem.setCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST, createSprintData(minVelSprintName), null);
+        productBacklogItem.setCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST, createSprintData(avgVelSprintName), null);
+        productBacklogItem.setCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST, createSprintData(maxVelSprintName), null);
         return productBacklogItem;
     }
 }

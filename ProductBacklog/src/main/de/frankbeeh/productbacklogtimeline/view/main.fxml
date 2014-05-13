@@ -14,6 +14,8 @@
       <children>
         <Label text="Select Product Backlog" />
         <ComboBox fx:id="selectedProductBacklog" onAction="#selectProductBacklog" prefHeight="21.0" prefWidth="293.0"/>
+        <Label text="Select reference Product Backlog" />
+        <ComboBox fx:id="selectedReferenceProductBacklog" onAction="#selectReferenceProductBacklog" prefHeight="21.0" prefWidth="293.0"/>
       </children>
     </HBox>
   </bottom>

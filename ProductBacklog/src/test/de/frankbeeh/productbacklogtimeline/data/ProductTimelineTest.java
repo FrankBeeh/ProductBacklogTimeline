@@ -9,11 +9,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ProductTimelineTest extends EasyMockSupport {
-    private ProductBacklog productBacklog;
+    private ProductBacklog selectedProductBacklogMock;
     private Sprints sprints;
     private Releases releases;
 
     private ProductTimeline productTimeline;
+    private ProductBacklog referenceProductBacklogMock;
 
     @Test
     public void initalContent() {
@@ -24,13 +25,36 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     @Test
     public void addAndSelectProductBacklog() throws Exception {
-        final String productBacklogName = "name";
-        productBacklog.updateAllItems(same(productTimeline.getSprints()));
-        releases.updateAll(same(productBacklog));
+        final String selectedName = "selected";
+        final String referenceName = "reference";
+        productTimeline.addProductBacklog(referenceName, referenceProductBacklogMock);
+        productTimeline.addProductBacklog(selectedName, selectedProductBacklogMock);
+
+        resetAll();
+        releases.updateAll(same(productTimeline.getSelectedProductBacklog()));
         replayAll();
-        productTimeline.addProductBacklog(productBacklogName, productBacklog);
-        productTimeline.selectProductBacklog(productBacklogName);
-        assertSame(productBacklog, productTimeline.getSelectedProductBacklog());
+        productTimeline.selectReferenceProductBacklog(referenceName);
+        verifyAll();
+
+        resetAll();
+        selectedProductBacklogMock.updateAllItems(same(productTimeline.getSprints()), same(referenceProductBacklogMock));
+        releases.updateAll(same(selectedProductBacklogMock));
+        replayAll();
+        productTimeline.selectProductBacklog(selectedName);
+        assertSame(selectedProductBacklogMock, productTimeline.getSelectedProductBacklog());
+        verifyAll();
+    }
+
+    @Test
+    public void addAndSelectProductBacklog_noReference() throws Exception {
+        final String selectedName = "selected";
+        productTimeline.addProductBacklog(selectedName, selectedProductBacklogMock);
+        resetAll();
+        selectedProductBacklogMock.updateAllItems(same(productTimeline.getSprints()), same(productTimeline.getSelectedProductBacklog()));
+        releases.updateAll(same(selectedProductBacklogMock));
+        replayAll();
+        productTimeline.selectProductBacklog(selectedName);
+        assertSame(selectedProductBacklogMock, productTimeline.getSelectedProductBacklog());
         verifyAll();
     }
 
@@ -48,7 +72,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         addAndSelectProductBacklog();
         resetAll();
         sprints.updateAllSprints();
-        productBacklog.updateAllItems(same(sprints));
+        selectedProductBacklogMock.updateAllItems(same(sprints), same(referenceProductBacklogMock));
         releases.updateAll(same(productTimeline.getSelectedProductBacklog()));
         replayAll();
         productTimeline.setSprints(sprints);
@@ -57,7 +81,8 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     @Before
     public void setUp() {
-        productBacklog = createMock(ProductBacklog.class);
+        selectedProductBacklogMock = createMock("selectedProductBacklogMock", ProductBacklog.class);
+        referenceProductBacklogMock = createMock("referenceProductBacklogMock", ProductBacklog.class);
         sprints = createMock(Sprints.class);
         releases = createMock(Releases.class);
         productTimeline = new ProductTimeline(releases);

@@ -52,12 +52,12 @@ public class ProductBacklog {
         return items;
     }
 
-    public void updateAllItems(Sprints sprints) {
+    public void updateAllItems(Sprints sprints, ProductBacklog referenceProductBacklog) {
         sortingStrategy.sortProductBacklog(this, sprints);
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
-                visitor.visit(item, sprints);
+                visitor.visit(item, referenceProductBacklog, sprints);
             }
         }
     }
@@ -79,5 +79,14 @@ public class ProductBacklog {
             }
         }
         return false;
+    }
+
+    public ProductBacklogItem getItemById(String id) {
+        for (final ProductBacklogItem item : items) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
     }
 }

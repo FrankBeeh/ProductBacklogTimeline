@@ -2,6 +2,7 @@ package de.frankbeeh.productbacklogtimeline.data;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.same;
@@ -33,6 +34,7 @@ public class ProductBacklogTest extends EasyMockSupport {
     private ProductBacklogItem productBacklogItem1;
     private ProductBacklogItem productBacklogItem2;
     private ProductBacklog productBacklog;
+    private ProductBacklog referenceProductBacklog;
 
     @Test
     public void updateAllItems() {
@@ -40,13 +42,13 @@ public class ProductBacklogTest extends EasyMockSupport {
 
         sortingStrategyMock.sortProductBacklog(same(productBacklog), same(sprints));
         visitorMock1.reset();
-        visitorMock1.visit(same(productBacklogItem1), same(sprints));
-        visitorMock1.visit(same(productBacklogItem2), same(sprints));
+        visitorMock1.visit(same(productBacklogItem1), same(referenceProductBacklog), same(sprints));
+        visitorMock1.visit(same(productBacklogItem2), same(referenceProductBacklog), same(sprints));
         visitorMock2.reset();
-        visitorMock2.visit(same(productBacklogItem1), same(sprints));
-        visitorMock2.visit(same(productBacklogItem2), same(sprints));
+        visitorMock2.visit(same(productBacklogItem1), same(referenceProductBacklog), same(sprints));
+        visitorMock2.visit(same(productBacklogItem2), same(referenceProductBacklog), same(sprints));
         replayAll();
-        productBacklog.updateAllItems(sprints);
+        productBacklog.updateAllItems(sprints, referenceProductBacklog);
         verifyAll();
     }
 
@@ -93,11 +95,19 @@ public class ProductBacklogTest extends EasyMockSupport {
         assertTrue(productBacklog.containsId(ID_2));
     }
 
+    @Test
+    public void getItemById() throws Exception {
+        assertEquals(productBacklogItem1, productBacklog.getItemById(ID_1));
+        assertNull(productBacklog.getItemById("Unknown ID"));
+        assertEquals(productBacklogItem2, productBacklog.getItemById(ID_2));
+    }
+
     @Before
     public void setUp() {
         sortingStrategyMock = createMock(ProductBacklogSortingStrategy.class);
         visitorMock1 = createMock(ProductBacklogItemVisitor.class);
         visitorMock2 = createMock(ProductBacklogItemVisitor.class);
+        referenceProductBacklog = createMock(ProductBacklog.class);
         productBacklog = new ProductBacklog(sortingStrategyMock, visitorMock1, visitorMock2);
         productBacklogItem1 = new ProductBacklogItem(ID_1, null, null, null, null, "", 1);
         productBacklog.addItem(productBacklogItem1);
