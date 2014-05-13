@@ -1,7 +1,9 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -9,10 +11,11 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemId
 
 public class ProductTimeline {
 
-    private final List<ProductBacklog> productBacklogs = new ArrayList<ProductBacklog>();
+    private final Map<String, ProductBacklog> productBacklogs = new HashMap<String, ProductBacklog>();
     private Sprints sprints = new Sprints();
     private final Releases releases;
     private final ProductBacklog emptyProductBacklog = new ProductBacklog();
+    private String selectedName = null;;
 
     public ProductTimeline() {
         this(new Releases());
@@ -24,17 +27,21 @@ public class ProductTimeline {
         this.releases = releases;
     }
 
-    public void addProductBacklog(ProductBacklog productBacklog) {
-        productBacklogs.add(productBacklog);
-        updateProductBacklog();
-        updateReleases();
+    public void addProductBacklog(String name, ProductBacklog productBacklog) {
+        productBacklogs.put(name, productBacklog);
     }
 
     public ProductBacklog getSelectedProductBacklog() {
-        if (productBacklogs.isEmpty()) {
+        if (selectedName == null) {
             return emptyProductBacklog;
         }
-        return productBacklogs.get(productBacklogs.size() - 1);
+        return productBacklogs.get(selectedName);
+    }
+
+    public void selectProductBacklog(String productBacklogName) {
+        selectedName = productBacklogName;
+        updateProductBacklog();
+        updateReleases();
     }
 
     public void setSprints(Sprints sprints) {
@@ -52,6 +59,10 @@ public class ProductTimeline {
         return releases;
     }
 
+    public List<String> getProductBacklogNames() {
+        return new ArrayList<String>(productBacklogs.keySet());
+    }
+    
     private void updateProductBacklog() {
         getSelectedProductBacklog().updateAllItems(getSprints());
     }
