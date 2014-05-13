@@ -23,11 +23,13 @@ public class ProductTimelineTest extends EasyMockSupport {
     }
 
     @Test
-    public void addProductBacklog() throws Exception {
+    public void addAndSelectProductBacklog() throws Exception {
+        final String productBacklogName = "name";
         productBacklog.updateAllItems(same(productTimeline.getSprints()));
         releases.updateAll(same(productBacklog));
         replayAll();
-        productTimeline.addProductBacklog(productBacklog);
+        productTimeline.addProductBacklog(productBacklogName, productBacklog);
+        productTimeline.selectProductBacklog(productBacklogName);
         assertSame(productBacklog, productTimeline.getSelectedProductBacklog());
         verifyAll();
     }
@@ -42,8 +44,8 @@ public class ProductTimelineTest extends EasyMockSupport {
     }
 
     @Test
-    public void setSprintsAfterAddingProductBacklog() throws Exception {
-        addProductBacklog();
+    public void setSprintsAfterSelectingProductBacklog() throws Exception {
+        addAndSelectProductBacklog();
         resetAll();
         sprints.updateAllSprints();
         productBacklog.updateAllItems(same(sprints));

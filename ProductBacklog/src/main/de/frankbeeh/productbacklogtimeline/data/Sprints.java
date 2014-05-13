@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class Sprints {
     public static final String AVERAGE_VELOCITY_FORECAST = "Avg. Vel.";
     public static final String MINIMUM_VELOCITY_FORECAST = "Min. Vel.";
     public static final String MAXIMUM_VELOCITY_FORECAST = "Max. Vel.";
+    public static final List<String> COMPLETION_FORECASTS = Arrays.asList(MINIMUM_VELOCITY_FORECAST, AVERAGE_VELOCITY_FORECAST, MAXIMUM_VELOCITY_FORECAST);
 
     private final List<SprintData> sprints;
     private final SprintDataVisitor[] visitors;

@@ -6,14 +6,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
 
+// FIMXE The release Tab is not updated when another PBL is selected.
 public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
@@ -23,6 +30,10 @@ public class MainController {
     private ProductBacklogTableController productBacklogTableController;
     @FXML
     private Tab releasesTab;
+    @FXML
+    private ComboBox<String> selectedProductBacklog;
+
+    private final ObjectProperty<ObservableList<String>> selectProductBacklogItems = new SimpleObjectProperty<>();
     private ReleaseTableController releaseTableController;
 
     private final ControllerFactory controllerFactory = new ControllerFactory();
@@ -39,6 +50,8 @@ public class MainController {
         releaseTableController = controllerFactory.createReleaseTableController();
         releasesTab.setContent(this.releaseTableController.getView());
         releaseTableController.initModel(productTimeline.getReleases());
+        selectedProductBacklog.itemsProperty().bind(selectProductBacklogItems);
+        selectProductBacklogItems.set(FXCollections.<String> observableArrayList());
     }
 
     @FXML
@@ -46,8 +59,14 @@ public class MainController {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
-            productTimeline.addProductBacklog(importer.importData(new FileReader(selectedFile)));
+            final ProductBacklog importData = importer.importData(new FileReader(selectedFile));
+            final String name = selectedFile.getName();
+            productTimeline.addProductBacklog(name, importData);
             productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
+            selectProductBacklogItems.getValue().clear();
+            selectProductBacklogItems.getValue().addAll(productTimeline.getProductBacklogNames());
+            changeSelectedProductBacklog(name);
+            releaseTableController.initModel(productTimeline.getReleases());
             releaseTableController.updateView();
         }
     }
@@ -61,8 +80,22 @@ public class MainController {
             sprintsTableController.initModel(productTimeline.getSprints());
             productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
             productBacklogTableController.updateView();
+            releaseTableController.initModel(productTimeline.getReleases());
             releaseTableController.updateView();
         }
+    }
+
+    @FXML
+    private void selectProductBacklog() {
+        productTimeline.selectProductBacklog(selectedProductBacklog.selectionModelProperty().get().getSelectedItem());
+        productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
+        productBacklogTableController.updateView();
+        releaseTableController.initModel(productTimeline.getReleases());
+        releaseTableController.updateView();
+    }
+
+    private void changeSelectedProductBacklog(final String productBacklogName) {
+        selectedProductBacklog.selectionModelProperty().get().select(productBacklogName);
     }
 
     private File selectCsvFileForImport() {
@@ -72,5 +105,4 @@ public class MainController {
         fileChooser.setInitialDirectory(CSV_DIRECTORY);
         return fileChooser.showOpenDialog(primaryStage);
     }
-
 }

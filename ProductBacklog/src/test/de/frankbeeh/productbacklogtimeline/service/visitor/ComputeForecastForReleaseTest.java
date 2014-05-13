@@ -43,6 +43,10 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     @Test
     public void visit_noMatch() throws Exception {
         final Release release = new Release(null, criteria);
+        release.setAccumulatedEstimate(ACCUMULATED_ESTIMATE_1);
+        release.setCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST, MIN_VEL_SPRINT_NAME_1);
+        release.setCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST, AVG_VEL_SPRINT_NAME_1);
+        release.setCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST, MAX_VEL_SPRINT_NAME_1);
 
         final List<ProductBacklogItem> matchingProductacklogItems = new ArrayList<ProductBacklogItem>();
         expect(productBacklog.getMatchingProductBacklogItems(criteria)).andReturn(matchingProductacklogItems);

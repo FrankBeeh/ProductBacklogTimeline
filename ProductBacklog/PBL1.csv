@@ -1,0 +1,6 @@
+Key;Summary;Description;Story Points;Resolution;Sprint;Rank
+1;Als Entwickler möchte ich einen initialen Projektsetup haben;"Akzeptanzkriterien:
+- Eclipse-Projekt
+- Git-Repo";0.5;Fixed;Sprint 1;1
+2;Als PO möchte ich PBIs aus einer CSV-Datei importieren und als PBL in einer Tabelle anzeigen können;"Akzeptanzkriterien:
+- Id, Title, Summary und Estimate";3;Fixed;Sprint 1, Sprint 2;2
