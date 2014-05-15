@@ -30,6 +30,8 @@ public class MainController {
     @FXML
     private Tab releasesTab;
     @FXML
+    private Tab timelineTab;
+    @FXML
     private ComboBox<String> selectedProductBacklog;
     @FXML
     private ComboBox<String> selectedReferenceProductBacklog;
@@ -42,15 +44,17 @@ public class MainController {
 
     private final ProductTimeline productTimeline = new ProductTimeline();
 
+    private TimelineTableController timelineTableController;
+
     public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
     @FXML
     private void initialize() throws IOException {
-        releaseTableController = controllerFactory.createReleaseTableController();
-        releasesTab.setContent(this.releaseTableController.getView());
-        releaseTableController.initModel(productTimeline.getReleases());
+        initReleaseTab();
+        initTimelineTab();
+
         selectedProductBacklog.itemsProperty().bind(selectProductBacklogItems);
         selectedReferenceProductBacklog.itemsProperty().bind(selectProductBacklogItems);
         selectProductBacklogItems.set(FXCollections.<String> observableArrayList());
@@ -118,5 +122,17 @@ public class MainController {
         productBacklogTableController.updateView();
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
+    }
+
+    private void initTimelineTab() throws IOException {
+        timelineTableController = controllerFactory.createTimelineTableController();
+        timelineTab.setContent(this.timelineTableController.getView());
+        timelineTableController.initModel(productTimeline.getTimestamps());
+    }
+
+    private void initReleaseTab() throws IOException {
+        releaseTableController = controllerFactory.createReleaseTableController();
+        releasesTab.setContent(this.releaseTableController.getView());
+        releaseTableController.initModel(productTimeline.getReleases());
     }
 }

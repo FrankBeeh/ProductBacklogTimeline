@@ -22,6 +22,7 @@
   <center>
     <TabPane fx:id="mainTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
       <tabs>
+        <Tab fx:id="timelineTab" text="Timeline" />
         <Tab text="PBL">
           <content>
             <ScrollPane prefHeight="-1.0" prefWidth="-1.0">

@@ -1,6 +1,8 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,12 @@ public class ProductTimeline {
     private final ProductBacklog emptyProductBacklog = new ProductBacklog();
     private String selectedName = null;
     private String referenceName;
+    private List<Timestamp> timestamps;
 
     public ProductTimeline() {
         this(new Releases());
         createDummyReleases();
+        createDummyTimestamps();
     }
 
     @VisibleForTesting
@@ -66,6 +70,10 @@ public class ProductTimeline {
         return releases;
     }
 
+    public List<Timestamp> getTimestamps() {
+        return timestamps;
+    }
+
     public List<String> getProductBacklogNames() {
         return new ArrayList<String>(productBacklogs.keySet());
     }
@@ -83,6 +91,10 @@ public class ProductTimeline {
 
     private void updateReleases() {
         releases.updateAll(getSelectedProductBacklog());
+    }
+
+    private void createDummyTimestamps() {
+        timestamps = Arrays.asList(new Timestamp("Sprint 1 - Start", new Date(), "PBL1.csv", "Sprints.csv"));
     }
 
     private void createDummyReleases() {
