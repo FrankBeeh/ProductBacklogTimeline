@@ -4,6 +4,7 @@ import static junit.framework.Assert.assertEquals;
 
 import java.net.URL;
 
+import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
@@ -35,8 +36,16 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
         openPBLImportDialog();
         enterFileName(FILE_NAME_2);
         assertEquals(FILE_NAME_2, getSelectedProductBacklog());
-        // FIXME java.lang.IllegalStateException: Not on FX application thread; currentThread = main
-        // selectProductBacklog(FILE_NAME_1);
+
+        // FIXME: Get rid of Workaround
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                selectProductBacklog(FILE_NAME_1);
+            }
+        });
+
         selectPBLTab();
     }
 
