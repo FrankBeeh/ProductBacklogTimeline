@@ -20,9 +20,14 @@ public class ComputeForecastForRelease implements ReleaseVisitor {
         if (!matchingProductBacklogItems.isEmpty()) {
             final ProductBacklogItem lastMacthingProductBacklogItem = getLastMatchingProductBacklogItem(matchingProductBacklogItems);
             release.setAccumulatedEstimate(lastMacthingProductBacklogItem.getAccumulatedEstimate());
-            setCompletionForecast(release, lastMacthingProductBacklogItem, Sprints.MINIMUM_VELOCITY_FORECAST);
-            setCompletionForecast(release, lastMacthingProductBacklogItem, Sprints.AVERAGE_VELOCITY_FORECAST);
-            setCompletionForecast(release, lastMacthingProductBacklogItem, Sprints.MAXIMUM_VELOCITY_FORECAST);
+            for (final String forecastName : Sprints.COMPLETION_FORECASTS) {
+                setCompletionForecast(forecastName, release, lastMacthingProductBacklogItem);
+            }
+        } else {
+            release.setAccumulatedEstimate(null);
+            for (final String forecastName : Sprints.COMPLETION_FORECASTS) {
+                release.setCompletionForecast(forecastName, null);
+            }
         }
     }
 
@@ -30,8 +35,7 @@ public class ComputeForecastForRelease implements ReleaseVisitor {
         return matchingProductBacklogItems.get(matchingProductBacklogItems.size() - 1);
     }
 
-    private void setCompletionForecast(Release release, final ProductBacklogItem productBacklogItem, String completionForecastName) {
+    private void setCompletionForecast(String completionForecastName, Release release, final ProductBacklogItem productBacklogItem) {
         release.setCompletionForecast(completionForecastName, productBacklogItem.getCompletionForecast(completionForecastName));
     }
-
 }

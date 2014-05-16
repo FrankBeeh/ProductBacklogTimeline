@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,9 +12,9 @@ import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
-    private String name;
-    private Date startDate;
-    private Date endDate;
+    private final String name;
+    private final Date startDate;
+    private final Date endDate;
     private final Double capacityForecast;
     private final Double effortForecast;
     private final Double capacityDone;
@@ -26,7 +27,7 @@ public class SprintData {
     public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
         this.name = name;
         this.startDate = startDate;
-        this.setEndDate(endDate);
+        this.endDate = endDate;
         this.capacityForecast = capacityForecast;
         this.effortForecast = effortForecast;
         this.capacityDone = capacityDone;
@@ -44,16 +45,8 @@ public class SprintData {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
     public Date getEndDate() {
         return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
     }
 
     public Double getCapacityForecast() {
@@ -108,13 +101,29 @@ public class SprintData {
         return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
     }
 
-    public String getDescription() {
+    public String getDescription(SprintData referenceSprintData) {
         final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getName());
+        final String sprintName = getName();
+        stringBuilder.append(sprintName);
+        if (referenceSprintData != null) {
+            final String referenceSprintName = referenceSprintData.getName();
+            if (!sprintName.equals(referenceSprintName)) {
+                stringBuilder.append("\n(").append(referenceSprintName).append(")");
+            }
+        }
         final Date endDate = getEndDate();
         if (endDate != null) {
             stringBuilder.append("\n");
             stringBuilder.append(FormatUtility.formatDate(endDate));
+            if (referenceSprintData != null) {
+                final Date referenceEndDate = referenceSprintData.getEndDate();
+                if (referenceEndDate != null) {
+                    final long diffDays = (endDate.getTime() - referenceEndDate.getTime()) / (1000 * 60 * 60 * 24);
+                    if (diffDays != 0) {
+                        stringBuilder.append("\n(").append(new DecimalFormat("+0;-0").format(diffDays)).append("d)");
+                    }
+                }
+            }
         }
         return stringBuilder.toString();
     }

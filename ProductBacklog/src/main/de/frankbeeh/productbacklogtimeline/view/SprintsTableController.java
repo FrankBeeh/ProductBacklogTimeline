@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import java.text.ParseException;
-
 import javafx.beans.value.ObservableValue;
 import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
@@ -10,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
@@ -58,8 +55,6 @@ public class SprintsTableController {
     @FXML
     private TableColumn<SprintData, String> startDateColumn;
     @FXML
-    private TableColumn<SprintData, String> nameColumn;
-    @FXML
     private TableColumn<SprintData, String> endDateColumn;
     @FXML
     private TableColumn<SprintData, Double> forecastPerSprintByAvgVelColumn;
@@ -78,36 +73,28 @@ public class SprintsTableController {
 
     @FXML
     private void initialize() {
-        startDateColumn.setCellFactory(TextFieldTableCell.<SprintData> forTableColumn());
-        startDateColumn.setCellValueFactory(cellDataFeatures -> new ObservableValueBase<String>() {
+        startDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>>() {
             @Override
-            public String getValue() {
-                return FormatUtility.formatDate(cellDataFeatures.getValue().getStartDate());
+            public ObservableValue<String> call(final CellDataFeatures<SprintData, String> cellDataFeatures) {
+                return new ObservableValueBase<String>() {
+                    @Override
+                    public String getValue() {
+                        return FormatUtility.formatDate(cellDataFeatures.getValue().getStartDate());
+                    }
+                };
             }
         });
-        startDateColumn.setOnEditCommit(newValue -> {
-            try {
-                newValue.getTableView().getItems().get(newValue.getTablePosition().getRow()).setStartDate(FormatUtility.parseDate(newValue.getNewValue()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        });
-        endDateColumn.setCellFactory(TextFieldTableCell.<SprintData> forTableColumn());
-        endDateColumn.setOnEditCommit(newValue -> {
-            try {
-                newValue.getTableView().getItems().get(newValue.getTablePosition().getRow()).setStartDate(FormatUtility.parseDate(newValue.getNewValue()));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        });
-
-        endDateColumn.setCellValueFactory(cellDataFeatures -> new ObservableValueBase<String>() {
+        endDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>>() {
             @Override
-            public String getValue() {
-                return FormatUtility.formatDate(cellDataFeatures.getValue().getEndDate());
+            public ObservableValue<String> call(final CellDataFeatures<SprintData, String> cellDataFeatures) {
+                return new ObservableValueBase<String>() {
+                    @Override
+                    public String getValue() {
+                        return FormatUtility.formatDate(cellDataFeatures.getValue().getEndDate());
+                    }
+                };
             }
         });
-        nameColumn.setCellFactory(TextFieldTableCell.<SprintData> forTableColumn());
         setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, Sprints.AVERAGE_VELOCITY_FORECAST);
         setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, Sprints.MINIMUM_VELOCITY_FORECAST);
         setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, Sprints.MAXIMUM_VELOCITY_FORECAST);

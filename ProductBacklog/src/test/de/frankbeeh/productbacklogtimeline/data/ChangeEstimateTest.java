@@ -14,7 +14,7 @@ public class ChangeEstimateTest {
     @Test
     public void applyTo_unkownId() {
         try {
-            new ChangeEstimate("Unknown Id", 10d).applyTo(new ArrayList<ProductBacklogItem>());
+            new ChangeEstimateOfProductBacklogItem("Unknown Id", 10d).applyTo(new ArrayList<ProductBacklogItem>());
             fail("IllegalArgumentException expected");
         } catch (final IllegalArgumentException exception) {
             assertEquals("Id 'Unknown Id' not found!", exception.getMessage());
@@ -29,7 +29,7 @@ public class ChangeEstimateTest {
         final List<ProductBacklogItem> productBacklogItems = new ArrayList<ProductBacklogItem>();
         productBacklogItems.add(new ProductBacklogItem(id, null, null, previousEstimate, null, null, null));
         
-        new ChangeEstimate(id, changedEstimate).applyTo(productBacklogItems);
+        new ChangeEstimateOfProductBacklogItem(id, changedEstimate).applyTo(productBacklogItems);
         assertEquals(Arrays.asList(new ProductBacklogItem(id, null, null, changedEstimate, null, null, null)).toString(), productBacklogItems.toString());
     }
 }

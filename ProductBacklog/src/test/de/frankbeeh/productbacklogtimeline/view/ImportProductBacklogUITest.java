@@ -1,15 +1,19 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 
 import java.net.URL;
 
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 
 import org.junit.Test;
 
 public class ImportProductBacklogUITest extends AbstractBaseUITest {
+
+    private static final String FILE_NAME_2 = "PBL2.csv";
+    private static final String FILE_NAME_1 = "PBL1.csv";
 
     @Override
     protected URL getFXMLResourceURL() {
@@ -19,8 +23,34 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
     @Test
     public void importBacklog() throws Exception {
         openPBLImportDialog();
-        enterFileName();
+        enterFileName(FILE_NAME_1);
         selectPBLTab();
+    }
+
+    @Test
+    public void selectBacklog() throws Exception {
+        openPBLImportDialog();
+        enterFileName(FILE_NAME_1);
+        assertEquals(FILE_NAME_1, getSelectedProductBacklog());
+        openPBLImportDialog();
+        enterFileName(FILE_NAME_2);
+        assertEquals(FILE_NAME_2, getSelectedProductBacklog());
+        // FIXME java.lang.IllegalStateException: Not on FX application thread; currentThread = main
+        // selectProductBacklog(FILE_NAME_1);
+        selectPBLTab();
+    }
+
+    private String getSelectedProductBacklog() {
+        return getSelectProductBacklogComboBox().getSelectionModel().getSelectedItem();
+    }
+
+    private void selectProductBacklog(String productBacklogName) {
+        getSelectProductBacklogComboBox().getSelectionModel().select(productBacklogName);
+    }
+
+    private ComboBox<String> getSelectProductBacklogComboBox() {
+        final ComboBox<String> comboBox = getNode("#selectedProductBacklog");
+        return comboBox;
     }
 
     @Test
@@ -30,8 +60,8 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
         selectPBLTab();
     }
 
-    private void enterFileName() {
-        type("PBL.csv");
+    private void enterFileName(String fileName) {
+        type(fileName);
         type(KeyCode.ENTER);
     }
 

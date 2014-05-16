@@ -1,9 +1,12 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.common.annotations.VisibleForTesting;
 
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEffortDone;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeAverageVelocityStrategy;
@@ -16,6 +19,7 @@ public class Sprints {
     public static final String AVERAGE_VELOCITY_FORECAST = "Avg. Vel.";
     public static final String MINIMUM_VELOCITY_FORECAST = "Min. Vel.";
     public static final String MAXIMUM_VELOCITY_FORECAST = "Max. Vel.";
+    public static final List<String> COMPLETION_FORECASTS = Arrays.asList(MINIMUM_VELOCITY_FORECAST, AVERAGE_VELOCITY_FORECAST, MAXIMUM_VELOCITY_FORECAST);
 
     private final List<SprintData> sprints;
     private final SprintDataVisitor[] visitors;
@@ -26,7 +30,7 @@ public class Sprints {
                 MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST, new ComputeMaximumVelocityStrategy()));
     }
 
-    // Visible for testing
+    @VisibleForTesting
     Sprints(SprintDataVisitor... visitors) {
         this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
@@ -51,7 +55,7 @@ public class Sprints {
         }
     }
 
-    public SprintData getCompletionSprintForecast(String progressForecastName, double accumulatedEstimate) {
+    public SprintData getCompletionSprintForecast(String progressForecastName, Double accumulatedEstimate) {
         for (final SprintData sprint : sprints) {
             final Double accumulatedEffortDoneOrProgressForcast = sprint.getAccumulatedEffortDoneOrProgressForcast(progressForecastName);
             if (accumulatedEffortDoneOrProgressForcast != null && accumulatedEstimate <= accumulatedEffortDoneOrProgressForcast) {

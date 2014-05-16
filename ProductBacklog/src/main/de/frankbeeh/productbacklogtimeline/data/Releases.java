@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeForecastForRelease;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ReleaseVisitor;
 
@@ -33,7 +35,7 @@ public class Releases {
         }
     }
 
-    // Visible for testing
+    @VisibleForTesting
     Releases(List<ReleaseVisitor> visitorMocks) {
         this.visitors = visitorMocks;
     }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 import de.frankbeeh.productbacklogtimeline.service.sort.JiraProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
@@ -29,11 +31,17 @@ public class ProductBacklog {
                 Sprints.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(Sprints.MAXIMUM_VELOCITY_FORECAST));
     }
 
-    // Visible for testing
+    @VisibleForTesting
     ProductBacklog(ProductBacklogSortingStrategy sortingStrategy, ProductBacklogItemVisitor... visitorMocks) {
         this.sortingStrategy = sortingStrategy;
         this.visitors = visitorMocks;
         this.items = new LinkedList<ProductBacklogItem>();
+    }
+
+    @VisibleForTesting
+    public ProductBacklog(List<ProductBacklogItem> items) {
+        this();
+        items = new LinkedList<ProductBacklogItem>(items);
     }
 
     public void addItem(ProductBacklogItem productBacklogItem) {
@@ -44,12 +52,12 @@ public class ProductBacklog {
         return items;
     }
 
-    public void updateAllItems(Sprints sprints) {
+    public void updateAllItems(Sprints sprints, ProductBacklog referenceProductBacklog) {
         sortingStrategy.sortProductBacklog(this, sprints);
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
-                visitor.visit(item, sprints);
+                visitor.visit(item, referenceProductBacklog, sprints);
             }
         }
     }
@@ -71,5 +79,14 @@ public class ProductBacklog {
             }
         }
         return false;
+    }
+
+    public ProductBacklogItem getItemById(String id) {
+        for (final ProductBacklogItem item : items) {
+            if (item.getId().equals(id)) {
+                return item;
+            }
+        }
+        return null;
     }
 }
