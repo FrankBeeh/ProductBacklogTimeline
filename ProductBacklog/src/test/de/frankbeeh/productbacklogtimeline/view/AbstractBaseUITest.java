@@ -1,21 +1,15 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.net.URL;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.KeyCode;
 
 import org.loadui.testfx.GuiTest;
 
 public abstract class AbstractBaseUITest extends GuiTest {
-
-    protected abstract URL getFXMLResourceURL();
 
     @Override
     protected Parent getRootNode() {
@@ -33,28 +27,6 @@ public abstract class AbstractBaseUITest extends GuiTest {
         return GuiTest.<T> find(selector);
     }
 
-    protected void enterFileName(String fileName) {
-        type(fileName);
-        type(KeyCode.ENTER);
-    }
-
-    protected void selectTab(String tabTitle) {
-        click(tabTitle);
-        assertEquals(tabTitle, getSelectedTabTitle());
-    }
-
-    protected void closeDialog() {
-        press(KeyCode.ALT);
-        press(KeyCode.F4);
-        release(KeyCode.ALT);
-    }
-
-    private String getSelectedTabTitle() {
-        return getTabPane().getSelectionModel().getSelectedItem().getText();
-    }
-
-    private TabPane getTabPane() {
-        return this.<TabPane> getNode("#mainTabPane");
-    }
+    protected abstract URL getFXMLResourceURL();
 
 }

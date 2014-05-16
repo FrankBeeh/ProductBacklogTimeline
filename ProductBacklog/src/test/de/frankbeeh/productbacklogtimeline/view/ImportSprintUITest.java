@@ -1,6 +1,11 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
+import static org.junit.Assert.assertEquals;
+
 import java.net.URL;
+
+import javafx.scene.control.TabPane;
+import javafx.scene.input.KeyCode;
 
 import org.junit.Test;
 
@@ -14,8 +19,26 @@ public class ImportSprintUITest extends AbstractBaseUITest {
     @Test
     public void importSprints() throws Exception {
         openSprintImportDialog();
-        enterFileName("Sprints.csv");
-        selectTab("Sprints");
+        enterFileName();
+        selectSprintsTab();
+    }
+
+    private void enterFileName() {
+        type("Sprints.csv");
+        type(KeyCode.ENTER);
+    }
+
+    private void selectSprintsTab() {
+        click("Sprints");
+        assertEquals("Sprints", getSelectedTabTitle());
+    }
+
+    private String getSelectedTabTitle() {
+        return getTabPane().getSelectionModel().getSelectedItem().getText();
+    }
+
+    private TabPane getTabPane() {
+        return this.<TabPane> getNode("#mainTabPane");
     }
 
     private void openSprintImportDialog() {
