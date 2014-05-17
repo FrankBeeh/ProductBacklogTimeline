@@ -8,6 +8,8 @@
 <?import de.frankbeeh.productbacklogtimeline.view.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
 
 <TableView fx:id="sprintsTable" prefHeight="719" prefWidth="1198" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.SprintsTableController">
   <columnResizePolicy>
@@ -116,4 +118,11 @@
       </columns>
     </TableColumn>
   </columns>
+  <contextMenu>
+  	<ContextMenu>
+  		<items>
+  			<MenuItem text="edit Sprint" fx:id="editItem" onAction="#editItem" />
+  		</items>
+  	</ContextMenu>
+  </contextMenu>
 </TableView>

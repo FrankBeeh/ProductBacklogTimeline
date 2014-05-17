@@ -103,6 +103,15 @@ public class SprintsTableController {
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, Sprints.MAXIMUM_VELOCITY_FORECAST);
     }
 
+    @FXML
+    private void editItem() {
+        final SprintEditDialog dialog = new SprintEditDialog();
+        final SprintData editedSprint = dialog.openDialog();
+        if (editedSprint != null) {
+            // TODO: Save changed Sprint to table and entity
+        }
+    }
+
     public void initModel(Sprints sprints) {
         createModel(sprints);
         this.sprintsTable.setItems(model);
