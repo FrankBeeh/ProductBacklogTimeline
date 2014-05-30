@@ -6,7 +6,7 @@ import javafx.scene.control.ComboBox;
 
 import org.junit.Test;
 
-public class ImportProductBacklogUITest extends AbstractBaseUITest {
+public class ImportProductBacklogUITest extends BaseUITest {
 
     private static final String FILE_NAME_2 = "PBL2.csv";
     private static final String FILE_NAME_1 = "PBL1.csv";
@@ -39,6 +39,13 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
         selectTab("PBL");
     }
 
+    @Test
+    public void cancelImportBacklog() throws Exception {
+        openPBLImportDialog();
+        closeDialog();
+        selectTab("PBL");
+    }
+
     private String getSelectedProductBacklog() {
         return getSelectProductBacklogComboBox().getSelectionModel().getSelectedItem();
     }
@@ -52,16 +59,8 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
         return comboBox;
     }
 
-    @Test
-    public void cancelImportBacklog() throws Exception {
-        openPBLImportDialog();
-        closeDialog();
-        selectTab("PBL");
-    }
-
     private void openPBLImportDialog() {
         click("File");
         click("Import PBL");
     }
-
 }

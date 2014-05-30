@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.view;
 
 import org.junit.Test;
 
-public class SprintUITest extends AbstractBaseUITest {
+public class SprintUITest extends BaseUITest {
 
     @Test
     public void importAndEditSprintClickCancel() throws Exception {

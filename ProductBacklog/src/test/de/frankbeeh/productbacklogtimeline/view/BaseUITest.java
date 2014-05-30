@@ -14,20 +14,31 @@ import javafx.scene.control.Skin;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 
+import org.junit.Before;
 import org.loadui.testfx.GuiTest;
 
-public abstract class AbstractBaseUITest extends GuiTest {
+public class BaseUITest {
+    private GuiTest guiTest;
 
-    @Override
-    protected Parent getRootNode() {
-        final URL resource = getFXMLResourceURL();
-        final FXMLLoader fxmlLoader = new FXMLLoader(resource);
-        try {
-            fxmlLoader.load();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-        return fxmlLoader.getRoot();
+    public BaseUITest() {
+        guiTest = new GuiTest() {
+            @Override
+            protected Parent getRootNode() {
+                final URL resource = getFXMLResourceURL();
+                final FXMLLoader fxmlLoader = new FXMLLoader(resource);
+                try {
+                    fxmlLoader.load();
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+                return fxmlLoader.getRoot();
+            }
+        };
+    }
+
+    @Before
+    public void setUp() throws Throwable {
+        guiTest.setupStage();
     }
 
     @SuppressWarnings("unchecked")
@@ -57,12 +68,12 @@ public abstract class AbstractBaseUITest extends GuiTest {
     }
 
     protected void enterFileName(String fileName) {
-        type(fileName);
-        type(KeyCode.ENTER);
+        guiTest.type(fileName);
+        guiTest.type(KeyCode.ENTER);
     }
 
     protected void selectTab(String tabTitle) {
-        click(tabTitle);
+        guiTest.click(tabTitle);
         assertEquals(tabTitle, getSelectedTabTitle());
     }
 
@@ -75,9 +86,20 @@ public abstract class AbstractBaseUITest extends GuiTest {
     }
 
     protected void closeDialog() {
-        press(KeyCode.ALT);
-        press(KeyCode.F4);
-        release(KeyCode.ALT);
+        guiTest.press(KeyCode.ALT);
+        guiTest.press(KeyCode.F4);
+        guiTest.release(KeyCode.ALT);
     }
 
+    public void click(String query) {
+        guiTest.click(query);
+    }
+
+    public void rightClick(String query) {
+        guiTest.rightClick(query);
+    }
+
+    public void closeCurrentWindow() {
+        guiTest.closeCurrentWindow();
+    }
 }
