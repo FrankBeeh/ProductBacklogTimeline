@@ -1,15 +1,8 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import java.net.URL;
-
 import org.junit.Test;
 
 public class SprintUITest extends AbstractBaseUITest {
-
-    @Override
-    protected URL getFXMLResourceURL() {
-        return MainController.class.getResource("main.fxml");
-    }
 
     @Test
     public void importAndEditSprintClickCancel() throws Exception {

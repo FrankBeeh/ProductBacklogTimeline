@@ -1,9 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
 import static junit.framework.Assert.assertEquals;
-
-import java.net.URL;
-
 import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 
@@ -13,11 +10,6 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
 
     private static final String FILE_NAME_2 = "PBL2.csv";
     private static final String FILE_NAME_1 = "PBL1.csv";
-
-    @Override
-    protected URL getFXMLResourceURL() {
-        return MainController.class.getResource("main.fxml");
-    }
 
     @Test
     public void importBacklog() throws Exception {
@@ -56,7 +48,7 @@ public class ImportProductBacklogUITest extends AbstractBaseUITest {
     }
 
     private ComboBox<String> getSelectProductBacklogComboBox() {
-        final ComboBox<String> comboBox = getNode("#selectedProductBacklog");
+        final ComboBox<String> comboBox = getUniqueNode("#selectedProductBacklog");
         return comboBox;
     }
 

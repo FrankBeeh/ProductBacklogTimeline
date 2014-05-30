@@ -4,10 +4,13 @@ import static junit.framework.Assert.assertEquals;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Skin;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.KeyCode;
 
@@ -27,11 +30,31 @@ public abstract class AbstractBaseUITest extends GuiTest {
         return fxmlLoader.getRoot();
     }
 
-    public <T extends Node> T getNode(final String selector) {
-        return GuiTest.<T> find(selector);
+    @SuppressWarnings("unchecked")
+    public <T extends Node> T getUniqueNode(final String selector) {
+        final Set<Node> foundNodes = removeSkinNodes(GuiTest.findAll(selector));
+        if (foundNodes.isEmpty()) {
+            throw new RuntimeException("No node found for selector '" + selector + "'!");
+        }
+        if (foundNodes.size() > 1) {
+            throw new RuntimeException("Multiple nodes found for selector '" + selector + ": " + foundNodes + "!");
+        }
+        return (T) foundNodes.iterator().next();
     }
 
-    protected abstract URL getFXMLResourceURL();
+    private Set<Node> removeSkinNodes(Set<Node> foundNodes) {
+        final Set<Node> filteredNodes = new HashSet<Node>();
+        for (final Node node : foundNodes) {
+            if (!(node instanceof Skin) && !(node.getClass().getName().contains("Skin"))) {
+                filteredNodes.add(node);
+            }
+        }
+        return filteredNodes;
+    }
+
+    private URL getFXMLResourceURL() {
+        return MainController.class.getResource("main.fxml");
+    }
 
     protected void enterFileName(String fileName) {
         type(fileName);
@@ -48,7 +71,7 @@ public abstract class AbstractBaseUITest extends GuiTest {
     }
 
     private TabPane getTabPane() {
-        return getNode("#mainTabPane");
+        return getUniqueNode("#mainTabPane");
     }
 
     protected void closeDialog() {
