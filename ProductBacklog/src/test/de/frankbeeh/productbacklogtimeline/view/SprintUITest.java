@@ -34,13 +34,11 @@ public class SprintUITest extends BaseUITest {
     private void editSprintAndSave(String sprint) {
         editSprint(sprint);
         click("Save");
-        closeCurrentWindow();
     }
 
     private void editSprintClickCancel(String sprint) {
         editSprint(sprint);
         click("Cancel");
-        closeCurrentWindow();
     }
 
     private void editSprint(String sprint) {

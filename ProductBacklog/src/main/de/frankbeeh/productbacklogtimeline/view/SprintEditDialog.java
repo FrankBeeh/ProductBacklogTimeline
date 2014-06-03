@@ -6,6 +6,8 @@ import de.frankbeeh.productbacklogtimeline.data.SprintData;
 
 public class SprintEditDialog extends BasicDialog<SprintData> {
 
+    private SprintEditDialogController sprintEditDialogController;
+
     public SprintEditDialog() {
         super("Sprint bearbeiten");
     }
@@ -13,6 +15,17 @@ public class SprintEditDialog extends BasicDialog<SprintData> {
     @Override
     protected URL getFXMLResourceURL() {
         return SprintEditDialogController.class.getResource("editSprintDialog.fxml");
+    }
+
+    @Override
+    protected SprintData createResult() {
+        return sprintEditDialogController.getDialogResult();
+    }
+
+    @Override
+    protected Object getDialogController() {
+        sprintEditDialogController = new SprintEditDialogController(this);
+        return sprintEditDialogController;
     }
 
 }
