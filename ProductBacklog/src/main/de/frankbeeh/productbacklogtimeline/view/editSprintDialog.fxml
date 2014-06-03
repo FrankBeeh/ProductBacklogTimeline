@@ -4,12 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="224.0" prefWidth="321.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" >
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<GridPane layoutX="20.0" layoutY="52.0" xmlns:fx="http://javafx.com/fxml">
+		<GridPane layoutX="20.0" layoutY="52.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" xmlns:fx="http://javafx.com/fxml">
 			<columnConstraints>
-				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-				<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+				<ColumnConstraints hgrow="ALWAYS" />
+				<ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="87.0" />
 			</columnConstraints>
 			<rowConstraints>
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -18,18 +18,27 @@
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
-				<TextField GridPane.columnIndex="1" />
-				<TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-				<TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-				<Label text="Label" />
-				<Label text="Label" GridPane.rowIndex="1" />
-				<Label text="Label" GridPane.rowIndex="2" />
-				<Button mnemonicParsing="false" fx:id="saveDialog" text="Save" GridPane.rowIndex="5" onAction="#save" />
-				<Button mnemonicParsing="false" fx:id="cancelDialog" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#cancel" />
-				<Label text="Label" GridPane.rowIndex="3" />
-				<TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<TextField fx:id="sprintName" GridPane.columnIndex="1" />
+				<TextField fx:id="startDate" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+				<TextField fx:id="endDate" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+				<Label text="Start Date" GridPane.rowIndex="1" />
+				<Label text="End Date" GridPane.rowIndex="2" />
+				<Label text="Planned Capacity" GridPane.rowIndex="3" />
+				<TextField fx:id="plannedCapacity" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+				<Label text="Planned Effort" GridPane.rowIndex="4" />
+				<Label text="Done Capacity" GridPane.rowIndex="5" />
+				<Label text="Done Effort" GridPane.rowIndex="6" />
+				<Label text="Sprint" />
+				<TextField fx:id="plannedEffort" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				<TextField fx:id="doneCapacity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+				<TextField fx:id="doneEffort" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+				<Button fx:id="saveDialog" mnemonicParsing="false" onAction="#save" text="Save" GridPane.rowIndex="8" />
+				<Button fx:id="cancelDialog" mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 			</children>
 		</GridPane>
 	</children>

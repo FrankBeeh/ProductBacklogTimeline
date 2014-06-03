@@ -105,10 +105,14 @@ public class SprintsTableController {
 
     @FXML
     private void editItem() {
-        final SprintEditDialog dialog = new SprintEditDialog();
-        final SprintData editedSprint = dialog.openDialog();
-        if (editedSprint != null) {
-            // TODO: Save changed Sprint to table and entity
+        final SprintData selectedItem = sprintsTable.getSelectionModel().getSelectedItem();
+        if (selectedItem != null) {
+            final BasicDialog<SprintData> dialog = new SprintEditDialog();
+            dialog.setEntity(selectedItem);
+            final SprintData editedSprint = dialog.openDialog();
+            if (editedSprint != null) {
+                // TODO: Save changed Sprint to table and entity
+            }
         }
     }
 

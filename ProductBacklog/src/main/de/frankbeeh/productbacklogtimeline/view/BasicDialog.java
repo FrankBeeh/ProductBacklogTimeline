@@ -43,4 +43,6 @@ public abstract class BasicDialog<T> extends Stage {
         final T dialogResult = createResult();
         return dialogResult;
     }
+
+    public abstract void setEntity(T selectedItem);
 }

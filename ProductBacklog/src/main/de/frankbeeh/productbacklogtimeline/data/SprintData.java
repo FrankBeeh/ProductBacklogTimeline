@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -12,56 +17,84 @@ import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
-    private final String name;
-    private final Date startDate;
-    private final Date endDate;
-    private final Double capacityForecast;
-    private final Double effortForecast;
-    private final Double capacityDone;
-    private final Double effortDone;
+    private final StringProperty name;
+    private final ObjectProperty<Date> startDate;
+    private final ObjectProperty<Date> endDate;
+    private final ObjectProperty<Double> capacityForecast;
+    private final ObjectProperty<Double> effortForecast;
+    private final ObjectProperty<Double> capacityDone;
+    private final ObjectProperty<Double> effortDone;
 
     private final Map<String, Double> progressForecastBasedOnHistory;
     private final Map<String, Double> accumulatedProgressForecastBasedOnHistory;
     private Double accumulatedEffortDone;
 
     public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.capacityForecast = capacityForecast;
-        this.effortForecast = effortForecast;
-        this.capacityDone = capacityDone;
-        this.effortDone = effortDone;
+        this.name = new SimpleStringProperty(name);
+        this.startDate = new SimpleObjectProperty<Date>(startDate);
+        this.endDate = new SimpleObjectProperty<Date>(endDate);
+        this.capacityForecast = new SimpleObjectProperty<Double>(capacityForecast);
+        this.effortForecast = new SimpleObjectProperty<Double>(effortForecast);
+        this.capacityDone = new SimpleObjectProperty<Double>(capacityDone);
+        this.effortDone = new SimpleObjectProperty<Double>(effortDone);
         this.accumulatedEffortDone = null;
         this.progressForecastBasedOnHistory = new HashMap<String, Double>();
         this.accumulatedProgressForecastBasedOnHistory = new HashMap<String, Double>();
     }
 
     public String getName() {
+        return name.get();
+    }
+
+    public StringProperty nameProperty() {
         return name;
     }
 
     public Date getStartDate() {
+        return startDate.get();
+    }
+
+    public ObjectProperty<Date> startDateProperty() {
         return startDate;
     }
 
     public Date getEndDate() {
+        return endDate.get();
+    }
+
+    public ObjectProperty<Date> endDateProperty() {
         return endDate;
     }
 
     public Double getCapacityForecast() {
+        return capacityForecast.get();
+    }
+
+    public ObjectProperty<Double> capacityForecastProperty() {
         return capacityForecast;
     }
 
     public Double getEffortForecast() {
+        return effortForecast.get();
+    }
+
+    public ObjectProperty<Double> effortForecastProperty() {
         return effortForecast;
     }
 
     public Double getCapacityDone() {
+        return capacityDone.get();
+    }
+
+    public ObjectProperty<Double> capacityDoneProperty() {
         return capacityDone;
     }
 
     public Double getEffortDone() {
+        return effortDone.get();
+    }
+
+    public ObjectProperty<Double> effortDoneProperty() {
         return effortDone;
     }
 

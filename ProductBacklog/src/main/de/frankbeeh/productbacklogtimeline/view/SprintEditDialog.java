@@ -28,4 +28,9 @@ public class SprintEditDialog extends BasicDialog<SprintData> {
         return sprintEditDialogController;
     }
 
+    @Override
+    public void setEntity(SprintData selectedItem) {
+        sprintEditDialogController.initModel(selectedItem);
+    }
+
 }
