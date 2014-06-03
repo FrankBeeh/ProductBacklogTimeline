@@ -38,7 +38,7 @@ public class BaseUITest {
 
     @Before
     public void setUp() throws Throwable {
-        guiTest.setupStage();
+        guiTest.setupGuiTest();
     }
 
     @SuppressWarnings("unchecked")
