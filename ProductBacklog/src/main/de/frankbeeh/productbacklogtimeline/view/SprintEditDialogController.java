@@ -3,7 +3,7 @@ package de.frankbeeh.productbacklogtimeline.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
 
 public class SprintEditDialogController extends AnchorPane {
 
@@ -23,18 +23,18 @@ public class SprintEditDialogController extends AnchorPane {
     private TextField doneEffort;
 
     // FIXME: Get rid of dependency to Dialog
-    private BasicDialog<SprintData> sprintEditDialog;
+    private BasicDialog<SprintDataViewModel> sprintEditDialog;
 
-    private SprintData result = null;
-    private SprintData sprintModel;
+    private SprintDataViewModel result = null;
+    private SprintDataViewModel sprintModel;
 
-    public SprintEditDialogController(BasicDialog<SprintData> sprintEditDialog) {
+    public SprintEditDialogController(BasicDialog<SprintDataViewModel> sprintEditDialog) {
         this.sprintEditDialog = sprintEditDialog;
     }
 
     @FXML
     private void save() {
-        result = new SprintData("nam", null, null, 2.0, 2.0, 2.0, 2.0);
+        result = sprintModel;
         closeDialog();
     }
 
@@ -43,7 +43,7 @@ public class SprintEditDialogController extends AnchorPane {
         closeDialog();
     }
 
-    public SprintData getDialogResult() {
+    public SprintDataViewModel getDialogResult() {
         return result;
     }
 
@@ -51,25 +51,31 @@ public class SprintEditDialogController extends AnchorPane {
         sprintEditDialog.close();
     }
 
-    public void initModel(final SprintData selectedItem) {
+    public void initModel(final SprintDataViewModel sprintModel) {
         unbindUI();
-        this.sprintModel = selectedItem;
+        this.sprintModel = sprintModel;
         bindUI();
     }
 
-    private void bindUI() {
-        sprintName.textProperty().bind(sprintModel.nameProperty());
-        // FIXME: Make conversion in bindings.
-        // startDate.textProperty().bind(sprintModel.startDateProperty());
-        // endDate.textProperty().bind(sprintModel.endDateProperty());
-        // plannedCapacity.textProperty().bind(sprintModel.capacityForecastProperty());
-        // plannedEffort.textProperty().bind(sprintModel.effortForecastProperty());
-        // doneCapacity.textProperty().bind(sprintModel.capacityDoneProperty());
-        // doneEffort.textProperty().bind(sprintModel.capacityForecastProperty());
-    }
-
     private void unbindUI() {
-
+        if (sprintModel != null) {
+            sprintName.textProperty().unbindBidirectional(sprintModel.nameProperty());
+            startDate.textProperty().unbindBidirectional(sprintModel.startDateProperty());
+            endDate.textProperty().unbindBidirectional(sprintModel.endDateProperty());
+            plannedCapacity.textProperty().unbindBidirectional(sprintModel.capacityForecastProperty());
+            plannedEffort.textProperty().unbindBidirectional(sprintModel.effortForecastProperty());
+            doneCapacity.textProperty().unbindBidirectional(sprintModel.capacityDoneProperty());
+            doneEffort.textProperty().unbindBidirectional(sprintModel.effortDoneProperty());
+        }
     }
-
+    
+    private void bindUI() {
+        sprintName.textProperty().bindBidirectional(sprintModel.nameProperty());
+        startDate.textProperty().bindBidirectional(sprintModel.startDateProperty());
+        endDate.textProperty().bindBidirectional(sprintModel.endDateProperty());
+        plannedCapacity.textProperty().bindBidirectional(sprintModel.capacityForecastProperty());
+        plannedEffort.textProperty().bindBidirectional(sprintModel.effortForecastProperty());
+        doneCapacity.textProperty().bindBidirectional(sprintModel.capacityDoneProperty());
+        doneEffort.textProperty().bindBidirectional(sprintModel.capacityForecastProperty());
+    }
 }

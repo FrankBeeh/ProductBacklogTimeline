@@ -2,9 +2,9 @@ package de.frankbeeh.productbacklogtimeline.view;
 
 import java.net.URL;
 
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
 
-public class SprintEditDialog extends BasicDialog<SprintData> {
+public class SprintEditDialog extends BasicDialog<SprintDataViewModel> {
 
     private SprintEditDialogController sprintEditDialogController;
 
@@ -18,7 +18,7 @@ public class SprintEditDialog extends BasicDialog<SprintData> {
     }
 
     @Override
-    protected SprintData createResult() {
+    protected SprintDataViewModel createResult() {
         return sprintEditDialogController.getDialogResult();
     }
 
@@ -29,7 +29,7 @@ public class SprintEditDialog extends BasicDialog<SprintData> {
     }
 
     @Override
-    public void setEntity(SprintData selectedItem) {
+    public void initModel(SprintDataViewModel selectedItem) {
         sprintEditDialogController.initModel(selectedItem);
     }
 

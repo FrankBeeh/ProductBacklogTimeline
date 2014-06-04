@@ -17,26 +17,31 @@ import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
-    private final StringProperty name;
-    private final ObjectProperty<Date> startDate;
-    private final ObjectProperty<Date> endDate;
-    private final ObjectProperty<Double> capacityForecast;
-    private final ObjectProperty<Double> effortForecast;
-    private final ObjectProperty<Double> capacityDone;
-    private final ObjectProperty<Double> effortDone;
+
+    private final StringProperty name = new SimpleStringProperty();
+    private final ObjectProperty<Date> startDate = new SimpleObjectProperty<Date>();
+    private final ObjectProperty<Date> endDate = new SimpleObjectProperty<Date>();
+    private final ObjectProperty<Double> capacityForecast = new SimpleObjectProperty<Double>();
+    private final ObjectProperty<Double> effortForecast = new SimpleObjectProperty<Double>();
+    private final ObjectProperty<Double> capacityDone = new SimpleObjectProperty<Double>();;
+    private final ObjectProperty<Double> effortDone = new SimpleObjectProperty<Double>();;
 
     private final Map<String, Double> progressForecastBasedOnHistory;
     private final Map<String, Double> accumulatedProgressForecastBasedOnHistory;
     private Double accumulatedEffortDone;
 
+    public SprintData() {
+        this("", null, null, null, null, null, null);
+    }
+
     public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
-        this.name = new SimpleStringProperty(name);
-        this.startDate = new SimpleObjectProperty<Date>(startDate);
-        this.endDate = new SimpleObjectProperty<Date>(endDate);
-        this.capacityForecast = new SimpleObjectProperty<Double>(capacityForecast);
-        this.effortForecast = new SimpleObjectProperty<Double>(effortForecast);
-        this.capacityDone = new SimpleObjectProperty<Double>(capacityDone);
-        this.effortDone = new SimpleObjectProperty<Double>(effortDone);
+        this.name.set(name);
+        this.startDate.set(startDate);
+        this.endDate.set(endDate);
+        this.capacityForecast.set(capacityForecast);
+        this.effortForecast.set(effortForecast);
+        this.capacityDone.set(capacityDone);
+        this.effortDone.set(effortDone);
         this.accumulatedEffortDone = null;
         this.progressForecastBasedOnHistory = new HashMap<String, Double>();
         this.accumulatedProgressForecastBasedOnHistory = new HashMap<String, Double>();

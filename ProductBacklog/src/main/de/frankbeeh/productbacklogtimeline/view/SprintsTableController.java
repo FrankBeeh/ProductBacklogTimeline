@@ -11,10 +11,11 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class SprintsTableController {
-    private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, Double>, ObservableValue<Double>> {
+    private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintDataViewModel, Double>, ObservableValue<Double>> {
         private final String progressForecastName;
 
         public ProgressForecastPropertyValueFactory(String progressForecastName) {
@@ -22,17 +23,17 @@ public class SprintsTableController {
         }
 
         @Override
-        public ObservableValue<Double> call(final CellDataFeatures<SprintData, Double> cellDataFeatures) {
+        public ObservableValue<Double> call(final CellDataFeatures<SprintDataViewModel, Double> cellDataFeatures) {
             return new ObservableValueBase<Double>() {
                 @Override
                 public Double getValue() {
-                    return cellDataFeatures.getValue().getProgressForecastBasedOnHistory(progressForecastName);
+                    return cellDataFeatures.getValue().entityProperty().get().getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
                 }
             };
         }
     }
 
-    private static final class AccumulatedProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintData, Double>, ObservableValue<Double>> {
+    private static final class AccumulatedProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintDataViewModel, Double>, ObservableValue<Double>> {
         private final String progressForecastName;
 
         public AccumulatedProgressForecastPropertyValueFactory(String progressForecastName) {
@@ -40,57 +41,59 @@ public class SprintsTableController {
         }
 
         @Override
-        public ObservableValue<Double> call(final CellDataFeatures<SprintData, Double> cellDataFeatures) {
+        public ObservableValue<Double> call(final CellDataFeatures<SprintDataViewModel, Double> cellDataFeatures) {
             return new ObservableValueBase<Double>() {
                 @Override
                 public Double getValue() {
-                    return cellDataFeatures.getValue().getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
+                    return cellDataFeatures.getValue().entityProperty().get().getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
                 }
             };
         }
     }
 
     @FXML
-    private TableView<SprintData> sprintsTable;
+    private TableView<SprintDataViewModel> sprintsTable;
     @FXML
-    private TableColumn<SprintData, String> startDateColumn;
+    private TableColumn<SprintDataViewModel, String> startDateColumn;
     @FXML
-    private TableColumn<SprintData, String> endDateColumn;
+    private TableColumn<SprintDataViewModel, String> endDateColumn;
     @FXML
-    private TableColumn<SprintData, Double> forecastPerSprintByAvgVelColumn;
+    private TableColumn<SprintDataViewModel, Double> forecastPerSprintByAvgVelColumn;
     @FXML
-    private TableColumn<SprintData, Double> forecastPerSprintByMinVelColumn;
+    private TableColumn<SprintDataViewModel, Double> forecastPerSprintByMinVelColumn;
     @FXML
-    private TableColumn<SprintData, Double> forecastPerSprintByMaxVelColumn;
+    private TableColumn<SprintDataViewModel, Double> forecastPerSprintByMaxVelColumn;
     @FXML
-    private TableColumn<SprintData, Double> accumulatedForecastByAvgVelColumn;
+    private TableColumn<SprintDataViewModel, Double> accumulatedForecastByAvgVelColumn;
     @FXML
-    private TableColumn<SprintData, Double> accumulatedForecastByMinVelColumn;
+    private TableColumn<SprintDataViewModel, Double> accumulatedForecastByMinVelColumn;
     @FXML
-    private TableColumn<SprintData, Double> accumulatedForecastByMaxVelColumn;
+    private TableColumn<SprintDataViewModel, Double> accumulatedForecastByMaxVelColumn;
 
-    private ObservableList<SprintData> model;
+    private ObservableList<SprintDataViewModel> model;
 
     @FXML
     private void initialize() {
-        startDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>>() {
+    	
+    	// FIXME: CellValueFactory should not be needed anymore, once PropertyFormatting works correctly can be directly binded to the property of the viewmodel
+        startDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintDataViewModel, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(final CellDataFeatures<SprintData, String> cellDataFeatures) {
+            public ObservableValue<String> call(final CellDataFeatures<SprintDataViewModel, String> cellDataFeatures) {
                 return new ObservableValueBase<String>() {
                     @Override
                     public String getValue() {
-                        return FormatUtility.formatDate(cellDataFeatures.getValue().getStartDate());
+                        return FormatUtility.formatDate(cellDataFeatures.getValue().entityProperty().get().getStartDate());
                     }
                 };
             }
         });
-        endDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintData, String>, ObservableValue<String>>() {
+        endDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintDataViewModel, String>, ObservableValue<String>>() {
             @Override
-            public ObservableValue<String> call(final CellDataFeatures<SprintData, String> cellDataFeatures) {
+            public ObservableValue<String> call(final CellDataFeatures<SprintDataViewModel, String> cellDataFeatures) {
                 return new ObservableValueBase<String>() {
                     @Override
                     public String getValue() {
-                        return FormatUtility.formatDate(cellDataFeatures.getValue().getEndDate());
+                        return FormatUtility.formatDate(cellDataFeatures.getValue().entityProperty().get().getEndDate());
                     }
                 };
             }
@@ -105,14 +108,11 @@ public class SprintsTableController {
 
     @FXML
     private void editItem() {
-        final SprintData selectedItem = sprintsTable.getSelectionModel().getSelectedItem();
+        final SprintDataViewModel selectedItem = sprintsTable.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
-            final BasicDialog<SprintData> dialog = new SprintEditDialog();
-            dialog.setEntity(selectedItem);
-            final SprintData editedSprint = dialog.openDialog();
-            if (editedSprint != null) {
-                // TODO: Save changed Sprint to table and entity
-            }
+            final BasicDialog<SprintDataViewModel> dialog = new SprintEditDialog();
+            dialog.initModel(selectedItem);
+            dialog.openDialog();
         }
     }
 
@@ -122,15 +122,19 @@ public class SprintsTableController {
     }
 
     private void createModel(Sprints sprints) {
-        model = FXCollections.<SprintData> observableArrayList();
-        model.addAll(sprints.getSprints());
+        model = FXCollections.<SprintDataViewModel> observableArrayList();
+
+        // FIXME: Maybe introduce a listModel, once this is needed in several classes?
+        for (SprintData sprintData : sprints.getSprints()) {
+            model.add(new SprintDataViewModel(sprintData));
+        }
     }
 
-    private void setCellValueFactoryForForecast(TableColumn<SprintData, Double> tableColumn, String historyForecastName) {
+    private void setCellValueFactoryForForecast(TableColumn<SprintDataViewModel, Double> tableColumn, String historyForecastName) {
         tableColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(historyForecastName));
     }
 
-    private void setCellValueFactoryForAccumulatedForecast(TableColumn<SprintData, Double> tableColumn, String historyForecastName) {
+    private void setCellValueFactoryForAccumulatedForecast(TableColumn<SprintDataViewModel, Double> tableColumn, String historyForecastName) {
         tableColumn.setCellValueFactory(new AccumulatedProgressForecastPropertyValueFactory(historyForecastName));
     }
 }
