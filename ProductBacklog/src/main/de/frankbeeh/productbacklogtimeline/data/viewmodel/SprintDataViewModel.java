@@ -29,7 +29,6 @@ public class SprintDataViewModel {
     public SprintDataViewModel(SprintData sprintData) {
         this.sprintData.set(sprintData);
         clear();
-        unbindModel();
         bindModel();
     }
 
@@ -73,18 +72,6 @@ public class SprintDataViewModel {
         effortForecast.set("");
         capacityDone.set("");
         effortDone.set("");
-    }
-
-    private void unbindModel() {
-        if (sprintData.get() != null) {
-            Bindings.unbindBidirectional(name, sprintData.get().nameProperty());
-            Bindings.unbindBidirectional(startDate, sprintData.get().startDateProperty());
-            Bindings.unbindBidirectional(endDate, sprintData.get().startDateProperty());
-            Bindings.unbindBidirectional(capacityForecast, sprintData.get().capacityForecastProperty());
-            Bindings.unbindBidirectional(effortForecast, sprintData.get().effortForecastProperty());
-            Bindings.unbindBidirectional(capacityDone, sprintData.get().capacityDoneProperty());
-            Bindings.unbindBidirectional(effortDone, sprintData.get().effortDoneProperty());
-        }
     }
 
     private void bindModel() {

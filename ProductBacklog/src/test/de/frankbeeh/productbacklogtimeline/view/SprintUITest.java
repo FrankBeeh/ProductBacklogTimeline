@@ -5,15 +5,9 @@ import org.junit.Test;
 public class SprintUITest extends BaseUITest {
 
     @Test
-    public void importAndEditSprintClickCancel() throws Exception {
-        importSprint();
-        editSprintClickCancel(getFirstSprint());
-    }
-
-    @Test
     public void importAndEditSprintClickSave() throws Exception {
         importSprint();
-        editSprintAndSave(getFirstSprint());
+        editSprint(getFirstSprint());
     }
 
     private void importSprint() {
@@ -31,19 +25,10 @@ public class SprintUITest extends BaseUITest {
         return "Sprint 1";
     }
 
-    private void editSprintAndSave(String sprint) {
-        editSprint(sprint);
-        click("Save");
-    }
-
-    private void editSprintClickCancel(String sprint) {
-        editSprint(sprint);
-        click("Cancel");
-    }
-
     private void editSprint(String sprint) {
         rightClick(sprint);
         click("#editItem");
+        click("#okDialog");
     }
 
 }

@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -25,7 +26,6 @@ public class SprintEditDialogController extends AnchorPane {
     // FIXME: Get rid of dependency to Dialog
     private BasicDialog<SprintDataViewModel> sprintEditDialog;
 
-    private SprintDataViewModel result = null;
     private SprintDataViewModel sprintModel;
 
     public SprintEditDialogController(BasicDialog<SprintDataViewModel> sprintEditDialog) {
@@ -33,27 +33,21 @@ public class SprintEditDialogController extends AnchorPane {
     }
 
     @FXML
-    private void save() {
-        result = sprintModel;
-        closeDialog();
-    }
-
-    @FXML
-    private void cancel() {
+    private void ok() {
         closeDialog();
     }
 
     public SprintDataViewModel getDialogResult() {
-        return result;
+        return null;
     }
 
     private void closeDialog() {
         sprintEditDialog.close();
     }
 
-    public void initModel(final SprintDataViewModel sprintModel) {
+    public void initModel(final SprintDataViewModel sprintDataViewModel) {
         unbindUI();
-        this.sprintModel = sprintModel;
+        this.sprintModel = sprintDataViewModel;
         bindUI();
     }
 
@@ -68,9 +62,9 @@ public class SprintEditDialogController extends AnchorPane {
             doneEffort.textProperty().unbindBidirectional(sprintModel.effortDoneProperty());
         }
     }
-    
+
     private void bindUI() {
-        sprintName.textProperty().bindBidirectional(sprintModel.nameProperty());
+        Bindings.bindBidirectional(sprintName.textProperty(), sprintModel.nameProperty());
         startDate.textProperty().bindBidirectional(sprintModel.startDateProperty());
         endDate.textProperty().bindBidirectional(sprintModel.endDateProperty());
         plannedCapacity.textProperty().bindBidirectional(sprintModel.capacityForecastProperty());

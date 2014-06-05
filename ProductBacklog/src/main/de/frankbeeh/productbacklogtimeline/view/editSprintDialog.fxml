@@ -37,8 +37,7 @@
 				<TextField fx:id="plannedEffort" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 				<TextField fx:id="doneCapacity" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 				<TextField fx:id="doneEffort" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-				<Button fx:id="saveDialog" mnemonicParsing="false" onAction="#save" text="Save" GridPane.rowIndex="8" />
-				<Button fx:id="cancelDialog" mnemonicParsing="false" onAction="#cancel" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+				<Button fx:id="okDialog" mnemonicParsing="false" onAction="#ok" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 			</children>
 		</GridPane>
 	</children>

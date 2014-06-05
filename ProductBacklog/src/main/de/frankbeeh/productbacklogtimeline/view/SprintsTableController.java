@@ -74,8 +74,8 @@ public class SprintsTableController {
 
     @FXML
     private void initialize() {
-    	
-    	// FIXME: CellValueFactory should not be needed anymore, once PropertyFormatting works correctly can be directly binded to the property of the viewmodel
+
+        // FIXME: CellValueFactory should not be needed anymore, once PropertyFormatting works correctly can be directly binded to the property of the viewmodel
         startDateColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintDataViewModel, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(final CellDataFeatures<SprintDataViewModel, String> cellDataFeatures) {
