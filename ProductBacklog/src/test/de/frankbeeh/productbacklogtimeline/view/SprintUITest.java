@@ -12,7 +12,7 @@ public class SprintUITest extends BaseUITest {
 
     private void importSprint() {
         openSprintImportDialog();
-        enterFileName("Sprints.csv");
+        enterFileName("VelocityForecast1.csv");
         selectTab("Sprints");
     }
 

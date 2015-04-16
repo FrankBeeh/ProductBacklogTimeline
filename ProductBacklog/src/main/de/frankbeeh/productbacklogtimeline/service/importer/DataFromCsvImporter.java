@@ -19,7 +19,7 @@ public abstract class DataFromCsvImporter<T> {
     private static final String RESOLUTION_FIXED = "Fixed";
     private static final String RESOLUTION_UNRESOLVED = "Unresolved";
     private static final String RESOLUTION_WONT_FIX = "Won't Fix";
-    private static final String RESOLUTION_DUPLICATE = "Duplicat3";
+    private static final String RESOLUTION_DUPLICATE = "Duplicate";
 
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.UK);
     private static final char SPLIT_BY = ';';
