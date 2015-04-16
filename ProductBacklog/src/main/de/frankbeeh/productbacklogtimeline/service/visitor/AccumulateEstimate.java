@@ -23,7 +23,7 @@ public class AccumulateEstimate implements ProductBacklogItemVisitor {
         accumulatedEstimate = 0d;
     }
 
-    public void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, VelocityForecast velocityForecast) {
+    public void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast referenceVelocityForecast) {
         final Double estimateOfThisItem = productBacklogItem.getEstimate();
         if (estimateOfThisItem != null && !State.Canceled.equals(productBacklogItem.getState())) {
             accumulatedEstimate += estimateOfThisItem;

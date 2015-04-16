@@ -22,8 +22,10 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
 
     private static final String FORECAST_NAME = "forecast name";
 
-    @Mock
-    private VelocityForecast sprints;
+    @Mock(name="referenceVelocityForecast")
+    private VelocityForecast referenceVelocityForecast;
+    @Mock(name="selectedVelocityForecast")
+    private VelocityForecast selectedVelocityForecast;
 
     private ForecastSprintOfCompletion visitor;
 
@@ -41,12 +43,12 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
         final double referenceAccumulatedEstimate = 15d;
         final ProductBacklogItem productBacklogItem = createProductBacklogItem(accumulatedEstimate);
 
-        expect(sprints.getCompletionSprintForecast(FORECAST_NAME, accumulatedEstimate)).andReturn(sprintData);
-        expect(sprints.getCompletionSprintForecast(FORECAST_NAME, referenceAccumulatedEstimate)).andReturn(referenceSprintData);
+        expect(selectedVelocityForecast.getCompletionSprintForecast(FORECAST_NAME, accumulatedEstimate)).andReturn(sprintData);
+        expect(referenceVelocityForecast.getCompletionSprintForecast(FORECAST_NAME, referenceAccumulatedEstimate)).andReturn(referenceSprintData);
         expect(referenceProductBacklogMock.getItemById(ID)).andReturn(createProductBacklogItem(referenceAccumulatedEstimate));
         replayAll();
 
-        visitor.visit(productBacklogItem, referenceProductBacklogMock, sprints);
+        visitor.visit(productBacklogItem, selectedVelocityForecast, referenceProductBacklogMock, referenceVelocityForecast);
         assertEquals(sprintName + "\n(" + referenceSprintName + ")\n" + date + "\n(-29d)", productBacklogItem.getCompletionForecast(FORECAST_NAME));
         verifyAll();
     }
@@ -59,11 +61,11 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
         final double accumulatedEstimate = 10d;
         final ProductBacklogItem productBacklogItem = createProductBacklogItem(accumulatedEstimate);
 
-        expect(sprints.getCompletionSprintForecast(FORECAST_NAME, accumulatedEstimate)).andReturn(sprintData);
+        expect(selectedVelocityForecast.getCompletionSprintForecast(FORECAST_NAME, accumulatedEstimate)).andReturn(sprintData);
         expect(referenceProductBacklogMock.getItemById(ID)).andReturn(null);
         replayAll();
 
-        visitor.visit(productBacklogItem, referenceProductBacklogMock, sprints);
+        visitor.visit(productBacklogItem, selectedVelocityForecast, referenceProductBacklogMock, referenceVelocityForecast);
         assertEquals(sprintName + "\n" + date, productBacklogItem.getCompletionForecast(FORECAST_NAME));
         verifyAll();
     }
@@ -80,12 +82,12 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
         final double referenceAccumulatedEstimate = 15d;
         final ProductBacklogItem productBacklogItem = createProductBacklogItem(accumulatedEstimate);
 
-        expect(sprints.getCompletionSprintForecast(FORECAST_NAME, accumulatedEstimate)).andReturn(sprintData);
-        expect(sprints.getCompletionSprintForecast(FORECAST_NAME, referenceAccumulatedEstimate)).andReturn(referenceSprintData);
+        expect(selectedVelocityForecast.getCompletionSprintForecast(FORECAST_NAME, accumulatedEstimate)).andReturn(sprintData);
+        expect(referenceVelocityForecast.getCompletionSprintForecast(FORECAST_NAME, referenceAccumulatedEstimate)).andReturn(referenceSprintData);
         expect(referenceProductBacklogMock.getItemById(ID)).andReturn(createProductBacklogItem(referenceAccumulatedEstimate));
         replayAll();
 
-        visitor.visit(productBacklogItem, referenceProductBacklogMock, sprints);
+        visitor.visit(productBacklogItem, selectedVelocityForecast, referenceProductBacklogMock, referenceVelocityForecast);
         assertEquals(sprintName + "\n" + date, productBacklogItem.getCompletionForecast(FORECAST_NAME));
         verifyAll();
     }

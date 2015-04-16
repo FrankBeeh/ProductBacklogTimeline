@@ -38,17 +38,18 @@ public class ProductBacklogTest extends EasyMockSupport {
 
     @Test
     public void updateAllItems() {
-        final VelocityForecast velocityForecast = new VelocityForecast();
+        final VelocityForecast referenceVelocityForecast = new VelocityForecast();
+        final VelocityForecast selectedVelocityForecast = new VelocityForecast();
 
-        sortingStrategyMock.sortProductBacklog(same(productBacklog), same(velocityForecast));
+        sortingStrategyMock.sortProductBacklog(same(productBacklog), same(selectedVelocityForecast));
         visitorMock1.reset();
-        visitorMock1.visit(same(productBacklogItem1), same(referenceProductBacklog), same(velocityForecast));
-        visitorMock1.visit(same(productBacklogItem2), same(referenceProductBacklog), same(velocityForecast));
+        visitorMock1.visit(same(productBacklogItem1), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
+        visitorMock1.visit(same(productBacklogItem2), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
         visitorMock2.reset();
-        visitorMock2.visit(same(productBacklogItem1), same(referenceProductBacklog), same(velocityForecast));
-        visitorMock2.visit(same(productBacklogItem2), same(referenceProductBacklog), same(velocityForecast));
+        visitorMock2.visit(same(productBacklogItem1), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
+        visitorMock2.visit(same(productBacklogItem2), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
         replayAll();
-        productBacklog.updateAllItems(velocityForecast, referenceProductBacklog);
+        productBacklog.updateAllItems(selectedVelocityForecast, referenceProductBacklog, referenceVelocityForecast);
         verifyAll();
     }
 

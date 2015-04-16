@@ -17,6 +17,8 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     private ProductTimeline productTimelineWithMockedReleases;
     private ProductBacklog referenceProductBacklogMock;
+    private VelocityForecast referenceVelocityForecast;
+    private VelocityForecast selectedVelocityForecast;
 
     @Test
     public void initalContent() {
@@ -28,16 +30,22 @@ public class ProductTimelineTest extends EasyMockSupport {
     @Test
     public void addAndSelectProductBacklog() throws Exception {
         productTimelineWithMockedReleases.addProductBacklog(REFERENCE, referenceProductBacklogMock);
+        productTimelineWithMockedReleases.selectReleaseForecast(REFERENCE);
+        productTimelineWithMockedReleases.setSelectedVelocityForecast(referenceVelocityForecast);
+
         productTimelineWithMockedReleases.addProductBacklog(SELECTED, selectedProductBacklogMock);
+        productTimelineWithMockedReleases.selectReleaseForecast(SELECTED);
+        productTimelineWithMockedReleases.setSelectedVelocityForecast(selectedVelocityForecast);
 
         resetAll();
+        selectedProductBacklogMock.updateAllItems(same(selectedVelocityForecast), same(referenceProductBacklogMock), same(referenceVelocityForecast));
         releases.updateAll(same(productTimelineWithMockedReleases.getSelectedProductBacklog()));
         replayAll();
         productTimelineWithMockedReleases.selectReferenceReleaseForecast(REFERENCE);
         verifyAll();
 
         resetAll();
-        selectedProductBacklogMock.updateAllItems(same(productTimelineWithMockedReleases.getSelectedVelocityForecast()), same(referenceProductBacklogMock));
+        selectedProductBacklogMock.updateAllItems(same(selectedVelocityForecast), same(referenceProductBacklogMock), same(referenceVelocityForecast));
         releases.updateAll(same(selectedProductBacklogMock));
         replayAll();
         productTimelineWithMockedReleases.selectReleaseForecast(SELECTED);
@@ -50,7 +58,8 @@ public class ProductTimelineTest extends EasyMockSupport {
         final String selectedName = SELECTED;
         productTimelineWithMockedReleases.addProductBacklog(selectedName, selectedProductBacklogMock);
         resetAll();
-        selectedProductBacklogMock.updateAllItems(same(productTimelineWithMockedReleases.getSelectedVelocityForecast()), same(productTimelineWithMockedReleases.getSelectedProductBacklog()));
+        selectedProductBacklogMock.updateAllItems(same(productTimelineWithMockedReleases.getSelectedVelocityForecast()), same(productTimelineWithMockedReleases.getSelectedProductBacklog()),
+                same(productTimelineWithMockedReleases.getSelectedVelocityForecast()));
         releases.updateAll(same(selectedProductBacklogMock));
         replayAll();
         productTimelineWithMockedReleases.selectReleaseForecast(selectedName);
@@ -67,11 +76,11 @@ public class ProductTimelineTest extends EasyMockSupport {
         final VelocityForecast velocityForecast1 = new VelocityForecast();
         productTimeline.selectReleaseForecast(REFERENCE);
         productTimeline.setSelectedVelocityForecast(velocityForecast1);
-        
+
         final VelocityForecast velocityForecast2 = new VelocityForecast();
         productTimeline.selectReleaseForecast(SELECTED);
         productTimeline.setSelectedVelocityForecast(velocityForecast2);
-        
+
         assertSame(velocityForecast2, productTimeline.getSelectedVelocityForecast());
         productTimeline.selectReleaseForecast(REFERENCE);
         assertSame(velocityForecast1, productTimeline.getSelectedVelocityForecast());
@@ -82,7 +91,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         addAndSelectProductBacklog();
         resetAll();
         velocityForecast.updateForecast();
-        selectedProductBacklogMock.updateAllItems(same(velocityForecast), same(referenceProductBacklogMock));
+        selectedProductBacklogMock.updateAllItems(same(velocityForecast), same(referenceProductBacklogMock), same(referenceVelocityForecast));
         releases.updateAll(same(productTimelineWithMockedReleases.getSelectedProductBacklog()));
         replayAll();
         productTimelineWithMockedReleases.setSelectedVelocityForecast(velocityForecast);
@@ -94,6 +103,8 @@ public class ProductTimelineTest extends EasyMockSupport {
         selectedProductBacklogMock = createMock("selectedProductBacklogMock", ProductBacklog.class);
         referenceProductBacklogMock = createMock("referenceProductBacklogMock", ProductBacklog.class);
         velocityForecast = createMock(VelocityForecast.class);
+        referenceVelocityForecast = new VelocityForecast();
+        selectedVelocityForecast = new VelocityForecast();
         releases = createMock(Releases.class);
         productTimelineWithMockedReleases = new ProductTimeline(releases);
     }

@@ -19,14 +19,14 @@ public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
     }
 
     @Override
-    public void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, VelocityForecast sprints) {
-        final SprintData completionSprintForecast = sprints.getCompletionSprintForecast(progressForecastName, productBacklogItem.getAccumulatedEstimate());
+    public void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast referenceVelocityForecast) {
+        final SprintData completionSprintForecast = selectedVelocityForecast.getCompletionSprintForecast(progressForecastName, productBacklogItem.getAccumulatedEstimate());
         final String id = productBacklogItem.getId();
         SprintData referenceCompletionSprintForecast = null;
         final ProductBacklogItem referenceItem = referenceProductBacklog.getItemById(id);
         if (referenceItem != null) {
             final Double referenceAccumulatedEstimate = referenceItem.getAccumulatedEstimate();
-            referenceCompletionSprintForecast = sprints.getCompletionSprintForecast(progressForecastName, referenceAccumulatedEstimate);
+            referenceCompletionSprintForecast = referenceVelocityForecast.getCompletionSprintForecast(progressForecastName, referenceAccumulatedEstimate);
         }
         productBacklogItem.setCompletionForecast(progressForecastName, completionSprintForecast, referenceCompletionSprintForecast);
     }

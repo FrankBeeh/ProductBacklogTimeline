@@ -52,12 +52,12 @@ public class ProductBacklog {
         return items;
     }
 
-    public void updateAllItems(VelocityForecast velocityForecast, ProductBacklog referenceProductBacklog) {
-        sortingStrategy.sortProductBacklog(this, velocityForecast);
+    public void updateAllItems(VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast reverenceVelocityForecast) {
+        sortingStrategy.sortProductBacklog(this, selectedVelocityForecast);
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
-                visitor.visit(item, referenceProductBacklog, velocityForecast);
+                visitor.visit(item, selectedVelocityForecast, referenceProductBacklog, reverenceVelocityForecast);
             }
         }
     }

@@ -69,7 +69,11 @@ public class ProductTimeline {
     }
 
     private void updateProductBacklog() {
-        getSelectedProductBacklog().updateAllItems(getSelectedVelocityForecast(), getReferenceProductBacklog());
+        getSelectedProductBacklog().updateAllItems(getSelectedVelocityForecast(), getReferenceProductBacklog(), getReferenceVelocityForecast());
+    }
+
+    private VelocityForecast getReferenceVelocityForecast() {
+        return getReleaseForecast(referenceName).getVelocityForecast();
     }
 
     private ProductBacklog getReferenceProductBacklog() {

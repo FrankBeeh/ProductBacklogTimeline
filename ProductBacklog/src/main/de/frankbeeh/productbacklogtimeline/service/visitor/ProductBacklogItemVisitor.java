@@ -13,5 +13,5 @@ import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 public interface ProductBacklogItemVisitor {
     void reset();
 
-    void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, VelocityForecast velocityForecast);
+    void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast referenceVelocityForecast);
 }

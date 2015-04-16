@@ -1,5 +1,8 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 public class ProductBacklogItemData {
 
     private final String id;
@@ -50,5 +53,10 @@ public class ProductBacklogItemData {
 
     public Integer getRank() {
         return rank;
+    }
+    
+    @Override
+    public String toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
     }
 }
