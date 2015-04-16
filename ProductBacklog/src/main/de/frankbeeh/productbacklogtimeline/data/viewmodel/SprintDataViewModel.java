@@ -1,7 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.data.viewmodel;
 
 import java.text.Format;
-import java.text.SimpleDateFormat;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
