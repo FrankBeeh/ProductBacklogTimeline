@@ -15,5 +15,4 @@ public class FormatUtility {
     public static String formatDate(Date date) {
         return DATE_FORMAT.format(date);
     }
-
 }

@@ -10,6 +10,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.service.DoubleConverterUtility;
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class SprintDataViewModel {
 
@@ -23,7 +24,6 @@ public class SprintDataViewModel {
     private final StringProperty capacityDone = new SimpleStringProperty();
     private final StringProperty effortDone = new SimpleStringProperty();
 
-    final Format dateConverter = new SimpleDateFormat("dd.MM.yyyy");
     final Format doubleConverter = new DoubleConverterUtility();
 
     public SprintDataViewModel(SprintData sprintData) {
@@ -77,8 +77,8 @@ public class SprintDataViewModel {
     private void bindModel() {
         if (sprintData.get() != null) {
             Bindings.bindBidirectional(name, sprintData.get().nameProperty());
-            Bindings.bindBidirectional(startDate, sprintData.get().startDateProperty(), dateConverter);
-            Bindings.bindBidirectional(endDate, sprintData.get().endDateProperty(), dateConverter);
+            Bindings.bindBidirectional(startDate, sprintData.get().startDateProperty(), FormatUtility.DATE_FORMAT);
+            Bindings.bindBidirectional(endDate, sprintData.get().endDateProperty(), FormatUtility.DATE_FORMAT);
             Bindings.bindBidirectional(capacityForecast, sprintData.get().capacityForecastProperty(), doubleConverter);
             Bindings.bindBidirectional(effortForecast, sprintData.get().effortForecastProperty(), doubleConverter);
             Bindings.bindBidirectional(capacityDone, sprintData.get().capacityDoneProperty(), doubleConverter);
