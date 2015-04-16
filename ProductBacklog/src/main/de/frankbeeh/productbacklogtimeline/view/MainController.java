@@ -87,6 +87,7 @@ public class MainController {
         productTimeline.selectReleaseForecast(selectedProductBacklog.selectionModelProperty().get().getSelectedItem());
         productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
         productBacklogTableController.updateView();
+        sprintsTableController.initModel(productTimeline.getSelectedVelocityForecast());
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
     }
