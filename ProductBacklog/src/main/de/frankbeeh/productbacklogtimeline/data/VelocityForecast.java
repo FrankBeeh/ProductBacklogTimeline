@@ -15,7 +15,7 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeMinimumVelocit
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
-public class Sprints {
+public class VelocityForecast {
     public static final String AVERAGE_VELOCITY_FORECAST = "Avg. Vel.";
     public static final String MINIMUM_VELOCITY_FORECAST = "Min. Vel.";
     public static final String MAXIMUM_VELOCITY_FORECAST = "Max. Vel.";
@@ -25,13 +25,13 @@ public class Sprints {
     private final SprintDataVisitor[] visitors;
     private final Map<String, Integer> sortIndexMap;
 
-    public Sprints() {
+    public VelocityForecast() {
         this(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()), new ComputeProgressForecastByVelocity(
                 MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST, new ComputeMaximumVelocityStrategy()));
     }
 
     @VisibleForTesting
-    Sprints(SprintDataVisitor... visitors) {
+    VelocityForecast(SprintDataVisitor... visitors) {
         this.visitors = visitors;
         this.sprints = new ArrayList<SprintData>();
         this.sortIndexMap = new HashMap<String, Integer>();
@@ -46,7 +46,7 @@ public class Sprints {
         sortIndexMap.put(sprint.getName(), sprints.size());
     }
 
-    public void updateAllSprints() {
+    public void updateForecast() {
         for (final SprintDataVisitor visitor : visitors) {
             visitor.reset();
             for (final SprintData sprintData : sprints) {

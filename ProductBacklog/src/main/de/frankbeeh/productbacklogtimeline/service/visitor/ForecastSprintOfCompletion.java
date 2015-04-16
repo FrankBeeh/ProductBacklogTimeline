@@ -3,7 +3,7 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
 public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
 
@@ -19,7 +19,7 @@ public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
     }
 
     @Override
-    public void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, Sprints sprints) {
+    public void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, VelocityForecast sprints) {
         final SprintData completionSprintForecast = sprints.getCompletionSprintForecast(progressForecastName, productBacklogItem.getAccumulatedEstimate());
         final String id = productBacklogItem.getId();
         SprintData referenceCompletionSprintForecast = null;

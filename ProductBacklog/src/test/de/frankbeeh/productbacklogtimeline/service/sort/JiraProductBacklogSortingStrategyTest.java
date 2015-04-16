@@ -14,12 +14,12 @@ import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
 @RunWith(EasyMockRunner.class)
 public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {
     @Mock
-    private Sprints sprintsMock;
+    private VelocityForecast velocityForecastMock;
 
     private JiraProductBacklogSortingStrategy sortingStrategy;
 
@@ -29,8 +29,8 @@ public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {
         final String secondSprintName = "sprint 2";
         final int secondRank = 10;
         final int firstRank = 5;
-        expect(sprintsMock.getSortIndex(firstSprintName)).andReturn(1).anyTimes();
-        expect(sprintsMock.getSortIndex(secondSprintName)).andReturn(10).anyTimes();
+        expect(velocityForecastMock.getSortIndex(firstSprintName)).andReturn(1).anyTimes();
+        expect(velocityForecastMock.getSortIndex(secondSprintName)).andReturn(10).anyTimes();
         replayAll();
         final ProductBacklog productBacklog = new ProductBacklog();
         final ProductBacklogItem firstSprintFirstRank = createProductBacklogItem(firstSprintName, firstRank);
@@ -41,7 +41,7 @@ public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {
         productBacklog.addItem(secondSprintFirstRank);
         productBacklog.addItem(firstSprintFirstRank);
         productBacklog.addItem(secondSprintSecondRank);
-        sortingStrategy.sortProductBacklog(productBacklog, sprintsMock);
+        sortingStrategy.sortProductBacklog(productBacklog, velocityForecastMock);
         assertEquals(Arrays.asList(firstSprintFirstRank, firstSprintSecondRank, secondSprintFirstRank, secondSprintSecondRank), productBacklog.getItems());
         verifyAll();
     }

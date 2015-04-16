@@ -19,7 +19,7 @@ import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.Release;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 
 @RunWith(EasyMockRunner.class)
@@ -44,9 +44,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     public void visit_noMatch() throws Exception {
         final Release release = new Release(null, criteria);
         release.setAccumulatedEstimate(ACCUMULATED_ESTIMATE_1);
-        release.setCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST, MIN_VEL_SPRINT_NAME_1);
-        release.setCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST, AVG_VEL_SPRINT_NAME_1);
-        release.setCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST, MAX_VEL_SPRINT_NAME_1);
+        release.setCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST, MIN_VEL_SPRINT_NAME_1);
+        release.setCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST, AVG_VEL_SPRINT_NAME_1);
+        release.setCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST, MAX_VEL_SPRINT_NAME_1);
 
         final List<ProductBacklogItem> matchingProductacklogItems = new ArrayList<ProductBacklogItem>();
         expect(productBacklog.getMatchingProductBacklogItems(criteria)).andReturn(matchingProductacklogItems);
@@ -54,9 +54,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         visitor.visit(release, productBacklog);
         verifyAll();
         assertNull(release.getAccumulatedEstimate());
-        assertNull(release.getCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST));
-        assertNull(release.getCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST));
-        assertNull(release.getCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        assertNull(release.getCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST));
+        assertNull(release.getCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST));
+        assertNull(release.getCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
     }
 
     @Test
@@ -71,9 +71,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         visitor.visit(release, productBacklog);
         verifyAll();
         assertEquals(accumulatedEstimate, release.getAccumulatedEstimate());
-        assertEquals(MIN_VEL_SPRINT_NAME_1, release.getCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST));
-        assertEquals(AVG_VEL_SPRINT_NAME_1, release.getCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST));
-        assertEquals(MAX_VEL_SPRINT_NAME_1, release.getCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        assertEquals(MIN_VEL_SPRINT_NAME_1, release.getCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST));
+        assertEquals(AVG_VEL_SPRINT_NAME_1, release.getCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST));
+        assertEquals(MAX_VEL_SPRINT_NAME_1, release.getCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
     }
 
     @Test
@@ -87,9 +87,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         visitor.visit(release, productBacklog);
         verifyAll();
         assertEquals(ACCUMULATED_ESTIMATE_2, release.getAccumulatedEstimate());
-        assertEquals(MIN_VEL_SPRINT_NAME_2, release.getCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST));
-        assertEquals(AVG_VEL_SPRINT_NAME_2, release.getCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST));
-        assertEquals(MAX_VEL_SPRINT_NAME_2, release.getCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        assertEquals(MIN_VEL_SPRINT_NAME_2, release.getCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST));
+        assertEquals(AVG_VEL_SPRINT_NAME_2, release.getCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST));
+        assertEquals(MAX_VEL_SPRINT_NAME_2, release.getCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
     }
 
     @Before
@@ -104,9 +104,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     private ProductBacklogItem createProductBacklogItem(double accumulatedEstimate, String minVelSprintName, String avgVelSprintName, String maxVelSprintName) {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
         productBacklogItem.setAccumulatedEstimate(accumulatedEstimate);
-        productBacklogItem.setCompletionForecast(Sprints.MINIMUM_VELOCITY_FORECAST, createSprintData(minVelSprintName), null);
-        productBacklogItem.setCompletionForecast(Sprints.AVERAGE_VELOCITY_FORECAST, createSprintData(avgVelSprintName), null);
-        productBacklogItem.setCompletionForecast(Sprints.MAXIMUM_VELOCITY_FORECAST, createSprintData(maxVelSprintName), null);
+        productBacklogItem.setCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST, createSprintData(minVelSprintName), null);
+        productBacklogItem.setCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST, createSprintData(avgVelSprintName), null);
+        productBacklogItem.setCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST, createSprintData(maxVelSprintName), null);
         return productBacklogItem;
     }
 }

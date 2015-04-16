@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 @RunWith(EasyMockRunner.class)
@@ -23,7 +23,7 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
     private static final String FORECAST_NAME = "forecast name";
 
     @Mock
-    private Sprints sprints;
+    private VelocityForecast sprints;
 
     private ForecastSprintOfCompletion visitor;
 

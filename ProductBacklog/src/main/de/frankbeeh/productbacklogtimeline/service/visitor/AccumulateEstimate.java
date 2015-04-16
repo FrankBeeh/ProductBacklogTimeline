@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
 /**
  * Responsibility:
@@ -22,7 +22,7 @@ public class AccumulateEstimate implements ProductBacklogItemVisitor {
         accumulatedEstimate = 0d;
     }
 
-    public void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, Sprints sprints) {
+    public void visit(ProductBacklogItem productBacklogItem, ProductBacklog referenceProductBacklog, VelocityForecast velocityForecast) {
         final Double estimateOfThisItem = productBacklogItem.getEstimate();
         if (estimateOfThisItem != null) {
             accumulatedEstimate += estimateOfThisItem;

@@ -12,7 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.Release;
 import de.frankbeeh.productbacklogtimeline.data.Releases;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
 public class ReleaseTableController {
     private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<Release, String>, ObservableValue<String>> {
@@ -41,9 +41,9 @@ public class ReleaseTableController {
 
     @FXML
     private void initialize() {
-        completionForecastByAvgVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.AVERAGE_VELOCITY_FORECAST));
-        completionForecastByMinVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MINIMUM_VELOCITY_FORECAST));
-        completionForecastByMaxVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        completionForecastByAvgVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(VelocityForecast.AVERAGE_VELOCITY_FORECAST));
+        completionForecastByMinVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(VelocityForecast.MINIMUM_VELOCITY_FORECAST));
+        completionForecastByMaxVelColumn.setCellValueFactory(new CompletionForecastPropertyValueFactory(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
         releasesTable.setItems(model);
     }
 

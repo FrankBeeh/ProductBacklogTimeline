@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
-import de.frankbeeh.productbacklogtimeline.service.importer.SprintsFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
 
 public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
@@ -44,6 +44,7 @@ public class MainController {
 
     public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        setSelectableProductBacklogNames();
     }
 
     @FXML
@@ -74,16 +75,16 @@ public class MainController {
     private void importSprints() throws IOException, ParseException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
-            final SprintsFromCsvImporter importer = new SprintsFromCsvImporter();
-            productTimeline.setSprints(importer.importData(new FileReader(selectedFile)));
-            sprintsTableController.initModel(productTimeline.getSprints());
+            final VelocityForecastFromCsvImporter importer = new VelocityForecastFromCsvImporter();
+            productTimeline.setSelectedVelocityForecast(importer.importData(new FileReader(selectedFile)));
+            sprintsTableController.initModel(productTimeline.getSelectedVelocityForecast());
             updateProductBacklogAndReleaseTable();
         }
     }
 
     @FXML
     private void selectProductBacklog() {
-        productTimeline.selectProductBacklog(selectedProductBacklog.selectionModelProperty().get().getSelectedItem());
+        productTimeline.selectReleaseForecast(selectedProductBacklog.selectionModelProperty().get().getSelectedItem());
         productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
         productBacklogTableController.updateView();
         releaseTableController.initModel(productTimeline.getReleases());
@@ -92,7 +93,7 @@ public class MainController {
 
     @FXML
     private void selectReferenceProductBacklog() {
-        productTimeline.selectReferenceProductBacklog(selectedReferenceProductBacklog.selectionModelProperty().get().getSelectedItem());
+        productTimeline.selectReferenceReleaseForecast(selectedReferenceProductBacklog.selectionModelProperty().get().getSelectedItem());
         updateProductBacklogAndReleaseTable();
     }
 
@@ -110,7 +111,7 @@ public class MainController {
 
     private void setSelectableProductBacklogNames() {
         selectProductBacklogItems.getValue().clear();
-        selectProductBacklogItems.getValue().addAll(productTimeline.getProductBacklogNames());
+        selectProductBacklogItems.getValue().addAll(productTimeline.getReleaseForecastNames());
     }
 
     private void updateProductBacklogAndReleaseTable() {

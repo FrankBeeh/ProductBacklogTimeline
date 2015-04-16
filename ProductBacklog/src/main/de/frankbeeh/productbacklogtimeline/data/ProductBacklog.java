@@ -27,8 +27,8 @@ public class ProductBacklog {
     private final ProductBacklogSortingStrategy sortingStrategy;
 
     public ProductBacklog() {
-        this(new JiraProductBacklogSortingStrategy(), new AccumulateEstimate(), new ForecastSprintOfCompletion(Sprints.AVERAGE_VELOCITY_FORECAST), new ForecastSprintOfCompletion(
-                Sprints.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(Sprints.MAXIMUM_VELOCITY_FORECAST));
+        this(new JiraProductBacklogSortingStrategy(), new AccumulateEstimate(), new ForecastSprintOfCompletion(VelocityForecast.AVERAGE_VELOCITY_FORECAST), new ForecastSprintOfCompletion(
+                VelocityForecast.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
     }
 
     @VisibleForTesting
@@ -52,12 +52,12 @@ public class ProductBacklog {
         return items;
     }
 
-    public void updateAllItems(Sprints sprints, ProductBacklog referenceProductBacklog) {
-        sortingStrategy.sortProductBacklog(this, sprints);
+    public void updateAllItems(VelocityForecast velocityForecast, ProductBacklog referenceProductBacklog) {
+        sortingStrategy.sortProductBacklog(this, velocityForecast);
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
-                visitor.visit(item, referenceProductBacklog, sprints);
+                visitor.visit(item, referenceProductBacklog, velocityForecast);
             }
         }
     }

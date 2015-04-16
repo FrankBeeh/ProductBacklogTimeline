@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
@@ -98,12 +98,12 @@ public class SprintsTableController {
                 };
             }
         });
-        setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, Sprints.AVERAGE_VELOCITY_FORECAST);
-        setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, Sprints.MINIMUM_VELOCITY_FORECAST);
-        setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, Sprints.MAXIMUM_VELOCITY_FORECAST);
-        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, Sprints.AVERAGE_VELOCITY_FORECAST);
-        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, Sprints.MINIMUM_VELOCITY_FORECAST);
-        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, Sprints.MAXIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, VelocityForecast.AVERAGE_VELOCITY_FORECAST);
+        setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, VelocityForecast.MINIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, VelocityForecast.MAXIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, VelocityForecast.AVERAGE_VELOCITY_FORECAST);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, VelocityForecast.MINIMUM_VELOCITY_FORECAST);
+        setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, VelocityForecast.MAXIMUM_VELOCITY_FORECAST);
     }
 
     @FXML
@@ -116,16 +116,16 @@ public class SprintsTableController {
         }
     }
 
-    public void initModel(Sprints sprints) {
-        createModel(sprints);
+    public void initModel(VelocityForecast velocityForecast) {
+        createModel(velocityForecast);
         this.sprintsTable.setItems(model);
     }
 
-    private void createModel(Sprints sprints) {
+    private void createModel(VelocityForecast velocityForecast) {
         model = FXCollections.<SprintDataViewModel> observableArrayList();
 
         // FIXME: Maybe introduce a listModel, once this is needed in several classes?
-        for (SprintData sprintData : sprints.getSprints()) {
+        for (SprintData sprintData : velocityForecast.getSprints()) {
             model.add(new SprintDataViewModel(sprintData));
         }
     }

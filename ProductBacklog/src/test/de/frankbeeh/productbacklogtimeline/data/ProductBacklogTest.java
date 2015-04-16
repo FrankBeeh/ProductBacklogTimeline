@@ -38,17 +38,17 @@ public class ProductBacklogTest extends EasyMockSupport {
 
     @Test
     public void updateAllItems() {
-        final Sprints sprints = new Sprints();
+        final VelocityForecast velocityForecast = new VelocityForecast();
 
-        sortingStrategyMock.sortProductBacklog(same(productBacklog), same(sprints));
+        sortingStrategyMock.sortProductBacklog(same(productBacklog), same(velocityForecast));
         visitorMock1.reset();
-        visitorMock1.visit(same(productBacklogItem1), same(referenceProductBacklog), same(sprints));
-        visitorMock1.visit(same(productBacklogItem2), same(referenceProductBacklog), same(sprints));
+        visitorMock1.visit(same(productBacklogItem1), same(referenceProductBacklog), same(velocityForecast));
+        visitorMock1.visit(same(productBacklogItem2), same(referenceProductBacklog), same(velocityForecast));
         visitorMock2.reset();
-        visitorMock2.visit(same(productBacklogItem1), same(referenceProductBacklog), same(sprints));
-        visitorMock2.visit(same(productBacklogItem2), same(referenceProductBacklog), same(sprints));
+        visitorMock2.visit(same(productBacklogItem1), same(referenceProductBacklog), same(velocityForecast));
+        visitorMock2.visit(same(productBacklogItem2), same(referenceProductBacklog), same(velocityForecast));
         replayAll();
-        productBacklog.updateAllItems(sprints, referenceProductBacklog);
+        productBacklog.updateAllItems(velocityForecast, referenceProductBacklog);
         verifyAll();
     }
 

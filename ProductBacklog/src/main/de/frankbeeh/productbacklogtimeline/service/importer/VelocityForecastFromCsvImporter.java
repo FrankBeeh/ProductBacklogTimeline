@@ -4,9 +4,9 @@ import java.text.ParseException;
 import java.util.Date;
 
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.Sprints;
+import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
-public class SprintsFromCsvImporter extends DataFromCsvImporter<Sprints> {
+public class VelocityForecastFromCsvImporter extends DataFromCsvImporter<VelocityForecast> {
 
     private static final String EFFORT_DONE_COLUMN_NAME = "Effort Done";
     private static final String ACTUAL_CAPACITY_COLUMN_NAME = "Capacity Done";
@@ -17,12 +17,12 @@ public class SprintsFromCsvImporter extends DataFromCsvImporter<Sprints> {
     private static final String SPRINT_COLUMN_NAME = "Sprint Name";
 
     @Override
-    protected Sprints createContainer() {
-        return new Sprints();
+    protected VelocityForecast createContainer() {
+        return new VelocityForecast();
     }
 
     @Override
-    protected void addItem(Sprints container) throws ParseException {
+    protected void addItem(VelocityForecast container) throws ParseException {
         final String sprintName = getString(SPRINT_COLUMN_NAME);
         final Date startDate = getDate(START_DATE_COLUMN_NAME);
         final Date endDate = getDate(END_DATE_COLUMN_NAME);

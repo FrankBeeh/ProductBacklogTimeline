@@ -26,21 +26,21 @@ public class SprintsTest extends EasyMockSupport {
     private SprintData sprint1;
     private SprintData sprint2;
 
-    private Sprints sprints;
+    private VelocityForecast velocityForecast;
 
     @Test
     public void getSortIndex() throws Exception {
-        assertEquals(1, sprints.getSortIndex(sprint1.getName()));
-        assertEquals(2, sprints.getSortIndex(sprint2.getName()));
-        assertEquals(2, sprints.getSortIndex(sprint1.getName() + ", " + sprint2.getName()));
-        assertEquals(Integer.MAX_VALUE, sprints.getSortIndex("other name"));
+        assertEquals(1, velocityForecast.getSortIndex(sprint1.getName()));
+        assertEquals(2, velocityForecast.getSortIndex(sprint2.getName()));
+        assertEquals(2, velocityForecast.getSortIndex(sprint1.getName() + ", " + sprint2.getName()));
+        assertEquals(Integer.MAX_VALUE, velocityForecast.getSortIndex("other name"));
     }
 
     @Test
     public void updateAllSprints() {
-        sprints = new Sprints(visitorMock1, visitorMock2);
-        sprints.addItem(sprint1);
-        sprints.addItem(sprint2);
+        velocityForecast = new VelocityForecast(visitorMock1, visitorMock2);
+        velocityForecast.addItem(sprint1);
+        velocityForecast.addItem(sprint2);
         visitorMock1.reset();
         visitorMock1.visit(sprint1);
         visitorMock1.visit(sprint2);
@@ -48,37 +48,37 @@ public class SprintsTest extends EasyMockSupport {
         visitorMock2.visit(sprint1);
         visitorMock2.visit(sprint2);
         replayAll();
-        sprints.updateAllSprints();
+        velocityForecast.updateForecast();
         verifyAll();
     }
 
     @Test
     public void visit_effortSmallerThanProgressForecastOfSprint1() {
-        assertEquals(sprint1, sprints.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_1 - 1));
+        assertEquals(sprint1, velocityForecast.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_1 - 1));
     }
 
     @Test
     public void visit_effortEqualToProgressForecastOfSprint1() {
-        assertEquals(sprint1, sprints.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_1));
+        assertEquals(sprint1, velocityForecast.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_1));
     }
 
     @Test
     public void visit_effortGreaterThanProgressForecastOfSprint1() {
-        assertEquals(sprint2, sprints.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_1 + 1));
+        assertEquals(sprint2, velocityForecast.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_1 + 1));
     }
 
     @Test
     public void effortGreaterThanProgressForecastOfLastSprint() {
-        assertEquals(null, sprints.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_2 + 1));
+        assertEquals(null, velocityForecast.getCompletionSprintForecast(FORECAST_NAME, PROGRESS_FORECAST_SPRINT_2 + 1));
     }
 
     @Before
     public void setUp() {
-        sprints = new Sprints();
+        velocityForecast = new VelocityForecast();
         sprint1 = createSprintData("Sprint 1", PROGRESS_FORECAST_SPRINT_1, null);
-        sprints.addItem(sprint1);
+        velocityForecast.addItem(sprint1);
         sprint2 = createSprintData("Sprint 2", null, PROGRESS_FORECAST_SPRINT_2);
-        sprints.addItem(sprint2);
+        velocityForecast.addItem(sprint2);
     }
 
     private SprintData createSprintData(String sprintName, Double accumulatedEffortDone, Double progressForecast) {
