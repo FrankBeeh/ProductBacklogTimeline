@@ -27,7 +27,7 @@ public class SprintsTableController {
             return new ObservableValueBase<Double>() {
                 @Override
                 public Double getValue() {
-                    return cellDataFeatures.getValue().entityProperty().get().getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
+                    return cellDataFeatures.getValue().entityProperty().get().getProgressForecastBasedOnHistory(progressForecastName);
                 }
             };
         }
