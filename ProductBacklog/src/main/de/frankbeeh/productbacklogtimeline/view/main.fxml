@@ -12,10 +12,10 @@
   <bottom>
     <HBox prefHeight="24.0" prefWidth="1200.0">
       <children>
-        <Label text="Select Product Backlog" />
-        <ComboBox fx:id="selectedProductBacklog" onAction="#selectProductBacklog" prefHeight="21.0" prefWidth="293.0"/>
-        <Label text="Select reference Product Backlog" />
-        <ComboBox fx:id="selectedReferenceProductBacklog" onAction="#selectReferenceProductBacklog" prefHeight="21.0" prefWidth="293.0"/>
+        <Label text="Selected Release Forecast" />
+        <ComboBox fx:id="selectedReleaseForecast" onAction="#selectReleaseForecast" prefHeight="21.0" prefWidth="293.0"/>
+        <Label text="Referenced Release Forecast" />
+        <ComboBox fx:id="referencedReleaseForecast" onAction="#referenceReleaseForecast" prefHeight="21.0" prefWidth="293.0"/>
       </children>
     </HBox>
   </bottom>

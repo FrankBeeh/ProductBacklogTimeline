@@ -73,9 +73,9 @@ public class BaseUITest extends ApplicationTest {
         assertEquals(tabTitle, getSelectedTabTitle());
     }
 
-    protected void assertContentOfTableView(TableView<?> tableView, TableViewContent expectedContent) {
-        waitUntilTableViewContentChanged(tableView, expectedContent);
-        final TableViewContent actualContent = getActualTableViewContent(tableView);
+    protected void assertContentOfTableView(String selector, TableViewContent expectedContent) {
+        waitUntilTableViewContentChanged(this.<TableView<?>>getUniqueNode(selector), expectedContent);
+        final TableViewContent actualContent = getActualTableViewContent(this.<TableView<?>>getUniqueNode(selector));
         assertEquals(expectedContent.toString(), actualContent.toString());
     }
 
@@ -429,5 +429,15 @@ public class BaseUITest extends ApplicationTest {
 
     private void typeUpperKey(KeyCode keyCode) {
         press(KeyCode.SHIFT).type(keyCode).release(KeyCode.SHIFT);
+    }
+
+    protected void importSprint(String fileName) {
+        openSprintImportDialog();
+        enterFileName(fileName);
+    }
+
+    private void openSprintImportDialog() {
+        clickOn("File");
+        clickOn("Import Sprints");
     }
 }
