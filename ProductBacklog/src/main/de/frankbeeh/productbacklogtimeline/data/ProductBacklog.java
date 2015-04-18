@@ -1,12 +1,10 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 import de.frankbeeh.productbacklogtimeline.service.sort.JiraProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
@@ -52,24 +50,14 @@ public class ProductBacklog {
         return items;
     }
 
-    public void updateAllItems(VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast reverenceVelocityForecast) {
+    public void updateAllItems(VelocityForecast selectedVelocityForecast) {
         sortingStrategy.sortProductBacklog(this, selectedVelocityForecast);
         for (final ProductBacklogItemVisitor visitor : visitors) {
             visitor.reset();
             for (final ProductBacklogItem item : items) {
-                visitor.visit(item, selectedVelocityForecast, referenceProductBacklog, reverenceVelocityForecast);
+                visitor.visit(item, selectedVelocityForecast);
             }
         }
-    }
-
-    public List<ProductBacklogItem> getMatchingProductBacklogItems(Criteria criteria) {
-        final List<ProductBacklogItem> matchingProductBacklogItems = new ArrayList<ProductBacklogItem>();
-        for (final ProductBacklogItem productBacklogItem : items) {
-            if (criteria.isMatching(productBacklogItem)) {
-                matchingProductBacklogItems.add(productBacklogItem);
-            }
-        }
-        return matchingProductBacklogItems;
     }
 
     public boolean containsId(String id) {

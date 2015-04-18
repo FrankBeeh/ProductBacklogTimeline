@@ -76,7 +76,7 @@ public class MainController {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final VelocityForecastFromCsvImporter importer = new VelocityForecastFromCsvImporter();
-            productTimeline.setSelectedVelocityForecast(importer.importData(new FileReader(selectedFile)));
+            productTimeline.setVelocityForecastForSelectedReleaseForecast(importer.importData(new FileReader(selectedFile)));
             velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
             updateProductBacklogAndReleaseTable();
         }
@@ -85,11 +85,7 @@ public class MainController {
     @FXML
     private void selectReleaseForecast() {
         productTimeline.selectReleaseForecast(selectedReleaseForecast.selectionModelProperty().get().getSelectedItem());
-        productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
-        productBacklogTableController.updateView();
-        velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
-        releaseTableController.initModel(productTimeline.getReleases());
-        releaseTableController.updateView();
+        updateProductBacklogAndReleaseTable();
     }
 
     @FXML
@@ -116,8 +112,9 @@ public class MainController {
     }
 
     private void updateProductBacklogAndReleaseTable() {
-        productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
+        productBacklogTableController.initModel(productTimeline.getProductBacklogComparison());
         productBacklogTableController.updateView();
+        velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
     }

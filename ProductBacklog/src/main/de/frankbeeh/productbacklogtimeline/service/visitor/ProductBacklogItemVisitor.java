@@ -1,6 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
@@ -13,5 +12,5 @@ import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 public interface ProductBacklogItemVisitor {
     void reset();
 
-    void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast referenceVelocityForecast);
+    void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast);
 }

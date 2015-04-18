@@ -1,10 +1,17 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.data.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Forecast the sprint for completing a {@link ProductBacklogItem}.
+ * <li>Compute the difference to the sprint forecast by the referenced {@link ReleaseForecast}.
+ * </ul>
+ */
 public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
 
     private final String progressForecastName;
@@ -19,15 +26,8 @@ public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
     }
 
     @Override
-    public void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast, ProductBacklog referenceProductBacklog, VelocityForecast referenceVelocityForecast) {
+    public void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast) {
         final SprintData completionSprintForecast = selectedVelocityForecast.getCompletionSprintForecast(progressForecastName, productBacklogItem.getAccumulatedEstimate());
-        final String id = productBacklogItem.getId();
-        SprintData referenceCompletionSprintForecast = null;
-        final ProductBacklogItem referenceItem = referenceProductBacklog.getItemById(id);
-        if (referenceItem != null) {
-            final Double referenceAccumulatedEstimate = referenceItem.getAccumulatedEstimate();
-            referenceCompletionSprintForecast = referenceVelocityForecast.getCompletionSprintForecast(progressForecastName, referenceAccumulatedEstimate);
-        }
-        productBacklogItem.setCompletionForecast(progressForecastName, completionSprintForecast, referenceCompletionSprintForecast);
+        productBacklogItem.setCompletionForecast(progressForecastName, completionSprintForecast);
     }
 }

@@ -26,11 +26,11 @@ public class Releases {
         return releases;
     }
 
-    public void updateAll(ProductBacklog productBacklog) {
+    public void updateAll(ProductBacklogComparison productBacklogComparison) {
         for (final ReleaseVisitor visitor : visitors) {
             visitor.reset();
             for (final Release release : releases) {
-                visitor.visit(release, productBacklog);
+                visitor.visit(release, productBacklogComparison);
             }
         }
     }

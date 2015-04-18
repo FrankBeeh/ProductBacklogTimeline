@@ -7,15 +7,14 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class ProductBacklogItem {
-
-    private final Map<String, String> completionForecast;
+    private final Map<String, SprintData> completionForecast;
     private Double accumulatedEstimate;
     private final ProductBacklogItemData data;
 
     public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String sprint, Integer rank) {
         this.data = new ProductBacklogItemData(id, title, description, estimate, state, sprint, rank);
-        this.completionForecast = new HashMap<String, String>();
-    } 
+        this.completionForecast = new HashMap<String, SprintData>();
+    }
 
     public void setAccumulatedEstimate(Double accumulatedEstimate) {
         this.accumulatedEstimate = accumulatedEstimate;
@@ -25,16 +24,12 @@ public class ProductBacklogItem {
         return accumulatedEstimate;
     }
 
-    public String getCompletionForecast(String progressForecastName) {
+    public SprintData getCompletionForecast(String progressForecastName) {
         return completionForecast.get(progressForecastName);
     }
 
-    public void setCompletionForecast(String progressForecastName, SprintData sprintData, SprintData referenceSprintData) {
-        if (sprintData == null) {
-            completionForecast.put(progressForecastName, null);
-        } else {
-            completionForecast.put(progressForecastName, sprintData.getDescription(referenceSprintData));
-        }
+    public void setCompletionForecast(String progressForecastName, SprintData sprintData) {
+        completionForecast.put(progressForecastName, sprintData);
     }
 
     @Override
@@ -57,7 +52,7 @@ public class ProductBacklogItem {
     public Double getEstimate() {
         return data.getEstimate();
     }
-    
+
     public void setEstimate(Double estimate) {
         data.setEstimate(estimate);
     }

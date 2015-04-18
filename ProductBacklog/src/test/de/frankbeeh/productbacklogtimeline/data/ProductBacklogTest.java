@@ -4,20 +4,14 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
-import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.same;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
-import org.easymock.Mock;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVisitor;
 
@@ -25,8 +19,6 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVis
 public class ProductBacklogTest extends EasyMockSupport {
     private static final String ID_2 = "ID 2";
     private static final String ID_1 = "ID 1";
-    @Mock
-    private Criteria criteriaMock;
     private ProductBacklogSortingStrategy sortingStrategyMock;
     private ProductBacklogItemVisitor visitorMock1;
     private ProductBacklogItemVisitor visitorMock2;
@@ -34,58 +26,20 @@ public class ProductBacklogTest extends EasyMockSupport {
     private ProductBacklogItem productBacklogItem1;
     private ProductBacklogItem productBacklogItem2;
     private ProductBacklog productBacklog;
-    private ProductBacklog referenceProductBacklog;
 
     @Test
     public void updateAllItems() {
-        final VelocityForecast referenceVelocityForecast = new VelocityForecast();
         final VelocityForecast selectedVelocityForecast = new VelocityForecast();
 
         sortingStrategyMock.sortProductBacklog(same(productBacklog), same(selectedVelocityForecast));
         visitorMock1.reset();
-        visitorMock1.visit(same(productBacklogItem1), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
-        visitorMock1.visit(same(productBacklogItem2), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
+        visitorMock1.visit(same(productBacklogItem1), same(selectedVelocityForecast));
+        visitorMock1.visit(same(productBacklogItem2), same(selectedVelocityForecast));
         visitorMock2.reset();
-        visitorMock2.visit(same(productBacklogItem1), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
-        visitorMock2.visit(same(productBacklogItem2), same(selectedVelocityForecast), same(referenceProductBacklog), same(referenceVelocityForecast));
+        visitorMock2.visit(same(productBacklogItem1), same(selectedVelocityForecast));
+        visitorMock2.visit(same(productBacklogItem2), same(selectedVelocityForecast));
         replayAll();
-        productBacklog.updateAllItems(selectedVelocityForecast, referenceProductBacklog, referenceVelocityForecast);
-        verifyAll();
-    }
-
-    @Test
-    public void getMatchingProductBacklogItems_noneIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(false);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(false);
-        replayAll();
-        assertEquals(new ArrayList<ProductBacklogItem>(), productBacklog.getMatchingProductBacklogItems(criteriaMock));
-        verifyAll();
-    }
-
-    @Test
-    public void getMatchingProductBacklogItems_firstIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(true);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(false);
-        replayAll();
-        assertEquals(Arrays.asList(productBacklogItem1), productBacklog.getMatchingProductBacklogItems(criteriaMock));
-        verifyAll();
-    }
-
-    @Test
-    public void getMatchingProductBacklogItems_secondIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(false);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(true);
-        replayAll();
-        assertEquals(Arrays.asList(productBacklogItem2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
-        verifyAll();
-    }
-
-    @Test
-    public void getMatchingProductBacklogItems_bothAreMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(true);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(true);
-        replayAll();
-        assertEquals(Arrays.asList(productBacklogItem1, productBacklogItem2), productBacklog.getMatchingProductBacklogItems(criteriaMock));
+        productBacklog.updateAllItems(selectedVelocityForecast);
         verifyAll();
     }
 
@@ -108,7 +62,6 @@ public class ProductBacklogTest extends EasyMockSupport {
         sortingStrategyMock = createMock(ProductBacklogSortingStrategy.class);
         visitorMock1 = createMock(ProductBacklogItemVisitor.class);
         visitorMock2 = createMock(ProductBacklogItemVisitor.class);
-        referenceProductBacklog = createMock(ProductBacklog.class);
         productBacklog = new ProductBacklog(sortingStrategyMock, visitorMock1, visitorMock2);
         productBacklogItem1 = new ProductBacklogItem(ID_1, null, null, null, null, "", 1);
         productBacklog.addItem(productBacklogItem1);

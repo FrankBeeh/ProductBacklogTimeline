@@ -23,7 +23,7 @@ public class ReleasesTest extends EasyMockSupport {
 
     @Test
     public void updateAll() {
-        final ProductBacklog productBacklog = new ProductBacklog();
+        final ProductBacklogComparison productBacklogComparison = new ProductBacklogComparison();
         releases = new Releases(Arrays.asList(visitorMock1, visitorMock2));
         final Release release1 = new Release("Release 1", null);
         releases.addRelease(release1);
@@ -31,12 +31,12 @@ public class ReleasesTest extends EasyMockSupport {
         releases.addRelease(release2);
         visitorMock1.reset();
         visitorMock2.reset();
-        visitorMock1.visit(same(release1), same(productBacklog));
-        visitorMock1.visit(same(release2), same(productBacklog));
-        visitorMock2.visit(same(release1), same(productBacklog));
-        visitorMock2.visit(same(release2), same(productBacklog));
+        visitorMock1.visit(same(release1), same(productBacklogComparison));
+        visitorMock1.visit(same(release2), same(productBacklogComparison));
+        visitorMock2.visit(same(release1), same(productBacklogComparison));
+        visitorMock2.visit(same(release2), same(productBacklogComparison));
         replayAll();
-        releases.updateAll(productBacklog);
+        releases.updateAll(productBacklogComparison);
         verifyAll();
     }
 }

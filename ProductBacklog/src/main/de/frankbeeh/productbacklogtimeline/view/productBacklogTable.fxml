@@ -44,7 +44,7 @@
             <AlignRightCellFactory />
       	  </cellFactory>
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="accumulatedEstimate"/>
+      	    <PropertyValueFactory property="accumulatedEstimateDescription"/>
       	  </cellValueFactory>
         </TableColumn>
 		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Sprint" fx:id="sprintColumn" >

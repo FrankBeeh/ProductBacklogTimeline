@@ -13,20 +13,24 @@ public class ProductTimeline {
     private final Releases releases;
     private String selectedName = INITIAL_NAME;
     private String referenceName = INITIAL_NAME;
+    private final ProductBacklogComparison productBacklogComparison;
 
     public ProductTimeline() {
-        this(new Releases());
+        this(new Releases(), new ProductBacklogComparison());
         createDummyReleases();
     }
 
     @VisibleForTesting
-    ProductTimeline(Releases releases) {
+    ProductTimeline(Releases releases, ProductBacklogComparison productBacklogComparison) {
         this.releases = releases;
+        this.productBacklogComparison = productBacklogComparison;
         this.releaseForecasts.add(new ReleaseForecast(INITIAL_NAME, new ProductBacklog(), new VelocityForecast()));
+        productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
 
     public void addProductBacklog(String name, ProductBacklog productBacklog) {
-        releaseForecasts.add(new ReleaseForecast(name, productBacklog, releaseForecasts.get(releaseForecasts.size()-1).getVelocityForecast()));
+        productBacklog.updateAllItems(getSelectedVelocityForecast());
+        releaseForecasts.add(new ReleaseForecast(name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1).getVelocityForecast()));
     }
 
     public ProductBacklog getSelectedProductBacklog() {
@@ -35,20 +39,23 @@ public class ProductTimeline {
 
     public void selectReleaseForecast(String selectedName) {
         this.selectedName = selectedName;
-        updateProductBacklog();
+        productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
+        updateProductBacklogComparison();
         updateReleases();
     }
 
     public void selectReferenceReleaseForecast(String referenceName) {
         this.referenceName = referenceName;
-        updateProductBacklog();
+        productBacklogComparison.setReferenceProductBacklog(getReferenceProductBacklog());
+        updateProductBacklogComparison();
         updateReleases();
     }
 
-    public void setSelectedVelocityForecast(VelocityForecast velocityForecast) {
+    public void setVelocityForecastForSelectedReleaseForecast(VelocityForecast velocityForecast) {
         velocityForecast.updateForecast();
         getReleaseForecast(selectedName).setVelocityForecast(velocityForecast);
         updateProductBacklog();
+        updateProductBacklogComparison();
         updateReleases();
     }
 
@@ -69,11 +76,11 @@ public class ProductTimeline {
     }
 
     private void updateProductBacklog() {
-        getSelectedProductBacklog().updateAllItems(getSelectedVelocityForecast(), getReferenceProductBacklog(), getReferenceVelocityForecast());
+        getSelectedProductBacklog().updateAllItems(getSelectedVelocityForecast());
     }
 
-    private VelocityForecast getReferenceVelocityForecast() {
-        return getReleaseForecast(referenceName).getVelocityForecast();
+    private void updateProductBacklogComparison() {
+        productBacklogComparison.updateAllItems();
     }
 
     private ProductBacklog getReferenceProductBacklog() {
@@ -81,7 +88,7 @@ public class ProductTimeline {
     }
 
     private void updateReleases() {
-        releases.updateAll(getSelectedProductBacklog());
+        releases.updateAll(productBacklogComparison);
     }
 
     private void createDummyReleases() {
@@ -105,5 +112,14 @@ public class ProductTimeline {
             }
         }
         throw new IllegalArgumentException("Release forcast '" + name + "' not found!");
+    }
+
+    public ProductBacklogComparison getProductBacklogComparison() {
+        return productBacklogComparison;
+    }
+
+    @VisibleForTesting
+    void addProductBacklog(String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast) {
+        releaseForecasts.add(new ReleaseForecast(name, productBacklog, referenceVelocityForecast));
     }
 }
