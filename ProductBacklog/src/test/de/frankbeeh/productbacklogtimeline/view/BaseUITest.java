@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.net.URL;
 import java.util.HashSet;
@@ -12,10 +13,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.service.support.WaitUntilSupport;
+
+import com.google.common.base.Predicate;
+import com.sun.javafx.scene.control.skin.LabeledText;
 
 public class BaseUITest extends ApplicationTest {
 
@@ -35,7 +43,7 @@ public class BaseUITest extends ApplicationTest {
 
     @SuppressWarnings("unchecked")
     public <T extends Node> T getUniqueNode(final String selector) {
-        final Set<Node> foundNodes = removeSkinNodes(lookup(selector).<Node>queryAll());
+        final Set<Node> foundNodes = removeSkinNodes(lookup(selector).<Node> queryAll());
         if (foundNodes.isEmpty()) {
             throw new RuntimeException("No node found for selector '" + selector + "'!");
         }
@@ -63,6 +71,42 @@ public class BaseUITest extends ApplicationTest {
     protected void selectTab(String tabTitle) {
         clickOn(tabTitle);
         assertEquals(tabTitle, getSelectedTabTitle());
+    }
+
+    protected void assertContentOfTableView(TableView<?> tableView, TableViewContent expectedContent) {
+        waitUntilTableViewContentChanged(tableView, expectedContent);
+        final TableViewContent actualContent = getActualTableViewContent(tableView);
+        assertEquals(expectedContent.toString(), actualContent.toString());
+    }
+
+    private TableViewContent getActualTableViewContent(TableView<?> tableView) {
+        final TableViewContent actualContent = new TableViewContent();
+        final Predicate<Node> nodePredicate = new Predicate<Node>() {
+            @Override
+            public boolean apply(Node node) {
+                if (node instanceof TableRow) {
+                    actualContent.addRow();
+                }
+                if (node instanceof LabeledText) {
+                    actualContent.addCellContent(((LabeledText) node).getText());
+                }
+                if (node instanceof StackPane) {
+                    actualContent.stopAdding();
+                }
+                return false;
+            }
+        };
+        from(tableView).lookup(nodePredicate).queryFirst();
+        return actualContent;
+    }
+
+    private void waitUntilTableViewContentChanged(TableView<?> tableView, final TableViewContent expectedContent) {
+        new WaitUntilSupport().waitUntil(tableView, new Predicate<TableView<?>>() {
+            @Override
+            public boolean apply(TableView<?> input) {
+                return getActualTableViewContent(input).getRowCount() == expectedContent.getRowCount();
+            }
+        }, 2);
     }
 
     private String getSelectedTabTitle() {
