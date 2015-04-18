@@ -3,7 +3,7 @@ package de.frankbeeh.productbacklogtimeline.view;
 import org.junit.Test;
 
 public class SprintUITest extends BaseUITest {
-
+    
     @Test
     public void importAndEditSprintClickSave() throws Exception {
         importSprint();
@@ -17,8 +17,8 @@ public class SprintUITest extends BaseUITest {
     }
 
     private void openSprintImportDialog() {
-        click("File");
-        click("Import Sprints");
+        clickOn("File");
+        clickOn("Import Sprints");
     }
 
     private String getFirstSprint() {
@@ -26,9 +26,8 @@ public class SprintUITest extends BaseUITest {
     }
 
     private void editSprint(String sprint) {
-        rightClick(sprint);
-        click("#editItem");
-        click("#okDialog");
+        rightClickOn(sprint);
+        clickOn("#editItem");
+        clickOn("#okDialog");
     }
-
 }

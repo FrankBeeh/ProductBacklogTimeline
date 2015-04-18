@@ -15,7 +15,7 @@ public class ImportProductBacklogUITest extends BaseUITest {
     public void importBacklog() throws Exception {
         openPBLImportDialog();
         enterFileName(FILE_NAME_1);
-        selectTab("PBL");
+        selectProductBacklogTab();
     }
 
     @Test
@@ -36,13 +36,17 @@ public class ImportProductBacklogUITest extends BaseUITest {
             }
         });
 
-        selectTab("PBL");
+        selectProductBacklogTab();
     }
 
     @Test
     public void cancelImportBacklog() throws Exception {
         openPBLImportDialog();
-        closeDialog();
+        closeCurrentWindow();
+        selectProductBacklogTab();
+    }
+
+    private void selectProductBacklogTab() {
         selectTab("PBL");
     }
 
@@ -55,12 +59,11 @@ public class ImportProductBacklogUITest extends BaseUITest {
     }
 
     private ComboBox<String> getSelectProductBacklogComboBox() {
-        final ComboBox<String> comboBox = getUniqueNode("#selectedProductBacklog");
-        return comboBox;
+        return this.<ComboBox<String>>getUniqueNode("#selectedProductBacklog");
     }
 
     private void openPBLImportDialog() {
-        click("File");
-        click("Import PBL");
+        clickOn("File");
+        clickOn("Import PBL");
     }
 }
