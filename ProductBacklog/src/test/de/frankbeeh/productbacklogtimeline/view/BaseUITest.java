@@ -53,14 +53,17 @@ public class BaseUITest extends ApplicationTest {
         return (T) foundNodes.iterator().next();
     }
 
-    private Set<Node> removeSkinNodes(Set<Node> foundNodes) {
-        final Set<Node> filteredNodes = new HashSet<Node>();
-        for (final Node node : foundNodes) {
-            if (!(node instanceof Skin) && !(node.getClass().getName().contains("Skin"))) {
-                filteredNodes.add(node);
-            }
-        }
-        return filteredNodes;
+    protected void importSprint(String fileName) {
+        openSprintImportDialog();
+        enterFileName(fileName);
+    }
+
+    protected void selectVelocityForecastTab() {
+        selectTab("Velocity Forecast");
+    }
+
+    protected void selectProductBacklogTab() {
+        selectTab("PBL");
     }
 
     protected void enterFileName(String fileName) {
@@ -68,15 +71,20 @@ public class BaseUITest extends ApplicationTest {
         type(KeyCode.ENTER);
     }
 
-    protected void selectTab(String tabTitle) {
-        clickOn(tabTitle);
-        assertEquals(tabTitle, getSelectedTabTitle());
-    }
-
     protected void assertContentOfTableView(String selector, TableViewContent expectedContent) {
         waitUntilTableViewContentChanged(this.<TableView<?>>getUniqueNode(selector), expectedContent);
         final TableViewContent actualContent = getActualTableViewContent(this.<TableView<?>>getUniqueNode(selector));
         assertEquals(expectedContent.toString(), actualContent.toString());
+    }
+
+    private void selectTab(String tabTitle) {
+        clickOn(tabTitle);
+        assertEquals(tabTitle, getSelectedTabTitle());
+    }
+
+    private void openSprintImportDialog() {
+        clickOn("File");
+        clickOn("Import Velocity Forecast");
     }
 
     private TableViewContent getActualTableViewContent(TableView<?> tableView) {
@@ -119,6 +127,16 @@ public class BaseUITest extends ApplicationTest {
 
     private URL getFXMLResourceURL() {
         return MainController.class.getResource("main.fxml");
+    }
+
+    private Set<Node> removeSkinNodes(Set<Node> foundNodes) {
+        final Set<Node> filteredNodes = new HashSet<Node>();
+        for (final Node node : foundNodes) {
+            if (!(node instanceof Skin) && !(node.getClass().getName().contains("Skin"))) {
+                filteredNodes.add(node);
+            }
+        }
+        return filteredNodes;
     }
 
     // This is a workaround for FxRobot.write not working on native file chooser dialog.
@@ -429,15 +447,5 @@ public class BaseUITest extends ApplicationTest {
 
     private void typeUpperKey(KeyCode keyCode) {
         press(KeyCode.SHIFT).type(keyCode).release(KeyCode.SHIFT);
-    }
-
-    protected void importSprint(String fileName) {
-        openSprintImportDialog();
-        enterFileName(fileName);
-    }
-
-    private void openSprintImportDialog() {
-        clickOn("File");
-        clickOn("Import Sprints");
     }
 }

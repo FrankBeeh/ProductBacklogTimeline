@@ -24,7 +24,7 @@ public class MainController {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
     @FXML
-    private SprintsTableController sprintsTableController;
+    private VelocityForecastTableController velocityForecastTableController;
     @FXML
     private ProductBacklogTableController productBacklogTableController;
     @FXML
@@ -72,12 +72,12 @@ public class MainController {
     }
 
     @FXML
-    private void importSprints() throws IOException, ParseException, FileNotFoundException {
+    private void importVelocityForecast() throws IOException, ParseException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final VelocityForecastFromCsvImporter importer = new VelocityForecastFromCsvImporter();
             productTimeline.setSelectedVelocityForecast(importer.importData(new FileReader(selectedFile)));
-            sprintsTableController.initModel(productTimeline.getSelectedVelocityForecast());
+            velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
             updateProductBacklogAndReleaseTable();
         }
     }
@@ -87,7 +87,7 @@ public class MainController {
         productTimeline.selectReleaseForecast(selectedReleaseForecast.selectionModelProperty().get().getSelectedItem());
         productBacklogTableController.initModel(productTimeline.getSelectedProductBacklog());
         productBacklogTableController.updateView();
-        sprintsTableController.initModel(productTimeline.getSelectedVelocityForecast());
+        velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
     }

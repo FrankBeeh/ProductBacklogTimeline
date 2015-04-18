@@ -31,11 +31,11 @@
             </ScrollPane>
           </content>
         </Tab>
-        <Tab text="Sprints">
+        <Tab text="Velocity Forecast">
           <content>
             <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
               <content>
-                <fx:include fx:id="sprintsTable" source="sprintsTable.fxml" />
+                <fx:include fx:id="velocityForecastTable" source="velocityForecastTable.fxml" />
               </content>
             </ScrollPane>
           </content>
@@ -50,7 +50,7 @@
         <Menu mnemonicParsing="false" text="File">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#importProductBacklog" text="Import PBL" />
-            <MenuItem mnemonicParsing="false" onAction="#importSprints" text="Import Sprints" />
+            <MenuItem mnemonicParsing="false" onAction="#importVelocityForecast" text="Import Velocity Forecast" />
           </items>
         </Menu>
       </menus>

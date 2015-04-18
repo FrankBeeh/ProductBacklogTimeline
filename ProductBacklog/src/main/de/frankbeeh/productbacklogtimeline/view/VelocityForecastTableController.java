@@ -14,7 +14,7 @@ import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
-public class SprintsTableController {
+public class VelocityForecastTableController {
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintDataViewModel, Double>, ObservableValue<Double>> {
         private final String progressForecastName;
 
@@ -52,7 +52,7 @@ public class SprintsTableController {
     }
 
     @FXML
-    private TableView<SprintDataViewModel> sprintsTable;
+    private TableView<SprintDataViewModel> velocityForecastTable;
     @FXML
     private TableColumn<SprintDataViewModel, String> startDateColumn;
     @FXML
@@ -108,7 +108,7 @@ public class SprintsTableController {
 
     @FXML
     private void editItem() {
-        final SprintDataViewModel selectedItem = sprintsTable.getSelectionModel().getSelectedItem();
+        final SprintDataViewModel selectedItem = velocityForecastTable.getSelectionModel().getSelectedItem();
         if (selectedItem != null) {
             final BasicDialog<SprintDataViewModel> dialog = new SprintEditDialog();
             dialog.initModel(selectedItem);
@@ -118,7 +118,7 @@ public class SprintsTableController {
 
     public void initModel(VelocityForecast velocityForecast) {
         createModel(velocityForecast);
-        this.sprintsTable.setItems(model);
+        velocityForecastTable.setItems(model);
     }
 
     private void createModel(VelocityForecast velocityForecast) {

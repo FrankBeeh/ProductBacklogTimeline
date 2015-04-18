@@ -16,8 +16,8 @@ public class SprintUITest extends BaseUITest {
     @Test
     public void importAndEditSprintClickSave() throws Exception {
         importSprint("VelocityForecast1.csv");
-        selectTab("Sprints");
-        assertContentOfTableView("#sprintsTable", VELOCITY_FORECAST_1);
+        selectVelocityForecastTab();
+        assertContentOfTableView("#velocityForecastTable", VELOCITY_FORECAST_1);
         editSprint(getFirstSprint());
     }
 

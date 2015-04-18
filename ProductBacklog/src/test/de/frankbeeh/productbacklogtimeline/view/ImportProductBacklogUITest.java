@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import org.junit.Test;
 
 public class ImportProductBacklogUITest extends BaseUITest {
+    private static final String VELOCITY_FORECAST_TABLE_ID = "#velocityForecastTable";
     private static final String PRODUCT_BACKLOG_TABLE_ID = "#productBacklogTable";
     private static final String SPRINT_1 = "Sprint 1\n25.04.2014";
     private static final String SPRINT_2 = "Sprint 2\n26.04.2014";
@@ -59,47 +60,60 @@ public class ImportProductBacklogUITest extends BaseUITest {
             { "4", "8.0", "Todo", "PBI 4", "Description 4", "29.0", "", "Sprint 6\n(Sprint 5)\n11.05.2014\n(+7d)", SPRINT_5, SPRINT_5 },
             { "6", "2.0", "Todo", "PBI 6", "Description 6", "31.0", "", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
+    private static final TableViewContent VELOCITY_FORECAST_1 = new TableViewContent(new String[][] { { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "", "", "", "" },
+            { "Sprint 2", "26.04.2014", "26.04.2014", "8.0", "", "", "", "4.0", "4.0", "4.0", "", "7.0", "7.0", "7.0" },
+            { "Sprint 3", "27.04.2014", "27.04.2014", "6.0", "", "", "", "3.0", "3.0", "3.0", "", "10.0", "10.0", "10.0" },
+            { "Sprint 4", "28.04.2014", "30.04.2014", "4.0", "", "", "", "2.0", "2.0", "2.0", "", "12.0", "12.0", "12.0" },
+            { "Sprint 5", "01.05.2014", "04.05.2014", "12.0", "", "", "", "6.0", "6.0", "6.0", "", "18.0", "18.0", "18.0" },
+            { "Sprint 6", "05.05.2014", "11.05.2014", "12.0", "", "", "", "6.0", "6.0", "6.0", "", "24.0", "24.0", "24.0" },
+            { "Sprint 7", "12.05.2014", "18.05.2014", "12.0", "", "", "", "6.0", "6.0", "6.0", "", "30.0", "30.0", "30.0" },
+            { "Sprint 8", "19.05.2014", "25.05.2014", "12.0", "", "", "", "6.0", "6.0", "6.0", "", "36.0", "36.0", "36.0" } });
+    
+    private static final TableViewContent VELOCITY_FORECAST_2 = new TableViewContent(new String[][] { { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "", "", "", "" },
+            { "Sprint 2", "26.04.2014", "26.04.2014", "8.0", "13.0", "12.0", "13.0", "6.0", "9.5", "13.0", "", "", "", "" },
+            { "Sprint 3", "27.04.2014", "27.04.2014", "6.0", "", "", "", "3.0", "4.8", "6.5", "", "19.0", "20.8", "22.5" },
+            { "Sprint 4", "28.04.2014", "30.04.2014", "4.0", "", "", "", "2.0", "3.2", "4.3", "", "21.0", "24.0", "26.8" },
+            { "Sprint 5", "01.05.2014", "04.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "27.0", "33.5", "39.8" },
+            { "Sprint 6", "05.05.2014", "11.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "33.0", "43.0", "52.8" },
+            { "Sprint 7", "12.05.2014", "18.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "39.0", "52.5", "65.8" },
+            { "Sprint 8", "19.05.2014", "25.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "45.0", "62.0", "78.8" } });
+    
     @Test
     public void selectReleaseForecast() throws Exception {
-        importBacklog1();
-        importBacklog2();
+        importProductBacklog(PBL_FILE_1);
+        assertEquals(PBL_FILE_1, getSelectedReleaseForecast());
+        selectProductBacklogTab();
+        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1);
+        
+        importSprint(VELOCITY_FORECAST_FILE_1);
+        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_WITH_FORECAST_1);
+        
+        importProductBacklog(PBL_FILE_2);
+        assertEquals(PBL_FILE_2, getSelectedReleaseForecast());
+        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_1);
+        
+        importSprint(VELOCITY_FORECAST_FILE_2);
+        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_2);
+        
         referenceReleaseForecast(PBL_FILE_2);
         selectReleaseForecast(PBL_FILE_1);
+        selectProductBacklogTab();
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_COMPARED_TO_PBL_2);
+        selectVelocityForecastTab();
+        assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_1);
 
         referenceReleaseForecast(PBL_FILE_1);
         selectReleaseForecast(PBL_FILE_2);
+        selectProductBacklogTab();
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_COMPARED_TO_PBL_1);
-
+        selectVelocityForecastTab();
+        assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_2);
     }
 
     @Test
     public void cancelImportBacklog() throws Exception {
         openPBLImportDialog();
         closeCurrentWindow();
-    }
-
-    private void importBacklog1() throws Exception {
-        importProductBacklog(PBL_FILE_1);
-        assertEquals(PBL_FILE_1, getSelectedReleaseForecast());
-        selectProductBacklogTab();
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1);
-
-        importSprint(VELOCITY_FORECAST_FILE_1);
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_WITH_FORECAST_1);
-    }
-
-    private void importBacklog2() throws Exception {
-        importProductBacklog(PBL_FILE_2);
-        assertEquals(PBL_FILE_2, getSelectedReleaseForecast());
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_1);
-
-        importSprint(VELOCITY_FORECAST_FILE_2);
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_2);
-    }
-
-    private void selectProductBacklogTab() {
-        selectTab("PBL");
     }
 
     private String getSelectedReleaseForecast() {
@@ -125,11 +139,11 @@ public class ImportProductBacklogUITest extends BaseUITest {
     }
 
     private ComboBox<String> getSelectedReleaseForecastComboBox() {
-        return this.<ComboBox<String>> getUniqueNode("#selectedReleaseForecast");
+        return getUniqueNode("#selectedReleaseForecast");
     }
 
     private ComboBox<String> getReferencedReleaseForecastComboBox() {
-        return this.<ComboBox<String>> getUniqueNode("#referencedReleaseForecast");
+        return getUniqueNode("#referencedReleaseForecast");
     }
 
     private void openPBLImportDialog() {
