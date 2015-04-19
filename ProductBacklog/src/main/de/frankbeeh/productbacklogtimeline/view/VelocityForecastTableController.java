@@ -64,6 +64,8 @@ public class VelocityForecastTableController {
     @FXML
     private TableColumn<SprintDataViewModel, Double> forecastPerSprintByMaxVelColumn;
     @FXML
+    private TableColumn<SprintDataViewModel, Double> accumulatedEffortDoneColumn;
+    @FXML
     private TableColumn<SprintDataViewModel, Double> accumulatedForecastByAvgVelColumn;
     @FXML
     private TableColumn<SprintDataViewModel, Double> accumulatedForecastByMinVelColumn;
@@ -98,6 +100,19 @@ public class VelocityForecastTableController {
                 };
             }
         });
+        accumulatedEffortDoneColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SprintDataViewModel, Double>, ObservableValue<Double>>() {
+            @Override
+            public ObservableValue<Double> call(final CellDataFeatures<SprintDataViewModel, Double> cellDataFeatures) {
+                return new ObservableValueBase<Double>() {
+                    @Override
+                    public Double getValue() {
+                        return cellDataFeatures.getValue().entityProperty().get().getAccumulatedEffortDone();
+                    }
+                };
+            }
+        });
+        
+        
         setCellValueFactoryForForecast(forecastPerSprintByAvgVelColumn, VelocityForecast.AVERAGE_VELOCITY_FORECAST);
         setCellValueFactoryForForecast(forecastPerSprintByMinVelColumn, VelocityForecast.MINIMUM_VELOCITY_FORECAST);
         setCellValueFactoryForForecast(forecastPerSprintByMaxVelColumn, VelocityForecast.MAXIMUM_VELOCITY_FORECAST);
