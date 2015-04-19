@@ -63,9 +63,9 @@ public class ProductBacklogTest extends EasyMockSupport {
         visitorMock1 = createMock(ProductBacklogItemVisitor.class);
         visitorMock2 = createMock(ProductBacklogItemVisitor.class);
         productBacklog = new ProductBacklog(sortingStrategyMock, visitorMock1, visitorMock2);
-        productBacklogItem1 = new ProductBacklogItem(ID_1, null, null, null, null, "", 1);
+        productBacklogItem1 = new ProductBacklogItem(ID_1, null, null, null, null, "", "1");
         productBacklog.addItem(productBacklogItem1);
-        productBacklogItem2 = new ProductBacklogItem(ID_2, null, null, null, null, "", 2);
+        productBacklogItem2 = new ProductBacklogItem(ID_2, null, null, null, null, "", "2");
         productBacklog.addItem(productBacklogItem2);
     }
 }

@@ -22,7 +22,7 @@ public class AlignRightCellFactory<T> implements Callback<TableColumn<SprintData
             }
         };
 
-        tableCell.setAlignment(Pos.CENTER_RIGHT);
+        tableCell.setAlignment(Pos.TOP_RIGHT);
         return tableCell;
     }
 }

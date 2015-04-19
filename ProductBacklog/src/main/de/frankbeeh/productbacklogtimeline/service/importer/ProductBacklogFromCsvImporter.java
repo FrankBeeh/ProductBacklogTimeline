@@ -24,7 +24,7 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
         final Double estimate = getDouble(NAME_OF_ESTIMATE_COLUMN);
         final State state = getState(NAME_OF_RESOLUTION_COLUMN);
         final String sprint = getString(NAME_OF_SPRINT_COLUMN);
-        final Integer rank = getInteger(NAME_OF_RANK_COLUMN);
+        final String rank = getString(NAME_OF_RANK_COLUMN);
         productBacklog.addItem(new ProductBacklogItem(id, title, description, estimate, state, sprint, rank));
     }
 

@@ -11,7 +11,7 @@ public class ProductBacklogItem {
     private Double accumulatedEstimate;
     private final ProductBacklogItemData data;
 
-    public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String sprint, Integer rank) {
+    public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String sprint, String rank) {
         this.data = new ProductBacklogItemData(id, title, description, estimate, state, sprint, rank);
         this.completionForecast = new HashMap<String, SprintData>();
     }
@@ -65,7 +65,7 @@ public class ProductBacklogItem {
         return data.getSprint();
     }
 
-    public Integer getRank() {
+    public String getRank() {
         return data.getRank();
     }
 }

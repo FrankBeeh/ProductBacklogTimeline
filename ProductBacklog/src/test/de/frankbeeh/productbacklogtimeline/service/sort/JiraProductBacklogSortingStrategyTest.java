@@ -27,8 +27,8 @@ public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {
     public void comparator_sprintDifferent() {
         final String firstSprintName = "sprint 1";
         final String secondSprintName = "sprint 2";
-        final int secondRank = 10;
-        final int firstRank = 5;
+        final String secondRank = "7";
+        final String firstRank = "5";
         expect(velocityForecastMock.getSortIndex(firstSprintName)).andReturn(1).anyTimes();
         expect(velocityForecastMock.getSortIndex(secondSprintName)).andReturn(10).anyTimes();
         replayAll();
@@ -51,7 +51,7 @@ public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {
         sortingStrategy = new JiraProductBacklogSortingStrategy();
     }
 
-    private ProductBacklogItem createProductBacklogItem(String sprintName, int rank) {
+    private ProductBacklogItem createProductBacklogItem(String sprintName, String rank) {
         return new ProductBacklogItem(null, null, null, null, null, sprintName, rank);
     }
 }

@@ -28,30 +28,30 @@ public class ProductBacklogFromCsvImporterTest {
 
     @Test
     public void importMultipleProductBacklogItems() throws Exception {
-        final ProductBacklog productBacklog = importer.importData(new StringReader(HEADER + "Id 1;Titel 1;Beschreibung 1;0.5;Fixed;Sprint 1;9\r\n"
+        final ProductBacklog productBacklog = importer.importData(new StringReader(HEADER + "Id 1;Titel 1;Beschreibung 1;0.5;Fixed;Sprint 1;09\r\n"
                 + "Id 2;Titel 2;Beschreibung 2;1;Unresolved;Sprint 2;10\r\n"));
         assertEquals(
-                Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Beschreibung 1", 0.5, State.Done, "Sprint 1", 9),
-                        new ProductBacklogItem("Id 2", "Titel 2", "Beschreibung 2", 1d, State.Todo, "Sprint 2", 10)).toString(), productBacklog.getItems().toString());
+                Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Beschreibung 1", 0.5, State.Done, "Sprint 1", "09"),
+                        new ProductBacklogItem("Id 2", "Titel 2", "Beschreibung 2", 1d, State.Todo, "Sprint 2", "10")).toString(), productBacklog.getItems().toString());
     }
 
     @Test
     public void importProductBacklogItemInDifferentRowOrder() throws Exception {
         final ProductBacklog productBacklog = importer.importData(new StringReader("Rank;Sprint;Resolution;Story Points;Description;Summary;Key\r\n"
                 + "10;Sprint 1;Won't Fix;0.5;Beschreibung 1;Titel 1;Id 1\r\n"));
-        assertEquals(Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Beschreibung 1", 0.5, State.Canceled, "Sprint 1", 10)).toString(), productBacklog.getItems().toString());
+        assertEquals(Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Beschreibung 1", 0.5, State.Canceled, "Sprint 1", "10")).toString(), productBacklog.getItems().toString());
     }
 
     @Test
     public void importProductBacklogItemEmptyValues() throws Exception {
         final ProductBacklog productBacklog = importer.importData(new StringReader(HEADER + ";;;;;;\r\n"));
-        assertEquals(Arrays.asList(new ProductBacklogItem("", "", "", null, null, "", null)).toString(), productBacklog.getItems().toString());
+        assertEquals(Arrays.asList(new ProductBacklogItem("", "", "", null, null, "", "")).toString(), productBacklog.getItems().toString());
     }
 
     @Test
     public void importProductBacklogItemMultiLineDescription() throws Exception {
         final ProductBacklog productBacklog = importer.importData(new StringReader(HEADER + "Id 1;Titel 1;\"Zeile 1\nZeile 2\";0.5;Unresolved;Sprint 1;10\r\n"));
-        assertEquals(Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Zeile 1\nZeile 2", 0.5, State.Todo, "Sprint 1", 10)).toString(), productBacklog.getItems().toString());
+        assertEquals(Arrays.asList(new ProductBacklogItem("Id 1", "Titel 1", "Zeile 1\nZeile 2", 0.5, State.Todo, "Sprint 1", "10")).toString(), productBacklog.getItems().toString());
     }
 
     @Before

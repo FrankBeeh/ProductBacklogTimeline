@@ -11,9 +11,9 @@ public class ProductBacklogItemData {
     private Double estimate;
     private final State state;
     private final String sprint;
-    private final Integer rank;
+    private final String rank;
 
-    public ProductBacklogItemData(String id, String title, String description, Double estimate, State state, String sprint, Integer rank) {
+    public ProductBacklogItemData(String id, String title, String description, Double estimate, State state, String sprint, String rank) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -51,7 +51,7 @@ public class ProductBacklogItemData {
         return sprint;
     }
 
-    public Integer getRank() {
+    public String getRank() {
         return rank;
     }
     
