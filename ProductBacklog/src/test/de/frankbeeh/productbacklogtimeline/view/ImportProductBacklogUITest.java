@@ -9,10 +9,8 @@ import org.junit.Test;
 public class ImportProductBacklogUITest extends BaseUITest {
     private static final String SPRINT_4_TO_SPRINT_5 = "Sprint 4\n(Sprint 5)\n30.04.2014\n(-4d)";
     private static final String SPRINT_4_TO_SPRINT_3 = "Sprint 4\n(Sprint 3)\n30.04.2014\n(+3d)";
-    private static final String SPRINT_1_TO_SPRINT_2 = "Sprint 1\n(Sprint 2)\n25.04.2014\n(-1d)";
     private static final String SPRINT_5_TO_SPRINT_4 = "Sprint 5\n(Sprint 4)\n04.05.2014\n(+4d)";
     private static final String SPRINT_3_TO_SPRINT_4 = "Sprint 3\n(Sprint 4)\n27.04.2014\n(-3d)";
-    private static final String SPRINT_2_TO_SPRINT_1 = "Sprint 2\n(Sprint 1)\n26.04.2014\n(+1d)";
     private static final String VELOCITY_FORECAST_TABLE_ID = "#velocityForecastTable";
     private static final String PRODUCT_BACKLOG_TABLE_ID = "#productBacklogTable";
     private static final String SPRINT_1 = "Sprint 1\n25.04.2014";
@@ -38,14 +36,14 @@ public class ImportProductBacklogUITest extends BaseUITest {
 
     private static final TableViewContent PBL_1_COMPARED_TO_PBL_2 = new TableViewContent(new String[][] {
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "2", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "    4.0\n(+1.0)", "Sprint 1", SPRINT_2_TO_SPRINT_1, SPRINT_2_TO_SPRINT_1, SPRINT_2_TO_SPRINT_1 },
+            { "2", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "     4.0\n(-12.0)", "Sprint 1\n(No Sprint)", SPRINT_2, SPRINT_2, SPRINT_2},
             { "3", "5.0", "Todo", "PBI 3\n(New PBI 3)", "Description 3\n(New Description 3)", "     9.0\n(-12.0)", "", SPRINT_3_TO_SPRINT_4, SPRINT_3_TO_SPRINT_4, SPRINT_3 },
             { "4", "    8.0\n(+3.0)", "Todo", "PBI 4", "Description 4", "   17.0\n(-9.0)", "", SPRINT_5, SPRINT_5, SPRINT_5_TO_SPRINT_4 } });
 
     private static final TableViewContent PBL_2_WITH_FORECAST_1 = new TableViewContent(new String[][] {
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "2", "1.0", "Canceled", "PBI 2", "Description 2", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "5", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", SPRINT_5, SPRINT_5, SPRINT_5 },
+            { "2", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", SPRINT_5, SPRINT_5, SPRINT_5 },
             { "3", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", SPRINT_6, SPRINT_6, SPRINT_6 }, { "4", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", SPRINT_7, SPRINT_7, SPRINT_7 },
             { "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", SPRINT_7, SPRINT_7, SPRINT_7 } });
 
@@ -53,14 +51,14 @@ public class ImportProductBacklogUITest extends BaseUITest {
             // FIXME: The PBIs are not ordered in the content, but in the UI it's ok.
             { "4", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", SPRINT_5, SPRINT_5, SPRINT_4 }, { "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", SPRINT_6, SPRINT_5, SPRINT_5 },
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "2", "1.0", "Canceled", "PBI 2", "Description 2", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "5", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "2", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "3", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", SPRINT_4, SPRINT_4, SPRINT_3 } });
 
     private static final TableViewContent PBL_2_COMPARED_TO_PBL_1 = new TableViewContent(new String[][] {
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "2", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    3.0\n(-1.0)", "Sprint 1", SPRINT_1_TO_SPRINT_2, SPRINT_1_TO_SPRINT_2, SPRINT_1_TO_SPRINT_2 },
             { "5", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "2", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    16.0\n(+12.0)", "No Sprint\n(Sprint 1)", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "3", "5.0", "Todo", "New PBI 3\n(PBI 3)", "New Description 3\n(Description 3)", "    21.0\n(+12.0)", "", SPRINT_4_TO_SPRINT_3, SPRINT_4_TO_SPRINT_3, SPRINT_3 },
             { "4", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "   26.0\n(+9.0)", "", SPRINT_5, SPRINT_5, SPRINT_4_TO_SPRINT_5 },
             { "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", SPRINT_6, SPRINT_5, SPRINT_5 } });

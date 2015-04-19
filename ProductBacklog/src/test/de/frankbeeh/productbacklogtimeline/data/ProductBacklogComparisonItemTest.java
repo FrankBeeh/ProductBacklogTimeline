@@ -73,6 +73,33 @@ public class ProductBacklogComparisonItemTest {
     }
 
     @Test
+    public void getComparedSprint_valueNull() throws Exception {
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(null), null).getComparedSprint());
+    }
+
+    @Test
+    public void getComparedSprint_referenceNull() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedSprint());
+    }
+
+    @Test
+    public void getComparedSprint_referenceValueNull() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(null)).getComparedSprint());
+    }
+
+    @Test
+    public void getComparedSprint_equal() throws Exception {
+        assertEquals(STRING_VALUE_1,
+                new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedSprint());
+    }
+
+    @Test
+    public void getComparedSprint_notEqual() throws Exception {
+        assertEquals(STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1),
+                createProductBacklogItemWithSprint(STRING_VALUE_2)).getComparedSprint());
+    }
+    
+    @Test
     public void getComparedCompletionForecast_valueNull() throws Exception {
         assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(null), null).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
@@ -241,6 +268,10 @@ public class ProductBacklogComparisonItemTest {
 
     private ProductBacklogItem createProductBacklogItemWithDescription(String description) {
         return new ProductBacklogItem(null, null, description, null, null, null, null);
+    }
+    
+    private ProductBacklogItem createProductBacklogItemWithSprint(String sprint) {
+        return new ProductBacklogItem(null, null, null, null, null, sprint, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithCompletionForecast(SprintData sprintData) {

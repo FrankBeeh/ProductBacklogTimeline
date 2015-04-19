@@ -24,8 +24,8 @@ public class ProductBacklogComparisonItem {
         return productBacklogItem.getAccumulatedEstimate();
     }
 
-    public String getSprint() {
-        return productBacklogItem.getSprint();
+    public String getComparedSprint() {
+        return formatDifference(productBacklogItem.getSprint(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getSprint());
     }
 
     public String getComparedTitle() {
