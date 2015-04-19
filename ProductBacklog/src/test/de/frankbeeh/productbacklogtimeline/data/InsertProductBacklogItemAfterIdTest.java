@@ -10,8 +10,8 @@ import java.util.List;
 import org.junit.Test;
 
 public class InsertProductBacklogItemAfterIdTest {
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM = new ProductBacklogItem("ID 1", null, null, null, null, null, null);
-    private static final ProductBacklogItem NEW_PRODUCT_BACKLOG_ITEM = new ProductBacklogItem("ID 2", null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM = new ProductBacklogItem("ID 1", null, null, null, null, null, null, null);
+    private static final ProductBacklogItem NEW_PRODUCT_BACKLOG_ITEM = new ProductBacklogItem("ID 2", null, null, null, null, null, null, null);
 
     @Test
     public void applyTo_empty() {

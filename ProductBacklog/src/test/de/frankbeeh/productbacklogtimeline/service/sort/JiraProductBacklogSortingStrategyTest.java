@@ -52,6 +52,6 @@ public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {
     }
 
     private ProductBacklogItem createProductBacklogItem(String sprintName, String rank) {
-        return new ProductBacklogItem(null, null, null, null, null, sprintName, rank);
+        return new ProductBacklogItem(null, null, null, null, null, sprintName, rank, null);
     }
 }

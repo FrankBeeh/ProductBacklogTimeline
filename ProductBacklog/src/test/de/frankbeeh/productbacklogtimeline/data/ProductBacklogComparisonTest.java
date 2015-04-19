@@ -19,8 +19,8 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
 public class ProductBacklogComparisonTest extends EasyMockSupport {
     @Mock
     private Criteria criteriaMock;
-    private ProductBacklogComparisonItem productBacklogItem1 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 1", null, null, null, null, "", "1"), null);
-    private ProductBacklogComparisonItem productBacklogItem2 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 2", null, null, null, null, "", "2"), null);
+    private ProductBacklogComparisonItem productBacklogItem1 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 1", null, null, null, null, "", "1", null), null);
+    private ProductBacklogComparisonItem productBacklogItem2 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 2", null, null, null, null, "", "2", null), null);
     private ProductBacklogComparison productBacklogComparison;
 
     @Test

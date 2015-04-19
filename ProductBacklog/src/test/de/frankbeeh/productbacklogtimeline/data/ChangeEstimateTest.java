@@ -27,9 +27,9 @@ public class ChangeEstimateTest {
         final Double previousEstimate = 5d;
         final Double changedEstimate = 10d;
         final List<ProductBacklogItem> productBacklogItems = new ArrayList<ProductBacklogItem>();
-        productBacklogItems.add(new ProductBacklogItem(id, null, null, previousEstimate, null, null, null));
+        productBacklogItems.add(new ProductBacklogItem(id, null, null, previousEstimate, null, null, null, null));
         
         new ChangeEstimateOfProductBacklogItem(id, changedEstimate).applyTo(productBacklogItems);
-        assertEquals(Arrays.asList(new ProductBacklogItem(id, null, null, changedEstimate, null, null, null)).toString(), productBacklogItems.toString());
+        assertEquals(Arrays.asList(new ProductBacklogItem(id, null, null, changedEstimate, null, null, null, null)).toString(), productBacklogItems.toString());
     }
 }

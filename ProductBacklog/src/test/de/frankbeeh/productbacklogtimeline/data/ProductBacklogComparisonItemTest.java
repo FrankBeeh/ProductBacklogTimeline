@@ -100,6 +100,33 @@ public class ProductBacklogComparisonItemTest {
     }
     
     @Test
+    public void getComparedPlannedRelease_valueNull() throws Exception {
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(null), null).getComparedPlannedRelease());
+    }
+
+    @Test
+    public void getComparedPlannedRelease_referenceNull() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1), null).getComparedPlannedRelease());
+    }
+
+    @Test
+    public void getComparedPlannedRelease_referenceValueNull() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1), createProductBacklogItemWithPlannedRelease(null)).getComparedPlannedRelease());
+    }
+
+    @Test
+    public void getComparedPlannedRelease_equal() throws Exception {
+        assertEquals(STRING_VALUE_1,
+                new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1), createProductBacklogItemWithPlannedRelease(STRING_VALUE_1)).getComparedPlannedRelease());
+    }
+
+    @Test
+    public void getComparedPlannedRelease_notEqual() throws Exception {
+        assertEquals(STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1),
+                createProductBacklogItemWithPlannedRelease(STRING_VALUE_2)).getComparedPlannedRelease());
+    }
+    
+    @Test
     public void getComparedCompletionForecast_valueNull() throws Exception {
         assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(null), null).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
@@ -251,31 +278,35 @@ public class ProductBacklogComparisonItemTest {
 
     @Before
     public void setUp() throws Exception {
-        productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
-        referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
+        productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
+        referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         productBacklogComparisonItem = new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem);
         sprint1 = new SprintData("Sprint 1", null, FormatUtility.parseDate("01.02.2003"), null, null, null, null);
         sprint2 = new SprintData("Sprint 2", null, FormatUtility.parseDate("15.02.2003"), null, null, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithState(State state) {
-        return new ProductBacklogItem(null, null, null, null, state, null, null);
+        return new ProductBacklogItem(null, null, null, null, state, null, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithTitle(String title) {
-        return new ProductBacklogItem(null, title, null, null, null, null, null);
+        return new ProductBacklogItem(null, title, null, null, null, null, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithDescription(String description) {
-        return new ProductBacklogItem(null, null, description, null, null, null, null);
+        return new ProductBacklogItem(null, null, description, null, null, null, null, null);
     }
-    
+
+    private ProductBacklogItem createProductBacklogItemWithPlannedRelease(String plannedRelease) {
+        return new ProductBacklogItem(null, null, null, null, null, null, null, plannedRelease);
+    }
+
     private ProductBacklogItem createProductBacklogItemWithSprint(String sprint) {
-        return new ProductBacklogItem(null, null, null, null, null, sprint, null);
+        return new ProductBacklogItem(null, null, null, null, null, sprint, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithCompletionForecast(SprintData sprintData) {
-        final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
+        final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         productBacklogItem.setCompletionForecast(VELOCITY_FORECAST, sprintData);
         return productBacklogItem;
     }

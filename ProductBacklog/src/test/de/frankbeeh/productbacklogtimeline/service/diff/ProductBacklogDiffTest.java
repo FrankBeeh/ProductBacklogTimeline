@@ -24,10 +24,10 @@ public class ProductBacklogDiffTest {
     private static final String ID_1 = "1";
     private static final String ID_2 = "2";
     private static final String ID_3 = "3";
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1 = new ProductBacklogItem(ID_1, null, null, ESTIMATE_1, null, null, null);
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1_CHANGED_ESTIMATE = new ProductBacklogItem(ID_1, null, null, CHANGED_ESTIMATE_1, null, null, null);
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_2 = new ProductBacklogItem(ID_2, null, null, null, null, null, null);
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_3 = new ProductBacklogItem(ID_3, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1 = new ProductBacklogItem(ID_1, null, null, ESTIMATE_1, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1_CHANGED_ESTIMATE = new ProductBacklogItem(ID_1, null, null, CHANGED_ESTIMATE_1, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_2 = new ProductBacklogItem(ID_2, null, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_3 = new ProductBacklogItem(ID_3, null, null, null, null, null, null, null);
 
     private ProductBacklog toProductBacklog;
     private ProductBacklog fromProductBacklog;

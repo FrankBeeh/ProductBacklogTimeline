@@ -8,6 +8,7 @@ import de.frankbeeh.productbacklogtimeline.data.State;
 
 public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBacklog> {
 
+    private static final String NAME_OF_RELEASE_COLUMN = "Fix Version/s";
     private static final String NAME_OF_ID_COLUMN = "Key";
     private static final String NAME_OF_TITLE_COLUMN = "Summary";
     private static final String NAME_OF_DESCRIPTION_COLUMN = "Description";
@@ -25,7 +26,8 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
         final State state = getState(NAME_OF_RESOLUTION_COLUMN);
         final String sprint = getString(NAME_OF_SPRINT_COLUMN);
         final String rank = getString(NAME_OF_RANK_COLUMN);
-        productBacklog.addItem(new ProductBacklogItem(id, title, description, estimate, state, sprint, rank));
+        final String plannedRelease = getString(NAME_OF_RELEASE_COLUMN);
+        productBacklog.addItem(new ProductBacklogItem(id, title, description, estimate, state, sprint, rank, plannedRelease));
     }
 
     @Override

@@ -24,6 +24,10 @@ public class ProductBacklogComparisonItem {
         return productBacklogItem.getAccumulatedEstimate();
     }
 
+    public String getComparedPlannedRelease(){
+        return formatDifference(productBacklogItem.getPlannedRelease(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getPlannedRelease()); 
+    }
+    
     public String getComparedSprint() {
         return formatDifference(productBacklogItem.getSprint(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getSprint());
     }

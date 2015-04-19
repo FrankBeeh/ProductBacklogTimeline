@@ -12,8 +12,9 @@ public class ProductBacklogItemData {
     private final State state;
     private final String sprint;
     private final String rank;
+    private final String plannedRelease;
 
-    public ProductBacklogItemData(String id, String title, String description, Double estimate, State state, String sprint, String rank) {
+    public ProductBacklogItemData(String id, String title, String description, Double estimate, State state, String sprint, String rank, String plannedRelease) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -21,6 +22,7 @@ public class ProductBacklogItemData {
         this.state = state;
         this.sprint = sprint;
         this.rank = rank;
+        this.plannedRelease = plannedRelease;
     }
 
     public String getId() {
@@ -53,6 +55,10 @@ public class ProductBacklogItemData {
 
     public String getRank() {
         return rank;
+    }
+    
+    public String getPlannedRelease() {
+        return plannedRelease;
     }
     
     @Override

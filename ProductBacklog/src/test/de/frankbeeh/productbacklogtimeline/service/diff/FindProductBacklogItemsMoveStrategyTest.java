@@ -183,7 +183,7 @@ public class FindProductBacklogItemsMoveStrategyTest {
     }
 
     private static ProductBacklogItem createProductBacklogItem(String id) {
-        return new ProductBacklogItem(id, null, null, null, null, null, null);
+        return new ProductBacklogItem(id, null, null, null, null, null, null, null);
     }
 
     private static LinkedList<ProductBacklogItem> createList(ProductBacklogItem... productBacklogItems) {

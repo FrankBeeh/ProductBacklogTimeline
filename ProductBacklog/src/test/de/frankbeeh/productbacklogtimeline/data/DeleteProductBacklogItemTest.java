@@ -13,8 +13,8 @@ import org.junit.Test;
 public class DeleteProductBacklogItemTest {
     private static final String ID_1 = "Id 1";
     private static final String ID_2 = "Id 2";
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1 = new ProductBacklogItem(ID_1, null, null, null, null, null, null);
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_2 = new ProductBacklogItem(ID_2, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1 = new ProductBacklogItem(ID_1, null, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_2 = new ProductBacklogItem(ID_2, null, null, null, null, null, null, null);
 
     private List<ProductBacklogItem> productBacklogItems;
 

@@ -13,9 +13,9 @@ public class MoveProductBacklogItemsAfterIdTest {
     private static final String ID_1 = "ID 1";
     private static final String ID_2 = "ID 2";
     private static final String ID_3 = "ID 3";
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1 = new ProductBacklogItem(ID_1, null, null, null, null, null, null);
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_2 = new ProductBacklogItem(ID_2, null, null, null, null, null, null);
-    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_3 = new ProductBacklogItem(ID_3, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_1 = new ProductBacklogItem(ID_1, null, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_2 = new ProductBacklogItem(ID_2, null, null, null, null, null, null, null);
+    private static final ProductBacklogItem PRODUCT_BACKLOG_ITEM_3 = new ProductBacklogItem(ID_3, null, null, null, null, null, null, null);
 
     @Test
     public void applyTo_moveAfterLast() {

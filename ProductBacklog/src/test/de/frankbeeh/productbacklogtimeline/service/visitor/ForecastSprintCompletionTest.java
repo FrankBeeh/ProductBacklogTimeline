@@ -50,7 +50,7 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
     }
 
     private ProductBacklogItem createProductBacklogItem(Double accumulatedEstimate) {
-        final ProductBacklogItem productBacklogItem = new ProductBacklogItem(ID, null, null, null, null, null, null);
+        final ProductBacklogItem productBacklogItem = new ProductBacklogItem(ID, null, null, null, null, null, null, null);
         productBacklogItem.setAccumulatedEstimate(accumulatedEstimate);
         return productBacklogItem;
     }
