@@ -1,38 +1,102 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class ProductBacklogComparisonItemTest {
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
+public class ProductBacklogComparisonItemTest {
+    private static final String VELOCITY_FORECAST = VelocityForecast.AVERAGE_VELOCITY_FORECAST;
+    private static final String DESCRIPTION_2 = "Description 2";
+    private static final String DESCRIPTION_1 = "Description 1";
     private ProductBacklogComparisonItem productBacklogComparisonItem;
     private ProductBacklogItem referenceProductBacklogItem;
     private ProductBacklogItem productBacklogItem;
+    private SprintData sprint1;
+    private SprintData sprint2;
 
     @Test
-    public void getStateDescription_valueNull() throws Exception {
+    public void getComparedDescription_valueNull() throws Exception {
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(null), null).getComparedDescription());
+    }
+
+    @Test
+    public void getComparedDescription_referenceNull() throws Exception {
+        assertEquals(DESCRIPTION_1, new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(DESCRIPTION_1), null).getComparedDescription());
+    }
+
+    @Test
+    public void getComparedDescription_referenceValueNull() throws Exception {
+        assertEquals(DESCRIPTION_1, new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(DESCRIPTION_1), createProductBacklogItemWithDescription(null)).getComparedDescription());
+    }
+
+    @Test
+    public void getComparedDescription_equal() throws Exception {
+        assertEquals(DESCRIPTION_1,
+                new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(DESCRIPTION_1), createProductBacklogItemWithDescription(DESCRIPTION_1)).getComparedDescription());
+    }
+
+    @Test
+    public void getComparedDescription_notEqual() throws Exception {
+        assertEquals(DESCRIPTION_1 + "\n(" + DESCRIPTION_2 + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(DESCRIPTION_1),
+                createProductBacklogItemWithDescription(DESCRIPTION_2)).getComparedDescription());
+    }
+
+    @Test
+    public void getComparedCompletionForecast_valueNull() throws Exception {
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(null), null).getComparedCompletionForecast(VELOCITY_FORECAST));
+    }
+
+    @Test
+    public void getComparedCompletionForecast_referenceNull() throws Exception {
+        assertEquals(sprint1.getComparedForecast(null),
+                new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(sprint1), null).getComparedCompletionForecast(VELOCITY_FORECAST));
+    }
+
+    @Test
+    public void getComparedCompletionForecast_referenceValueNull() throws Exception {
+        assertEquals(
+                sprint1.getComparedForecast(null),
+                new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(sprint1), createProductBacklogItemWithCompletionForecast(null)).getComparedCompletionForecast(VELOCITY_FORECAST));
+    }
+
+    @Test
+    public void getComparedCompletionForecast_equal() throws Exception {
+        assertEquals(sprint1.getComparedForecast(null), new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(sprint1),
+                createProductBacklogItemWithCompletionForecast(sprint1)).getComparedCompletionForecast(VELOCITY_FORECAST));
+    }
+
+    @Test
+    public void getComparedCompletionForecast_notEqual() throws Exception {
+        assertEquals("Sprint 1\n(Sprint 2)\n01.02.2003\n(-14d)", new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(sprint1),
+                createProductBacklogItemWithCompletionForecast(sprint2)).getComparedCompletionForecast(VELOCITY_FORECAST));
+    }
+
+    @Test
+    public void getComparedState_valueNull() throws Exception {
         assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithState(null), null).getComparedState());
     }
 
     @Test
-    public void getStateDescription_referenceNull() throws Exception {
+    public void getComparedState_referenceNull() throws Exception {
         assertEquals(State.Todo.toString(), new ProductBacklogComparisonItem(createProductBacklogItemWithState(State.Todo), null).getComparedState());
     }
 
     @Test
-    public void getStateDescription_referenceValueNull() throws Exception {
+    public void getComparedState_referenceValueNull() throws Exception {
         assertEquals(State.Todo.toString(), new ProductBacklogComparisonItem(createProductBacklogItemWithState(State.Todo), createProductBacklogItemWithState(null)).getComparedState());
     }
 
     @Test
-    public void getStateDescription_equal() throws Exception {
+    public void getComparedState_equal() throws Exception {
         assertEquals(State.Todo.toString(), new ProductBacklogComparisonItem(createProductBacklogItemWithState(State.Todo), createProductBacklogItemWithState(State.Todo)).getComparedState());
     }
 
     @Test
-    public void getStateDescription_notEqual() throws Exception {
+    public void getComparedState_notEqual() throws Exception {
         assertEquals(State.Todo.toString() + "\n(" + State.Done.toString() + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithState(State.Todo),
                 createProductBacklogItemWithState(State.Done)).getComparedState());
     }
@@ -132,13 +196,26 @@ public class ProductBacklogComparisonItemTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
         referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
         productBacklogComparisonItem = new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem);
+        sprint1 = new SprintData("Sprint 1", null, FormatUtility.parseDate("01.02.2003"), null, null, null, null);
+        sprint2 = new SprintData("Sprint 2", null, FormatUtility.parseDate("15.02.2003"), null, null, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithState(State state) {
         return new ProductBacklogItem(null, null, null, null, state, null, null);
     }
+
+    private ProductBacklogItem createProductBacklogItemWithDescription(String description) {
+        return new ProductBacklogItem(null, null, description, null, null, null, null);
+    }
+
+    private ProductBacklogItem createProductBacklogItemWithCompletionForecast(SprintData sprintData) {
+        final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null);
+        productBacklogItem.setCompletionForecast(VELOCITY_FORECAST, sprintData);
+        return productBacklogItem;
+    }
+
 }

@@ -138,7 +138,7 @@ public class SprintData {
         return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
     }
 
-    public String getDescription(SprintData referenceSprintData) {
+    public String getComparedForecast(SprintData referenceSprintData) {
         final StringBuilder stringBuilder = new StringBuilder();
         final String sprintName = getName();
         stringBuilder.append(sprintName);

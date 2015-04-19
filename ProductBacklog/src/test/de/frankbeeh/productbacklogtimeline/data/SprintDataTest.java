@@ -57,20 +57,20 @@ public class SprintDataTest {
     public void getDescription_withEndDate() throws Exception {
         final String endDate = "01.02.2003";
         final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
-        assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getDescription(null));
+        assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getComparedForecast(null));
     }
 
     @Test
     public void getDescription_noEndDate() throws Exception {
         final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, null, null, null, null, null);
-        assertEquals(SPRINT_NAME_1, sprintData.getDescription(null));
+        assertEquals(SPRINT_NAME_1, sprintData.getComparedForecast(null));
     }
 
     @Test
     public void getDescription_sameReferenceSprint() throws Exception {
         final String endDate = "01.02.2003";
         final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
-        assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getDescription(sprintData));
+        assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getComparedForecast(sprintData));
     }
 
     @Test
@@ -79,7 +79,7 @@ public class SprintDataTest {
         final String referenceEndDate = "02.02.2003";
         final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
         final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseDate(referenceEndDate), null, null, null, null);
-        assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(-1d)", sprintData.getDescription(referenceSprintData));
+        assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(-1d)", sprintData.getComparedForecast(referenceSprintData));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class SprintDataTest {
         final String referenceEndDate = "01.01.2003";
         final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
         final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseDate(referenceEndDate), null, null, null, null);
-        assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(+31d)", sprintData.getDescription(referenceSprintData));
+        assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(+31d)", sprintData.getComparedForecast(referenceSprintData));
     }
 
 }

@@ -20,36 +20,20 @@ public class ProductBacklogComparisonItem {
         return productBacklogItem.getId();
     }
 
-    public SprintData getCompletionForecast(String progressForecastName) {
-        return productBacklogItem.getCompletionForecast(progressForecastName);
-    }
-
     public String getTitle() {
         return productBacklogItem.getTitle();
-    }
-
-    public String getDescription() {
-        return productBacklogItem.getDescription();
-    }
-
-    public State getState() {
-        return productBacklogItem.getState();
     }
 
     public Double getAccumulatedEstimate() {
         return productBacklogItem.getAccumulatedEstimate();
     }
 
-    public Double getEstimate() {
-        return productBacklogItem.getEstimate();
-    }
-
     public String getSprint() {
         return productBacklogItem.getSprint();
     }
 
-    public Integer getRank() {
-        return productBacklogItem.getRank();
+    public String getComparedDescription() {
+        return formatDifference(productBacklogItem.getDescription(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getDescription());
     }
 
     // FIXME Write unit tests
@@ -58,40 +42,39 @@ public class ProductBacklogComparisonItem {
         if (sprintData == null) {
             return null;
         } else {
-            SprintData referenceCompletionForecast = null;
-            if (referenceProductBacklogItem != null) {
-                referenceCompletionForecast = referenceProductBacklogItem.getCompletionForecast(progressForecastName);
-            }
-            return sprintData.getDescription(referenceCompletionForecast);
+            final SprintData referenceCompletionForecast = referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getCompletionForecast(progressForecastName);
+            return sprintData.getComparedForecast(referenceCompletionForecast);
         }
     }
 
     public String getComparedState() {
-        if (getState() == null) {
-            return null;
-        }
-        final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getState().toString());
-        if (referenceProductBacklogItem != null) {
-            final State referenceState = referenceProductBacklogItem.getState();
-            if (referenceState != null && !getState().equals(referenceState)) {
-                stringBuilder.append("\n(").append(referenceState).append(")");
-            }
-        }
-        return stringBuilder.toString();
+        return formatDifference(productBacklogItem.getState() == null ? null : productBacklogItem.getState().toString(),
+                (referenceProductBacklogItem == null || referenceProductBacklogItem.getState() == null) ? null : referenceProductBacklogItem.getState().toString());
     }
 
     public String getComparedEstimate() {
-        return formatDifference(getEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getEstimate());
+        return formatDifference(productBacklogItem.getEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getEstimate());
     }
 
     public String getComparedAccumulatedEstimate() {
-        return formatDifference(getAccumulatedEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getAccumulatedEstimate());
+        return formatDifference(productBacklogItem.getAccumulatedEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getAccumulatedEstimate());
     }
 
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+
+    private String formatDifference(final String value, String referenceValue) {
+        if (value == null) {
+            return null;
+        }
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(value.toString());
+        if (referenceValue != null && !value.equals(referenceValue)) {
+            stringBuilder.append("\n(").append(referenceValue).append(")");
+        }
+        return stringBuilder.toString();
     }
 
     private String formatDifference(final Double value, Double referenceValue) {
