@@ -28,6 +28,8 @@ public class MainController {
     @FXML
     private ProductBacklogTableController productBacklogTableController;
     @FXML
+    private ReleaseBurndownController releaseBurndownController;
+    @FXML
     private Tab releasesTab;
     @FXML
     private ComboBox<String> selectedReleaseForecast;
@@ -77,7 +79,6 @@ public class MainController {
         if (selectedFile != null) {
             final VelocityForecastFromCsvImporter importer = new VelocityForecastFromCsvImporter();
             productTimeline.setVelocityForecastForSelectedReleaseForecast(importer.importData(new FileReader(selectedFile)));
-            velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
             updateProductBacklogAndReleaseTable();
         }
     }
@@ -115,6 +116,7 @@ public class MainController {
         productBacklogTableController.initModel(productTimeline.getProductBacklogComparison());
         productBacklogTableController.updateView();
         velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
+        releaseBurndownController.initModel(productTimeline.getSelectedReleaseForecast());
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
     }

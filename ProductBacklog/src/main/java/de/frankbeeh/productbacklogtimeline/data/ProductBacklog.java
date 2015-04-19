@@ -77,4 +77,11 @@ public class ProductBacklog {
         }
         return null;
     }
+
+    public Double getTotalEffort() {
+        if (items.isEmpty()) {
+            return 0.0;
+        }
+        return items.getLast().getAccumulatedEstimate();
+    }
 }

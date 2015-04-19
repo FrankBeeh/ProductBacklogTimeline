@@ -36,6 +36,10 @@ public class ProductTimeline {
     public ProductBacklog getSelectedProductBacklog() {
         return getProductBacklog(selectedName);
     }
+    
+    public ReleaseForecast getSelectedReleaseForecast() {
+        return getReleaseForecast(selectedName);
+    }
 
     public void selectReleaseForecast(String selectedName) {
         this.selectedName = selectedName;

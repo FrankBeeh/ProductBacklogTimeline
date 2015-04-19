@@ -8,14 +8,14 @@
 <?import javafx.scene.paint.*?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
 
-<BorderPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="800.0" prefWidth="1200.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.MainController">
+<BorderPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.frankbeeh.productbacklogtimeline.view.MainController">
   <bottom>
     <HBox prefHeight="24.0" prefWidth="1200.0">
       <children>
         <Label text="Selected Release Forecast" />
-        <ComboBox fx:id="selectedReleaseForecast" onAction="#selectReleaseForecast" prefHeight="21.0" prefWidth="293.0"/>
+        <ComboBox fx:id="selectedReleaseForecast" onAction="#selectReleaseForecast" prefHeight="21.0" prefWidth="293.0" />
         <Label text="Referenced Release Forecast" />
-        <ComboBox fx:id="referencedReleaseForecast" onAction="#referenceReleaseForecast" prefHeight="21.0" prefWidth="293.0"/>
+        <ComboBox fx:id="referencedReleaseForecast" onAction="#referenceReleaseForecast" prefHeight="21.0" prefWidth="293.0" />
       </children>
     </HBox>
   </bottom>
@@ -41,6 +41,11 @@
           </content>
         </Tab>
         <Tab fx:id="releasesTab" text="Releases" />
+            <Tab text="Release Burndown">
+               <content>
+               		<fx:include fx:id="releaseBurndown" source="releaseBurndown.fxml" />
+               </content>
+            </Tab>
       </tabs>
     </TabPane>
   </center>
