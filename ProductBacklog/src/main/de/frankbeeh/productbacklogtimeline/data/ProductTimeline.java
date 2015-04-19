@@ -29,7 +29,7 @@ public class ProductTimeline {
     }
 
     public void addProductBacklog(String name, ProductBacklog productBacklog) {
-        productBacklog.updateAllItems(getSelectedVelocityForecast());
+        updateProductBacklog(productBacklog);
         releaseForecasts.add(new ReleaseForecast(name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1).getVelocityForecast()));
     }
 
@@ -54,7 +54,7 @@ public class ProductTimeline {
     public void setVelocityForecastForSelectedReleaseForecast(VelocityForecast velocityForecast) {
         velocityForecast.updateForecast();
         getReleaseForecast(selectedName).setVelocityForecast(velocityForecast);
-        updateProductBacklog();
+        updateProductBacklog(getSelectedProductBacklog());
         updateProductBacklogComparison();
         updateReleases();
     }
@@ -75,8 +75,8 @@ public class ProductTimeline {
         return names;
     }
 
-    private void updateProductBacklog() {
-        getSelectedProductBacklog().updateAllItems(getSelectedVelocityForecast());
+    private void updateProductBacklog(ProductBacklog productBacklog) {
+        productBacklog.updateAllItems(getSelectedVelocityForecast());
     }
 
     private void updateProductBacklogComparison() {
