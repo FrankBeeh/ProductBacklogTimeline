@@ -21,12 +21,12 @@
             <AlignRightCellFactory />
       	  </cellFactory>
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="estimateDescription"/>
+      	    <PropertyValueFactory property="comparedEstimate"/>
       	  </cellValueFactory>
         </TableColumn>
-		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="State" fx:id="stateColumn">
+		<TableColumn editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="-1.0" resizable="true" sortable="false" text="State" fx:id="stateColumn">
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="state"/>
+      	    <PropertyValueFactory property="comparedState"/>
       	  </cellValueFactory>
 		</TableColumn>
 		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="400.0" resizable="true" sortable="false" text="Title" fx:id="titleColumn">
@@ -44,7 +44,7 @@
             <AlignRightCellFactory />
       	  </cellFactory>
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="accumulatedEstimateDescription"/>
+      	    <PropertyValueFactory property="comparedAccumulatedEstimate"/>
       	  </cellValueFactory>
         </TableColumn>
 		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Sprint" fx:id="sprintColumn" >

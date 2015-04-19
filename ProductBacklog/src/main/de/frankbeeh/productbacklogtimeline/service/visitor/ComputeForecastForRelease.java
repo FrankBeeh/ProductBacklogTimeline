@@ -36,6 +36,6 @@ public class ComputeForecastForRelease implements ReleaseVisitor {
     }
 
     private void setCompletionForecast(String completionForecastName, Release release, final ProductBacklogComparisonItem productBacklogComparisonItem) {
-        release.setCompletionForecast(completionForecastName, productBacklogComparisonItem.getCompletionForecastDescription(completionForecastName));
+        release.setCompletionForecast(completionForecastName, productBacklogComparisonItem.getComparedCompletionForecast(completionForecastName));
     }
 }

@@ -23,7 +23,7 @@ public class ProductBacklogTableController {
 
         @Override
         public ObservableValue<String> call(CellDataFeatures<ProductBacklogComparisonItem, String> cellDataFeatures) {
-            return new SimpleStringProperty(cellDataFeatures.getValue().getCompletionForecastDescription(progressForecastName));
+            return new SimpleStringProperty(cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName));
         }
     }
 

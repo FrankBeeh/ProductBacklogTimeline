@@ -52,7 +52,8 @@ public class ProductBacklogComparisonItem {
         return productBacklogItem.getRank();
     }
 
-    public String getCompletionForecastDescription(String progressForecastName) {
+    // FIXME Write unit tests
+    public String getComparedCompletionForecast(String progressForecastName) {
         final SprintData sprintData = productBacklogItem.getCompletionForecast(progressForecastName);
         if (sprintData == null) {
             return null;
@@ -65,11 +66,26 @@ public class ProductBacklogComparisonItem {
         }
     }
 
-    public String getEstimateDescription() {
+    public String getComparedState() {
+        if (getState() == null) {
+            return null;
+        }
+        final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getState().toString());
+        if (referenceProductBacklogItem != null) {
+            final State referenceState = referenceProductBacklogItem.getState();
+            if (referenceState != null && !getState().equals(referenceState)) {
+                stringBuilder.append("\n(").append(referenceState).append(")");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getComparedEstimate() {
         return formatDifference(getEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getEstimate());
     }
 
-    public String getAccumulatedEstimateDescription() {
+    public String getComparedAccumulatedEstimate() {
         return formatDifference(getAccumulatedEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getAccumulatedEstimate());
     }
 
