@@ -21,7 +21,7 @@ import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.Release;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
 import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
-import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 @RunWith(EasyMockRunner.class)
 public class ComputeForecastForReleaseTest extends EasyMockSupport {
@@ -37,7 +37,7 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     @Mock
     private ProductBacklogComparison productBacklogComparison;
     @Mock
-    private Criteria criteria;
+    private ReleaseCriteria criteria;
 
     private ReleaseVisitor visitor;
 

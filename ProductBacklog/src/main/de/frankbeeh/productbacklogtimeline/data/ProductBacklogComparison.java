@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 /**
  * Responsibility:
@@ -47,7 +47,7 @@ public class ProductBacklogComparison {
         return productBacklogComparisonItems;
     }
     
-    public List<ProductBacklogComparisonItem> getMatchingProductBacklogItems(Criteria criteria) {
+    public List<ProductBacklogComparisonItem> getMatchingProductBacklogItems(ReleaseCriteria criteria) {
         final List<ProductBacklogComparisonItem> matchingProductBacklogItems = new ArrayList<ProductBacklogComparisonItem>();
         for (final ProductBacklogComparisonItem productBacklogComparisonItem : productBacklogComparisonItems) {
             if (criteria.isMatching(productBacklogComparisonItem)) {

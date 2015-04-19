@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.criteria;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparisonItem;
 
-public class ProductBacklogItemIdIsEqual implements Criteria {
+public class ProductBacklogItemIdIsEqual implements ReleaseCriteria {
 
     private final String id;
 

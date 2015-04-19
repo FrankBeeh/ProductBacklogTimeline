@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.criteria;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparisonItem;
 
-public interface Criteria {
+public interface ReleaseCriteria {
 
     boolean isMatching(ProductBacklogComparisonItem productBacklogComparisonItem);
 

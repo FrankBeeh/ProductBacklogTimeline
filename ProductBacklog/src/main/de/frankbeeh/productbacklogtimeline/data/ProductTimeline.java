@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemIdIsEqual;
+import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
 
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
@@ -92,10 +92,12 @@ public class ProductTimeline {
     }
 
     private void createDummyReleases() {
-        releases.addRelease(new Release("Release 0.8", new ProductBacklogItemIdIsEqual("CRM-793")));
-        releases.addRelease(new Release("Release 0.9", new ProductBacklogItemIdIsEqual("CRM-560")));
-        releases.addRelease(new Release("Release 1.0", new ProductBacklogItemIdIsEqual("CRM-771")));
-        releases.addRelease(new Release("Release 1.2", new ProductBacklogItemIdIsEqual("CRM-554")));
+        releases.addRelease(new Release("TP1: Technical Preview Basis", new PlannedReleaseIsEqual("TP1: Technical Preview Basis")));
+        releases.addRelease(new Release("TP 2: Technical Preview Erweitert", new PlannedReleaseIsEqual("TP 2: Technical Preview Erweitert")));
+        releases.addRelease(new Release("CP: Consumer Preview", new PlannedReleaseIsEqual("CP: Consumer Preview")));
+        releases.addRelease(new Release("Full Launch", new PlannedReleaseIsEqual("Full Launch")));
+        releases.addRelease(new Release("Weiterentwicklung", new PlannedReleaseIsEqual("Weiterentwicklung")));
+        releases.addRelease(new Release("Phase Out bestehende App", new PlannedReleaseIsEqual("Phase Out bestehende App")));
     }
 
     private ProductBacklog getProductBacklog(String name) {

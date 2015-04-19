@@ -6,15 +6,15 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 public class Release {
     private final String name;
-    private final Criteria criteria;
+    private final ReleaseCriteria criteria;
     private final Map<String, String> completionForecast = new HashMap<String, String>();
     private Double accumulatedEstimate;
 
-    public Release(String name, Criteria criteria) {
+    public Release(String name, ReleaseCriteria criteria) {
         this.name = name;
         this.criteria = criteria;
     }
@@ -23,7 +23,7 @@ public class Release {
         return name;
     }
 
-    public Criteria getCriteria() {
+    public ReleaseCriteria getCriteria() {
         return criteria;
     }
 

@@ -13,12 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.Criteria;
+import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 @RunWith(EasyMockRunner.class)
 public class ProductBacklogComparisonTest extends EasyMockSupport {
     @Mock
-    private Criteria criteriaMock;
+    private ReleaseCriteria criteriaMock;
     private ProductBacklogComparisonItem productBacklogItem1 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 1", null, null, null, null, "", "1", null), null);
     private ProductBacklogComparisonItem productBacklogItem2 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 2", null, null, null, null, "", "2", null), null);
     private ProductBacklogComparison productBacklogComparison;
