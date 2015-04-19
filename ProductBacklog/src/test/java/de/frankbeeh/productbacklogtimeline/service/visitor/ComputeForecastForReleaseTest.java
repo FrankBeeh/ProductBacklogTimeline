@@ -1,8 +1,8 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 import static org.easymock.EasyMock.expect;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +71,7 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         replayAll();
         visitor.visit(release, productBacklogComparison);
         verifyAll();
-        assertEquals(accumulatedEstimate, release.getAccumulatedEstimate());
+        assertEquals(new Double(accumulatedEstimate), release.getAccumulatedEstimate());
         assertEquals(MIN_VEL_SPRINT_NAME_1, release.getCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST));
         assertEquals(AVG_VEL_SPRINT_NAME_1, release.getCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST));
         assertEquals(MAX_VEL_SPRINT_NAME_1, release.getCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
@@ -87,7 +87,7 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         replayAll();
         visitor.visit(release, productBacklogComparison);
         verifyAll();
-        assertEquals(ACCUMULATED_ESTIMATE_2, release.getAccumulatedEstimate());
+        assertEquals(new Double(ACCUMULATED_ESTIMATE_2), release.getAccumulatedEstimate());
         assertEquals(MIN_VEL_SPRINT_NAME_2, release.getCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST));
         assertEquals(AVG_VEL_SPRINT_NAME_2, release.getCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST));
         assertEquals(MAX_VEL_SPRINT_NAME_2, release.getCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));

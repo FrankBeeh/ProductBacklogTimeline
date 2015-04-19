@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 

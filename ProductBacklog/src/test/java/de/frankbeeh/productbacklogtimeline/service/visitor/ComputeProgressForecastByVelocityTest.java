@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 import static org.easymock.EasyMock.same;
 
 import org.easymock.EasyMockRunner;

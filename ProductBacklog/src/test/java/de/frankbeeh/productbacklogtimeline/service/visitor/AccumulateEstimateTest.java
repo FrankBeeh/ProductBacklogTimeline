@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class AccumulateEstimateTest {
     public void visitFirst_noEstimate() {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         visitor.visit(productBacklogItem, null);
-        assertEquals(0d, productBacklogItem.getAccumulatedEstimate());
+        assertEquals(new Double(0d), productBacklogItem.getAccumulatedEstimate());
     }
 
     @Test
@@ -32,7 +32,7 @@ public class AccumulateEstimateTest {
         final Double estimate = Double.valueOf(1d);
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, estimate, State.Canceled, null, null, null);
         visitor.visit(productBacklogItem, null);
-        assertEquals(0d, productBacklogItem.getAccumulatedEstimate());
+        assertEquals(new Double(0d), productBacklogItem.getAccumulatedEstimate());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class AccumulateEstimateTest {
         final Double estimate2 = Double.valueOf(2d);
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem(null, null, null, estimate2, null, null, null, null);
         visitor.visit(productBacklogItem2, null);
-        assertEquals(estimate1 + estimate2, productBacklogItem2.getAccumulatedEstimate());
+        assertEquals(new Double(estimate1 + estimate2), productBacklogItem2.getAccumulatedEstimate());
     }
     
     @Test

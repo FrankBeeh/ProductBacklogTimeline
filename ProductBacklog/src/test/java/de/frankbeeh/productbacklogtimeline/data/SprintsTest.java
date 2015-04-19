@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;

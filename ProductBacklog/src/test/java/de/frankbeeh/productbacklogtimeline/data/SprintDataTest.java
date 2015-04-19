@@ -1,7 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -19,14 +19,14 @@ public class SprintDataTest {
     public void setProgressForecastBasedOnHistory_isRounding() throws Exception {
         final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
         sprintData.setProgressForecastBasedOnHistory(FORECAST_NAME, 1.23d);
-        assertEquals(1.2d, sprintData.getProgressForecastBasedOnHistory(FORECAST_NAME));
+        assertEquals(Double.valueOf(1.2d), sprintData.getProgressForecastBasedOnHistory(FORECAST_NAME));
     }
 
     @Test
     public void setAccumulatedProgressForecastBasedOnHistory_isRounding() throws Exception {
         final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
         sprintData.setAccumulatedProgressForecastBasedOnHistory(FORECAST_NAME, 2.59d);
-        assertEquals(2.6d, sprintData.getAccumulatedEffortDoneOrProgressForcast(FORECAST_NAME));
+        assertEquals(Double.valueOf(2.6d), sprintData.getAccumulatedEffortDoneOrProgressForcast(FORECAST_NAME));
     }
 
     @Test

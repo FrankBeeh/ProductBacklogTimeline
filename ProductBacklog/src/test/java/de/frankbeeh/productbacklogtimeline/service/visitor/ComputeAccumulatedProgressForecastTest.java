@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import static junit.framework.Assert.assertEquals;
+
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
