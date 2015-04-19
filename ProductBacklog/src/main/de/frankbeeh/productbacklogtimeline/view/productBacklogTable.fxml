@@ -11,7 +11,7 @@
 
 <TableView fx:id="productBacklogTable" prefHeight="719" prefWidth="1198" BorderPane.alignment="CENTER" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ProductBacklogTableController">
 	<columns>
-		<TableColumn editable="false" maxWidth="70.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn">
+		<TableColumn editable="false" maxWidth="70.0" minWidth="70.0" prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn">
 		  <cellValueFactory>
       	    <PropertyValueFactory property="id"/>
       	  </cellValueFactory>
@@ -36,8 +36,8 @@
 		</TableColumn>
 		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0" prefWidth="-1.0" resizable="true" sortable="false" text="Description" fx:id="descriptionColumn">
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="comparedDescription"/>
-      	  </cellValueFactory>
+		  	<LimitDescriptionLinesValueFactory/>
+		  </cellValueFactory>
 		</TableColumn>
 		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est." fx:id="accumulatedEstimateColumn" >
           <cellFactory>
