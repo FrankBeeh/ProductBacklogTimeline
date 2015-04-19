@@ -20,10 +20,6 @@ public class ProductBacklogComparisonItem {
         return productBacklogItem.getId();
     }
 
-    public String getTitle() {
-        return productBacklogItem.getTitle();
-    }
-
     public Double getAccumulatedEstimate() {
         return productBacklogItem.getAccumulatedEstimate();
     }
@@ -32,11 +28,14 @@ public class ProductBacklogComparisonItem {
         return productBacklogItem.getSprint();
     }
 
+    public String getComparedTitle() {
+        return formatDifference(productBacklogItem.getTitle(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getTitle());
+    }
+
     public String getComparedDescription() {
         return formatDifference(productBacklogItem.getDescription(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getDescription());
     }
 
-    // FIXME Write unit tests
     public String getComparedCompletionForecast(String progressForecastName) {
         final SprintData sprintData = productBacklogItem.getCompletionForecast(progressForecastName);
         if (sprintData == null) {
