@@ -1,11 +1,11 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import java.text.DecimalFormat;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.google.common.base.Strings;
+
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class ProductBacklogComparisonItem {
     private final ProductBacklogItem productBacklogItem;
@@ -65,33 +65,44 @@ public class ProductBacklogComparisonItem {
         }
     }
 
+    public String getEstimateDescription() {
+        return formatDifference(getEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getEstimate());
+    }
+
     public String getAccumulatedEstimateDescription() {
-        final StringBuilder stringBuilder = new StringBuilder();
-        final Double accumulatedEstimate = getAccumulatedEstimate();
-        if (accumulatedEstimate == null) {
-            return null;
-        }
-        final String formattedEstimate = accumulatedEstimate.toString();
-        stringBuilder.append(formattedEstimate);
-        if (referenceProductBacklogItem != null && referenceProductBacklogItem.getAccumulatedEstimate() != null) {
-            final double accumulatedEstimateDifference = accumulatedEstimate - referenceProductBacklogItem.getAccumulatedEstimate();
-            if (accumulatedEstimateDifference != 0) {
-                final String formattedDifference = "(" + new DecimalFormat("+0.0;-0.0").format(accumulatedEstimateDifference) + ")";
-                int count = formattedDifference.length() - formattedEstimate.length() + 1;
-                if (count > 0) {
-                    stringBuilder.insert(0, Strings.repeat(" ", count));
-                    stringBuilder.append("\n");
-                } else {
-                    stringBuilder.append("\n").append(Strings.repeat(" ", 3 - count));
-                }
-                stringBuilder.append(formattedDifference);
-            }
-        }
-        return stringBuilder.toString();
+        return formatDifference(getAccumulatedEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getAccumulatedEstimate());
     }
 
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+
+    private String formatDifference(final Double value, Double referenceValue) {
+        if (value == null) {
+            return null;
+        }
+        final StringBuilder stringBuilder = new StringBuilder();
+        final String formattedEstimate = value.toString();
+        stringBuilder.append(formattedEstimate);
+        if (referenceValue != null) {
+            final double accumulatedEstimateDifference = value - referenceValue;
+            if (accumulatedEstimateDifference != 0) {
+                final String formattedDifference = "(" + FormatUtility.formatDifferenceDouble(accumulatedEstimateDifference) + ")";
+                rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    private void rigthAllign(final StringBuilder stringBuilder, final String formattedEstimate, final String formattedDifference) {
+        int count = formattedDifference.length() - formattedEstimate.length() + 1;
+        if (count > 0) {
+            stringBuilder.insert(0, Strings.repeat(" ", count));
+            stringBuilder.append("\n");
+        } else {
+            stringBuilder.append("\n").append(Strings.repeat(" ", 3 - count));
+        }
+        stringBuilder.append(formattedDifference);
     }
 }

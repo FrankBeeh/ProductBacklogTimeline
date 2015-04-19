@@ -21,7 +21,7 @@
             <AlignRightCellFactory />
       	  </cellFactory>
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="estimate"/>
+      	    <PropertyValueFactory property="estimateDescription"/>
       	  </cellValueFactory>
         </TableColumn>
 		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="State" fx:id="stateColumn">

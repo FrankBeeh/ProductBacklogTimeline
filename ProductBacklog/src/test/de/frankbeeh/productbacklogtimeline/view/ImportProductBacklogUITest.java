@@ -34,7 +34,7 @@ public class ImportProductBacklogUITest extends BaseUITest {
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "2", "1.0", "Canceled", "PBI 2", "Description 2", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "3", "5.0", "Todo", "PBI 3", "Description 3", "     8.0\n(-13.0)", "", "Sprint 3\n(Sprint 4)\n27.04.2014\n(-3d)", "Sprint 3\n(Sprint 4)\n27.04.2014\n(-3d)", SPRINT_3 },
-            { "4", "8.0", "Todo", "PBI 4", "Description 4", "    16.0\n(-10.0)", "", SPRINT_5, SPRINT_5, "Sprint 5\n(Sprint 4)\n04.05.2014\n(+4d)" } });
+            { "4", "    8.0\n(+3.0)", "Todo", "PBI 4", "Description 4", "    16.0\n(-10.0)", "", SPRINT_5, SPRINT_5, "Sprint 5\n(Sprint 4)\n04.05.2014\n(+4d)" } });
 
     private static final TableViewContent PBL_2_WITH_FORECAST_1 = new TableViewContent(new String[][] {
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
@@ -56,7 +56,7 @@ public class ImportProductBacklogUITest extends BaseUITest {
             { "2", "1.0", "Canceled", "PBI 2", "Description 2", "3.0", "Sprint 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "5", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "3", "5.0", "Todo", "PBI 3", "Description 3", "    21.0\n(+13.0)", "", "Sprint 4\n(Sprint 3)\n30.04.2014\n(+3d)", "Sprint 4\n(Sprint 3)\n30.04.2014\n(+3d)", SPRINT_3 },
-            { "4", "5.0", "Todo", "PBI 4", "Description 4", "    26.0\n(+10.0)", "", SPRINT_5, SPRINT_5, "Sprint 4\n(Sprint 5)\n30.04.2014\n(-4d)" },
+            { "4", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "    26.0\n(+10.0)", "", SPRINT_5, SPRINT_5, "Sprint 4\n(Sprint 5)\n30.04.2014\n(-4d)" },
             { "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
     private static final TableViewContent VELOCITY_FORECAST_1 = new TableViewContent(new String[][] { { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "", "", "", "" },

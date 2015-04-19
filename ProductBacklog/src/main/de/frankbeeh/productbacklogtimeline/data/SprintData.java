@@ -1,6 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.data;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -158,7 +157,7 @@ public class SprintData {
                 if (referenceEndDate != null) {
                     final long diffDays = (endDate.getTime() - referenceEndDate.getTime()) / (1000 * 60 * 60 * 24);
                     if (diffDays != 0) {
-                        stringBuilder.append("\n(").append(new DecimalFormat("+0;-0").format(diffDays)).append("d)");
+                        stringBuilder.append("\n(").append(FormatUtility.formatDifferenceLong(diffDays)).append("d)");
                     }
                 }
             }
