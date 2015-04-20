@@ -53,6 +53,16 @@ public class ProductBacklogItem {
         return data.getEstimate();
     }
 
+    /**
+     * @return <code>0</code> if state of Product Backlog Item is canceled or estimate is <code>null</code>; {@link #getEstimate()} otherwise.
+     */
+    public Double getCleanedEstimate() {
+        if (State.Canceled.equals(getState()) || data.getEstimate() == null) {
+            return Double.valueOf(0d);
+        }
+        return data.getEstimate();
+    }
+
     public void setEstimate(Double estimate) {
         data.setEstimate(estimate);
     }

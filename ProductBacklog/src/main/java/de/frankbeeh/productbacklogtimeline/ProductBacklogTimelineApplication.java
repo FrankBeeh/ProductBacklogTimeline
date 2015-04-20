@@ -18,7 +18,7 @@ public class ProductBacklogTimelineApplication extends Application {
         final Parent root = (Parent) loader.load();
 
         final Scene scene = new Scene(root, 1200, 800);
-
+        scene.getStylesheets().add(ProductBacklogTimelineApplication.class.getResource("css/productBacklog.css").toExternalForm());
         primaryStage.setTitle(APPLICATION_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();

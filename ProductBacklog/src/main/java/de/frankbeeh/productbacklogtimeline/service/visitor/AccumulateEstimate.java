@@ -1,7 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.State;
 import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
 /**
@@ -23,10 +22,7 @@ public class AccumulateEstimate implements ProductBacklogItemVisitor {
     }
 
     public void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast) {
-        final Double estimateOfThisItem = productBacklogItem.getEstimate();
-        if (estimateOfThisItem != null && !State.Canceled.equals(productBacklogItem.getState())) {
-            accumulatedEstimate += estimateOfThisItem;
-        }
+        accumulatedEstimate += productBacklogItem.getCleanedEstimate();
         productBacklogItem.setAccumulatedEstimate(accumulatedEstimate);
     }
 }

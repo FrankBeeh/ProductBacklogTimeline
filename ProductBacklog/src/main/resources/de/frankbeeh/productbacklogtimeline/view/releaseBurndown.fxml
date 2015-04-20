@@ -4,11 +4,11 @@
 <?import java.util.*?>
 <?import javafx.scene.chart.*?>
 
-<BarChart fx:id="releaseBurndown" prefHeight="719" prefWidth="1198" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ReleaseBurndownController">
+<StackedBarChart fx:id="releaseBurndown" prefHeight="719" prefWidth="1198" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.ReleaseBurndownController" legendVisible="false" animated="false">
 	<xAxis>
 		<CategoryAxis side="BOTTOM" />
     </xAxis>
     <yAxis>
     	<NumberAxis side="LEFT" />
     </yAxis>
-</BarChart>
+</StackedBarChart>

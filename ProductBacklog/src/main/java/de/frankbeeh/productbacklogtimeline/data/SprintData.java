@@ -176,4 +176,14 @@ public class SprintData {
         }
         return Math.round(value.doubleValue() * 10.0) / 10.0;
     }
+
+    public State getState() {
+        if (getEffortDone() != null){
+            return State.Done; 
+        }
+        if (getEffortForecast() != null){
+            return State.InProgress;
+        }
+        return State.Todo;
+    }
 }

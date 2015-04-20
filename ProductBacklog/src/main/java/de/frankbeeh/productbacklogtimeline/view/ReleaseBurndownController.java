@@ -1,52 +1,104 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
+import java.util.List;
+
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
+import javafx.scene.Node;
+import javafx.scene.chart.StackedBarChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Tooltip;
+import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.data.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.data.State;
 import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
 
 public class ReleaseBurndownController {
+    private static final String PRODUCT_BACKLOG = "Product Backlog";
+    private static final String FORECAST = "Forecast ";
     @FXML
-    private BarChart<String, Double> releaseBurndown;
+    private StackedBarChart<String, Double> releaseBurndown;
 
     @FXML
     private void initialize() {
-
     }
 
     public void initModel(ReleaseForecast releaseForecast) {
-        releaseBurndown.getData().clear();
-        releaseBurndown.getData().add(createAccumulatedEffortDoneSeries(releaseForecast));
-        releaseBurndown.getData().add(createForecastSeries(releaseForecast));
-        final Series<String, Double> totalEffortSeries = new XYChart.Series<String, Double>();
-        totalEffortSeries.getData().add(new XYChart.Data<String, Double>("TODO",releaseForecast.getProductBacklog().getTotalEffort()));
-        releaseBurndown.getData().add(totalEffortSeries);
+        releaseBurndown.getData().removeAll(releaseBurndown.getData());
+        addProductBacklogItems(releaseForecast);
+        addVelocityForecasts(releaseForecast);
     }
 
-    private Series<String, Double> createForecastSeries(ReleaseForecast releaseForecast) {
-        final Series<String, Double> forecastSeries = new XYChart.Series<String, Double>();
-        forecastSeries.setName("Forecast");
-        for (SprintData sprintData : releaseForecast.getVelocityForecast().getSprints()) {
-            final Double forecast = sprintData.getAccumulatedProgressForecastBasedOnHistory(VelocityForecast.AVERAGE_VELOCITY_FORECAST);
-            if (forecast != null) {
-                forecastSeries.getData().add(new XYChart.Data<String, Double>(sprintData.getName(), forecast));
+    private void addVelocityForecasts(ReleaseForecast releaseForecast) {
+        final Series<String, Double> series = new XYChart.Series<String, Double>();
+        final VelocityForecast velocityForecast = releaseForecast.getVelocityForecast();
+        for (SprintData sprintData : velocityForecast.getSprints()) {
+            for (String forecastType : VelocityForecast.COMPLETION_FORECASTS) {
+                Double value = sprintData.getEffortDone();
+                if (value == null) {
+                    value = sprintData.getProgressForecastBasedOnHistory(forecastType);
+                    if (value == null) {
+                        value = 0d;
+                    }
+                }
+                final Data<String, Double> data = new XYChart.Data<String, Double>(getForecastName(forecastType), value);
+                series.getData().add(data);
             }
         }
-        return forecastSeries;
+        releaseBurndown.getData().add(series);
+        addTooltipsForVelocityForecasts(velocityForecast);
     }
 
-    private Series<String, Double> createAccumulatedEffortDoneSeries(ReleaseForecast releaseForecast) {
-        final Series<String, Double> accumulatedEffortSeries = new XYChart.Series<String, Double>();
-        accumulatedEffortSeries.setName("Effort Done");
-        for (SprintData sprintData : releaseForecast.getVelocityForecast().getSprints()) {
-            final Double accumulatedEffort = sprintData.getAccumulatedEffortDone();
-            if (accumulatedEffort != null) {
-                accumulatedEffortSeries.getData().add(new XYChart.Data<String, Double>(sprintData.getName(), accumulatedEffort));
+    private void addProductBacklogItems(ReleaseForecast releaseForecast) {
+        final Series<String, Double> series = new XYChart.Series<String, Double>();
+        final ProductBacklog productBacklog = releaseForecast.getProductBacklog();
+        for (ProductBacklogItem item : productBacklog.getItems()) {
+            final Data<String, Double> data = new XYChart.Data<String, Double>(PRODUCT_BACKLOG, item.getCleanedEstimate());
+            series.getData().add(data);
+        }
+        releaseBurndown.getData().add(series);
+        addTooltipsForProductBacklogItems(productBacklog);
+    }
+
+    private void addTooltipsForProductBacklogItems(ProductBacklog productBacklog) {
+        final List<ProductBacklogItem> items = productBacklog.getItems();
+        int index = 0;
+        for (Series<String, Double> series : releaseBurndown.getData()) {
+            for (Data<String, Double> data : series.getData()) {
+                if (PRODUCT_BACKLOG.equals(data.getXValue())) {
+                    final ProductBacklogItem productBacklogItem = items.get(index++);
+                    final Node node = data.getNode();
+                    final State state = productBacklogItem.getState();
+                    node.getStyleClass().add(state.toString());
+                    Tooltip.install(node, new Tooltip(productBacklogItem.getId() + ": " + productBacklogItem.getTitle() + " - " + state + " - " + productBacklogItem.getAccumulatedEstimate()));
+                }
             }
         }
-        return accumulatedEffortSeries;
     }
+
+    private void addTooltipsForVelocityForecasts(VelocityForecast velocityForecast) {
+        final List<SprintData> sprints = velocityForecast.getSprints();
+        for (String forecastType : VelocityForecast.COMPLETION_FORECASTS) {
+            int index = 0;
+            for (Series<String, Double> series : releaseBurndown.getData()) {
+                for (Data<String, Double> data : series.getData()) {
+                    if (data.getXValue().startsWith(getForecastName(forecastType))) {
+                        final SprintData sprintData = sprints.get(index++);
+                        final State state = sprintData.getState();
+                        final Node node = data.getNode();
+                        node.getStyleClass().add(state.toString());
+                        Tooltip.install(node, new Tooltip(sprintData.getName() + " - " + state + " - " + sprintData.getAccumulatedEffortDoneOrProgressForcast(forecastType)));
+                    }
+                }
+            }
+        }
+    }
+
+    private String getForecastName(String forecastType) {
+        return FORECAST + forecastType;
+    }
+
 }

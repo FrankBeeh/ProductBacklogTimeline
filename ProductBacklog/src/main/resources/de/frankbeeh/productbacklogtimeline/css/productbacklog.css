@@ -1,0 +1,19 @@
+.chart-bar {
+    -fx-border-color: rgba(0,0,0,0.3);
+}
+
+.Done {
+	-fx-background-color: GoldenRod;
+}
+
+.Todo {
+	-fx-background-color: RoyalBlue;
+}
+
+.Canceled {
+	-fx-background-color: White;
+}
+
+.InProgress {
+	-fx-background-color: Silver;
+}
