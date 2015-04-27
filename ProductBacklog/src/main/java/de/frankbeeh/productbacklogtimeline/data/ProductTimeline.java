@@ -5,32 +5,27 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
-
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
     private final List<ReleaseForecast> releaseForecasts = new ArrayList<ReleaseForecast>();
-    private final Releases releases;
     private String selectedName = INITIAL_NAME;
     private String referenceName = INITIAL_NAME;
     private final ProductBacklogComparison productBacklogComparison;
 
     public ProductTimeline() {
         this(new Releases(), new ProductBacklogComparison());
-        createDummyReleases();
     }
 
     @VisibleForTesting
     ProductTimeline(Releases releases, ProductBacklogComparison productBacklogComparison) {
-        this.releases = releases;
         this.productBacklogComparison = productBacklogComparison;
-        this.releaseForecasts.add(new ReleaseForecast(INITIAL_NAME, new ProductBacklog(), new VelocityForecast()));
+        this.releaseForecasts.add(new ReleaseForecast(INITIAL_NAME, releases));
         productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
 
     public void addProductBacklog(String name, ProductBacklog productBacklog) {
         updateProductBacklog(productBacklog);
-        releaseForecasts.add(new ReleaseForecast(name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1).getVelocityForecast()));
+        releaseForecasts.add(new ReleaseForecast(name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1)));
     }
 
     public ProductBacklog getSelectedProductBacklog() {
@@ -68,7 +63,7 @@ public class ProductTimeline {
     }
 
     public Releases getReleases() {
-        return releases;
+        return getReleaseForecast(selectedName).getReleases();
     }
 
     public List<String> getReleaseForecastNames() {
@@ -92,16 +87,7 @@ public class ProductTimeline {
     }
 
     private void updateReleases() {
-        releases.updateAll(productBacklogComparison);
-    }
-
-    private void createDummyReleases() {
-        releases.addRelease(new Release("TP1: Technical Preview Basis", new PlannedReleaseIsEqual("TP1: Technical Preview Basis")));
-        releases.addRelease(new Release("TP 2: Technical Preview Erweitert", new PlannedReleaseIsEqual("TP 2: Technical Preview Erweitert")));
-        releases.addRelease(new Release("CP: Consumer Preview", new PlannedReleaseIsEqual("CP: Consumer Preview")));
-        releases.addRelease(new Release("Full Launch", new PlannedReleaseIsEqual("Full Launch")));
-        releases.addRelease(new Release("Weiterentwicklung", new PlannedReleaseIsEqual("Weiterentwicklung")));
-        releases.addRelease(new Release("Phase Out bestehende App", new PlannedReleaseIsEqual("Phase Out bestehende App")));
+        getReleases().updateAll(productBacklogComparison);
     }
 
     private ProductBacklog getProductBacklog(String name) {
@@ -125,7 +111,7 @@ public class ProductTimeline {
     }
 
     @VisibleForTesting
-    void addProductBacklog(String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast) {
-        releaseForecasts.add(new ReleaseForecast(name, productBacklog, referenceVelocityForecast));
+    void addProductBacklog(String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
+        releaseForecasts.add(new ReleaseForecast(name, productBacklog, referenceVelocityForecast, releases));
     }
 }
