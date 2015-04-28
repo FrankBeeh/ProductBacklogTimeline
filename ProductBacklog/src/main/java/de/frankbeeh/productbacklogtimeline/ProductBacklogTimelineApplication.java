@@ -6,12 +6,14 @@ import java.net.URL;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
+import de.frankbeeh.productbacklogtimeline.service.RealServiceRegistry;
+import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
+import de.frankbeeh.productbacklogtimeline.view.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.view.MainController;
 
 public class ProductBacklogTimelineApplication extends Application {
 
@@ -22,6 +24,7 @@ public class ProductBacklogTimelineApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        ServiceLocator.init(new RealServiceRegistry());
         final FXMLLoader loader = new FXMLLoader(getClass().getResource(APPLICATION_FXML));
         final Parent root = (Parent) loader.load();
 

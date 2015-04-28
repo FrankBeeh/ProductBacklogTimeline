@@ -7,7 +7,22 @@ buildscript {
     repositories {
         jcenter()
     }
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:1.0.5'
+        classpath 'org.xerial:sqlite-jdbc:3.8.7' // database-specific JDBC driver
+    }
+    configurations.classpath {
+        resolutionStrategy {                            // enforce a specific jOOQ version
+            forcedModules = [
+                'org.jooq:jooq:3.6.0',
+                'org.jooq:jooq-meta:3.6.0',
+                'org.jooq:jooq-codegen:3.6.0'
+            ]     
+        }
+    }
 }
+
+apply plugin: 'nu.studer.jooq'
 
 sourceCompatibility = 1.8
 version = '0.1.1'
@@ -36,6 +51,8 @@ repositories {
 }
 
 dependencies {
+    compile 'org.xerial:sqlite-jdbc:3.8.7'
+    compile 'org.jooq:jooq:3.5.0'
     compile 'org.apache.commons:commons-lang3:3.3.2'
     compile group: 'com.google.guava', name: 'guava', version: '12.0'
     compile 'net.sf.opencsv:opencsv:2.3'
@@ -44,4 +61,30 @@ dependencies {
     testCompile 'org.loadui:testFx:3.1.0'
     testCompile "org.testfx:testfx-core:4.0.+"
     testCompile "org.testfx:testfx-junit:4.0.+"
+}
+
+jooq {
+   main(sourceSets.main) {
+       jdbc {
+           driver = 'org.sqlite.JDBC'
+           url = 'jdbc:sqlite:jooq/template.db'
+       }
+       generator {
+           name = 'org.jooq.util.DefaultGenerator'
+           strategy {
+               name = 'org.jooq.util.DefaultGeneratorStrategy'
+           }
+           database {
+               name = 'org.jooq.util.sqlite.SQLiteDatabase'
+               dateAsTimestamp = false
+           }
+           generate {
+               deprecated = false
+               records = false
+           }
+           target {
+               packageName = 'de.frankbeeh.productbacklogtimeline.service.database.generated'
+           }
+       }
+   }
 }
