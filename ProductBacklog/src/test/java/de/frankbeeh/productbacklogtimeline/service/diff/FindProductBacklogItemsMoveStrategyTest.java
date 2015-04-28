@@ -16,9 +16,9 @@ import java.util.SortedSet;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.data.MoveProductBacklogItemsAfterId;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogChange;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.change.MoveProductBacklogItemsAfterId;
+import de.frankbeeh.productbacklogtimeline.domain.change.ProductBacklogChange;
 
 public class FindProductBacklogItemsMoveStrategyTest {
 

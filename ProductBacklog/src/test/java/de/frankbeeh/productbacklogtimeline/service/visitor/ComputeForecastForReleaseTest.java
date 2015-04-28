@@ -15,12 +15,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparisonItem;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.Release;
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.Release;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 @RunWith(EasyMockRunner.class)

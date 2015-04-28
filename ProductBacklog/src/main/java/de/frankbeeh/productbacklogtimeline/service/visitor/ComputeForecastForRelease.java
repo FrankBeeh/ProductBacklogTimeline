@@ -2,10 +2,10 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import java.util.List;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparisonItem;
-import de.frankbeeh.productbacklogtimeline.data.Release;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.Release;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ComputeForecastForRelease implements ReleaseVisitor {
 

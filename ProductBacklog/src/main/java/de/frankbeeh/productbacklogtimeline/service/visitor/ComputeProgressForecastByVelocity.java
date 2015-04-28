@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 
 /**
  * Responsibility:

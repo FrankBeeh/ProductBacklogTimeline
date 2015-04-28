@@ -15,8 +15,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductTimeline;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
 

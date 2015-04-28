@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
+import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public abstract class BasicDialog<T> extends Stage {
 

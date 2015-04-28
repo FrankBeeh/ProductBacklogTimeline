@@ -12,9 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 @RunWith(EasyMockRunner.class)
 public class JiraProductBacklogSortingStrategyTest extends EasyMockSupport {

@@ -1,7 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 /**
  * Responsibility:

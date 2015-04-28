@@ -9,9 +9,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparisonItem;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ProductBacklogTableController {
     private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ProductBacklogComparisonItem, String>, ObservableValue<String>> {

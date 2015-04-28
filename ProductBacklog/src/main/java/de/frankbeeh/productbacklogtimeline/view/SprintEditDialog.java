@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.view;
 
 import java.net.URL;
 
-import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
+import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public class SprintEditDialog extends BasicDialog<SprintDataViewModel> {
 

@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 
 public class ComputeAccumulatedProgressForecast implements SprintDataVisitor {
     private Double accumulatedProgressForecast;

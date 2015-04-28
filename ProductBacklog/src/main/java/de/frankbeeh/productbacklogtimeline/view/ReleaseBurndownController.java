@@ -9,12 +9,12 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Tooltip;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.ReleaseForecast;
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.State;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.State;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ReleaseBurndownController {
     private static final String PRODUCT_BACKLOG = "Product Backlog";

@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 
 public class AlignRightCellFactory<T> implements Callback<TableColumn<SprintData, T>, TableCell<SprintData, T>> {
     @Override

@@ -6,12 +6,12 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.data.ChangeEstimateOfProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.DeleteProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.InsertProductBacklogItemAfterId;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogChange;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.change.ChangeEstimateOfProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.change.DeleteProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.change.InsertProductBacklogItemAfterId;
+import de.frankbeeh.productbacklogtimeline.domain.change.ProductBacklogChange;
 
 public class ProductBacklogDiff {
     private final FindProductBacklogItemsMoveStrategy findProductBacklogItemsMoveStrategy = new FindProductBacklogItemsMoveStrategy();

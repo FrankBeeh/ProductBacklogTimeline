@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 
 @RunWith(EasyMockRunner.class)
 public class ComputeProgressForecastByVelocityTest extends EasyMockSupport {

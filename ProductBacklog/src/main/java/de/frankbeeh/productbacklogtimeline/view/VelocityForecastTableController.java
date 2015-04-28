@@ -9,10 +9,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
-import de.frankbeeh.productbacklogtimeline.data.viewmodel.SprintDataViewModel;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public class VelocityForecastTableController {
     private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintDataViewModel, Double>, ObservableValue<Double>> {

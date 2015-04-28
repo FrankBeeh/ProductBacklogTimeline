@@ -1,7 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.data.Release;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
+import de.frankbeeh.productbacklogtimeline.domain.Release;
 
 /**
  * Responsibility:

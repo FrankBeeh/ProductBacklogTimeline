@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 
 public class AccumulateEffortDoneTest {
 

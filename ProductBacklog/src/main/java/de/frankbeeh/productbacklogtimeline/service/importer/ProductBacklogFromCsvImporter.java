@@ -2,9 +2,9 @@ package de.frankbeeh.productbacklogtimeline.service.importer;
 
 import java.text.ParseException;
 
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.data.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.data.State;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.domain.State;
 
 public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBacklog> {
 

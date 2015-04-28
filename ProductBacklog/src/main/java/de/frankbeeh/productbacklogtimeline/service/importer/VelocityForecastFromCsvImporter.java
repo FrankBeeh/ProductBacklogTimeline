@@ -3,8 +3,8 @@ package de.frankbeeh.productbacklogtimeline.service.importer;
 import java.text.ParseException;
 import java.util.Date;
 
-import de.frankbeeh.productbacklogtimeline.data.SprintData;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class VelocityForecastFromCsvImporter extends DataFromCsvImporter<VelocityForecast> {
 

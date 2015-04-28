@@ -10,9 +10,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-import de.frankbeeh.productbacklogtimeline.data.Release;
-import de.frankbeeh.productbacklogtimeline.data.Releases;
-import de.frankbeeh.productbacklogtimeline.data.VelocityForecast;
+import de.frankbeeh.productbacklogtimeline.domain.Release;
+import de.frankbeeh.productbacklogtimeline.domain.Releases;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ReleaseTableController {
     private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<Release, String>, ObservableValue<String>> {

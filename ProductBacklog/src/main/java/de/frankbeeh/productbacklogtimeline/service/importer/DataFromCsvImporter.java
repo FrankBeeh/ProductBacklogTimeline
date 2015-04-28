@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
-import de.frankbeeh.productbacklogtimeline.data.State;
+import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public abstract class DataFromCsvImporter<T> {
