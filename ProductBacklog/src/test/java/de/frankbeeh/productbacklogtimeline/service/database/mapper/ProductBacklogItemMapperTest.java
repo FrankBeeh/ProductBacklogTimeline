@@ -16,9 +16,9 @@ public class ProductBacklogItemMapperTest extends DatabaseServiceTest {
 	private ProductBacklogItemMapper mapper;
 
 	@Test
-	public void getShortJottings() throws Exception {
+	public void insert() throws Exception {
 		mapper.insert(FIRST_ITEM);
-		final ProductBacklogItemData item = mapper.get(FIRST_ITEM.getId());
+		final ProductBacklogItemData item = mapper.get(FIRST_ITEM.getHash());
 		assertItemEquals(FIRST_ITEM, item);
 	}
 

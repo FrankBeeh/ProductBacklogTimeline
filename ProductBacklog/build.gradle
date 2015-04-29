@@ -54,7 +54,7 @@ dependencies {
     compile 'org.xerial:sqlite-jdbc:3.8.7'
     compile 'org.jooq:jooq:3.5.0'
     compile 'org.apache.commons:commons-lang3:3.3.2'
-    compile group: 'com.google.guava', name: 'guava', version: '12.0'
+    compile 'com.google.guava:guava:18.0'
     compile 'net.sf.opencsv:opencsv:2.3'
     testCompile 'junit:junit:4.+'
     testCompile 'org.easymock:easymock:3.3'
