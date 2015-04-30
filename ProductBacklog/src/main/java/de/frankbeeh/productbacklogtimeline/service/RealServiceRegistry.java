@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import de.frankbeeh.productbacklogtimeline.service.database.DatabaseService;
-import de.frankbeeh.productbacklogtimeline.service.database.ProductBacklogItemService;
+import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastService;
 
 public class RealServiceRegistry extends ServiceRegistry {
 	private static final String PRODUCT_TIMELINE_DB = "productTimeline.db";
 
 	public RealServiceRegistry() {
 		Connection connection = initConnection();
-		registerService(ProductBacklogItemService.class, new ProductBacklogItemService(connection));
+		registerService(ReleaseForecastService.class, new ReleaseForecastService(connection));
 	}
 
 	private static Connection getConnection(String databaseName)

@@ -83,7 +83,7 @@ public class ProductBacklogItem {
         return data.getPlannedRelease();
     }
 
-    public ProductBacklogItemData getProductBacklogItemData() {
-        return data;
+    public String getHash() {
+        return data.getHash();
     }
 }

@@ -4,6 +4,7 @@ import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tab
 
 import java.sql.Connection;
 
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemData;
 
 /**
@@ -17,21 +18,21 @@ public class ProductBacklogItemMapper extends BaseMapper {
         super(connection);
     }
 
-    public void insert(ProductBacklogItemData productBacklogItemData) {
+    public void insert(ProductBacklogItem productBacklogItem) {
         // WORKAROUND because onDuplicateKeyIgnore() is not implemented for SQLite
-        if (notYetInserted(productBacklogItemData)) {
-            getDslContext().insertInto(PBI, PBI.HASH, PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).values(productBacklogItemData.getHash(),
-                    productBacklogItemData.getId(), productBacklogItemData.getTitle(), productBacklogItemData.getDescription(), productBacklogItemData.getEstimate(),
-                    productBacklogItemData.getState().toString(), productBacklogItemData.getSprint(), productBacklogItemData.getRank(), productBacklogItemData.getPlannedRelease()).execute();
+        if (notYetInserted(productBacklogItem)) {
+            getDslContext().insertInto(PBI, PBI.HASH, PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).values(productBacklogItem.getHash(),
+                    productBacklogItem.getId(), productBacklogItem.getTitle(), productBacklogItem.getDescription(), productBacklogItem.getEstimate(), productBacklogItem.getState().toString(),
+                    productBacklogItem.getSprint(), productBacklogItem.getRank(), productBacklogItem.getPlannedRelease()).execute();
         }
     }
 
-    private boolean notYetInserted(ProductBacklogItemData productBacklogItemData) {
-        return getDslContext().select(PBI.HASH).from(PBI).where(PBI.ID.eq(productBacklogItemData.getId()).and(PBI.HASH.eq(productBacklogItemData.getHash()))).fetchOne() == null;
+    private boolean notYetInserted(ProductBacklogItem productBacklogItem) {
+        return getDslContext().select(PBI.HASH).from(PBI).where(PBI.ID.eq(productBacklogItem.getId()).and(PBI.HASH.eq(productBacklogItem.getHash()))).fetchOne() == null;
     }
 
-    public ProductBacklogItemData get(String id, String hash) {
+    public ProductBacklogItem get(String id, String hash) {
         return getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(PBI).where(PBI.HASH.eq(hash)).and(PBI.ID.eq(id)).fetchOne().into(
-                ProductBacklogItemData.class);
+                ProductBacklogItem.class);
     }
 }
