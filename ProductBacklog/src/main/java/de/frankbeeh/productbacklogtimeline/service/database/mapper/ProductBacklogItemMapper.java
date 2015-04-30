@@ -24,9 +24,16 @@ public class ProductBacklogItemMapper {
     }
 
     public void insert(ProductBacklogItemData productBacklogItemData) {
-        getDslContext().insertInto(PBI, PBI.HASH, PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).values(productBacklogItemData.getHash(),
-                productBacklogItemData.getId(), productBacklogItemData.getTitle(), productBacklogItemData.getDescription(), productBacklogItemData.getEstimate(),
-                productBacklogItemData.getState().toString(), productBacklogItemData.getSprint(), productBacklogItemData.getRank(), productBacklogItemData.getPlannedRelease()).execute();
+        // WORKAROUND because onDuplicateKeyIgnore() is not implemented for SQLite
+        if (notYetInserted(productBacklogItemData)) {
+            getDslContext().insertInto(PBI, PBI.HASH, PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).values(productBacklogItemData.getHash(),
+                    productBacklogItemData.getId(), productBacklogItemData.getTitle(), productBacklogItemData.getDescription(), productBacklogItemData.getEstimate(),
+                    productBacklogItemData.getState().toString(), productBacklogItemData.getSprint(), productBacklogItemData.getRank(), productBacklogItemData.getPlannedRelease()).execute();
+        }
+    }
+
+    private boolean notYetInserted(ProductBacklogItemData productBacklogItemData) {
+        return getDslContext().select(PBI.HASH).from(PBI).where(PBI.ID.eq(productBacklogItemData.getId()).and(PBI.HASH.eq(productBacklogItemData.getHash()))).fetchOne() == null;
     }
 
     public ProductBacklogItemData get(String id, String hash) {

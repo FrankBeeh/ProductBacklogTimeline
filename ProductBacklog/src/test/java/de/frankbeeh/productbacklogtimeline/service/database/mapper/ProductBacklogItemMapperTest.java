@@ -27,6 +27,13 @@ public class ProductBacklogItemMapperTest extends DatabaseServiceTest {
         assertItemEquals(FIRST_ITEM_TITLE_CHANGED, mapper.get(FIRST_ID, FIRST_ITEM_TITLE_CHANGED.getHash()));
 	}
 
+    @Test
+    public void storeAndRetrieveTwoTimes() throws Exception {
+        mapper.insert(FIRST_ITEM);
+        mapper.insert(FIRST_ITEM);
+        assertItemEquals(FIRST_ITEM, mapper.get(FIRST_ID, FIRST_ITEM.getHash()));
+    }
+
 	@Before
 	public void setUp() {
 		mapper = new ProductBacklogItemMapper(getConnection());
