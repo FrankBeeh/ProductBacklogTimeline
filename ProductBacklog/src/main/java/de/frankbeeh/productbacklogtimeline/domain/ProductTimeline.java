@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
+
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
     private final List<ReleaseForecast> releaseForecasts = new ArrayList<ReleaseForecast>();
@@ -13,7 +15,7 @@ public class ProductTimeline {
     private final ProductBacklogComparison productBacklogComparison;
 
     public ProductTimeline() {
-        this(new Releases(), new ProductBacklogComparison());
+        this(createDummyReleases(), new ProductBacklogComparison());
     }
 
     @VisibleForTesting
@@ -113,5 +115,16 @@ public class ProductTimeline {
     @VisibleForTesting
     void addProductBacklog(String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
         releaseForecasts.add(new ReleaseForecast(name, productBacklog, referenceVelocityForecast, releases));
+    }
+    
+    private static Releases createDummyReleases() {
+        final Releases releases = new Releases();
+        releases.addRelease(new Release("TP1: Technical Preview Basis", new PlannedReleaseIsEqual("TP1: Technical Preview Basis")));
+        releases.addRelease(new Release("TP 2: Technical Preview Erweitert", new PlannedReleaseIsEqual("TP 2: Technical Preview Erweitert")));
+        releases.addRelease(new Release("CP: Consumer Preview", new PlannedReleaseIsEqual("CP: Consumer Preview")));
+        releases.addRelease(new Release("Full Launch", new PlannedReleaseIsEqual("Full Launch")));
+        releases.addRelease(new Release("Weiterentwicklung", new PlannedReleaseIsEqual("Weiterentwicklung")));
+        releases.addRelease(new Release("Phase Out bestehende App", new PlannedReleaseIsEqual("Phase Out bestehende App")));
+        return releases;
     }
 }
