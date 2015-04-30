@@ -10,16 +10,21 @@ import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.service.database.DatabaseServiceTest;
 
 public class ProductBacklogItemMapperTest extends DatabaseServiceTest {
-	private static final ProductBacklogItemData FIRST_ITEM = new ProductBacklogItemData(
-			"ID 1", "Title 1", "Description 1", 1d, State.Done, "Sprint 1",
+	private static final String FIRST_ID = "ID 1";
+    private static final ProductBacklogItemData FIRST_ITEM = new ProductBacklogItemData(
+			FIRST_ID, "Title 1", "Description 1", 1d, State.Done, "Sprint 1",
 			"Rank 1", "Release 1");
+    private static final ProductBacklogItemData FIRST_ITEM_TITLE_CHANGED = new ProductBacklogItemData(
+            FIRST_ID, "Title 2", "Description 1", 1d, State.Done, "Sprint 1",
+            "Rank 1", "Release 1");
 	private ProductBacklogItemMapper mapper;
 
 	@Test
-	public void insert() throws Exception {
+	public void storeAndRetrieveTwoDifferentVersionsOfOneItem() throws Exception {
 		mapper.insert(FIRST_ITEM);
-		final ProductBacklogItemData item = mapper.get(FIRST_ITEM.getHash());
-		assertItemEquals(FIRST_ITEM, item);
+        mapper.insert(FIRST_ITEM_TITLE_CHANGED);
+		assertItemEquals(FIRST_ITEM, mapper.get(FIRST_ID, FIRST_ITEM.getHash()));
+        assertItemEquals(FIRST_ITEM_TITLE_CHANGED, mapper.get(FIRST_ID, FIRST_ITEM_TITLE_CHANGED.getHash()));
 	}
 
 	@Before

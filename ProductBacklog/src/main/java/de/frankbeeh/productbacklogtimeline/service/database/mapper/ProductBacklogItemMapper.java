@@ -29,8 +29,8 @@ public class ProductBacklogItemMapper {
                 productBacklogItemData.getState().toString(), productBacklogItemData.getSprint(), productBacklogItemData.getRank(), productBacklogItemData.getPlannedRelease()).execute();
     }
 
-    public ProductBacklogItemData get(String hash) {
-        return getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(PBI).where(PBI.HASH.eq(hash)).fetchOne().into(
+    public ProductBacklogItemData get(String id, String hash) {
+        return getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(PBI).where(PBI.HASH.eq(hash)).and(PBI.ID.eq(id)).fetchOne().into(
                 ProductBacklogItemData.class);
     }
 

@@ -76,7 +76,7 @@ public class ProductBacklogItemData {
     }
 
     public String getHash() {
-        final HashFunction hashFunction = Hashing.sha512();
+        final HashFunction hashFunction = Hashing.sha1();
         final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(id)).putUnencodedChars(Strings.nullToEmpty(title)).putUnencodedChars(Strings.nullToEmpty(description));
         if (estimate != null) {
             hasher.putDouble(estimate);
