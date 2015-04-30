@@ -4,10 +4,6 @@ import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tab
 
 import java.sql.Connection;
 
-import org.jooq.DSLContext;
-import org.jooq.SQLDialect;
-import org.jooq.impl.DSL;
-
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemData;
 
 /**
@@ -16,11 +12,9 @@ import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemData;
  * <li>Maps a {@link ProductBacklogItemData} into the Database.
  * </ul>
  */
-public class ProductBacklogItemMapper {
-    private final Connection connection;
-
+public class ProductBacklogItemMapper extends BaseMapper {
     public ProductBacklogItemMapper(Connection connection) {
-        this.connection = connection;
+        super(connection);
     }
 
     public void insert(ProductBacklogItemData productBacklogItemData) {
@@ -39,9 +33,5 @@ public class ProductBacklogItemMapper {
     public ProductBacklogItemData get(String id, String hash) {
         return getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(PBI).where(PBI.HASH.eq(hash)).and(PBI.ID.eq(id)).fetchOne().into(
                 ProductBacklogItemData.class);
-    }
-
-    private DSLContext getDslContext() {
-        return DSL.using(connection, SQLDialect.SQLITE);
     }
 }

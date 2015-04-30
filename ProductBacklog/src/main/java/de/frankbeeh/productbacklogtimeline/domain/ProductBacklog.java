@@ -39,7 +39,7 @@ public class ProductBacklog {
     @VisibleForTesting
     public ProductBacklog(List<ProductBacklogItem> items) {
         this();
-        items = new LinkedList<ProductBacklogItem>(items);
+        this.items.addAll(items);
     }
 
     public void addItem(ProductBacklogItem productBacklogItem) {
@@ -83,5 +83,9 @@ public class ProductBacklog {
             return 0.0;
         }
         return items.getLast().getAccumulatedEstimate();
+    }
+
+    public int size() {
+        return items.size();
     }
 }

@@ -82,4 +82,8 @@ public class ProductBacklogItem {
     public String getPlannedRelease() {
         return data.getPlannedRelease();
     }
+
+    public ProductBacklogItemData getProductBacklogItemData() {
+        return data;
+    }
 }

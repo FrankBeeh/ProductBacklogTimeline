@@ -30,6 +30,7 @@ public class DatabaseServiceTest {
 	
 	private void dropTables() throws Exception {
 		try (Statement statement = connection.createStatement()) {
+		    statement.executeUpdate("DROP TABLE IF EXISTS PBL");
 			statement.executeUpdate("DROP TABLE IF EXISTS PBI");
 		}
 	}
