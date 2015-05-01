@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,6 +19,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
+import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
+import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastService;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
 
@@ -47,6 +50,7 @@ public class MainController {
 
     public void initController(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        loadFromDataBase();
         setSelectableProductBacklogNames();
     }
 
@@ -120,5 +124,13 @@ public class MainController {
         releaseBurndownController.initModel(productTimeline.getSelectedReleaseForecast());
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
+    }
+    
+    private void loadFromDataBase() {
+        final ReleaseForecastService service = ServiceLocator.getService(ReleaseForecastService.class);
+        final List<LocalDateTime> allIds = service.getAllIds();
+        for (LocalDateTime localDateTime : allIds) {
+            productTimeline.addReleaseForecast(service.get(localDateTime));
+        }
     }
 }

@@ -9,9 +9,10 @@ import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastServi
 
 public class RealServiceRegistry extends ServiceRegistry {
 	private static final String PRODUCT_TIMELINE_DB = "productTimeline.db";
+    private final Connection connection;
 
 	public RealServiceRegistry() {
-		Connection connection = initConnection();
+		connection = initConnection();
 		registerService(ReleaseForecastService.class, new ReleaseForecastService(connection));
 	}
 
@@ -32,4 +33,9 @@ public class RealServiceRegistry extends ServiceRegistry {
 		}
 		return connection;
 	}
+
+    @Override
+    public void close() throws Exception {
+        connection.close();
+    }
 }

@@ -9,7 +9,7 @@ public class ReleaseForecast {
     private final String name;
     private final ProductBacklog productBacklog;
     private VelocityForecast velocityForecast;
-    private final Releases releases;
+    private Releases releases;
 
     public ReleaseForecast(LocalDateTime dateTime, String name, ProductBacklog productBacklog, ReleaseForecast previousReleaseForecast) {
         this(dateTime, name, productBacklog, previousReleaseForecast.getVelocityForecast(), previousReleaseForecast.getReleases());
@@ -46,6 +46,10 @@ public class ReleaseForecast {
 
     public void setVelocityForecast(VelocityForecast velocityForecast) {
         this.velocityForecast = velocityForecast;
+    }
+    
+    public void setReleases(Releases releases) {
+        this.releases = releases;
     }
     
     public LocalDateTime getDateTime() {

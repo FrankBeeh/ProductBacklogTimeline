@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
+import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastService;
 
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
@@ -25,10 +27,19 @@ public class ProductTimeline {
         this.releaseForecasts.add(new ReleaseForecast(null, INITIAL_NAME, releases));
         productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
+    
+    public void addReleaseForecast(ReleaseForecast releaseForecast) {
+        releaseForecast.setVelocityForecast(getPreviousReleaseForecast().getVelocityForecast());
+        releaseForecast.setReleases(getPreviousReleaseForecast().getReleases());
+        updateProductBacklog(releaseForecast.getProductBacklog());
+        releaseForecasts.add(releaseForecast);
+    }
 
     public void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog) {
         updateProductBacklog(productBacklog);
-        releaseForecasts.add(new ReleaseForecast(dateTime, name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1)));
+        final ReleaseForecast releaseForecast = new ReleaseForecast(dateTime, name, productBacklog, getPreviousReleaseForecast());
+        ServiceLocator.getService(ReleaseForecastService.class).insert(releaseForecast);
+        releaseForecasts.add(releaseForecast);
     }
 
     public ProductBacklog getSelectedProductBacklog() {
@@ -77,6 +88,10 @@ public class ProductTimeline {
         return names;
     }
 
+    public ProductBacklogComparison getProductBacklogComparison() {
+        return productBacklogComparison;
+    }
+
     private void updateProductBacklog(ProductBacklog productBacklog) {
         productBacklog.updateAllItems(getSelectedVelocityForecast());
     }
@@ -109,13 +124,13 @@ public class ProductTimeline {
         throw new IllegalArgumentException("Release forcast '" + name + "' not found!");
     }
 
-    public ProductBacklogComparison getProductBacklogComparison() {
-        return productBacklogComparison;
-    }
-
     @VisibleForTesting
     void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
         releaseForecasts.add(new ReleaseForecast(dateTime, name, productBacklog, referenceVelocityForecast, releases));
+    }
+    
+    private ReleaseForecast getPreviousReleaseForecast() {
+        return releaseForecasts.get(releaseForecasts.size() - 1);
     }
     
     private static Releases createDummyReleases() {

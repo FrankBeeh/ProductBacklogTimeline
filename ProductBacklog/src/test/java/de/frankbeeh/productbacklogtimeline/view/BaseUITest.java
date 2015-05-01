@@ -18,16 +18,21 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import org.junit.After;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.service.support.WaitUntilSupport;
 
 import com.google.common.base.Predicate;
 import com.sun.javafx.scene.control.skin.LabeledText;
 
+import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
+import de.frankbeeh.productbacklogtimeline.service.database.UITestServiceRegistry;
+
 public class BaseUITest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
+        ServiceLocator.init(new UITestServiceRegistry());
         final FXMLLoader loader = new FXMLLoader(getFXMLResourceURL());
         final Parent root = (Parent) loader.load();
 
@@ -38,6 +43,11 @@ public class BaseUITest extends ApplicationTest {
 
         final MainController controller = loader.getController();
         controller.initController(stage);
+    }
+
+    @After
+    public void closeServiceLocator() throws Exception {
+        ServiceLocator.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -71,8 +81,8 @@ public class BaseUITest extends ApplicationTest {
     }
 
     protected void assertContentOfTableView(String selector, TableViewContent expectedContent) {
-        waitUntilTableViewContentChanged(this.<TableView<?>>getUniqueNode(selector), expectedContent);
-        final TableViewContent actualContent = getActualTableViewContent(this.<TableView<?>>getUniqueNode(selector));
+        waitUntilTableViewContentChanged(this.<TableView<?>> getUniqueNode(selector), expectedContent);
+        final TableViewContent actualContent = getActualTableViewContent(this.<TableView<?>> getUniqueNode(selector));
         assertEquals(expectedContent.toString(), actualContent.toString());
     }
 

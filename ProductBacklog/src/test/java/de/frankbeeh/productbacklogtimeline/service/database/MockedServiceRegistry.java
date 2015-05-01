@@ -20,6 +20,10 @@ public class MockedServiceRegistry extends ServiceRegistry {
 		}
 	}
 
+    @Override
+    public void close() throws Exception {
+    }
+    
 	public void resetAllMocks() {
 		for (Class<?> serviceClass : MOCKED_SERVICE_CLASSES) {
 			reset(getService(serviceClass));
@@ -42,4 +46,5 @@ public class MockedServiceRegistry extends ServiceRegistry {
 		registerService(serviceClass, EasyMock.createMock(
 				serviceClass.getSimpleName() + "Mock", serviceClass));
 	}
+
 }

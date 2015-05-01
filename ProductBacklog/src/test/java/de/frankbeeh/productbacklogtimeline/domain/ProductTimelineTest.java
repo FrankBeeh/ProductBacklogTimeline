@@ -7,8 +7,12 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDateTime;
 
 import org.easymock.EasyMockSupport;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
+import de.frankbeeh.productbacklogtimeline.service.database.MockedServiceRegistry;
 
 public class ProductTimelineTest extends EasyMockSupport {
     private static final LocalDateTime REFERENCE_DATE_TIME = LocalDateTime.now();
@@ -92,6 +96,7 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     @Before
     public void setUp() {
+        ServiceLocator.init(new MockedServiceRegistry());
         selectedProductBacklogMock = createMock("selectedProductBacklogMock", ProductBacklog.class);
         referenceProductBacklogMock = createMock("referenceProductBacklogMock", ProductBacklog.class);
         velocityForecast = createMock(VelocityForecast.class);
@@ -104,4 +109,8 @@ public class ProductTimelineTest extends EasyMockSupport {
         productTimelineWithMockedReleases = new ProductTimeline(initialReleasesMock, productBacklogComparisonMock);
     }
 
+    @After
+    public void tearDown(){
+        ServiceLocator.init(null);
+    }
 }
