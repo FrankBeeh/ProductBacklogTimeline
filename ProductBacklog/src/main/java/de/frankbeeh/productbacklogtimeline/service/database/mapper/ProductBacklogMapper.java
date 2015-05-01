@@ -4,12 +4,12 @@ import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tab
 import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.PBL;
 
 import java.sql.Connection;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
+import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
 
 /**
  * Responsibility:
@@ -29,7 +29,7 @@ public class ProductBacklogMapper extends BaseMapper {
         for (ProductBacklogItem item : productBacklog.getItems()) {
             productBacklogItemMapper.insert(item);
             if (notYetInserted(releaseForecastId, item)) {
-                getDslContext().insertInto(PBL, PBL.RF_ID, PBL.PBI_ID, PBL.PBI_HASH).values(getTimestamp(releaseForecastId), item.getId(), item.getHash()).execute();
+                getDslContext().insertInto(PBL, PBL.RF_ID, PBL.PBI_ID, PBL.PBI_HASH).values(ConvertUtility.getTimestamp(releaseForecastId), item.getId(), item.getHash()).execute();
             }
         }
     }
@@ -37,7 +37,7 @@ public class ProductBacklogMapper extends BaseMapper {
     public ProductBacklog get(LocalDateTime releaseForecastId) {
         final ProductBacklog productBacklog = new ProductBacklog();
         final List<ProductBacklogItem> itemDataList = getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(
-                PBL.join(PBI).on(PBL.PBI_ID.eq(PBI.ID).and(PBL.PBI_HASH.eq(PBI.HASH)))).where(PBL.RF_ID.eq(getTimestamp(releaseForecastId))).fetch().into(ProductBacklogItem.class);
+                PBL.join(PBI).on(PBL.PBI_ID.eq(PBI.ID).and(PBL.PBI_HASH.eq(PBI.HASH)))).where(PBL.RF_ID.eq(ConvertUtility.getTimestamp(releaseForecastId))).fetch().into(ProductBacklogItem.class);
         for (ProductBacklogItem itemData : itemDataList) {
             productBacklog.addItem(itemData);
         }
@@ -46,10 +46,6 @@ public class ProductBacklogMapper extends BaseMapper {
 
     private boolean notYetInserted(LocalDateTime releaseForecastId, ProductBacklogItem productBacklogItem) {
         return getDslContext().select(PBL.RF_ID).from(PBL).where(
-                PBL.RF_ID.eq(getTimestamp(releaseForecastId)).and(PBL.PBI_ID.eq(productBacklogItem.getId()).and(PBL.PBI_HASH.eq(productBacklogItem.getHash())))).fetchOne() == null;
-    }
-    
-    private Timestamp getTimestamp(LocalDateTime releaseForecastId) {
-        return Timestamp.valueOf(releaseForecastId);
+                PBL.RF_ID.eq(ConvertUtility.getTimestamp(releaseForecastId)).and(PBL.PBI_ID.eq(productBacklogItem.getId()).and(PBL.PBI_HASH.eq(productBacklogItem.getHash())))).fetchOne() == null;
     }
 }

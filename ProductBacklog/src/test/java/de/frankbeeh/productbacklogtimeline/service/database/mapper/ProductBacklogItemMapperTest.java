@@ -7,9 +7,9 @@ import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.State;
-import de.frankbeeh.productbacklogtimeline.service.database.DatabaseServiceTest;
+import de.frankbeeh.productbacklogtimeline.service.database.DataBaseServiceTest;
 
-public class ProductBacklogItemMapperTest extends DatabaseServiceTest {
+public class ProductBacklogItemMapperTest extends DataBaseServiceTest {
     private static final String FIRST_ID = "ID 1";
     private static final ProductBacklogItem FIRST_ITEM = new ProductBacklogItem(FIRST_ID, "Title 1", "Description 1", 1d, State.Done, "Sprint 1", "Rank 1", "Release 1");
     private static final ProductBacklogItem FIRST_ITEM_TITLE_CHANGED = new ProductBacklogItem(FIRST_ID, "Title 2", "Description 1", 1d, State.Done, "Sprint 1", "Rank 1", "Release 1");
@@ -19,15 +19,15 @@ public class ProductBacklogItemMapperTest extends DatabaseServiceTest {
     public void storeAndRetrieveTwoDifferentVersionsOfOneItem() throws Exception {
         mapper.insert(FIRST_ITEM);
         mapper.insert(FIRST_ITEM_TITLE_CHANGED);
-        assertItemEquals(FIRST_ITEM, mapper.get(FIRST_ID, FIRST_ITEM.getHash()));
-        assertItemEquals(FIRST_ITEM_TITLE_CHANGED, mapper.get(FIRST_ID, FIRST_ITEM_TITLE_CHANGED.getHash()));
+        assertProductBacklogItemEquals(FIRST_ITEM, mapper.get(FIRST_ID, FIRST_ITEM.getHash()));
+        assertProductBacklogItemEquals(FIRST_ITEM_TITLE_CHANGED, mapper.get(FIRST_ID, FIRST_ITEM_TITLE_CHANGED.getHash()));
     }
 
     @Test
     public void storeAndRetrieveTwoTimes() throws Exception {
         mapper.insert(FIRST_ITEM);
         mapper.insert(FIRST_ITEM);
-        assertItemEquals(FIRST_ITEM, mapper.get(FIRST_ID, FIRST_ITEM.getHash()));
+        assertProductBacklogItemEquals(FIRST_ITEM, mapper.get(FIRST_ID, FIRST_ITEM.getHash()));
     }
 
     @Before
@@ -35,7 +35,7 @@ public class ProductBacklogItemMapperTest extends DatabaseServiceTest {
         mapper = new ProductBacklogItemMapper(getConnection());
     }
 
-    private void assertItemEquals(ProductBacklogItem expectedItem, ProductBacklogItem actualItem) {
+    static void assertProductBacklogItemEquals(ProductBacklogItem expectedItem, ProductBacklogItem actualItem) {
         assertEquals(expectedItem.getId(), actualItem.getId());
         assertEquals(expectedItem.getTitle(), actualItem.getTitle());
         assertEquals(expectedItem.getDescription(), actualItem.getDescription());

@@ -8,7 +8,7 @@ import java.sql.Statement;
 import org.junit.After;
 import org.junit.Before;
 
-public class DatabaseServiceTest {
+public class DataBaseServiceTest {
 	private static final String TEST_DB = "build/test.db";
 	private Connection connection;
 	
@@ -30,6 +30,7 @@ public class DatabaseServiceTest {
 	
 	private void dropTables() throws Exception {
 		try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate("DROP TABLE IF EXISTS RELEASE_FORECAST");
 		    statement.executeUpdate("DROP TABLE IF EXISTS PBL");
 			statement.executeUpdate("DROP TABLE IF EXISTS PBI");
 		}
