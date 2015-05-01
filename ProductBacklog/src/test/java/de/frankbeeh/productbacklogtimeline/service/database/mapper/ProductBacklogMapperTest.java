@@ -3,6 +3,7 @@ package de.frankbeeh.productbacklogtimeline.service.database.mapper;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -14,8 +15,8 @@ import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.service.database.DatabaseServiceTest;
 
 public class ProductBacklogMapperTest extends DatabaseServiceTest {
-    private static final int RELEASE_FORECAST_ID_2 = 2;
-    private static final int RELEASE_FORECAST_ID_1 = 1;
+    private static final LocalDateTime RELEASE_FORECAST_ID_1 = LocalDateTime.now();
+    private static final LocalDateTime RELEASE_FORECAST_ID_2 = RELEASE_FORECAST_ID_1.minusYears(1);
     private ProductBacklogMapper mapper;
 
     @Test

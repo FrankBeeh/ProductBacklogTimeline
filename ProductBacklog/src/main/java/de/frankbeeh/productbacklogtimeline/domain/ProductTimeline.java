@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +22,13 @@ public class ProductTimeline {
     @VisibleForTesting
     ProductTimeline(Releases releases, ProductBacklogComparison productBacklogComparison) {
         this.productBacklogComparison = productBacklogComparison;
-        this.releaseForecasts.add(new ReleaseForecast(INITIAL_NAME, releases));
+        this.releaseForecasts.add(new ReleaseForecast(null, INITIAL_NAME, releases));
         productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
 
-    public void addProductBacklog(String name, ProductBacklog productBacklog) {
+    public void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog) {
         updateProductBacklog(productBacklog);
-        releaseForecasts.add(new ReleaseForecast(name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1)));
+        releaseForecasts.add(new ReleaseForecast(dateTime, name, productBacklog, releaseForecasts.get(releaseForecasts.size() - 1)));
     }
 
     public ProductBacklog getSelectedProductBacklog() {
@@ -113,8 +114,8 @@ public class ProductTimeline {
     }
 
     @VisibleForTesting
-    void addProductBacklog(String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
-        releaseForecasts.add(new ReleaseForecast(name, productBacklog, referenceVelocityForecast, releases));
+    void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
+        releaseForecasts.add(new ReleaseForecast(dateTime, name, productBacklog, referenceVelocityForecast, releases));
     }
     
     private static Releases createDummyReleases() {

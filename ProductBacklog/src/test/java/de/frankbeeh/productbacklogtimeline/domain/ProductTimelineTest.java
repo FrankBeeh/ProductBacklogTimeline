@@ -4,17 +4,15 @@ import static org.easymock.EasyMock.same;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDateTime;
+
 import org.easymock.EasyMockSupport;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
-import de.frankbeeh.productbacklogtimeline.domain.Releases;
-import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
-
 public class ProductTimelineTest extends EasyMockSupport {
+    private static final LocalDateTime REFERENCE_DATE_TIME = LocalDateTime.now();
+    private static final LocalDateTime SELECTEDT_DATE_TIME = REFERENCE_DATE_TIME.minusYears(1);
     private static final String REFERENCE = "reference";
     private static final String SELECTED = "selected";
     private ProductBacklog selectedProductBacklogMock;
@@ -38,8 +36,8 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     @Test
     public void addAndSelectProductBacklog() throws Exception {
-        productTimelineWithMockedReleases.addProductBacklog(REFERENCE, referenceProductBacklogMock, referenceVelocityForecast, referenceReleasesMock);
-        productTimelineWithMockedReleases.addProductBacklog(SELECTED, selectedProductBacklogMock, selectedVelocityForecast, selectedReleasesMock);
+        productTimelineWithMockedReleases.addProductBacklog(REFERENCE_DATE_TIME, REFERENCE, referenceProductBacklogMock, referenceVelocityForecast, referenceReleasesMock);
+        productTimelineWithMockedReleases.addProductBacklog(SELECTEDT_DATE_TIME, SELECTED, selectedProductBacklogMock, selectedVelocityForecast, selectedReleasesMock);
 
         resetAll();
         productBacklogComparisonMock.setSelectedProductBacklog(selectedProductBacklogMock);
@@ -49,7 +47,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         productTimelineWithMockedReleases.selectReleaseForecast(SELECTED);
         assertSame(selectedProductBacklogMock, productTimelineWithMockedReleases.getSelectedProductBacklog());
         verifyAll();
-        
+
         resetAll();
         productBacklogComparisonMock.setReferenceProductBacklog(referenceProductBacklogMock);
         productBacklogComparisonMock.updateAllItems();
@@ -58,14 +56,13 @@ public class ProductTimelineTest extends EasyMockSupport {
         productTimelineWithMockedReleases.selectReferenceReleaseForecast(REFERENCE);
         verifyAll();
 
-
     }
 
     @Test
     public void setSelectedVelocityForecast() throws Exception {
         final ProductTimeline productTimeline = new ProductTimeline(new Releases(), new ProductBacklogComparison());
-        productTimeline.addProductBacklog(SELECTED, new ProductBacklog());
-        productTimeline.addProductBacklog(REFERENCE, new ProductBacklog());
+        productTimeline.addProductBacklog(SELECTEDT_DATE_TIME, SELECTED, new ProductBacklog());
+        productTimeline.addProductBacklog(REFERENCE_DATE_TIME, REFERENCE, new ProductBacklog());
 
         final VelocityForecast velocityForecast1 = new VelocityForecast();
         productTimeline.selectReleaseForecast(REFERENCE);

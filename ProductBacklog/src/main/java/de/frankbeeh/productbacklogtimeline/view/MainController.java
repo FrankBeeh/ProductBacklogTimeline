@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -66,7 +67,7 @@ public class MainController {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
             final ProductBacklog importData = importer.importData(new FileReader(selectedFile));
             final String name = selectedFile.getName();
-            productTimeline.addProductBacklog(name, importData);
+            productTimeline.addProductBacklog(LocalDateTime.now(), name, importData);
             setSelectableProductBacklogNames();
             changeSelectedReleaseForecast(name);
             updateProductBacklogAndReleaseTable();
