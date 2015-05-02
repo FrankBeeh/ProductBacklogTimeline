@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.service.DoubleFormat;
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.LocalDateFormat;
 
 public class SprintDataViewModel {

@@ -13,6 +13,11 @@ import javafx.beans.property.StringProperty;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.google.common.base.Strings;
+import com.google.common.hash.HashFunction;
+import com.google.common.hash.Hasher;
+import com.google.common.hash.Hashing;
+
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
@@ -156,7 +161,7 @@ public class SprintData {
             if (referenceSprintData != null) {
                 final LocalDate referenceEndDate = referenceSprintData.getEndDate();
                 if (referenceEndDate != null) {
-                    final long diffDays = ChronoUnit.DAYS.between(referenceEndDate,  endDate);
+                    final long diffDays = ChronoUnit.DAYS.between(referenceEndDate, endDate);
                     if (diffDays != 0) {
                         stringBuilder.append("\n(").append(FormatUtility.formatDifferenceLong(diffDays)).append("d)");
                     }
@@ -179,12 +184,36 @@ public class SprintData {
     }
 
     public State getState() {
-        if (getEffortDone() != null){
-            return State.Done; 
+        if (getEffortDone() != null) {
+            return State.Done;
         }
-        if (getEffortForecast() != null){
+        if (getEffortForecast() != null) {
             return State.InProgress;
         }
         return State.Todo;
+    }
+
+    public String getHash() {
+        final HashFunction hashFunction = Hashing.sha1();
+        final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(name.get()));
+        if (getStartDate() != null) {
+            hasher.putLong(getStartDate().toEpochDay());
+        }
+        if (getEndDate() != null) {
+            hasher.putLong(getEndDate().toEpochDay());
+        }
+        if (getCapacityForecast() != null){
+            hasher.putDouble(getCapacityForecast());
+        }
+        if (getEffortForecast() != null){
+            hasher.putDouble(getEffortForecast());
+        }
+        if (getCapacityDone() != null){
+            hasher.putDouble(getCapacityDone());
+        }
+        if (getEffortDone() != null){
+            hasher.putDouble(getEffortDone());
+        }
+        return hasher.hash().toString();
     }
 }

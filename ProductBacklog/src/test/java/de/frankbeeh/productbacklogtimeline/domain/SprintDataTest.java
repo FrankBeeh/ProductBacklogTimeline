@@ -1,11 +1,13 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
+
+import java.time.LocalDate;
 
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class SprintDataTest {
@@ -63,7 +65,7 @@ public class SprintDataTest {
 
     @Test
     public void getDescription_noEndDate() throws Exception {
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, null, null, null, null, null);
+        final SprintData sprintData = newSprintDataWithName(SPRINT_NAME_1);
         assertEquals(SPRINT_NAME_1, sprintData.getComparedForecast(null));
     }
 
@@ -92,4 +94,73 @@ public class SprintDataTest {
         assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(+31d)", sprintData.getComparedForecast(referenceSprintData));
     }
 
+    @Test
+    public void hashName() {
+        assertEquals(newSprintDataWithName(SPRINT_NAME_1).getHash(), newSprintDataWithName(SPRINT_NAME_1).getHash());
+        assertNotEquals(newSprintDataWithName(SPRINT_NAME_1).getHash(), newSprintDataWithName(SPRINT_NAME_2).getHash());
+    }
+
+    @Test
+    public void hashStartDate() {
+        assertEquals(newSprintDataWithStartDate(LocalDate.now()).getHash(), newSprintDataWithStartDate(LocalDate.now()).getHash());
+        assertNotEquals(newSprintDataWithStartDate(LocalDate.now()).getHash(), newSprintDataWithStartDate(LocalDate.now().plusDays(1)).getHash());
+    }
+
+    @Test
+    public void hashEndDate() {
+        assertEquals(newSprintDataWithEndDate(LocalDate.now()).getHash(), newSprintDataWithEndDate(LocalDate.now()).getHash());
+        assertNotEquals(newSprintDataWithEndDate(LocalDate.now()).getHash(), newSprintDataWithEndDate(LocalDate.now().plusDays(1)).getHash());
+    }
+
+    @Test
+    public void hashCapacityForecast() {
+        assertEquals(newSprintDataWithCapacityForecast(1d).getHash(), newSprintDataWithCapacityForecast(1d).getHash());
+        assertNotEquals(newSprintDataWithCapacityForecast(1d).getHash(), newSprintDataWithCapacityForecast(2d).getHash());
+    }
+
+    @Test
+    public void hashEffortForecast() {
+        assertEquals(newSprintDataWithEffortForecast(1d).getHash(), newSprintDataWithEffortForecast(1d).getHash());
+        assertNotEquals(newSprintDataWithEffortForecast(1d).getHash(), newSprintDataWithEffortForecast(2d).getHash());
+    }
+
+    @Test
+    public void hashCapacityDone() {
+        assertEquals(newSprintDataWithCapacityDone(1d).getHash(), newSprintDataWithCapacityDone(1d).getHash());
+        assertNotEquals(newSprintDataWithCapacityDone(1d).getHash(), newSprintDataWithCapacityDone(2d).getHash());
+    }
+
+    @Test
+    public void hashEffortDone() {
+        assertEquals(newSprintDataWithEffortDone(1d).getHash(), newSprintDataWithEffortDone(1d).getHash());
+        assertNotEquals(newSprintDataWithEffortDone(1d).getHash(), newSprintDataWithEffortDone(2d).getHash());
+    }
+
+    private SprintData newSprintDataWithName(String name) {
+        return new SprintData(name, null, null, null, null, null, null);
+    }
+
+    private SprintData newSprintDataWithStartDate(LocalDate startDate) {
+        return new SprintData(null, startDate, null, null, null, null, null);
+    }
+
+    private SprintData newSprintDataWithEndDate(LocalDate endDate) {
+        return new SprintData(null, null, endDate, null, null, null, null);
+    }
+
+    private SprintData newSprintDataWithCapacityForecast(double capacityForecast) {
+        return new SprintData(null, null, null, capacityForecast, null, null, null);
+    }
+
+    private SprintData newSprintDataWithEffortForecast(double effortForecast) {
+        return new SprintData(null, null, null, null, effortForecast, null, null);
+    }
+
+    private SprintData newSprintDataWithCapacityDone(double capacityDone) {
+        return new SprintData(null, null, null, null, null, capacityDone, null);
+    }
+
+    private SprintData newSprintDataWithEffortDone(double effortDone) {
+        return new SprintData(null, null, null, null, null, null, effortDone);
+    }
 }

@@ -27,12 +27,12 @@ public class ProductBacklogItemMapper extends BaseMapper {
         }
     }
 
-    private boolean notYetInserted(ProductBacklogItem productBacklogItem) {
-        return getDslContext().select(PBI.HASH).from(PBI).where(PBI.ID.eq(productBacklogItem.getId()).and(PBI.HASH.eq(productBacklogItem.getHash()))).fetchOne() == null;
-    }
-
     public ProductBacklogItem get(String id, String hash) {
         return getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(PBI).where(PBI.HASH.eq(hash)).and(PBI.ID.eq(id)).fetchOne().into(
                 ProductBacklogItem.class);
+    }
+
+    private boolean notYetInserted(ProductBacklogItem productBacklogItem) {
+        return getDslContext().select(PBI.HASH).from(PBI).where(PBI.ID.eq(productBacklogItem.getId()).and(PBI.HASH.eq(productBacklogItem.getHash()))).fetchOne() == null;
     }
 }
