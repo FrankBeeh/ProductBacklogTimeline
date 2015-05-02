@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.service.importer;
 
-import java.text.ParseException;
-
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.State;
@@ -18,7 +16,7 @@ public class ProductBacklogFromCsvImporter extends DataFromCsvImporter<ProductBa
     private static final String NAME_OF_RANK_COLUMN = "Rank";
 
     @Override
-    public void addItem(final ProductBacklog productBacklog) throws ParseException {
+    public void addItem(final ProductBacklog productBacklog) {
         final String id = getString(NAME_OF_ID_COLUMN);
         final String title = getString(NAME_OF_TITLE_COLUMN);
         final String description = getString(NAME_OF_DESCRIPTION_COLUMN);

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class MainController {
     }
 
     @FXML
-    private void importProductBacklog() throws IOException, ParseException, FileNotFoundException {
+    private void importProductBacklog() throws IOException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final ProductBacklogFromCsvImporter importer = new ProductBacklogFromCsvImporter();
@@ -79,7 +78,7 @@ public class MainController {
     }
 
     @FXML
-    private void importVelocityForecast() throws IOException, ParseException, FileNotFoundException {
+    private void importVelocityForecast() throws IOException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final VelocityForecastFromCsvImporter importer = new VelocityForecastFromCsvImporter();

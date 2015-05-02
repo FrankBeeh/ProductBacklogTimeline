@@ -13,8 +13,12 @@ public class FormatUtility {
     public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm.ss");
 
-    public static Date parseDate(String value) throws ParseException {
-        return DATE_FORMAT.parse(value);
+    public static Date parseDate(String value) {
+        try {
+            return DATE_FORMAT.parse(value);
+        } catch (ParseException parseException) {
+            throw new IllegalArgumentException(parseException);
+        }
     }
 
     public static String formatDate(Date date) {

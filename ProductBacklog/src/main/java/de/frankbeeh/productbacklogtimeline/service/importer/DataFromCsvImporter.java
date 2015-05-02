@@ -39,9 +39,9 @@ public abstract class DataFromCsvImporter<T> {
 
     protected abstract T createContainer();
 
-    protected abstract void addItem(final T container) throws ParseException;
+    protected abstract void addItem(final T container);
 
-    public final T importData(Reader reader) throws IOException, ParseException {
+    public final T importData(Reader reader) throws IOException {
         final T container = createContainer();
         final BufferedReader bufferedReader = new BufferedReader(reader);
         final CSVReader csvReader = new CSVReader(bufferedReader, SPLIT_BY);
@@ -67,12 +67,16 @@ public abstract class DataFromCsvImporter<T> {
         return values[columnIndex];
     }
 
-    protected final Double getDouble(String columnName) throws ParseException {
+    protected final Double getDouble(String columnName) {
         final String value = getString(columnName);
         if (value.isEmpty()) {
             return null;
         }
-        return NUMBER_FORMAT.parse(value).doubleValue();
+        try {
+            return NUMBER_FORMAT.parse(value).doubleValue();
+        } catch (ParseException exception) {
+            throw new IllegalArgumentException(exception);
+        }
     }
 
     protected Integer getInteger(String columnName) {
@@ -83,7 +87,7 @@ public abstract class DataFromCsvImporter<T> {
         return Integer.parseInt(value);
     }
 
-    protected final Date getDate(String columnName) throws ParseException {
+    protected final Date getDate(String columnName) {
         final String value = getString(columnName);
         if (value.isEmpty()) {
             return null;

@@ -1,6 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.service.importer;
 
-import java.text.ParseException;
 import java.util.Date;
 
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
@@ -22,7 +21,7 @@ public class VelocityForecastFromCsvImporter extends DataFromCsvImporter<Velocit
     }
 
     @Override
-    protected void addItem(VelocityForecast container) throws ParseException {
+    protected void addItem(VelocityForecast container) {
         final String sprintName = getString(SPRINT_COLUMN_NAME);
         final Date startDate = getDate(START_DATE_COLUMN_NAME);
         final Date endDate = getDate(END_DATE_COLUMN_NAME);
