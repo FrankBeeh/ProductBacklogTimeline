@@ -286,8 +286,8 @@ public class ProductBacklogComparisonItemTest {
         productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         productBacklogComparisonItem = new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem);
-        sprint1 = new SprintData("Sprint 1", null, FormatUtility.parseDate("01.02.2003"), null, null, null, null);
-        sprint2 = new SprintData("Sprint 2", null, FormatUtility.parseDate("15.02.2003"), null, null, null, null);
+        sprint1 = new SprintData("Sprint 1", null, FormatUtility.parseLocalDate("01.02.2003"), null, null, null, null);
+        sprint2 = new SprintData("Sprint 2", null, FormatUtility.parseLocalDate("15.02.2003"), null, null, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithState(State state) {

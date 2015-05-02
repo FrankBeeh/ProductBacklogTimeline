@@ -8,8 +8,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
-import de.frankbeeh.productbacklogtimeline.service.DoubleConverterUtility;
+import de.frankbeeh.productbacklogtimeline.service.DoubleFormat;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.LocalDateFormat;
 
 public class SprintDataViewModel {
 
@@ -23,7 +24,8 @@ public class SprintDataViewModel {
     private final StringProperty capacityDone = new SimpleStringProperty();
     private final StringProperty effortDone = new SimpleStringProperty();
 
-    final Format doubleConverter = new DoubleConverterUtility();
+    private final Format doubleFormat = new DoubleFormat();
+    private final Format localDateFormat = new LocalDateFormat();
 
     public SprintDataViewModel(SprintData sprintData) {
         this.sprintData.set(sprintData);
@@ -76,12 +78,12 @@ public class SprintDataViewModel {
     private void bindModel() {
         if (sprintData.get() != null) {
             Bindings.bindBidirectional(name, sprintData.get().nameProperty());
-            Bindings.bindBidirectional(startDate, sprintData.get().startDateProperty(), FormatUtility.DATE_FORMAT);
-            Bindings.bindBidirectional(endDate, sprintData.get().endDateProperty(), FormatUtility.DATE_FORMAT);
-            Bindings.bindBidirectional(capacityForecast, sprintData.get().capacityForecastProperty(), doubleConverter);
-            Bindings.bindBidirectional(effortForecast, sprintData.get().effortForecastProperty(), doubleConverter);
-            Bindings.bindBidirectional(capacityDone, sprintData.get().capacityDoneProperty(), doubleConverter);
-            Bindings.bindBidirectional(effortDone, sprintData.get().effortDoneProperty(), doubleConverter);
+            Bindings.bindBidirectional(startDate, sprintData.get().startDateProperty(), localDateFormat);
+            Bindings.bindBidirectional(endDate, sprintData.get().endDateProperty(), localDateFormat);
+            Bindings.bindBidirectional(capacityForecast, sprintData.get().capacityForecastProperty(), doubleFormat);
+            Bindings.bindBidirectional(effortForecast, sprintData.get().effortForecastProperty(), doubleFormat);
+            Bindings.bindBidirectional(capacityDone, sprintData.get().capacityDoneProperty(), doubleFormat);
+            Bindings.bindBidirectional(effortDone, sprintData.get().effortDoneProperty(), doubleFormat);
         }
     }
 }

@@ -33,9 +33,10 @@ public class VelocityForecastFromCsvImporterTest {
 
     @Test
     public void importMultipleSprints() throws Exception {
-        final List<SprintData> expectedSprints = Arrays.asList(new SprintData("Sprint 1", FormatUtility.parseDate("01.02.2003"), FormatUtility.parseDate("02.03.2004"), Double.parseDouble("10.5"),
-                Double.parseDouble("3.5"), Double.parseDouble("8.5"), Double.parseDouble("8")), new SprintData("Sprint 2", FormatUtility.parseDate("03.04.2005"),
-                FormatUtility.parseDate("04.05.2006"), Double.parseDouble("10"), Double.parseDouble("2"), null, null));
+        final List<SprintData> expectedSprints = Arrays.asList(
+                new SprintData("Sprint 1", FormatUtility.parseLocalDate("01.02.2003"), FormatUtility.parseLocalDate("02.03.2004"), Double.parseDouble("10.5"), Double.parseDouble("3.5"),
+                        Double.parseDouble("8.5"), Double.parseDouble("8")),
+                new SprintData("Sprint 2", FormatUtility.parseLocalDate("03.04.2005"), FormatUtility.parseLocalDate("04.05.2006"), Double.parseDouble("10"), Double.parseDouble("2"), null, null));
 
         final VelocityForecast velocityForecast = importer.importData(new StringReader(HEADER + "Sprint 1;01.02.2003;02.03.2004;10.5;3.5;8.5;8\r\n" + "Sprint 2;03.04.2005;04.05.2006;10;2;;\r\n"));
         assertEquals(expectedSprints.toString(), velocityForecast.getSprints().toString());

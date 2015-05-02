@@ -57,7 +57,7 @@ public class SprintDataTest {
     @Test
     public void getDescription_withEndDate() throws Exception {
         final String endDate = "01.02.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
+        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getComparedForecast(null));
     }
 
@@ -70,7 +70,7 @@ public class SprintDataTest {
     @Test
     public void getDescription_sameReferenceSprint() throws Exception {
         final String endDate = "01.02.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
+        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getComparedForecast(sprintData));
     }
 
@@ -78,8 +78,8 @@ public class SprintDataTest {
     public void getDescription_laterReferenceEndDate() throws Exception {
         final String endDate = "01.02.2003";
         final String referenceEndDate = "02.02.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
-        final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseDate(referenceEndDate), null, null, null, null);
+        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
+        final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseLocalDate(referenceEndDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(-1d)", sprintData.getComparedForecast(referenceSprintData));
     }
 
@@ -87,8 +87,8 @@ public class SprintDataTest {
     public void getDescription_earlierReferenceEndDate() throws Exception {
         final String endDate = "01.02.2003";
         final String referenceEndDate = "01.01.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseDate(endDate), null, null, null, null);
-        final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseDate(referenceEndDate), null, null, null, null);
+        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
+        final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseLocalDate(referenceEndDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(+31d)", sprintData.getComparedForecast(referenceSprintData));
     }
 

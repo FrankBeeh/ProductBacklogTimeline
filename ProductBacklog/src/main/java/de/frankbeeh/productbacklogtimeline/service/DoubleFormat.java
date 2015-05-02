@@ -5,7 +5,7 @@ import java.text.Format;
 import java.text.ParsePosition;
 
 @SuppressWarnings("serial")
-public class DoubleConverterUtility extends Format {
+public class DoubleFormat extends Format {
 
     @Override
     public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) {

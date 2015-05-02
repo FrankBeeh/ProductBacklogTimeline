@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,8 +19,8 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 public class SprintData {
 
     private final StringProperty name = new SimpleStringProperty();
-    private final ObjectProperty<Date> startDate = new SimpleObjectProperty<Date>();
-    private final ObjectProperty<Date> endDate = new SimpleObjectProperty<Date>();
+    private final ObjectProperty<LocalDate> startDate = new SimpleObjectProperty<LocalDate>();
+    private final ObjectProperty<LocalDate> endDate = new SimpleObjectProperty<LocalDate>();
     private final ObjectProperty<Double> capacityForecast = new SimpleObjectProperty<Double>();
     private final ObjectProperty<Double> effortForecast = new SimpleObjectProperty<Double>();
     private final ObjectProperty<Double> capacityDone = new SimpleObjectProperty<Double>();;
@@ -33,7 +34,7 @@ public class SprintData {
         this("", null, null, null, null, null, null);
     }
 
-    public SprintData(String name, Date startDate, Date endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
+    public SprintData(String name, LocalDate startDate, LocalDate endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
         this.name.set(name);
         this.startDate.set(startDate);
         this.endDate.set(endDate);
@@ -54,19 +55,19 @@ public class SprintData {
         return name;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate.get();
     }
 
-    public ObjectProperty<Date> startDateProperty() {
+    public ObjectProperty<LocalDate> startDateProperty() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate.get();
     }
 
-    public ObjectProperty<Date> endDateProperty() {
+    public ObjectProperty<LocalDate> endDateProperty() {
         return endDate;
     }
 
@@ -148,14 +149,14 @@ public class SprintData {
                 stringBuilder.append("\n(").append(referenceSprintName).append(")");
             }
         }
-        final Date endDate = getEndDate();
+        final LocalDate endDate = getEndDate();
         if (endDate != null) {
             stringBuilder.append("\n");
-            stringBuilder.append(FormatUtility.formatDate(endDate));
+            stringBuilder.append(FormatUtility.formatLocalDate(endDate));
             if (referenceSprintData != null) {
-                final Date referenceEndDate = referenceSprintData.getEndDate();
+                final LocalDate referenceEndDate = referenceSprintData.getEndDate();
                 if (referenceEndDate != null) {
-                    final long diffDays = (endDate.getTime() - referenceEndDate.getTime()) / (1000 * 60 * 60 * 24);
+                    final long diffDays = ChronoUnit.DAYS.between(referenceEndDate,  endDate);
                     if (diffDays != 0) {
                         stringBuilder.append("\n(").append(FormatUtility.formatDifferenceLong(diffDays)).append("d)");
                     }

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -87,12 +87,12 @@ public abstract class DataFromCsvImporter<T> {
         return Integer.parseInt(value);
     }
 
-    protected final Date getDate(String columnName) {
+    protected final LocalDate getLocalDate(String columnName) {
         final String value = getString(columnName);
         if (value.isEmpty()) {
             return null;
         }
-        return FormatUtility.parseDate(value);
+        return FormatUtility.parseLocalDate(value);
     }
 
     protected final State getState(String columnName) {

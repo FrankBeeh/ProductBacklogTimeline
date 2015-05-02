@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.importer;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
@@ -23,8 +23,8 @@ public class VelocityForecastFromCsvImporter extends DataFromCsvImporter<Velocit
     @Override
     protected void addItem(VelocityForecast container) {
         final String sprintName = getString(SPRINT_COLUMN_NAME);
-        final Date startDate = getDate(START_DATE_COLUMN_NAME);
-        final Date endDate = getDate(END_DATE_COLUMN_NAME);
+        final LocalDate startDate = getLocalDate(START_DATE_COLUMN_NAME);
+        final LocalDate endDate = getLocalDate(END_DATE_COLUMN_NAME);
         final Double plannedCapacity = getDouble(CAPACITY_FORECAST_COLUMN_NAME);
         final Double plannedEffort = getDouble(EFFORT_FORECAST_COLUMN_NAME);
         final Double actualCapacity = getDouble(ACTUAL_CAPACITY_COLUMN_NAME);

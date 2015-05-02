@@ -84,7 +84,7 @@ public class VelocityForecastTableController {
                 return new ObservableValueBase<String>() {
                     @Override
                     public String getValue() {
-                        return FormatUtility.formatDate(cellDataFeatures.getValue().entityProperty().get().getStartDate());
+                        return FormatUtility.formatLocalDate(cellDataFeatures.getValue().entityProperty().get().getStartDate());
                     }
                 };
             }
@@ -95,7 +95,7 @@ public class VelocityForecastTableController {
                 return new ObservableValueBase<String>() {
                     @Override
                     public String getValue() {
-                        return FormatUtility.formatDate(cellDataFeatures.getValue().entityProperty().get().getEndDate());
+                        return FormatUtility.formatLocalDate(cellDataFeatures.getValue().entityProperty().get().getEndDate());
                     }
                 };
             }

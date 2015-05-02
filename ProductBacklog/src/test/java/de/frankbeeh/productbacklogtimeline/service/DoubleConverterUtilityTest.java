@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class DoubleConverterUtilityTest {
 
-    private DoubleConverterUtility doubleConverterUtility;
+    private DoubleFormat doubleConverterUtility;
 
     @Before
     public void setUp() {
-        doubleConverterUtility = new DoubleConverterUtility();
+        doubleConverterUtility = new DoubleFormat();
     }
 
     @Test

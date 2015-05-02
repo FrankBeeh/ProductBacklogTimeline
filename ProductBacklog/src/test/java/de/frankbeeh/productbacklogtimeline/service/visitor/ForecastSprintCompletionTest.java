@@ -32,7 +32,7 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
     public void visit() throws Exception {
         final String sprintName = "Sprint 1";
         final String date = "01.02.2003";
-        final SprintData sprintData = new SprintData(sprintName, null, FormatUtility.parseDate(date), null, null, null, null);
+        final SprintData sprintData = new SprintData(sprintName, null, FormatUtility.parseLocalDate(date), null, null, null, null);
         final double accumulatedEstimate = 10d;
         final ProductBacklogItem productBacklogItem = createProductBacklogItem(accumulatedEstimate);
 
