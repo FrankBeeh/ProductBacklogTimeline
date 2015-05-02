@@ -27,7 +27,7 @@ public class ProductTimeline {
         this.releaseForecasts.add(new ReleaseForecast(null, INITIAL_NAME, releases));
         productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
-    
+
     public void addReleaseForecast(ReleaseForecast releaseForecast) {
         releaseForecast.setVelocityForecast(getPreviousReleaseForecast().getVelocityForecast());
         releaseForecast.setReleases(getPreviousReleaseForecast().getReleases());
@@ -38,14 +38,18 @@ public class ProductTimeline {
     public void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog) {
         updateProductBacklog(productBacklog);
         final ReleaseForecast releaseForecast = new ReleaseForecast(dateTime, name, productBacklog, getPreviousReleaseForecast());
+        // final long startTime = System.currentTimeMillis();
         ServiceLocator.getService(ReleaseForecastService.class).insert(releaseForecast);
+        // final long duration = System.currentTimeMillis() - startTime;
+        // final int itemCount = productBacklog.size();
+        // System.out.println("Inserted " + itemCount + " items in " + duration + " ms (" + (itemCount * 1e3d / duration) + " inserts/sec)");
         releaseForecasts.add(releaseForecast);
     }
 
     public ProductBacklog getSelectedProductBacklog() {
         return getProductBacklog(selectedName);
     }
-    
+
     public ReleaseForecast getSelectedReleaseForecast() {
         return getReleaseForecast(selectedName);
     }
@@ -128,11 +132,11 @@ public class ProductTimeline {
     void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
         releaseForecasts.add(new ReleaseForecast(dateTime, name, productBacklog, referenceVelocityForecast, releases));
     }
-    
+
     private ReleaseForecast getPreviousReleaseForecast() {
         return releaseForecasts.get(releaseForecasts.size() - 1);
     }
-    
+
     private static Releases createDummyReleases() {
         final Releases releases = new Releases();
         releases.addRelease(new Release("TP1: Technical Preview Basis", new PlannedReleaseIsEqual("TP1: Technical Preview Basis")));
