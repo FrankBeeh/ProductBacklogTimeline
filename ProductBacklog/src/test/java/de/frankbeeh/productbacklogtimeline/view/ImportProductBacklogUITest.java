@@ -84,9 +84,9 @@ public class ImportProductBacklogUITest extends BaseUITest {
             { "Sprint 8", "19.05.2014", "25.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "45.0", "62.0", "78.8" } });
 
     @Test
-    public void selectReleaseForecast() throws Exception {
+    public void selectProductTimestamp() throws Exception {
         importProductBacklog(PBL_FILE_1);
-        assertEquals(PBL_FILE_1, getSelectedReleaseForecast());
+        assertEquals(PBL_FILE_1, getSelectedProductTimestamp());
         selectProductBacklogTab();
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1);
 
@@ -94,21 +94,21 @@ public class ImportProductBacklogUITest extends BaseUITest {
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_WITH_FORECAST_1);
 
         importProductBacklog(PBL_FILE_2);
-        assertEquals(PBL_FILE_2, getSelectedReleaseForecast());
+        assertEquals(PBL_FILE_2, getSelectedProductTimestamp());
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_1);
 
         importSprint(VELOCITY_FORECAST_FILE_2);
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_2);
 
-        referenceReleaseForecast(PBL_FILE_2);
-        selectReleaseForecast(PBL_FILE_1);
+        referenceProductTimestamp(PBL_FILE_2);
+        selectProductTimestamp(PBL_FILE_1);
         selectProductBacklogTab();
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_COMPARED_TO_PBL_2);
         selectVelocityForecastTab();
         assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_1);
 
-        referenceReleaseForecast(PBL_FILE_1);
-        selectReleaseForecast(PBL_FILE_2);
+        referenceProductTimestamp(PBL_FILE_1);
+        selectProductTimestamp(PBL_FILE_2);
         selectProductBacklogTab();
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_COMPARED_TO_PBL_1);
         selectVelocityForecastTab();
@@ -121,34 +121,34 @@ public class ImportProductBacklogUITest extends BaseUITest {
         closeCurrentWindow();
     }
 
-    private String getSelectedReleaseForecast() {
-        return getSelectedReleaseForecastComboBox().getSelectionModel().getSelectedItem();
+    private String getSelectedProductTimestamp() {
+        return getSelectedProductTimestampComboBox().getSelectionModel().getSelectedItem();
     }
 
-    private void selectReleaseForecast(final String releaseForecastName) {
+    private void selectProductTimestamp(final String productTimestampName) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                getSelectedReleaseForecastComboBox().getSelectionModel().select(releaseForecastName);
+                getSelectedProductTimestampComboBox().getSelectionModel().select(productTimestampName);
             }
         });
     }
 
-    private void referenceReleaseForecast(final String releaseForecastName) {
+    private void referenceProductTimestamp(final String productTimestamp) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                getReferencedReleaseForecastComboBox().getSelectionModel().select(releaseForecastName);
+                getReferencedProductTimestampComboBox().getSelectionModel().select(productTimestamp);
             }
         });
     }
 
-    private ComboBox<String> getSelectedReleaseForecastComboBox() {
-        return getUniqueNode("#selectedReleaseForecast");
+    private ComboBox<String> getSelectedProductTimestampComboBox() {
+        return getUniqueNode("#selectedProductTimestamp");
     }
 
-    private ComboBox<String> getReferencedReleaseForecastComboBox() {
-        return getUniqueNode("#referencedReleaseForecast");
+    private ComboBox<String> getReferencedProductTimestampComboBox() {
+        return getUniqueNode("#referencedProductTimestamp");
     }
 
     private void openPBLImportDialog() {

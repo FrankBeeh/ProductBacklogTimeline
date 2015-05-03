@@ -12,7 +12,7 @@ public class UITestServiceRegistry extends ServiceRegistry {
 	    testDataBase = new TestDataBase(TEST_DB);
 	    testDataBase.recreateTables();
 		Connection connection = testDataBase.getConnection();
-		registerService(ReleaseForecastService.class, new ReleaseForecastService(connection));
+		registerService(ProductTimestampService.class, new ProductTimestampService(connection));
 	}
 	
 	@Override

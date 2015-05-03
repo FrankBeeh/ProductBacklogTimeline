@@ -8,11 +8,11 @@ import com.google.common.annotations.VisibleForTesting;
 
 import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
-import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastService;
+import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
-    private final List<ReleaseForecast> releaseForecasts = new ArrayList<ReleaseForecast>();
+    private final List<ProductTimestamp> productTimestamps = new ArrayList<ProductTimestamp>();
     private String selectedName = INITIAL_NAME;
     private String referenceName = INITIAL_NAME;
     private final ProductBacklogComparison productBacklogComparison;
@@ -24,70 +24,70 @@ public class ProductTimeline {
     @VisibleForTesting
     ProductTimeline(Releases releases, ProductBacklogComparison productBacklogComparison) {
         this.productBacklogComparison = productBacklogComparison;
-        this.releaseForecasts.add(new ReleaseForecast(null, INITIAL_NAME, releases));
+        this.productTimestamps.add(new ProductTimestamp(null, INITIAL_NAME, releases));
         productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
 
-    public void addReleaseForecast(ReleaseForecast releaseForecast) {
-        releaseForecast.setVelocityForecast(getPreviousReleaseForecast().getVelocityForecast());
-        releaseForecast.setReleases(getPreviousReleaseForecast().getReleases());
-        updateProductBacklog(releaseForecast.getProductBacklog());
-        releaseForecasts.add(releaseForecast);
+    public void addProductTimestamp(ProductTimestamp productTimestamp) {
+        productTimestamp.setVelocityForecast(getPreviousProductTimestamp().getVelocityForecast());
+        productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
+        updateProductBacklog(productTimestamp.getProductBacklog());
+        productTimestamps.add(productTimestamp);
     }
 
     public void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog) {
         updateProductBacklog(productBacklog);
-        final ReleaseForecast releaseForecast = new ReleaseForecast(dateTime, name, productBacklog, getPreviousReleaseForecast());
+        final ProductTimestamp productTimestamp = new ProductTimestamp(dateTime, name, productBacklog, getPreviousProductTimestamp());
         // final long startTime = System.currentTimeMillis();
-        ServiceLocator.getService(ReleaseForecastService.class).insert(releaseForecast);
+        ServiceLocator.getService(ProductTimestampService.class).insert(productTimestamp);
         // final long duration = System.currentTimeMillis() - startTime;
         // final int itemCount = productBacklog.size();
         // System.out.println("Inserted " + itemCount + " items in " + duration + " ms (" + (itemCount * 1e3d / duration) + " inserts/sec)");
-        releaseForecasts.add(releaseForecast);
+        productTimestamps.add(productTimestamp);
     }
 
     public ProductBacklog getSelectedProductBacklog() {
         return getProductBacklog(selectedName);
     }
 
-    public ReleaseForecast getSelectedReleaseForecast() {
-        return getReleaseForecast(selectedName);
+    public ProductTimestamp getSelectedProductTimestamp() {
+        return getProductTimestamp(selectedName);
     }
 
-    public void selectReleaseForecast(String selectedName) {
+    public void selectProductTimestamp(String selectedName) {
         this.selectedName = selectedName;
         productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
         updateProductBacklogComparison();
         updateReleases();
     }
 
-    public void selectReferenceReleaseForecast(String referenceName) {
+    public void selectReferenceProductTimestamp(String referenceName) {
         this.referenceName = referenceName;
         productBacklogComparison.setReferenceProductBacklog(getReferenceProductBacklog());
         updateProductBacklogComparison();
         updateReleases();
     }
 
-    public void setVelocityForecastForSelectedReleaseForecast(VelocityForecast velocityForecast) {
+    public void setVelocityForecastForSelectedProductTimestamp(VelocityForecast velocityForecast) {
         velocityForecast.updateForecast();
-        getReleaseForecast(selectedName).setVelocityForecast(velocityForecast);
+        getProductTimestamp(selectedName).setVelocityForecast(velocityForecast);
         updateProductBacklog(getSelectedProductBacklog());
         updateProductBacklogComparison();
         updateReleases();
     }
 
     public VelocityForecast getSelectedVelocityForecast() {
-        return getReleaseForecast(selectedName).getVelocityForecast();
+        return getProductTimestamp(selectedName).getVelocityForecast();
     }
 
     public Releases getReleases() {
-        return getReleaseForecast(selectedName).getReleases();
+        return getProductTimestamp(selectedName).getReleases();
     }
 
-    public List<String> getReleaseForecastNames() {
+    public List<String> getProductTimestampNames() {
         final List<String> names = new ArrayList<String>();
-        for (ReleaseForecast releaseForecast : releaseForecasts) {
-            names.add(releaseForecast.getName());
+        for (ProductTimestamp productTimestamp : productTimestamps) {
+            names.add(productTimestamp.getName());
         }
         return names;
     }
@@ -113,16 +113,16 @@ public class ProductTimeline {
     }
 
     private ProductBacklog getProductBacklog(String name) {
-        return getReleaseForecast(name).getProductBacklog();
+        return getProductTimestamp(name).getProductBacklog();
     }
 
-    private ReleaseForecast getReleaseForecast(String name) {
+    private ProductTimestamp getProductTimestamp(String name) {
         if (name == null) {
-            return getReleaseForecast(INITIAL_NAME);
+            return getProductTimestamp(INITIAL_NAME);
         }
-        for (ReleaseForecast releaseForecast : releaseForecasts) {
-            if (releaseForecast.getName().equals(name)) {
-                return releaseForecast;
+        for (ProductTimestamp productTimestamp : productTimestamps) {
+            if (productTimestamp.getName().equals(name)) {
+                return productTimestamp;
             }
         }
         throw new IllegalArgumentException("Release forcast '" + name + "' not found!");
@@ -130,11 +130,11 @@ public class ProductTimeline {
 
     @VisibleForTesting
     void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
-        releaseForecasts.add(new ReleaseForecast(dateTime, name, productBacklog, referenceVelocityForecast, releases));
+        productTimestamps.add(new ProductTimestamp(dateTime, name, productBacklog, referenceVelocityForecast, releases));
     }
 
-    private ReleaseForecast getPreviousReleaseForecast() {
-        return releaseForecasts.get(releaseForecasts.size() - 1);
+    private ProductTimestamp getPreviousProductTimestamp() {
+        return productTimestamps.get(productTimestamps.size() - 1);
     }
 
     private static Releases createDummyReleases() {

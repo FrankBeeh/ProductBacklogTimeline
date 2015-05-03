@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import de.frankbeeh.productbacklogtimeline.service.database.DatabaseService;
-import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastService;
+import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
 public class RealServiceRegistry extends ServiceRegistry {
 	private static final String PRODUCT_TIMELINE_DB = "productTimeline.db";
@@ -13,7 +13,7 @@ public class RealServiceRegistry extends ServiceRegistry {
 
 	public RealServiceRegistry() {
 		connection = initConnection();
-		registerService(ReleaseForecastService.class, new ReleaseForecastService(connection));
+		registerService(ProductTimestampService.class, new ProductTimestampService(connection));
 	}
 
 	private static Connection getConnection(String databaseName)

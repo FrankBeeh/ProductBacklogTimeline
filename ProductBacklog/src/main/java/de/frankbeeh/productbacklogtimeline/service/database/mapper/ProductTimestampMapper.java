@@ -12,33 +12,33 @@ import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Result;
 
-import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
 
 /**
  * Responsibility:
  * <ul>
- * <li>Maps a {@link ReleaseForecast} into the Database.
+ * <li>Maps a {@link ProductTimestamp} into the Database.
  * </ul>
  */
-public class ReleaseForecastMapper extends BaseMapper {
+public class ProductTimestampMapper extends BaseMapper {
     private final ProductBacklogMapper productBacklogMapper;
 
-    public ReleaseForecastMapper(Connection connection) {
+    public ProductTimestampMapper(Connection connection) {
         super(connection);
         productBacklogMapper = new ProductBacklogMapper(connection);
     }
 
-    public void insert(ReleaseForecast releaseForecast) {
-        productBacklogMapper.insert(releaseForecast.getDateTime(), releaseForecast.getProductBacklog());
-        getDslContext().insertInto(RELEASE_FORECAST, RELEASE_FORECAST.ID, RELEASE_FORECAST.NAME).values(ConvertUtility.getTimestamp(releaseForecast.getDateTime()), releaseForecast.getName()).execute();
+    public void insert(ProductTimestamp productTimestamp) {
+        productBacklogMapper.insert(productTimestamp.getDateTime(), productTimestamp.getProductBacklog());
+        getDslContext().insertInto(RELEASE_FORECAST, RELEASE_FORECAST.ID, RELEASE_FORECAST.NAME).values(ConvertUtility.getTimestamp(productTimestamp.getDateTime()), productTimestamp.getName()).execute();
     }
 
-    public ReleaseForecast get(LocalDateTime locatDateTime) {
+    public ProductTimestamp get(LocalDateTime locatDateTime) {
         final Record2<Timestamp, String> record = getDslContext().select(RELEASE_FORECAST.ID, RELEASE_FORECAST.NAME).from(RELEASE_FORECAST).where(
                 RELEASE_FORECAST.ID.eq(ConvertUtility.getTimestamp(locatDateTime))).fetchOne();
         final LocalDateTime localDateTime = ConvertUtility.getLocalDateTime(record.getValue(RELEASE_FORECAST.ID));
-        return new ReleaseForecast(localDateTime, record.getValue(RELEASE_FORECAST.NAME), productBacklogMapper.get(locatDateTime), null, null);
+        return new ProductTimestamp(localDateTime, record.getValue(RELEASE_FORECAST.NAME), productBacklogMapper.get(locatDateTime), null, null);
     }
 
     public List<LocalDateTime> getAllIds() {

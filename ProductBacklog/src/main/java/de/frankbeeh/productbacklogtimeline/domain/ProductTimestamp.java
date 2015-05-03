@@ -4,18 +4,18 @@ import java.time.LocalDateTime;
 
 import com.google.common.annotations.VisibleForTesting;
 
-public class ReleaseForecast {
+public class ProductTimestamp {
     private final LocalDateTime dateTime;
     private final String name;
     private final ProductBacklog productBacklog;
     private VelocityForecast velocityForecast;
     private Releases releases;
 
-    public ReleaseForecast(LocalDateTime dateTime, String name, ProductBacklog productBacklog, ReleaseForecast previousReleaseForecast) {
-        this(dateTime, name, productBacklog, previousReleaseForecast.getVelocityForecast(), previousReleaseForecast.getReleases());
+    public ProductTimestamp(LocalDateTime dateTime, String name, ProductBacklog productBacklog, ProductTimestamp previousProductTimestamp) {
+        this(dateTime, name, productBacklog, previousProductTimestamp.getVelocityForecast(), previousProductTimestamp.getReleases());
     }
 
-    public ReleaseForecast(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast velocityForecast, Releases releases) {
+    public ProductTimestamp(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast velocityForecast, Releases releases) {
         this.dateTime = dateTime;
         this.name = name;
         this.productBacklog = productBacklog;
@@ -24,7 +24,7 @@ public class ReleaseForecast {
     }
 
     @VisibleForTesting
-    ReleaseForecast(LocalDateTime dateTime, String name, Releases releases) {
+    ProductTimestamp(LocalDateTime dateTime, String name, Releases releases) {
         this(dateTime, name, new ProductBacklog(), new VelocityForecast(), releases);
     }
 

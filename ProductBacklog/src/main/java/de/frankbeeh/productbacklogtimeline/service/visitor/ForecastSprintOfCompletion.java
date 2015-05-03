@@ -1,7 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
@@ -9,7 +9,7 @@ import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
  * Responsibility:
  * <ul>
  * <li>Forecast the sprint for completing a {@link ProductBacklogItem}.
- * <li>Compute the difference to the sprint forecast by the referenced {@link ReleaseForecast}.
+ * <li>Compute the difference to the sprint forecast by the referenced {@link ProductTimestamp}.
  * </ul>
  */
 public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {

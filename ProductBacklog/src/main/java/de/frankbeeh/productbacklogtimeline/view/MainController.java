@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
-import de.frankbeeh.productbacklogtimeline.service.database.ReleaseForecastService;
+import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
 
@@ -35,9 +35,9 @@ public class MainController {
     @FXML
     private Tab releasesTab;
     @FXML
-    private ComboBox<String> selectedReleaseForecast;
+    private ComboBox<String> selectedProductTimestamp;
     @FXML
-    private ComboBox<String> referencedReleaseForecast;
+    private ComboBox<String> referencedProductTimestamp;
 
     private final ObjectProperty<ObservableList<String>> selectProductBacklogItems = new SimpleObjectProperty<>();
     private ReleaseTableController releaseTableController;
@@ -58,11 +58,16 @@ public class MainController {
         releaseTableController = controllerFactory.createReleaseTableController();
         releasesTab.setContent(this.releaseTableController.getView());
         releaseTableController.initModel(productTimeline.getReleases());
-        selectedReleaseForecast.itemsProperty().bind(selectProductBacklogItems);
-        referencedReleaseForecast.itemsProperty().bind(selectProductBacklogItems);
+        selectedProductTimestamp.itemsProperty().bind(selectProductBacklogItems);
+        referencedProductTimestamp.itemsProperty().bind(selectProductBacklogItems);
         selectProductBacklogItems.set(FXCollections.<String> observableArrayList());
     }
 
+    @FXML
+    private void importTimestamp(){
+        
+    }
+    
     @FXML
     private void importProductBacklog() throws IOException, FileNotFoundException {
         final File selectedFile = selectCsvFileForImport();
@@ -72,7 +77,7 @@ public class MainController {
             final String name = selectedFile.getName();
             productTimeline.addProductBacklog(LocalDateTime.now(), name, importData);
             setSelectableProductBacklogNames();
-            changeSelectedReleaseForecast(name);
+            changeSelectedProductTimestamp(name);
             updateProductBacklogAndReleaseTable();
         }
     }
@@ -82,25 +87,25 @@ public class MainController {
         final File selectedFile = selectCsvFileForImport();
         if (selectedFile != null) {
             final VelocityForecastFromCsvImporter importer = new VelocityForecastFromCsvImporter();
-            productTimeline.setVelocityForecastForSelectedReleaseForecast(importer.importData(new FileReader(selectedFile)));
+            productTimeline.setVelocityForecastForSelectedProductTimestamp(importer.importData(new FileReader(selectedFile)));
             updateProductBacklogAndReleaseTable();
         }
     }
 
     @FXML
-    private void selectReleaseForecast() {
-        productTimeline.selectReleaseForecast(selectedReleaseForecast.selectionModelProperty().get().getSelectedItem());
+    private void selectProductTimestamp() {
+        productTimeline.selectProductTimestamp(selectedProductTimestamp.selectionModelProperty().get().getSelectedItem());
         updateProductBacklogAndReleaseTable();
     }
 
     @FXML
-    private void referenceReleaseForecast() {
-        productTimeline.selectReferenceReleaseForecast(referencedReleaseForecast.selectionModelProperty().get().getSelectedItem());
+    private void referenceProductTimestamp() {
+        productTimeline.selectReferenceProductTimestamp(referencedProductTimestamp.selectionModelProperty().get().getSelectedItem());
         updateProductBacklogAndReleaseTable();
     }
 
-    private void changeSelectedReleaseForecast(final String productBacklogName) {
-        selectedReleaseForecast.selectionModelProperty().get().select(productBacklogName);
+    private void changeSelectedProductTimestamp(final String productBacklogName) {
+        selectedProductTimestamp.selectionModelProperty().get().select(productBacklogName);
     }
 
     private File selectCsvFileForImport() {
@@ -113,23 +118,23 @@ public class MainController {
 
     private void setSelectableProductBacklogNames() {
         selectProductBacklogItems.getValue().clear();
-        selectProductBacklogItems.getValue().addAll(productTimeline.getReleaseForecastNames());
+        selectProductBacklogItems.getValue().addAll(productTimeline.getProductTimestampNames());
     }
 
     private void updateProductBacklogAndReleaseTable() {
         productBacklogTableController.initModel(productTimeline.getProductBacklogComparison());
         productBacklogTableController.updateView();
         velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
-        releaseBurndownController.initModel(productTimeline.getSelectedReleaseForecast());
+        releaseBurndownController.initModel(productTimeline.getSelectedProductTimestamp());
         releaseTableController.initModel(productTimeline.getReleases());
         releaseTableController.updateView();
     }
     
     private void loadFromDataBase() {
-        final ReleaseForecastService service = ServiceLocator.getService(ReleaseForecastService.class);
+        final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
         final List<LocalDateTime> allIds = service.getAllIds();
         for (LocalDateTime localDateTime : allIds) {
-            productTimeline.addReleaseForecast(service.get(localDateTime));
+            productTimeline.addProductTimestamp(service.get(localDateTime));
         }
     }
 }

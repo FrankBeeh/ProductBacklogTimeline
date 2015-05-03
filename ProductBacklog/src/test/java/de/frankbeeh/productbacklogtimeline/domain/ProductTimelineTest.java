@@ -48,7 +48,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         productBacklogComparisonMock.updateAllItems();
         selectedReleasesMock.updateAll(productBacklogComparisonMock);
         replayAll();
-        productTimelineWithMockedReleases.selectReleaseForecast(SELECTED);
+        productTimelineWithMockedReleases.selectProductTimestamp(SELECTED);
         assertSame(selectedProductBacklogMock, productTimelineWithMockedReleases.getSelectedProductBacklog());
         verifyAll();
 
@@ -57,7 +57,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         productBacklogComparisonMock.updateAllItems();
         selectedReleasesMock.updateAll(same(productBacklogComparisonMock));
         replayAll();
-        productTimelineWithMockedReleases.selectReferenceReleaseForecast(REFERENCE);
+        productTimelineWithMockedReleases.selectReferenceProductTimestamp(REFERENCE);
         verifyAll();
 
     }
@@ -69,15 +69,15 @@ public class ProductTimelineTest extends EasyMockSupport {
         productTimeline.addProductBacklog(REFERENCE_DATE_TIME, REFERENCE, new ProductBacklog());
 
         final VelocityForecast velocityForecast1 = new VelocityForecast();
-        productTimeline.selectReleaseForecast(REFERENCE);
-        productTimeline.setVelocityForecastForSelectedReleaseForecast(velocityForecast1);
+        productTimeline.selectProductTimestamp(REFERENCE);
+        productTimeline.setVelocityForecastForSelectedProductTimestamp(velocityForecast1);
 
         final VelocityForecast velocityForecast2 = new VelocityForecast();
-        productTimeline.selectReleaseForecast(SELECTED);
-        productTimeline.setVelocityForecastForSelectedReleaseForecast(velocityForecast2);
+        productTimeline.selectProductTimestamp(SELECTED);
+        productTimeline.setVelocityForecastForSelectedProductTimestamp(velocityForecast2);
 
         assertSame(velocityForecast2, productTimeline.getSelectedVelocityForecast());
-        productTimeline.selectReleaseForecast(REFERENCE);
+        productTimeline.selectProductTimestamp(REFERENCE);
         assertSame(velocityForecast1, productTimeline.getSelectedVelocityForecast());
     }
 
@@ -90,7 +90,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         selectedProductBacklogMock.updateAllItems(same(velocityForecast));
         selectedReleasesMock.updateAll(productBacklogComparisonMock);
         replayAll();
-        productTimelineWithMockedReleases.setVelocityForecastForSelectedReleaseForecast(velocityForecast);
+        productTimelineWithMockedReleases.setVelocityForecastForSelectedProductTimestamp(velocityForecast);
         verifyAll();
     }
 

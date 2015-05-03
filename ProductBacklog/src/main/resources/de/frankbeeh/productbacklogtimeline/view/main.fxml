@@ -13,9 +13,9 @@
     <HBox prefHeight="24.0" prefWidth="1200.0">
       <children>
         <Label text="Selected Release Forecast" />
-        <ComboBox fx:id="selectedReleaseForecast" onAction="#selectReleaseForecast" prefHeight="21.0" prefWidth="293.0" />
+        <ComboBox fx:id="selectedProductTimestamp" onAction="#selectProductTimestamp" prefHeight="21.0" prefWidth="293.0" />
         <Label text="Referenced Release Forecast" />
-        <ComboBox fx:id="referencedReleaseForecast" onAction="#referenceReleaseForecast" prefHeight="21.0" prefWidth="293.0" />
+        <ComboBox fx:id="referencedProductTimestamp" onAction="#referenceProductTimestamp" prefHeight="21.0" prefWidth="293.0" />
       </children>
     </HBox>
   </bottom>
@@ -54,6 +54,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
+            <MenuItem mnemonicParsing="false" onAction="#importTimestamp" text="Import Timestamp" />
             <MenuItem mnemonicParsing="false" onAction="#importProductBacklog" text="Import PBL" />
             <MenuItem mnemonicParsing="false" onAction="#importVelocityForecast" text="Import Velocity Forecast" />
           </items>

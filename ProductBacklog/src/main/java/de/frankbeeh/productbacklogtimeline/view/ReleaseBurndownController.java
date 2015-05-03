@@ -11,7 +11,7 @@ import javafx.scene.chart.XYChart.Series;
 import javafx.scene.control.Tooltip;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
@@ -26,15 +26,15 @@ public class ReleaseBurndownController {
     private void initialize() {
     }
 
-    public void initModel(ReleaseForecast releaseForecast) {
+    public void initModel(ProductTimestamp productTimestamp) {
         releaseBurndown.getData().removeAll(releaseBurndown.getData());
-        addProductBacklogItems(releaseForecast);
-        addVelocityForecasts(releaseForecast);
+        addProductBacklogItems(productTimestamp);
+        addVelocityForecasts(productTimestamp);
     }
 
-    private void addVelocityForecasts(ReleaseForecast releaseForecast) {
+    private void addVelocityForecasts(ProductTimestamp productTimestamp) {
         final Series<String, Double> series = new XYChart.Series<String, Double>();
-        final VelocityForecast velocityForecast = releaseForecast.getVelocityForecast();
+        final VelocityForecast velocityForecast = productTimestamp.getVelocityForecast();
         for (SprintData sprintData : velocityForecast.getSprints()) {
             for (String forecastType : VelocityForecast.COMPLETION_FORECASTS) {
                 Double value = sprintData.getEffortDone();
@@ -52,9 +52,9 @@ public class ReleaseBurndownController {
         addTooltipsForVelocityForecasts(velocityForecast);
     }
 
-    private void addProductBacklogItems(ReleaseForecast releaseForecast) {
+    private void addProductBacklogItems(ProductTimestamp productTimestamp) {
         final Series<String, Double> series = new XYChart.Series<String, Double>();
-        final ProductBacklog productBacklog = releaseForecast.getProductBacklog();
+        final ProductBacklog productBacklog = productTimestamp.getProductBacklog();
         for (ProductBacklogItem item : productBacklog.getItems()) {
             final Data<String, Double> data = new XYChart.Data<String, Double>(PRODUCT_BACKLOG, item.getCleanedEstimate());
             series.getData().add(data);

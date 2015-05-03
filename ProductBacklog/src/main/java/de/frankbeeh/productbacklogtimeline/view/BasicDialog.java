@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public abstract class BasicDialog<T> extends Stage {
 
@@ -45,6 +44,5 @@ public abstract class BasicDialog<T> extends Stage {
         return dialogResult;
     }
 
-    // FIXME: Make Generic, once Superclass for ViewModels exist
-    public abstract void initModel(SprintDataViewModel selectedItem);
+    public abstract void initModel(T selectedItem);
 }

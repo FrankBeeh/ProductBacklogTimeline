@@ -12,7 +12,7 @@ import org.easymock.EasyMock;
 import de.frankbeeh.productbacklogtimeline.service.ServiceRegistry;
 
 public class MockedServiceRegistry extends ServiceRegistry {
-	private static final List<Class<ReleaseForecastService>> MOCKED_SERVICE_CLASSES = Arrays.asList(ReleaseForecastService.class);
+	private static final List<Class<ProductTimestampService>> MOCKED_SERVICE_CLASSES = Arrays.asList(ProductTimestampService.class);
 
 	public MockedServiceRegistry() {
 		for (Class<?> serviceClass : MOCKED_SERVICE_CLASSES) {
