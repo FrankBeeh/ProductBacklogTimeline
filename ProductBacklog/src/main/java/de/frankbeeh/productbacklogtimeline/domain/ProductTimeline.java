@@ -6,9 +6,7 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
-import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
@@ -29,20 +27,10 @@ public class ProductTimeline {
     }
 
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
-        productTimestamp.setVelocityForecast(getPreviousProductTimestamp().getVelocityForecast());
+        productTimestamp.updateVelocityForecast();
+        // TODO: Do not overwrite as soon as the releases are read from CSV or DB!
         productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
-        updateProductBacklog(productTimestamp.getProductBacklog());
-        productTimestamps.add(productTimestamp);
-    }
-
-    public void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog) {
-        updateProductBacklog(productBacklog);
-        final ProductTimestamp productTimestamp = new ProductTimestamp(dateTime, name, productBacklog, getPreviousProductTimestamp());
-        // final long startTime = System.currentTimeMillis();
-        ServiceLocator.getService(ProductTimestampService.class).insert(productTimestamp);
-        // final long duration = System.currentTimeMillis() - startTime;
-        // final int itemCount = productBacklog.size();
-        // System.out.println("Inserted " + itemCount + " items in " + duration + " ms (" + (itemCount * 1e3d / duration) + " inserts/sec)");
+        productTimestamp.updateProductBacklog();
         productTimestamps.add(productTimestamp);
     }
 
@@ -68,19 +56,11 @@ public class ProductTimeline {
         updateReleases();
     }
 
-    public void setVelocityForecastForSelectedProductTimestamp(VelocityForecast velocityForecast) {
-        velocityForecast.updateForecast();
-        getProductTimestamp(selectedName).setVelocityForecast(velocityForecast);
-        updateProductBacklog(getSelectedProductBacklog());
-        updateProductBacklogComparison();
-        updateReleases();
-    }
-
     public VelocityForecast getSelectedVelocityForecast() {
         return getProductTimestamp(selectedName).getVelocityForecast();
     }
 
-    public Releases getReleases() {
+    public Releases getSelectedReleases() {
         return getProductTimestamp(selectedName).getReleases();
     }
 
@@ -96,10 +76,6 @@ public class ProductTimeline {
         return productBacklogComparison;
     }
 
-    private void updateProductBacklog(ProductBacklog productBacklog) {
-        productBacklog.updateAllItems(getSelectedVelocityForecast());
-    }
-
     private void updateProductBacklogComparison() {
         productBacklogComparison.updateAllItems();
     }
@@ -109,7 +85,7 @@ public class ProductTimeline {
     }
 
     private void updateReleases() {
-        getReleases().updateAll(productBacklogComparison);
+        getSelectedReleases().updateAll(productBacklogComparison);
     }
 
     private ProductBacklog getProductBacklog(String name) {

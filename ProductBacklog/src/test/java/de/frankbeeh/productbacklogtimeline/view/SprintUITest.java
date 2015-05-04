@@ -3,6 +3,8 @@ package de.frankbeeh.productbacklogtimeline.view;
 import org.junit.Test;
 
 public class SprintUITest extends BaseUITest {
+    private static final String PBL_FILE_1 = "PBL1.csv";
+    private static final String VELOCITY_FORECAST_FILE_1 = "VelocityForecast1.csv";
 
     private static final TableViewContent VELOCITY_FORECAST_1 = new TableViewContent(new String[][] { { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "3.0", "", "", "" },
             { "Sprint 2", "26.04.2014", "26.04.2014", "8.0", "", "", "", "4.0", "4.0", "4.0", "", "7.0", "7.0", "7.0" },
@@ -15,7 +17,7 @@ public class SprintUITest extends BaseUITest {
 
     @Test
     public void importAndEditSprintClickSave() throws Exception {
-        importSprint("VelocityForecast1.csv");
+        importProductTimestamp(PBL_FILE_1, VELOCITY_FORECAST_FILE_1);
         selectVelocityForecastTab();
         assertContentOfTableView("#velocityForecastTable", VELOCITY_FORECAST_1);
         editSprint(getFirstSprint());

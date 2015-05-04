@@ -13,6 +13,7 @@ import org.jooq.Record2;
 import org.jooq.Result;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
+import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
 
 /**
@@ -38,7 +39,7 @@ public class ProductTimestampMapper extends BaseMapper {
         final Record2<Timestamp, String> record = getDslContext().select(RELEASE_FORECAST.ID, RELEASE_FORECAST.NAME).from(RELEASE_FORECAST).where(
                 RELEASE_FORECAST.ID.eq(ConvertUtility.getTimestamp(locatDateTime))).fetchOne();
         final LocalDateTime localDateTime = ConvertUtility.getLocalDateTime(record.getValue(RELEASE_FORECAST.ID));
-        return new ProductTimestamp(localDateTime, record.getValue(RELEASE_FORECAST.NAME), productBacklogMapper.get(locatDateTime), null, null);
+        return new ProductTimestamp(localDateTime, record.getValue(RELEASE_FORECAST.NAME), productBacklogMapper.get(locatDateTime), new VelocityForecast(), null);
     }
 
     public List<LocalDateTime> getAllIds() {

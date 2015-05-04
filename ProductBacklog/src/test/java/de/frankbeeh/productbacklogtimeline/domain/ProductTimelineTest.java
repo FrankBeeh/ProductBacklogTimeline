@@ -20,7 +20,6 @@ public class ProductTimelineTest extends EasyMockSupport {
     private static final String REFERENCE = "reference";
     private static final String SELECTED = "selected";
     private ProductBacklog selectedProductBacklogMock;
-    private VelocityForecast velocityForecast;
 
     private ProductTimeline productTimelineWithMockedReleases;
     private ProductBacklog referenceProductBacklogMock;
@@ -35,7 +34,7 @@ public class ProductTimelineTest extends EasyMockSupport {
     public void initalContent() {
         assertTrue(productTimelineWithMockedReleases.getSelectedVelocityForecast().getSprints().isEmpty());
         assertTrue(productTimelineWithMockedReleases.getSelectedProductBacklog().getItems().isEmpty());
-        assertSame(initialReleasesMock, productTimelineWithMockedReleases.getReleases());
+        assertSame(initialReleasesMock, productTimelineWithMockedReleases.getSelectedReleases());
     }
 
     @Test
@@ -62,44 +61,11 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     }
 
-    @Test
-    public void setSelectedVelocityForecast() throws Exception {
-        final ProductTimeline productTimeline = new ProductTimeline(new Releases(), new ProductBacklogComparison());
-        productTimeline.addProductBacklog(SELECTEDT_DATE_TIME, SELECTED, new ProductBacklog());
-        productTimeline.addProductBacklog(REFERENCE_DATE_TIME, REFERENCE, new ProductBacklog());
-
-        final VelocityForecast velocityForecast1 = new VelocityForecast();
-        productTimeline.selectProductTimestamp(REFERENCE);
-        productTimeline.setVelocityForecastForSelectedProductTimestamp(velocityForecast1);
-
-        final VelocityForecast velocityForecast2 = new VelocityForecast();
-        productTimeline.selectProductTimestamp(SELECTED);
-        productTimeline.setVelocityForecastForSelectedProductTimestamp(velocityForecast2);
-
-        assertSame(velocityForecast2, productTimeline.getSelectedVelocityForecast());
-        productTimeline.selectProductTimestamp(REFERENCE);
-        assertSame(velocityForecast1, productTimeline.getSelectedVelocityForecast());
-    }
-
-    @Test
-    public void setSelectedVelocityForecast_updates() throws Exception {
-        addAndSelectProductBacklog();
-        resetAll();
-        velocityForecast.updateForecast();
-        productBacklogComparisonMock.updateAllItems();
-        selectedProductBacklogMock.updateAllItems(same(velocityForecast));
-        selectedReleasesMock.updateAll(productBacklogComparisonMock);
-        replayAll();
-        productTimelineWithMockedReleases.setVelocityForecastForSelectedProductTimestamp(velocityForecast);
-        verifyAll();
-    }
-
     @Before
     public void setUp() {
         ServiceLocator.init(new MockedServiceRegistry());
         selectedProductBacklogMock = createMock("selectedProductBacklogMock", ProductBacklog.class);
         referenceProductBacklogMock = createMock("referenceProductBacklogMock", ProductBacklog.class);
-        velocityForecast = createMock(VelocityForecast.class);
         referenceVelocityForecast = new VelocityForecast();
         selectedVelocityForecast = new VelocityForecast();
         initialReleasesMock = createMock("initialReleasesMock", Releases.class);
@@ -110,7 +76,7 @@ public class ProductTimelineTest extends EasyMockSupport {
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         ServiceLocator.init(null);
     }
 }

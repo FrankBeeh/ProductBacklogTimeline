@@ -55,4 +55,12 @@ public class ProductTimestamp {
     public LocalDateTime getDateTime() {
         return dateTime;
     }
+
+    public void updateProductBacklog() {
+        productBacklog.updateAllItems(velocityForecast);
+    }
+
+    public void updateVelocityForecast() {
+        velocityForecast.updateForecast();
+    }
 }

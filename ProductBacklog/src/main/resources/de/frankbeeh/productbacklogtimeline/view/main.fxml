@@ -54,9 +54,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#importTimestamp" text="Import Timestamp" />
-            <MenuItem mnemonicParsing="false" onAction="#importProductBacklog" text="Import PBL" />
-            <MenuItem mnemonicParsing="false" onAction="#importVelocityForecast" text="Import Velocity Forecast" />
+            <MenuItem mnemonicParsing="false" onAction="#importProductTimestamp" text="Import Product Timestamp" />
           </items>
         </Menu>
       </menus>
