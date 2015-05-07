@@ -1,8 +1,13 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 import org.junit.Test;
 
 public class SprintUITest extends BaseUITest {
+    private static final LocalDate TIMESTAMP_DATE_1 = LocalDate.of(2001, Month.JANUARY, 1);
+    private static final String TIMESTAMP_NAME_1 = "Name 1";
     private static final String PBL_FILE_1 = "PBL1.csv";
     private static final String VELOCITY_FORECAST_FILE_1 = "VelocityForecast1.csv";
 
@@ -17,9 +22,9 @@ public class SprintUITest extends BaseUITest {
 
     @Test
     public void importAndEditSprintClickSave() throws Exception {
-        importProductTimestamp(PBL_FILE_1, VELOCITY_FORECAST_FILE_1);
-        selectVelocityForecastTab();
-        assertContentOfTableView("#velocityForecastTable", VELOCITY_FORECAST_1);
+        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1, PBL_FILE_1, VELOCITY_FORECAST_FILE_1);
+        getMainAccessor().selectVelocityForecastTab(this);
+        getMainAccessor().assertContentOfTableView("#velocityForecastTable", VELOCITY_FORECAST_1);
         editSprint(getFirstSprint());
     }
 

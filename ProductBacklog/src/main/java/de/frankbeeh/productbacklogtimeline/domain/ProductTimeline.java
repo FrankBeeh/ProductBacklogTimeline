@@ -6,14 +6,17 @@ import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
+import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
 public class ProductTimeline {
     private static final String INITIAL_NAME = "Initial";
     private final List<ProductTimestamp> productTimestamps = new ArrayList<ProductTimestamp>();
-    private String selectedName = INITIAL_NAME;
-    private String referenceName = INITIAL_NAME;
+    private String selectedName = null;
+    private String referenceName = null;
     private final ProductBacklogComparison productBacklogComparison;
+    private ProductTimestamp emptyProductTimestamp;
 
     public ProductTimeline() {
         this(createDummyReleases(), new ProductBacklogComparison());
@@ -22,24 +25,21 @@ public class ProductTimeline {
     @VisibleForTesting
     ProductTimeline(Releases releases, ProductBacklogComparison productBacklogComparison) {
         this.productBacklogComparison = productBacklogComparison;
-        this.productTimestamps.add(new ProductTimestamp(null, INITIAL_NAME, releases));
-        productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
+        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, releases);
+        this.productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
     }
 
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
-        productTimestamp.updateVelocityForecast();
-        // TODO: Do not overwrite as soon as the releases are read from CSV or DB!
-        productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
-        productTimestamp.updateProductBacklog();
-        productTimestamps.add(productTimestamp);
+        ServiceLocator.getService(ProductTimestampService.class).insert(productTimestamp);
+        updateAndAddProductTimestamp(productTimestamp);
     }
 
     public ProductBacklog getSelectedProductBacklog() {
-        return getProductBacklog(selectedName);
+        return getProductBacklogByFullName(selectedName);
     }
 
     public ProductTimestamp getSelectedProductTimestamp() {
-        return getProductTimestamp(selectedName);
+        return getProductTimestampByFullName(selectedName);
     }
 
     public void selectProductTimestamp(String selectedName) {
@@ -57,17 +57,17 @@ public class ProductTimeline {
     }
 
     public VelocityForecast getSelectedVelocityForecast() {
-        return getProductTimestamp(selectedName).getVelocityForecast();
+        return getProductTimestampByFullName(selectedName).getVelocityForecast();
     }
 
     public Releases getSelectedReleases() {
-        return getProductTimestamp(selectedName).getReleases();
+        return getProductTimestampByFullName(selectedName).getReleases();
     }
 
-    public List<String> getProductTimestampNames() {
+    public List<String> getProductTimestampFullNames() {
         final List<String> names = new ArrayList<String>();
         for (ProductTimestamp productTimestamp : productTimestamps) {
-            names.add(productTimestamp.getName());
+            names.add(productTimestamp.getFullName());
         }
         return names;
     }
@@ -81,27 +81,27 @@ public class ProductTimeline {
     }
 
     private ProductBacklog getReferenceProductBacklog() {
-        return getProductBacklog(referenceName);
+        return getProductBacklogByFullName(referenceName);
     }
 
     private void updateReleases() {
         getSelectedReleases().updateAll(productBacklogComparison);
     }
 
-    private ProductBacklog getProductBacklog(String name) {
-        return getProductTimestamp(name).getProductBacklog();
+    private ProductBacklog getProductBacklogByFullName(String fullName) {
+        return getProductTimestampByFullName(fullName).getProductBacklog();
     }
 
-    private ProductTimestamp getProductTimestamp(String name) {
-        if (name == null) {
-            return getProductTimestamp(INITIAL_NAME);
+    private ProductTimestamp getProductTimestampByFullName(String fullName) {
+        if (fullName == null) {
+            return emptyProductTimestamp;
         }
         for (ProductTimestamp productTimestamp : productTimestamps) {
-            if (productTimestamp.getName().equals(name)) {
+            if (productTimestamp.getFullName().equals(fullName)) {
                 return productTimestamp;
             }
         }
-        throw new IllegalArgumentException("Release forcast '" + name + "' not found!");
+        throw new IllegalArgumentException("Release forcast '" + fullName + "' not found!");
     }
 
     @VisibleForTesting
@@ -110,6 +110,9 @@ public class ProductTimeline {
     }
 
     private ProductTimestamp getPreviousProductTimestamp() {
+        if (productTimestamps.isEmpty()){
+            return emptyProductTimestamp;
+        }
         return productTimestamps.get(productTimestamps.size() - 1);
     }
 
@@ -122,5 +125,25 @@ public class ProductTimeline {
         releases.addRelease(new Release("Weiterentwicklung", new PlannedReleaseIsEqual("Weiterentwicklung")));
         releases.addRelease(new Release("Phase Out bestehende App", new PlannedReleaseIsEqual("Phase Out bestehende App")));
         return releases;
+    }
+
+    public void loadFromDataBase() {
+        final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
+        final List<LocalDateTime> allIds = service.getAllIds();
+        for (LocalDateTime localDateTime : allIds) {
+            updateAndAddProductTimestamp(service.get(localDateTime));
+        }
+    }
+
+    private void updateProductTimestamp(ProductTimestamp productTimestamp) {
+        productTimestamp.updateVelocityForecast();
+        // TODO: Do not overwrite as soon as the releases are read from CSV or DB!
+        productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
+        productTimestamp.updateProductBacklog();
+    }
+    
+    private void updateAndAddProductTimestamp(ProductTimestamp productTimestamp) {
+        updateProductTimestamp(productTimestamp);
+        productTimestamps.add(productTimestamp);
     }
 }

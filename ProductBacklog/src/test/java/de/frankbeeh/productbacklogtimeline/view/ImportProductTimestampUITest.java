@@ -1,8 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import static org.junit.Assert.assertEquals;
-import javafx.application.Platform;
-import javafx.scene.control.ComboBox;
+import java.time.LocalDate;
+import java.time.Month;
 
 import org.junit.Test;
 
@@ -19,6 +18,10 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String SPRINT_4 = "Sprint 4\n30.04.2014";
     private static final String SPRINT_5 = "Sprint 5\n04.05.2014";
     private static final String SPRINT_6 = "Sprint 6\n11.05.2014";
+    private static final LocalDate TIMESTAMP_DATE_1 = LocalDate.of(2001, Month.JANUARY, 1);
+    private static final LocalDate TIMESTAMP_DATE_2 = LocalDate.of(2002, Month.FEBRUARY, 2);
+    private static final String TIMESTAMP_NAME_1 = "Name 1";
+    private static final String TIMESTAMP_NAME_2 = "Name 2";
     private static final String PBL_FILE_1 = "PBL1.csv";
     private static final String PBL_FILE_2 = "PBL2.csv";
     private static final String VELOCITY_FORECAST_FILE_1 = "VelocityForecast1.csv";
@@ -76,57 +79,27 @@ public class ImportProductTimestampUITest extends BaseUITest {
 
     @Test
     public void selectProductTimestamp() throws Exception {
-        importProductTimestamp(PBL_FILE_1, VELOCITY_FORECAST_FILE_1);
-        assertEquals(PBL_FILE_1, getSelectedProductTimestamp());
-        selectProductBacklogTab();
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_WITH_FORECAST_1);
+        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1, PBL_FILE_1, VELOCITY_FORECAST_FILE_1);
+        getMainAccessor().assertSelectedProductTimestampEquals(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
+        getMainAccessor().selectProductBacklogTab(this);
+        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_WITH_FORECAST_1);
 
-        importProductTimestamp(PBL_FILE_2, VELOCITY_FORECAST_FILE_2);
-        assertEquals(PBL_FILE_2, getSelectedProductTimestamp());
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_2);
+        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2, PBL_FILE_2, VELOCITY_FORECAST_FILE_2);
+        getMainAccessor().assertSelectedProductTimestampEquals(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
+        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_2);
 
-        referenceProductTimestamp(PBL_FILE_2);
-        selectProductTimestamp(PBL_FILE_1);
-        selectProductBacklogTab();
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_COMPARED_TO_PBL_2);
-        selectVelocityForecastTab();
-        assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_1);
+        getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
+        getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
+        getMainAccessor().selectProductBacklogTab(this);
+        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_COMPARED_TO_PBL_2);
+        getMainAccessor().selectVelocityForecastTab(this);
+        getMainAccessor().assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_1);
 
-        referenceProductTimestamp(PBL_FILE_1);
-        selectProductTimestamp(PBL_FILE_2);
-        selectProductBacklogTab();
-        assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_COMPARED_TO_PBL_1);
-        selectVelocityForecastTab();
-        assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_2);
-    }
-
-    private String getSelectedProductTimestamp() {
-        return getSelectedProductTimestampComboBox().getSelectionModel().getSelectedItem();
-    }
-
-    private void selectProductTimestamp(final String productTimestampName) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                getSelectedProductTimestampComboBox().getSelectionModel().select(productTimestampName);
-            }
-        });
-    }
-
-    private void referenceProductTimestamp(final String productTimestamp) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                getReferencedProductTimestampComboBox().getSelectionModel().select(productTimestamp);
-            }
-        });
-    }
-
-    private ComboBox<String> getSelectedProductTimestampComboBox() {
-        return getUniqueNode("#selectedProductTimestamp");
-    }
-
-    private ComboBox<String> getReferencedProductTimestampComboBox() {
-        return getUniqueNode("#referencedProductTimestamp");
+        getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
+        getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
+        getMainAccessor().selectProductBacklogTab(this);
+        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_COMPARED_TO_PBL_1);
+        getMainAccessor().selectVelocityForecastTab(this);
+        getMainAccessor().assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_2);
     }
 }

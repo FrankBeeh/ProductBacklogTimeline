@@ -12,6 +12,7 @@ import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.view.dialog.SprintEditDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public class VelocityForecastTableController {

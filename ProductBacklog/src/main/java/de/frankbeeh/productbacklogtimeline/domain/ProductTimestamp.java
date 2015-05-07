@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+
 public class ProductTimestamp {
     private final LocalDateTime dateTime;
     private final String name;
@@ -31,6 +33,10 @@ public class ProductTimestamp {
     public String getName() {
         return name;
     }
+    
+    public String getFullName() {
+        return FormatUtility.formatLocalDateTime(dateTime) + " - " + name;
+    }
 
     public ProductBacklog getProductBacklog() {
         return productBacklog;
@@ -47,11 +53,11 @@ public class ProductTimestamp {
     public void setVelocityForecast(VelocityForecast velocityForecast) {
         this.velocityForecast = velocityForecast;
     }
-    
+
     public void setReleases(Releases releases) {
         this.releases = releases;
     }
-    
+
     public LocalDateTime getDateTime() {
         return dateTime;
     }

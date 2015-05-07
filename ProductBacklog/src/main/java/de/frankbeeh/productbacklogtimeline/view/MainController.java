@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,10 +18,10 @@ import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
-import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
-import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.view.dialog.ImportProductTimestampDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.ImportProductTimestampViewModel;
 
 public class MainController {
@@ -64,19 +63,20 @@ public class MainController {
     }
 
     @FXML
-    private void importProductTimestamp() throws FileNotFoundException, IOException{
+    private void importProductTimestamp() throws FileNotFoundException, IOException {
         final BasicDialog<ImportProductTimestampViewModel> dialog = new ImportProductTimestampDialog(primaryStage);
         dialog.initModel(new ImportProductTimestampViewModel());
         final ImportProductTimestampViewModel result = dialog.openDialog();
         final ProductBacklog productBacklog = importProductBacklogFromCsv(result.getProductBacklogFile());
         final VelocityForecast velocityForecast = importVelocityForecastFromCsv(result.getVelocityForecastFile());
-        final String name = result.getProductBacklogFile().getName();
-        productTimeline.addProductTimestamp(new ProductTimestamp(LocalDateTime.now(), name, productBacklog, velocityForecast, null));
+        final String name = result.getName();
+        final LocalDateTime dateTime = result.getDateTime();
+        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, null));
         setSelectableProductBacklogNames();
-        changeSelectedProductTimestamp(name);
+        changeSelectedProductTimestamp(dateTime, name);
         updateProductBacklogAndReleaseTable();
     }
-    
+
     @FXML
     private void selectProductTimestamp() {
         productTimeline.selectProductTimestamp(selectedProductTimestamp.selectionModelProperty().get().getSelectedItem());
@@ -97,13 +97,13 @@ public class MainController {
         return new VelocityForecastFromCsvImporter().importData(new FileReader(selectedFile));
     }
 
-    private void changeSelectedProductTimestamp(final String productBacklogName) {
-        selectedProductTimestamp.selectionModelProperty().get().select(productBacklogName);
+    private void changeSelectedProductTimestamp(LocalDateTime dateTime, final String productBacklogName) {
+        selectedProductTimestamp.selectionModelProperty().get().select(FormatUtility.formatLocalDateTime(dateTime) + " - " + productBacklogName);
     }
 
     private void setSelectableProductBacklogNames() {
         selectProductBacklogItems.getValue().clear();
-        selectProductBacklogItems.getValue().addAll(productTimeline.getProductTimestampNames());
+        selectProductBacklogItems.getValue().addAll(productTimeline.getProductTimestampFullNames());
     }
 
     private void updateProductBacklogAndReleaseTable() {
@@ -114,12 +114,8 @@ public class MainController {
         releaseTableController.initModel(productTimeline.getSelectedReleases());
         releaseTableController.updateView();
     }
-    
+
     private void loadFromDataBase() {
-        final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
-        final List<LocalDateTime> allIds = service.getAllIds();
-        for (LocalDateTime localDateTime : allIds) {
-            productTimeline.addProductTimestamp(service.get(localDateTime));
-        }
+        productTimeline.loadFromDataBase();
     }
 }

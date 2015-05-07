@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.database.MockedServiceRegistry;
 
@@ -47,7 +48,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         productBacklogComparisonMock.updateAllItems();
         selectedReleasesMock.updateAll(productBacklogComparisonMock);
         replayAll();
-        productTimelineWithMockedReleases.selectProductTimestamp(SELECTED);
+        productTimelineWithMockedReleases.selectProductTimestamp(getProductTimelineFullName(SELECTEDT_DATE_TIME, SELECTED));
         assertSame(selectedProductBacklogMock, productTimelineWithMockedReleases.getSelectedProductBacklog());
         verifyAll();
 
@@ -56,7 +57,7 @@ public class ProductTimelineTest extends EasyMockSupport {
         productBacklogComparisonMock.updateAllItems();
         selectedReleasesMock.updateAll(same(productBacklogComparisonMock));
         replayAll();
-        productTimelineWithMockedReleases.selectReferenceProductTimestamp(REFERENCE);
+        productTimelineWithMockedReleases.selectReferenceProductTimestamp(getProductTimelineFullName(REFERENCE_DATE_TIME, REFERENCE));
         verifyAll();
 
     }
@@ -78,5 +79,9 @@ public class ProductTimelineTest extends EasyMockSupport {
     @After
     public void tearDown() {
         ServiceLocator.init(null);
+    }
+    
+    private String getProductTimelineFullName(LocalDateTime productTimestampDate, String productTimestampName) {
+        return FormatUtility.formatLocalDateTime(productTimestampDate) + " - " + productTimestampName;
     }
 }

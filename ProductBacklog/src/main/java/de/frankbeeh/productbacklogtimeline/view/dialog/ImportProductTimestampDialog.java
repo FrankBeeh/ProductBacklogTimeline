@@ -1,8 +1,9 @@
-package de.frankbeeh.productbacklogtimeline.view;
+package de.frankbeeh.productbacklogtimeline.view.dialog;
 
 import java.net.URL;
 
 import javafx.stage.Stage;
+import de.frankbeeh.productbacklogtimeline.view.BasicDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.ImportProductTimestampViewModel;
 
 public class ImportProductTimestampDialog extends BasicDialog<ImportProductTimestampViewModel> {

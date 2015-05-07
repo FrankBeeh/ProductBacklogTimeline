@@ -1,18 +1,25 @@
-package de.frankbeeh.productbacklogtimeline.view;
+package de.frankbeeh.productbacklogtimeline.view.dialog;
 
 import java.io.File;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import de.frankbeeh.productbacklogtimeline.view.BasicDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.ImportProductTimestampViewModel;
 
 public class ImportProductTimestampDialogController extends AnchorPane {
     private static final File CSV_DIRECTORY = new File(System.getProperty("user.dir"));
 
+    @FXML
+    private TextField name;
+    @FXML
+    private DatePicker datePicker;
     @FXML
     private Button chooseProductBacklog;
     @FXML
@@ -67,9 +74,15 @@ public class ImportProductTimestampDialogController extends AnchorPane {
     }
 
     private void unbindUI() {
+        if (viewModel != null) {
+            Bindings.unbindBidirectional(viewModel.nameProperty(), name.textProperty());
+            Bindings.unbindBidirectional(viewModel.dateProperty(), datePicker.valueProperty());
+        }
     }
 
     private void bindUI() {
+        Bindings.bindBidirectional(viewModel.nameProperty(), name.textProperty());
+        Bindings.bindBidirectional(viewModel.dateProperty(), datePicker.valueProperty());
     }
 
     private File selectCsvFileForImport() {

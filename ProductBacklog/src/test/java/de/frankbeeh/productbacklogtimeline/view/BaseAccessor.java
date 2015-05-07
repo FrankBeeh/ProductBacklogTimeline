@@ -5,9 +5,15 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.Skin;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.StackPane;
 
 import org.testfx.api.FxRobot;
+
+import com.google.common.base.Predicate;
+import com.sun.javafx.scene.control.skin.LabeledText;
 
 public class BaseAccessor {
     private final FxRobot fxRobot;
@@ -27,15 +33,24 @@ public class BaseAccessor {
         }
         return (T) foundNodes.iterator().next();
     }
-    
+
+    protected FxRobot getFxRobot() {
+        return fxRobot;
+    }
+
     protected void clickOn(Node node) {
         fxRobot.clickOn(node);
     }
     
+    protected void enterText(String selector, String text) {
+        clickOn(getUniqueNode(selector));
+        fxRobot.write(text);
+    }
+
     protected void typeKeyCode(KeyCode keyCode) {
         fxRobot.type(keyCode);
     }
-    
+
     protected void typeString(CharSequence characters) {
         int length = characters.length();
         for (int i = 0; i < length; i++) {
@@ -46,13 +61,39 @@ public class BaseAccessor {
     private Set<Node> removeSkinNodes(Set<Node> foundNodes) {
         final Set<Node> filteredNodes = new HashSet<Node>();
         for (final Node node : foundNodes) {
-            if (!(node instanceof Skin) && !(node.getClass().getName().contains("Skin"))) {
+            if (!(node instanceof Skin) && !isSkinClass(node)) {
                 filteredNodes.add(node);
             }
         }
         return filteredNodes;
     }
+
+    protected TableViewContent getActualTableViewContent(TableView<?> tableView) {
+        final TableViewContent actualContent = new TableViewContent();
+        final Predicate<Node> nodePredicate = new Predicate<Node>() {
+            @Override
+            public boolean apply(Node node) {
+                if (node instanceof TableRow) {
+                    actualContent.addRow();
+                }
+                if (node instanceof LabeledText) {
+                    actualContent.addCellContent(((LabeledText) node).getText());
+                }
+                if (node instanceof StackPane) {
+                    actualContent.stopAdding();
+                }
+                return false;
+            }
+        };
+        fxRobot.from(tableView).lookup(nodePredicate).queryFirst();
+        return actualContent;
+    }
     
+    private boolean isSkinClass(final Node node) {
+        final String name = node.getClass().getName();
+        return name.contains("Skin") && !(name.contains("MenuBarSkin$MenuBarButton"));
+    }
+
     private void type(char character) {
         switch (character) {
             case 'a':

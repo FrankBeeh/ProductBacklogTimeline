@@ -1,9 +1,10 @@
-package de.frankbeeh.productbacklogtimeline.view;
+package de.frankbeeh.productbacklogtimeline.view.dialog;
 
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import de.frankbeeh.productbacklogtimeline.view.BasicDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public class SprintEditDialogController extends AnchorPane {
