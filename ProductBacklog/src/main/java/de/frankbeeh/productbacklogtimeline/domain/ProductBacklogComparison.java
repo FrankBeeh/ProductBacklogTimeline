@@ -27,11 +27,11 @@ public class ProductBacklogComparison {
     public void updateAllItems() {
         productBacklogComparisonItems.clear();
         for (ProductBacklogItem productBacklogItem : selectedProductBacklog.getItems()) {
-            if (referenceProductBacklog != null) {
+            if (referenceProductBacklog == null) {
+                productBacklogComparisonItems.add(new ProductBacklogComparisonItem(productBacklogItem));
+            } else {
                 final ProductBacklogItem referenceProductBacklogItem = referenceProductBacklog.getItemById(productBacklogItem.getId());
                 productBacklogComparisonItems.add(new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem));
-            } else {
-                productBacklogComparisonItems.add(new ProductBacklogComparisonItem(productBacklogItem, null));
             }
         }
     }

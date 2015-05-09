@@ -28,10 +28,10 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String RELEASES_FILE_2 = "Releases2.csv";
 
     private static final TableViewContent PBL_1_WITH_FORECAST_1 = new TableViewContent(new String[][] {
-            { "1", "     1\n(NEW)", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "2", "     2\n(NEW)", "1.0", "Todo", "PBI 2", "Description 2", "4.0", "Sprint 1", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "3", "     3\n(NEW)", "5.0", "Todo", "PBI 3", "Description 3", "9.0", "", "Release 1", SPRINT_3, SPRINT_3, SPRINT_3 },
-            { "4", "     4\n(NEW)", "8.0", "Todo", "PBI 4", "Description 4", "17.0", "", "Release 1", SPRINT_5, SPRINT_5, SPRINT_5 } });
+            { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
+            { "2", "2", "1.0", "Todo", "PBI 2", "Description 2", "4.0", "Sprint 1", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "3", "3", "5.0", "Todo", "PBI 3", "Description 3", "9.0", "", "Release 1", SPRINT_3, SPRINT_3, SPRINT_3 },
+            { "4", "4", "8.0", "Todo", "PBI 4", "Description 4", "17.0", "", "Release 1", SPRINT_5, SPRINT_5, SPRINT_5 } });
 
     private static final TableViewContent PBL_1_COMPARED_TO_PBL_2 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
@@ -41,12 +41,12 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "4", "    4\n(-1)", "    8.0\n(+3.0)", "Todo", "PBI 4", "Description 4", "   17.0\n(-9.0)", "", "Release 1\n(Release 2)", SPRINT_5, SPRINT_5, SPRINT_5_TO_SPRINT_4 } });
 
     private static final TableViewContent PBL_2_WITH_FORECAST_2 = new TableViewContent(new String[][] {
-            { "1", "     1\n(NEW)", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "5", "     2\n(NEW)", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "2", "     3\n(NEW)", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "3", "     4\n(NEW)", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", "Release 2", SPRINT_4, SPRINT_4, SPRINT_3 },
-            { "4", "     5\n(NEW)", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", "Release 2", SPRINT_5, SPRINT_5, SPRINT_4 },
-            { "6", "     6\n(NEW)", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
+            { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
+            { "5", "2", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "2", "3", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "3", "4", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", "Release 2", SPRINT_4, SPRINT_4, SPRINT_3 },
+            { "4", "5", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", "Release 2", SPRINT_5, SPRINT_5, SPRINT_4 },
+            { "6", "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
     private static final TableViewContent PBL_2_COMPARED_TO_PBL_1 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },

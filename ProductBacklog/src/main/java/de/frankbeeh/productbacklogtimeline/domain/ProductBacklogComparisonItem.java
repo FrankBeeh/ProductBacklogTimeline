@@ -11,9 +11,17 @@ public class ProductBacklogComparisonItem {
     private final ProductBacklogItem productBacklogItem;
     private final ProductBacklogItem referenceProductBacklogItem;
 
+    public ProductBacklogComparisonItem(ProductBacklogItem productBacklogItem) {
+        this(productBacklogItem, productBacklogItem);
+    }
+
     public ProductBacklogComparisonItem(ProductBacklogItem productBacklogItem, ProductBacklogItem referenceProductBacklogItem) {
         this.productBacklogItem = productBacklogItem;
-        this.referenceProductBacklogItem = referenceProductBacklogItem;
+        if (referenceProductBacklogItem == null) {
+            this.referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
+        } else {
+            this.referenceProductBacklogItem = referenceProductBacklogItem;
+        }
     }
 
     public String getId() {
@@ -23,25 +31,25 @@ public class ProductBacklogComparisonItem {
     public Double getAccumulatedEstimate() {
         return productBacklogItem.getAccumulatedEstimate();
     }
-    
+
     public String getPlannedRelease() {
         return productBacklogItem.getPlannedRelease();
     }
 
-    public String getComparedPlannedRelease(){
-        return formatTextualDifference(productBacklogItem.getPlannedRelease(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getPlannedRelease()); 
+    public String getComparedPlannedRelease() {
+        return formatTextualDifference(productBacklogItem.getPlannedRelease(), referenceProductBacklogItem.getPlannedRelease());
     }
-    
+
     public String getComparedJiraSprint() {
-        return formatTextualDifference(productBacklogItem.getJiraSprint(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getJiraSprint());
+        return formatTextualDifference(productBacklogItem.getJiraSprint(), referenceProductBacklogItem.getJiraSprint());
     }
 
     public String getComparedTitle() {
-        return formatTextualDifference(productBacklogItem.getTitle(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getTitle());
+        return formatTextualDifference(productBacklogItem.getTitle(), referenceProductBacklogItem.getTitle());
     }
 
     public String getComparedDescription() {
-        return formatTextualDifference(productBacklogItem.getDescription(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getDescription());
+        return formatTextualDifference(productBacklogItem.getDescription(), referenceProductBacklogItem.getDescription());
     }
 
     public String getComparedCompletionForecast(String progressForecastName) {
@@ -49,26 +57,25 @@ public class ProductBacklogComparisonItem {
         if (sprintData == null) {
             return null;
         } else {
-            final Sprint referenceCompletionForecast = referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getCompletionForecast(progressForecastName);
-            return sprintData.getComparedForecast(referenceCompletionForecast);
+            return sprintData.getComparedForecast(referenceProductBacklogItem.getCompletionForecast(progressForecastName));
         }
     }
 
     public String getComparedState() {
-        return formatTextualDifference(productBacklogItem.getState() == null ? null : productBacklogItem.getState().toString(),
-                (referenceProductBacklogItem == null || referenceProductBacklogItem.getState() == null) ? null : referenceProductBacklogItem.getState().toString());
+        return formatTextualDifference(productBacklogItem.getState() == null ? null : productBacklogItem.getState().toString(), referenceProductBacklogItem.getState() == null ? null
+                : referenceProductBacklogItem.getState().toString());
     }
 
     public String getComparedEstimate() {
-        return formatDoubleDifference(productBacklogItem.getEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getEstimate());
+        return formatDoubleDifference(productBacklogItem.getEstimate(), referenceProductBacklogItem.getEstimate());
     }
 
     public String getComparedAccumulatedEstimate() {
-        return formatDoubleDifference(productBacklogItem.getAccumulatedEstimate(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getAccumulatedEstimate());
+        return formatDoubleDifference(productBacklogItem.getAccumulatedEstimate(), referenceProductBacklogItem.getAccumulatedEstimate());
     }
-    
+
     public String getComparedProductBacklogRank() {
-        return formatProductBacklogRankDifference(productBacklogItem.getProductBacklogRank(), referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getProductBacklogRank());
+        return formatProductBacklogRankDifference(productBacklogItem.getProductBacklogRank(), referenceProductBacklogItem.getProductBacklogRank());
     }
 
     @Override
@@ -104,7 +111,6 @@ public class ProductBacklogComparisonItem {
         return stringBuilder.toString();
     }
 
-    
     private String formatDoubleDifference(final Double value, Double referenceValue) {
         if (value == null) {
             return null;

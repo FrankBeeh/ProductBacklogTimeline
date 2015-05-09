@@ -19,7 +19,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ProductBacklogItem {
     private final Map<String, Sprint> completionForecast;
     private Double accumulatedEstimate;
-    private int productBacklogRank;
+    private Integer productBacklogRank;
     private final ProductBacklogItemData data;
 
     public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String jiraSprint, String jiraRank, String plannedRelease) {
@@ -47,7 +47,7 @@ public class ProductBacklogItem {
         this.productBacklogRank = productBacklogRank;
     }
 
-    public int getProductBacklogRank() {
+    public Integer getProductBacklogRank() {
         return productBacklogRank;
     }
 

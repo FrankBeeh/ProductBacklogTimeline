@@ -25,7 +25,12 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedTitle_valueNull() throws Exception {
-        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithTitle(null), null).getComparedTitle());
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithTitle(null)).getComparedTitle());
+    }
+
+    @Test
+    public void getComparedTitle_noReference() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithTitle(STRING_VALUE_1)).getComparedTitle());
     }
 
     @Test
@@ -40,8 +45,7 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedTitle_equal() throws Exception {
-        assertEquals(STRING_VALUE_1,
-                new ProductBacklogComparisonItem(createProductBacklogItemWithTitle(STRING_VALUE_1), createProductBacklogItemWithTitle(STRING_VALUE_1)).getComparedTitle());
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithTitle(STRING_VALUE_1), createProductBacklogItemWithTitle(STRING_VALUE_1)).getComparedTitle());
     }
 
     @Test
@@ -52,7 +56,12 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedDescription_valueNull() throws Exception {
-        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(null), null).getComparedDescription());
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(null)).getComparedDescription());
+    }
+
+    @Test
+    public void getComparedDescription_noReference() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithDescription(STRING_VALUE_1)).getComparedDescription());
     }
 
     @Test
@@ -79,7 +88,12 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedSprint_valueNull() throws Exception {
-        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(null), null).getComparedJiraSprint());
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(null)).getComparedJiraSprint());
+    }
+
+    @Test
+    public void getComparedSprint_noReference() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedJiraSprint());
     }
 
     @Test
@@ -94,8 +108,7 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedSprint_equal() throws Exception {
-        assertEquals(STRING_VALUE_1,
-                new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedJiraSprint());
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedJiraSprint());
     }
 
     @Test
@@ -103,10 +116,15 @@ public class ProductBacklogComparisonItemTest {
         assertEquals(STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1),
                 createProductBacklogItemWithSprint(STRING_VALUE_2)).getComparedJiraSprint());
     }
-    
+
     @Test
     public void getComparedPlannedRelease_valueNull() throws Exception {
-        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(null), null).getComparedPlannedRelease());
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(null)).getComparedPlannedRelease());
+    }
+
+    @Test
+    public void getComparedPlannedRelease_noReference() throws Exception {
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1)).getComparedPlannedRelease());
     }
 
     @Test
@@ -116,7 +134,8 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedPlannedRelease_referenceValueNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1), createProductBacklogItemWithPlannedRelease(null)).getComparedPlannedRelease());
+        assertEquals(STRING_VALUE_1,
+                new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1), createProductBacklogItemWithPlannedRelease(null)).getComparedPlannedRelease());
     }
 
     @Test
@@ -130,10 +149,15 @@ public class ProductBacklogComparisonItemTest {
         assertEquals(STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithPlannedRelease(STRING_VALUE_1),
                 createProductBacklogItemWithPlannedRelease(STRING_VALUE_2)).getComparedPlannedRelease());
     }
-    
+
     @Test
     public void getComparedCompletionForecast_valueNull() throws Exception {
         assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(null), null).getComparedCompletionForecast(VELOCITY_FORECAST));
+    }
+
+    @Test
+    public void getComparedCompletionForecast_noReference() throws Exception {
+        assertEquals(sprint1.getComparedForecast(null), new ProductBacklogComparisonItem(createProductBacklogItemWithCompletionForecast(sprint1)).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
@@ -163,7 +187,12 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedState_valueNull() throws Exception {
-        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithState(null), null).getComparedState());
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithState(null)).getComparedState());
+    }
+
+    @Test
+    public void getComparedState_noReference() throws Exception {
+        assertEquals(State.Todo.toString(), new ProductBacklogComparisonItem(createProductBacklogItemWithState(State.Todo)).getComparedState());
     }
 
     @Test
@@ -190,7 +219,13 @@ public class ProductBacklogComparisonItemTest {
     @Test
     public void getComparedEstimate_valueNull() throws Exception {
         productBacklogItem.setEstimate(null);
-        assertNull(productBacklogComparisonItem.getComparedEstimate());
+        assertNull(new ProductBacklogComparisonItem(productBacklogItem).getComparedEstimate());
+    }
+
+    @Test
+    public void getComparedEstimate_noReference() throws Exception {
+        productBacklogItem.setEstimate(2d);
+        assertEquals("2.0", new ProductBacklogComparisonItem(productBacklogItem).getComparedEstimate());
     }
 
     @Test
@@ -237,7 +272,13 @@ public class ProductBacklogComparisonItemTest {
     @Test
     public void getComparedAccumulatedEstimate_valueNull() throws Exception {
         productBacklogItem.setAccumulatedEstimate(null);
-        assertNull(productBacklogComparisonItem.getComparedAccumulatedEstimate());
+        assertNull(new ProductBacklogComparisonItem(productBacklogItem).getComparedAccumulatedEstimate());
+    }
+
+    @Test
+    public void getComparedAccumulatedEstimate_noReference() throws Exception {
+        productBacklogItem.setAccumulatedEstimate(2d);
+        assertEquals("2.0", new ProductBacklogComparisonItem(productBacklogItem).getComparedAccumulatedEstimate());
     }
 
     @Test
@@ -280,7 +321,12 @@ public class ProductBacklogComparisonItemTest {
         referenceProductBacklogItem.setAccumulatedEstimate(123456.7d);
         assertEquals("123456.0\n    (-0.7)", productBacklogComparisonItem.getComparedAccumulatedEstimate());
     }
-    
+
+    @Test
+    public void getComparedProductBacklogRank_noReference() throws Exception {
+        productBacklogItem.setProductBacklogRank(2);
+        assertEquals("2", new ProductBacklogComparisonItem(productBacklogItem).getComparedProductBacklogRank());
+    }
 
     @Test
     public void getComparedProductBacklogRank_referenceNull() throws Exception {

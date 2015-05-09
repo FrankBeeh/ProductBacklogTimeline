@@ -15,7 +15,7 @@ public class RankProductBacklogItemTest {
     public void visitFirst() {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         visitor.visit(productBacklogItem, null);
-        assertEquals(1, productBacklogItem.getProductBacklogRank());
+        assertEquals(Integer.valueOf(1), productBacklogItem.getProductBacklogRank());
     }
     
     @Test
@@ -24,7 +24,7 @@ public class RankProductBacklogItemTest {
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         visitor.visit(productBacklogItem1, null);
         visitor.visit(productBacklogItem2, null);
-        assertEquals(2, productBacklogItem2.getProductBacklogRank());
+        assertEquals(Integer.valueOf(2), productBacklogItem2.getProductBacklogRank());
     }
     
     @Test
@@ -36,7 +36,7 @@ public class RankProductBacklogItemTest {
         visitor.visit(productBacklogItem2, null);
         visitor.reset();
         visitor.visit(productBacklogItem3, null);
-        assertEquals(1, productBacklogItem3.getProductBacklogRank());
+        assertEquals(Integer.valueOf(1), productBacklogItem3.getProductBacklogRank());
     }
 
     
