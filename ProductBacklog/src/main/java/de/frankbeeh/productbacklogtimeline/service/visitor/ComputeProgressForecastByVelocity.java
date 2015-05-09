@@ -2,12 +2,12 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 
 /**
  * Responsibility:
  * <ul>
- * <li>Compute the progress forecast using <b>velocity</b> by visiting {@link SprintData}.
+ * <li>Compute the progress forecast using <b>velocity</b> by visiting {@link Sprint}.
  * <li>Delegate the computation of the velocity to {@link ComputeVelocityStrategy}.
  * </ul>
  */
@@ -34,7 +34,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
     }
 
     @Override
-    public void visit(SprintData sprintData) {
+    public void visit(Sprint sprintData) {
         clientsVisitedCount++;
         final Double velocityOfThisSprint = computeVelocityOfThisSprint(sprintData);
         sprintData.setProgressForecastBasedOnHistory(progressForecastName, computeProgressForecastOfThisSprint(sprintData, velocityOfThisSprint));
@@ -51,7 +51,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
         return computeVelocityStrategy.computeVelocity(velocityOfThisSprint, historicVelocity, clientsVisitedCount);
     }
 
-    private Double computeProgressForecastOfThisSprint(SprintData sprintData, Double velocityOfThisSprint) {
+    private Double computeProgressForecastOfThisSprint(Sprint sprintData, Double velocityOfThisSprint) {
         historicVelocity = getResultingVelocity(velocityOfThisSprint);
         Double effortForecast = null;
         if (historicVelocity != null) {
@@ -70,7 +70,7 @@ public class ComputeProgressForecastByVelocity implements SprintDataVisitor {
         return velocity.doubleValue() * capacity.doubleValue();
     }
 
-    private Double computeVelocityOfThisSprint(SprintData sprintData) {
+    private Double computeVelocityOfThisSprint(Sprint sprintData) {
         Double velocity = null;
         final Double capacityDone = sprintData.getCapacityDone();
         final Double effortDone = sprintData.getEffortDone();

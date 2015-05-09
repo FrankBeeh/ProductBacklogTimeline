@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
@@ -20,8 +20,8 @@ public class ProductBacklogComparisonItemTest {
     private ProductBacklogComparisonItem productBacklogComparisonItem;
     private ProductBacklogItem referenceProductBacklogItem;
     private ProductBacklogItem productBacklogItem;
-    private SprintData sprint1;
-    private SprintData sprint2;
+    private Sprint sprint1;
+    private Sprint sprint2;
 
     @Test
     public void getComparedTitle_valueNull() throws Exception {
@@ -314,8 +314,8 @@ public class ProductBacklogComparisonItemTest {
         productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         productBacklogComparisonItem = new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem);
-        sprint1 = new SprintData("Sprint 1", null, FormatUtility.parseLocalDate("01.02.2003"), null, null, null, null);
-        sprint2 = new SprintData("Sprint 2", null, FormatUtility.parseLocalDate("15.02.2003"), null, null, null, null);
+        sprint1 = new Sprint("Sprint 1", null, FormatUtility.parseLocalDate("01.02.2003"), null, null, null, null);
+        sprint2 = new Sprint("Sprint 2", null, FormatUtility.parseLocalDate("15.02.2003"), null, null, null, null);
     }
 
     private ProductBacklogItem createProductBacklogItemWithState(State state) {
@@ -338,7 +338,7 @@ public class ProductBacklogComparisonItemTest {
         return new ProductBacklogItem(null, null, null, null, null, sprint, null, null);
     }
 
-    private ProductBacklogItem createProductBacklogItemWithCompletionForecast(SprintData sprintData) {
+    private ProductBacklogItem createProductBacklogItemWithCompletionForecast(Sprint sprintData) {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         productBacklogItem.setCompletionForecast(VELOCITY_FORECAST, sprintData);
         return productBacklogItem;

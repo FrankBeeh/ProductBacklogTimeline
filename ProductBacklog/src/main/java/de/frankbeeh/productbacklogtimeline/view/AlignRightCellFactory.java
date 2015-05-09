@@ -4,12 +4,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.util.Callback;
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 
-public class AlignRightCellFactory<T> implements Callback<TableColumn<SprintData, T>, TableCell<SprintData, T>> {
+public class AlignRightCellFactory<T> implements Callback<TableColumn<Sprint, T>, TableCell<Sprint, T>> {
     @Override
-    public TableCell<SprintData, T> call(TableColumn<SprintData, T> arg0) {
-        final TableCell<SprintData, T> tableCell = new TableCell<SprintData, T>() {
+    public TableCell<Sprint, T> call(TableColumn<Sprint, T> arg0) {
+        final TableCell<Sprint, T> tableCell = new TableCell<Sprint, T>() {
             @Override
             public void updateItem(T item, boolean empty) {
                 super.updateItem(item, empty);

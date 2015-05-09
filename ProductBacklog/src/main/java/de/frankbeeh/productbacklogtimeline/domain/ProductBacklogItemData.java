@@ -8,6 +8,12 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Contain a representation of the data of a {@link ProductBacklogItem} that is stored in the data base.
+ * </ul>
+ */
 public class ProductBacklogItemData {
 
     private final String id;

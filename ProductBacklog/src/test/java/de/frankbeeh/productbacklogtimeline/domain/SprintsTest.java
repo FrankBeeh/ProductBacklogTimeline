@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
@@ -27,8 +27,8 @@ public class SprintsTest extends EasyMockSupport {
     @Mock(name = "visitorMock2")
     private SprintDataVisitor visitorMock2;
 
-    private SprintData sprint1;
-    private SprintData sprint2;
+    private Sprint sprint1;
+    private Sprint sprint2;
 
     private VelocityForecast velocityForecast;
 
@@ -83,8 +83,8 @@ public class SprintsTest extends EasyMockSupport {
         velocityForecast.addItem(sprint2);
     }
 
-    private SprintData createSprintData(String sprintName, Double accumulatedEffortDone, Double progressForecast) {
-        final SprintData sprintData = new SprintData(sprintName, null, null, null, null, null, null);
+    private Sprint createSprintData(String sprintName, Double accumulatedEffortDone, Double progressForecast) {
+        final Sprint sprintData = new Sprint(sprintName, null, null, null, null, null, null);
         sprintData.setAccumulatedEffortDone(accumulatedEffortDone);
         sprintData.setAccumulatedProgressForecastBasedOnHistory(FORECAST_NAME, progressForecast);
         return sprintData;

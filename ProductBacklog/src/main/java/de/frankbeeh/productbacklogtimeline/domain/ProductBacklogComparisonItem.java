@@ -45,11 +45,11 @@ public class ProductBacklogComparisonItem {
     }
 
     public String getComparedCompletionForecast(String progressForecastName) {
-        final SprintData sprintData = productBacklogItem.getCompletionForecast(progressForecastName);
+        final Sprint sprintData = productBacklogItem.getCompletionForecast(progressForecastName);
         if (sprintData == null) {
             return null;
         } else {
-            final SprintData referenceCompletionForecast = referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getCompletionForecast(progressForecastName);
+            final Sprint referenceCompletionForecast = referenceProductBacklogItem == null ? null : referenceProductBacklogItem.getCompletionForecast(progressForecastName);
             return sprintData.getComparedForecast(referenceCompletionForecast);
         }
     }

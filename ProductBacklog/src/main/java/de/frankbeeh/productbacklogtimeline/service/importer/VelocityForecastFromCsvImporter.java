@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.importer;
 
 import java.time.LocalDate;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class VelocityForecastFromCsvImporter extends DataFromCsvImporter<VelocityForecast> {
@@ -29,6 +29,6 @@ public class VelocityForecastFromCsvImporter extends DataFromCsvImporter<Velocit
         final Double plannedEffort = getDouble(EFFORT_FORECAST_COLUMN_NAME);
         final Double actualCapacity = getDouble(ACTUAL_CAPACITY_COLUMN_NAME);
         final Double effortDone = getDouble(EFFORT_DONE_COLUMN_NAME);
-        container.addItem(new SprintData(sprintName, startDate, endDate, plannedCapacity, plannedEffort, actualCapacity, effortDone));
+        container.addItem(new Sprint(sprintName, startDate, endDate, plannedCapacity, plannedEffort, actualCapacity, effortDone));
     }
 }

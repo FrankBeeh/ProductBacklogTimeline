@@ -2,7 +2,7 @@ package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 /**
@@ -27,7 +27,7 @@ public class ForecastSprintOfCompletion implements ProductBacklogItemVisitor {
 
     @Override
     public void visit(ProductBacklogItem productBacklogItem, VelocityForecast selectedVelocityForecast) {
-        final SprintData completionSprintForecast = selectedVelocityForecast.getCompletionSprintForecast(progressForecastName, productBacklogItem.getAccumulatedEstimate());
+        final Sprint completionSprintForecast = selectedVelocityForecast.getCompletionSprintForecast(progressForecastName, productBacklogItem.getAccumulatedEstimate());
         productBacklogItem.setCompletionForecast(progressForecastName, completionSprintForecast);
     }
 }

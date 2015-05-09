@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 
 public class AccumulateEffortDone implements SprintDataVisitor {
 
@@ -16,12 +16,12 @@ public class AccumulateEffortDone implements SprintDataVisitor {
     }
 
     @Override
-    public void visit(SprintData sprintData) {
+    public void visit(Sprint sprintData) {
         accumulatedEffortDone = computeAccumulatedEffortDone(sprintData);
         sprintData.setAccumulatedEffortDone(accumulatedEffortDone);
     }
 
-    private Double computeAccumulatedEffortDone(SprintData sprintData) {
+    private Double computeAccumulatedEffortDone(Sprint sprintData) {
         final Double effortDone = sprintData.getEffortDone();
         if (accumulatedEffortDone == null) {
             return effortDone;

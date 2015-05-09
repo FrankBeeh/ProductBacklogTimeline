@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 
 public class ComputeAccumulatedProgressForecast implements SprintDataVisitor {
     private Double accumulatedProgressForecast;
@@ -16,7 +16,7 @@ public class ComputeAccumulatedProgressForecast implements SprintDataVisitor {
     }
 
     @Override
-    public void visit(SprintData sprintData) {
+    public void visit(Sprint sprintData) {
         final Double accumulatedEffortDone = sprintData.getAccumulatedEffortDone();
         final Double progressForecast = sprintData.getProgressForecastBasedOnHistory(progressForecastName);
         if (accumulatedEffortDone == null) {

@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 
 public class AccumulateEffortDoneTest {
 
@@ -15,11 +15,11 @@ public class AccumulateEffortDoneTest {
     @Test
     public void visit() {
         final double effortDone1 = 10d;
-        final SprintData sprintData1 = new SprintData(null, null, null, null, null, null, effortDone1);
+        final Sprint sprintData1 = new Sprint(null, null, null, null, null, null, effortDone1);
         visitor.visit(sprintData1);
         final double effortDone2 = 12d;
         assertEquals(Double.valueOf(effortDone1), sprintData1.getAccumulatedEffortDone());
-        final SprintData sprintData2 = new SprintData(null, null, null, null, null, null, effortDone2);
+        final Sprint sprintData2 = new Sprint(null, null, null, null, null, null, effortDone2);
         visitor.visit(sprintData2);
         assertEquals(Double.valueOf(effortDone1 + effortDone2), sprintData2.getAccumulatedEffortDone());
     }
@@ -27,10 +27,10 @@ public class AccumulateEffortDoneTest {
     @Test
     public void visit_effortDoneMissing() {
         final double effortDone1 = 10d;
-        final SprintData sprintData1 = new SprintData(null, null, null, null, null, null, effortDone1);
+        final Sprint sprintData1 = new Sprint(null, null, null, null, null, null, effortDone1);
         visitor.visit(sprintData1);
         assertEquals(Double.valueOf(effortDone1), sprintData1.getAccumulatedEffortDone());
-        final SprintData sprintData2 = new SprintData(null, null, null, null, null, null, null);
+        final Sprint sprintData2 = new Sprint(null, null, null, null, null, null, null);
         visitor.visit(sprintData2);
         assertNull(sprintData2.getAccumulatedEffortDone());
     }
@@ -38,14 +38,14 @@ public class AccumulateEffortDoneTest {
     @Test
     public void reset() throws Exception {
         final double effortDone1 = 10d;
-        final SprintData sprintData1 = new SprintData(null, null, null, null, null, null, effortDone1);
+        final Sprint sprintData1 = new Sprint(null, null, null, null, null, null, effortDone1);
         visitor.visit(sprintData1);
 
         visitor.reset();
 
         final double effortDone2 = 12d;
         assertEquals(Double.valueOf(effortDone1), sprintData1.getAccumulatedEffortDone());
-        final SprintData sprintData2 = new SprintData(null, null, null, null, null, null, effortDone2);
+        final Sprint sprintData2 = new Sprint(null, null, null, null, null, null, effortDone2);
         visitor.visit(sprintData2);
         assertEquals(Double.valueOf(effortDone2), sprintData2.getAccumulatedEffortDone());
     }

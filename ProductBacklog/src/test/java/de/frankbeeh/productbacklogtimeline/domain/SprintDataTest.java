@@ -22,21 +22,21 @@ public class SprintDataTest {
 
     @Test
     public void setProgressForecastBasedOnHistory_isRounding() throws Exception {
-        final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
+        final Sprint sprintData = new Sprint(null, null, null, null, null, null, null);
         sprintData.setProgressForecastBasedOnHistory(FORECAST_NAME, 1.23d);
         assertEquals(Double.valueOf(1.2d), sprintData.getProgressForecastBasedOnHistory(FORECAST_NAME));
     }
 
     @Test
     public void setAccumulatedProgressForecastBasedOnHistory_isRounding() throws Exception {
-        final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
+        final Sprint sprintData = new Sprint(null, null, null, null, null, null, null);
         sprintData.setAccumulatedProgressForecastBasedOnHistory(FORECAST_NAME, 2.59d);
         assertEquals(Double.valueOf(2.6d), sprintData.getAccumulatedEffortDoneOrProgressForcast(FORECAST_NAME));
     }
 
     @Test
     public void getAccumulatedEffortDoneOrProgressForcast_none() {
-        final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
+        final Sprint sprintData = new Sprint(null, null, null, null, null, null, null);
         sprintData.setAccumulatedEffortDone(null);
         sprintData.setAccumulatedProgressForecastBasedOnHistory(FORECAST_NAME, null);
         assertNull(sprintData.getAccumulatedEffortDoneOrProgressForcast(FORECAST_NAME));
@@ -44,7 +44,7 @@ public class SprintDataTest {
 
     @Test
     public void getAccumulatedEffortDoneOrProgressForcast_effortDone() {
-        final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
+        final Sprint sprintData = new Sprint(null, null, null, null, null, null, null);
         sprintData.setAccumulatedEffortDone(ACCUMULATED_EFFORT_DONE);
         sprintData.setAccumulatedProgressForecastBasedOnHistory(FORECAST_NAME, PROGRESS_FORECAST);
         assertEquals(ACCUMULATED_EFFORT_DONE, sprintData.getAccumulatedEffortDoneOrProgressForcast(FORECAST_NAME));
@@ -52,7 +52,7 @@ public class SprintDataTest {
 
     @Test
     public void getAccumulatedEffortDoneOrProgressForcast_progressForecast() {
-        final SprintData sprintData = new SprintData(null, null, null, null, null, null, null);
+        final Sprint sprintData = new Sprint(null, null, null, null, null, null, null);
         sprintData.setAccumulatedEffortDone(null);
         sprintData.setAccumulatedProgressForecastBasedOnHistory(FORECAST_NAME, PROGRESS_FORECAST);
         assertEquals(PROGRESS_FORECAST, sprintData.getAccumulatedEffortDoneOrProgressForcast(FORECAST_NAME));
@@ -61,20 +61,20 @@ public class SprintDataTest {
     @Test
     public void getDescription_withEndDate() throws Exception {
         final String endDate = "01.02.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
+        final Sprint sprintData = new Sprint(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getComparedForecast(null));
     }
 
     @Test
     public void getDescription_noEndDate() throws Exception {
-        final SprintData sprintData = newSprintDataWithName(SPRINT_NAME_1);
+        final Sprint sprintData = newSprintDataWithName(SPRINT_NAME_1);
         assertEquals(SPRINT_NAME_1, sprintData.getComparedForecast(null));
     }
 
     @Test
     public void getDescription_sameReferenceSprint() throws Exception {
         final String endDate = "01.02.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
+        final Sprint sprintData = new Sprint(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n" + endDate, sprintData.getComparedForecast(sprintData));
     }
 
@@ -82,8 +82,8 @@ public class SprintDataTest {
     public void getDescription_laterReferenceEndDate() throws Exception {
         final String endDate = "01.02.2003";
         final String referenceEndDate = "02.02.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
-        final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseLocalDate(referenceEndDate), null, null, null, null);
+        final Sprint sprintData = new Sprint(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
+        final Sprint referenceSprintData = new Sprint(SPRINT_NAME_2, null, FormatUtility.parseLocalDate(referenceEndDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(-1d)", sprintData.getComparedForecast(referenceSprintData));
     }
 
@@ -91,8 +91,8 @@ public class SprintDataTest {
     public void getDescription_earlierReferenceEndDate() throws Exception {
         final String endDate = "01.02.2003";
         final String referenceEndDate = "01.01.2003";
-        final SprintData sprintData = new SprintData(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
-        final SprintData referenceSprintData = new SprintData(SPRINT_NAME_2, null, FormatUtility.parseLocalDate(referenceEndDate), null, null, null, null);
+        final Sprint sprintData = new Sprint(SPRINT_NAME_1, null, FormatUtility.parseLocalDate(endDate), null, null, null, null);
+        final Sprint referenceSprintData = new Sprint(SPRINT_NAME_2, null, FormatUtility.parseLocalDate(referenceEndDate), null, null, null, null);
         assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + endDate + "\n(+31d)", sprintData.getComparedForecast(referenceSprintData));
     }
 
@@ -145,31 +145,31 @@ public class SprintDataTest {
         assertNotEquals(newSprintDataWithEffortDone(1d).getHash(), newSprintDataWithEffortForecast(1d).getHash());
     }
 
-    private SprintData newSprintDataWithName(String name) {
-        return new SprintData(name, null, null, null, null, null, null);
+    private Sprint newSprintDataWithName(String name) {
+        return new Sprint(name, null, null, null, null, null, null);
     }
 
-    private SprintData newSprintDataWithStartDate(LocalDate startDate) {
-        return new SprintData(null, startDate, null, null, null, null, null);
+    private Sprint newSprintDataWithStartDate(LocalDate startDate) {
+        return new Sprint(null, startDate, null, null, null, null, null);
     }
 
-    private SprintData newSprintDataWithEndDate(LocalDate endDate) {
-        return new SprintData(null, null, endDate, null, null, null, null);
+    private Sprint newSprintDataWithEndDate(LocalDate endDate) {
+        return new Sprint(null, null, endDate, null, null, null, null);
     }
 
-    private SprintData newSprintDataWithCapacityForecast(double capacityForecast) {
-        return new SprintData(null, null, null, capacityForecast, null, null, null);
+    private Sprint newSprintDataWithCapacityForecast(double capacityForecast) {
+        return new Sprint(null, null, null, capacityForecast, null, null, null);
     }
 
-    private SprintData newSprintDataWithEffortForecast(double effortForecast) {
-        return new SprintData(null, null, null, null, effortForecast, null, null);
+    private Sprint newSprintDataWithEffortForecast(double effortForecast) {
+        return new Sprint(null, null, null, null, effortForecast, null, null);
     }
 
-    private SprintData newSprintDataWithCapacityDone(double capacityDone) {
-        return new SprintData(null, null, null, null, null, capacityDone, null);
+    private Sprint newSprintDataWithCapacityDone(double capacityDone) {
+        return new Sprint(null, null, null, null, null, capacityDone, null);
     }
 
-    private SprintData newSprintDataWithEffortDone(double effortDone) {
-        return new SprintData(null, null, null, null, null, null, effortDone);
+    private Sprint newSprintDataWithEffortDone(double effortDone) {
+        return new Sprint(null, null, null, null, null, null, effortDone);
     }
 }

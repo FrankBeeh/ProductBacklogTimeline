@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.database.DataBaseServiceTest;
 
@@ -34,14 +34,14 @@ public class VelocityForecastMapperTest extends DataBaseServiceTest {
 
     static void assertVelocityForecastEquals(VelocityForecast expectedVelocityForecast, VelocityForecast actualVelocityForecast) {
         assertEquals(expectedVelocityForecast.getSprints().size(), actualVelocityForecast.getSprints().size());
-        final List<SprintData> actualItems = actualVelocityForecast.getSprints();
-        final List<SprintData> expectedItems = expectedVelocityForecast.getSprints();
+        final List<Sprint> actualItems = actualVelocityForecast.getSprints();
+        final List<Sprint> expectedItems = expectedVelocityForecast.getSprints();
         for (int index = 0; index < expectedItems.size(); index++) {
             assertSprintDataEquals(expectedItems.get(index), actualItems.get(index));
         }
     }
 
-    private static void assertSprintDataEquals(SprintData expectedItem, SprintData actualItem) {
+    private static void assertSprintDataEquals(Sprint expectedItem, Sprint actualItem) {
         assertEquals(expectedItem.getName(), actualItem.getName());
         assertEquals(expectedItem.getStartDate(), actualItem.getStartDate());
         assertEquals(expectedItem.getEndDate(), actualItem.getEndDate());
@@ -51,15 +51,15 @@ public class VelocityForecastMapperTest extends DataBaseServiceTest {
         assertEquals(expectedItem.getEffortDone(), actualItem.getEffortDone());
     }
 
-    private static SprintData newFirstSprintData() {
-        return new SprintData("Name 1", LocalDate.of(2001, Month.JANUARY, 1), LocalDate.of(2001, Month.FEBRUARY, 2), 1d, 2d, 3d, 4d);
+    private static Sprint newFirstSprintData() {
+        return new Sprint("Name 1", LocalDate.of(2001, Month.JANUARY, 1), LocalDate.of(2001, Month.FEBRUARY, 2), 1d, 2d, 3d, 4d);
     }
 
-    private static SprintData newSecondSprintData() {
-        return new SprintData("Name 2", LocalDate.of(2002, Month.FEBRUARY, 2), LocalDate.of(2002, Month.MARCH, 3), 5d, 6d, 7d, 8d);
+    private static Sprint newSecondSprintData() {
+        return new Sprint("Name 2", LocalDate.of(2002, Month.FEBRUARY, 2), LocalDate.of(2002, Month.MARCH, 3), 5d, 6d, 7d, 8d);
     }
 
-    private static SprintData newFirstSprintData_nameChanged() {
-        return new SprintData("Changed Name 1", LocalDate.of(2001, Month.JANUARY, 1), LocalDate.of(2001, Month.FEBRUARY, 2), 1d, 2d, 3d, 4d);
+    private static Sprint newFirstSprintData_nameChanged() {
+        return new Sprint("Changed Name 1", LocalDate.of(2001, Month.JANUARY, 1), LocalDate.of(2001, Month.FEBRUARY, 2), 1d, 2d, 3d, 4d);
     }
 }

@@ -12,7 +12,7 @@ import javafx.scene.control.Tooltip;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
@@ -35,7 +35,7 @@ public class ReleaseBurndownController {
     private void addVelocityForecasts(ProductTimestamp productTimestamp) {
         final Series<String, Double> series = new XYChart.Series<String, Double>();
         final VelocityForecast velocityForecast = productTimestamp.getVelocityForecast();
-        for (SprintData sprintData : velocityForecast.getSprints()) {
+        for (Sprint sprintData : velocityForecast.getSprints()) {
             for (String forecastType : VelocityForecast.COMPLETION_FORECASTS) {
                 Double value = sprintData.getEffortDone();
                 if (value == null) {
@@ -80,13 +80,13 @@ public class ReleaseBurndownController {
     }
 
     private void addTooltipsForVelocityForecasts(VelocityForecast velocityForecast) {
-        final List<SprintData> sprints = velocityForecast.getSprints();
+        final List<Sprint> sprints = velocityForecast.getSprints();
         for (String forecastType : VelocityForecast.COMPLETION_FORECASTS) {
             int index = 0;
             for (Series<String, Double> series : releaseBurndown.getData()) {
                 for (Data<String, Double> data : series.getData()) {
                     if (data.getXValue().startsWith(getForecastName(forecastType))) {
-                        final SprintData sprintData = sprints.get(index++);
+                        final Sprint sprintData = sprints.get(index++);
                         final State state = sprintData.getState();
                         final Node node = data.getNode();
                         node.getStyleClass().add(state.toString());

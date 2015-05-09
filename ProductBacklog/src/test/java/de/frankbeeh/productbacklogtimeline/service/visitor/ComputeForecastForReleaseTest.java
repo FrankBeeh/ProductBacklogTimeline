@@ -19,7 +19,7 @@ import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
-import de.frankbeeh.productbacklogtimeline.domain.SprintData;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
@@ -98,8 +98,8 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         visitor = new ComputeForecastForRelease();
     }
 
-    private SprintData createSprintData(String sprintName) {
-        return new SprintData(sprintName, null, null, null, null, null, null);
+    private Sprint createSprintData(String sprintName) {
+        return new Sprint(sprintName, null, null, null, null, null, null);
     }
 
     private ProductBacklogComparisonItem createProductBacklogItem(double accumulatedEstimate, String minVelSprintName, String avgVelSprintName, String maxVelSprintName) {

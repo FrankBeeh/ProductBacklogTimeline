@@ -6,15 +6,25 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Represent the data of an item of a {@link ProductBacklog}:
+ * <ul>
+ * <li>Data that is independent from the ordering and persisted.
+ * <li>Data that is dependent on the the ordering and is computed online.
+ * </ul>
+ * </ul>
+ */
 public class ProductBacklogItem {
-    private final Map<String, SprintData> completionForecast;
+    private final Map<String, Sprint> completionForecast;
     private Double accumulatedEstimate;
     private int productBacklogRank;
     private final ProductBacklogItemData data;
 
     public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String jiraSprint, String jiraRank, String plannedRelease) {
         this.data = new ProductBacklogItemData(id, title, description, estimate, state, jiraSprint, jiraRank, plannedRelease);
-        this.completionForecast = new HashMap<String, SprintData>();
+        this.completionForecast = new HashMap<String, Sprint>();
     }
 
     public void setAccumulatedEstimate(Double accumulatedEstimate) {
@@ -25,11 +35,11 @@ public class ProductBacklogItem {
         return accumulatedEstimate;
     }
 
-    public SprintData getCompletionForecast(String progressForecastName) {
+    public Sprint getCompletionForecast(String progressForecastName) {
         return completionForecast.get(progressForecastName);
     }
 
-    public void setCompletionForecast(String progressForecastName, SprintData sprintData) {
+    public void setCompletionForecast(String progressForecastName, Sprint sprintData) {
         completionForecast.put(progressForecastName, sprintData);
     }
 

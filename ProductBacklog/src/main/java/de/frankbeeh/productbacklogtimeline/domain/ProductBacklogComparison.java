@@ -27,11 +27,12 @@ public class ProductBacklogComparison {
     public void updateAllItems() {
         productBacklogComparisonItems.clear();
         for (ProductBacklogItem productBacklogItem : selectedProductBacklog.getItems()) {
-            ProductBacklogItem referenceProductBacklogItem = null;
             if (referenceProductBacklog != null) {
-                referenceProductBacklogItem = referenceProductBacklog.getItemById(productBacklogItem.getId());
+                final ProductBacklogItem referenceProductBacklogItem = referenceProductBacklog.getItemById(productBacklogItem.getId());
+                productBacklogComparisonItems.add(new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem));
+            } else {
+                productBacklogComparisonItems.add(new ProductBacklogComparisonItem(productBacklogItem, null));
             }
-            productBacklogComparisonItems.add(new ProductBacklogComparisonItem(productBacklogItem, referenceProductBacklogItem));
         }
     }
 
@@ -46,7 +47,7 @@ public class ProductBacklogComparison {
     public List<ProductBacklogComparisonItem> getItems() {
         return productBacklogComparisonItems;
     }
-    
+
     public List<ProductBacklogComparisonItem> getMatchingProductBacklogItems(ReleaseCriteria criteria) {
         final List<ProductBacklogComparisonItem> matchingProductBacklogItems = new ArrayList<ProductBacklogComparisonItem>();
         for (final ProductBacklogComparisonItem productBacklogComparisonItem : productBacklogComparisonItems) {

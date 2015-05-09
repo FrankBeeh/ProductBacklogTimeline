@@ -15,34 +15,40 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeMinimumVelocit
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeProgressForecastByVelocity;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Forecast the progress of {@link Sprint}s depending on the velocity of previous.
+ * </ul>
+ */
 public class VelocityForecast {
     public static final String AVERAGE_VELOCITY_FORECAST = "Avg. Vel.";
     public static final String MINIMUM_VELOCITY_FORECAST = "Min. Vel.";
     public static final String MAXIMUM_VELOCITY_FORECAST = "Max. Vel.";
     public static final List<String> COMPLETION_FORECASTS = Arrays.asList(MINIMUM_VELOCITY_FORECAST, AVERAGE_VELOCITY_FORECAST, MAXIMUM_VELOCITY_FORECAST);
 
-    private final List<SprintData> sprints;
+    private final List<Sprint> sprints;
     private final List<SprintDataVisitor> visitors;
     private final Map<String, Integer> sortIndexMap;
 
     public VelocityForecast() {
-        this(new ArrayList<SprintData>(), Arrays.asList(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()),
+        this(new ArrayList<Sprint>(), Arrays.asList(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()),
                 new ComputeProgressForecastByVelocity(MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST,
                         new ComputeMaximumVelocityStrategy())));
     }
 
     @VisibleForTesting
-    public VelocityForecast(List<SprintData> sprints, List<SprintDataVisitor> visitors) {
+    public VelocityForecast(List<Sprint> sprints, List<SprintDataVisitor> visitors) {
         this.visitors = visitors;
         this.sprints = sprints;
         this.sortIndexMap = new HashMap<String, Integer>();
     }
 
-    public List<SprintData> getSprints() {
+    public List<Sprint> getSprints() {
         return sprints;
     }
 
-    public void addItem(SprintData sprint) {
+    public void addItem(Sprint sprint) {
         sprints.add(sprint);
         sortIndexMap.put(sprint.getName(), sprints.size());
     }
@@ -50,14 +56,14 @@ public class VelocityForecast {
     public void updateForecast() {
         for (final SprintDataVisitor visitor : visitors) {
             visitor.reset();
-            for (final SprintData sprintData : sprints) {
+            for (final Sprint sprintData : sprints) {
                 sprintData.accept(visitor);
             }
         }
     }
 
-    public SprintData getCompletionSprintForecast(String progressForecastName, Double accumulatedEstimate) {
-        for (final SprintData sprint : sprints) {
+    public Sprint getCompletionSprintForecast(String progressForecastName, Double accumulatedEstimate) {
+        for (final Sprint sprint : sprints) {
             final Double accumulatedEffortDoneOrProgressForcast = sprint.getAccumulatedEffortDoneOrProgressForcast(progressForecastName);
             if (accumulatedEffortDoneOrProgressForcast != null && accumulatedEstimate <= accumulatedEffortDoneOrProgressForcast) {
                 return sprint;
