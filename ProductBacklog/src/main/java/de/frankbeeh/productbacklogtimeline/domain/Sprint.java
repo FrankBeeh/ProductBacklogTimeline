@@ -1,7 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 /**
@@ -102,32 +100,6 @@ public class Sprint {
         return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
     }
 
-    public String getComparedForecast(Sprint referenceSprintData) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        final String sprintName = getName();
-        stringBuilder.append(sprintName);
-        if (referenceSprintData != null) {
-            final String referenceSprintName = referenceSprintData.getName();
-            if (!sprintName.equals(referenceSprintName)) {
-                stringBuilder.append("\n(").append(referenceSprintName).append(")");
-            }
-        }
-        final LocalDate endDate = getEndDate();
-        if (endDate != null) {
-            stringBuilder.append("\n");
-            stringBuilder.append(FormatUtility.formatLocalDate(endDate));
-            if (referenceSprintData != null) {
-                final LocalDate referenceEndDate = referenceSprintData.getEndDate();
-                if (referenceEndDate != null) {
-                    final long diffDays = ChronoUnit.DAYS.between(referenceEndDate, endDate);
-                    if (diffDays != 0) {
-                        stringBuilder.append("\n(").append(FormatUtility.formatDifferenceLong(diffDays)).append("d)");
-                    }
-                }
-            }
-        }
-        return stringBuilder.toString();
-    }
 
     @Override
     public String toString() {

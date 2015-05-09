@@ -9,9 +9,9 @@ public class TableViewContent {
     private List<List<String>> rows = new ArrayList<List<String>>();
     private List<String> presentRow;
 
-    public TableViewContent(){
+    public TableViewContent() {
     }
-    
+
     public TableViewContent(String[][] rows) {
         for (String[] row : rows) {
             addRow(row);
@@ -46,9 +46,18 @@ public class TableViewContent {
     @Override
     public String toString() {
         final StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("{\n");
         for (List<String> row : rows) {
-            stringBuilder.append(row).append("\n");
+            stringBuilder.append("{");
+            for (String value : row) {
+                stringBuilder.append('"').append(value.replaceAll("\n", "\\\\n")).append('"').append(",");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            stringBuilder.append("},\n");
         }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        stringBuilder.append("\n}");
         return stringBuilder.toString();
     }
 

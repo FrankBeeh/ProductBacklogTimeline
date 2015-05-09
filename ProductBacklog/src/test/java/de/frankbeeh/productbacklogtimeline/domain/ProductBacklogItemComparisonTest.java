@@ -157,25 +157,25 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedCompletionForecast_noReference() throws Exception {
-        assertEquals(sprint1.getComparedForecast(null), new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1)).getComparedCompletionForecast(VELOCITY_FORECAST));
+        assertEquals(DifferenceFormatter.formatSprintDifference(sprint1, null),
+                new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1)).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
     public void getComparedCompletionForecast_referenceNull() throws Exception {
-        assertEquals(sprint1.getComparedForecast(null),
+        assertEquals(DifferenceFormatter.formatSprintDifference(sprint1, null),
                 new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1), null).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
     public void getComparedCompletionForecast_referenceValueNull() throws Exception {
-        assertEquals(
-                sprint1.getComparedForecast(null),
-                new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1), createProductBacklogItemWithCompletionForecast(null)).getComparedCompletionForecast(VELOCITY_FORECAST));
+        assertEquals(DifferenceFormatter.formatSprintDifference(sprint1, null), new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1),
+                createProductBacklogItemWithCompletionForecast(null)).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
     public void getComparedCompletionForecast_equal() throws Exception {
-        assertEquals(sprint1.getComparedForecast(null), new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1),
+        assertEquals(DifferenceFormatter.formatSprintDifference(sprint1, null), new ProductBacklogItemComparison(createProductBacklogItemWithCompletionForecast(sprint1),
                 createProductBacklogItemWithCompletionForecast(sprint1)).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
@@ -231,14 +231,14 @@ public class ProductBacklogItemComparisonTest {
     @Test
     public void getComparedEstimate_referenceNull() throws Exception {
         productBacklogItem.setEstimate(2d);
-        assertEquals("2.0", new ProductBacklogItemComparison(productBacklogItem, null).getComparedEstimate());
+        assertEquals("   2.0\n(NEW)", new ProductBacklogItemComparison(productBacklogItem, null).getComparedEstimate());
     }
 
     @Test
     public void getComparedEstimate_referenceValueNull() throws Exception {
         productBacklogItem.setEstimate(2d);
         referenceProductBacklogItem.setEstimate(null);
-        assertEquals("2.0", productBacklogComparisonItem.getComparedEstimate());
+        assertEquals("   2.0\n(NEW)", productBacklogComparisonItem.getComparedEstimate());
     }
 
     @Test
@@ -284,14 +284,14 @@ public class ProductBacklogItemComparisonTest {
     @Test
     public void getComparedAccumulatedEstimate_referenceNull() throws Exception {
         productBacklogItem.setAccumulatedEstimate(2d);
-        assertEquals("2.0", new ProductBacklogItemComparison(productBacklogItem, null).getComparedAccumulatedEstimate());
+        assertEquals("   2.0\n(NEW)", new ProductBacklogItemComparison(productBacklogItem, null).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_referenceValueNull() throws Exception {
         productBacklogItem.setAccumulatedEstimate(2d);
         referenceProductBacklogItem.setAccumulatedEstimate(null);
-        assertEquals("2.0", productBacklogComparisonItem.getComparedAccumulatedEstimate());
+        assertEquals("   2.0\n(NEW)", productBacklogComparisonItem.getComparedAccumulatedEstimate());
     }
 
     @Test

@@ -37,7 +37,7 @@
       	    <PropertyValueFactory property="comparedState"/>
       	  </cellValueFactory>
 		</TableColumn>
-		<TableColumn editable="false" maxWidth="5000.0" minWidth="100.0" prefWidth="300.0" resizable="true" sortable="false" text="Title" fx:id="titleColumn">
+		<TableColumn editable="false" maxWidth="5000.0" minWidth="100.0" prefWidth="250.0" resizable="true" sortable="false" text="Title" fx:id="titleColumn">
 		  <cellValueFactory>
       	    <PropertyValueFactory property="comparedTitle"/>
       	  </cellValueFactory>

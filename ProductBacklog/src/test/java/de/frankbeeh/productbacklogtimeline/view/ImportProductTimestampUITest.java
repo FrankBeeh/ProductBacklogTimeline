@@ -33,7 +33,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "3", "3", "5.0", "Todo", "PBI 3", "Description 3", "9.0", "", "Release 1", SPRINT_3, SPRINT_3, SPRINT_3 },
             { "4", "4", "8.0", "Todo", "PBI 4", "Description 4", "17.0", "", "Release 1", SPRINT_5, SPRINT_5, SPRINT_5 } });
 
-    private static final TableViewContent PBL_1_COMPARED_TO_PBL_2 = new TableViewContent(new String[][] {
+    private static final TableViewContent PBL_1_COMPARED_TO_2 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "2", "    2\n(-1)", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "     4.0\n(-12.0)", "Sprint 1\n(No Sprint)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "3", "    3\n(-1)", "5.0", "Todo", "PBI 3\n(New PBI 3)", "Description 3\n(New Description 3)", "     9.0\n(-12.0)", "", "Release 1\n(Release 2)", SPRINT_3_TO_SPRINT_4,
@@ -48,14 +48,14 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "4", "5", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", "Release 2", SPRINT_5, SPRINT_5, SPRINT_4 },
             { "6", "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
-    private static final TableViewContent PBL_2_COMPARED_TO_PBL_1 = new TableViewContent(new String[][] {
+    private static final TableViewContent PBL_2_COMPARED_TO_1 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "5", "     2\n(NEW)", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "5", "     2\n(NEW)", "  13.0\n(NEW)", "Done", "PBI 5", "Description 5", "  16.0\n(NEW)", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "2", "    3\n(+1)", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    16.0\n(+12.0)", "No Sprint\n(Sprint 1)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "3", "    4\n(+1)", "5.0", "Todo", "New PBI 3\n(PBI 3)", "New Description 3\n(Description 3)", "    21.0\n(+12.0)", "", "Release 2\n(Release 1)", SPRINT_4_TO_SPRINT_3,
                     SPRINT_4_TO_SPRINT_3, SPRINT_3 },
             { "4", "    5\n(+1)", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "   26.0\n(+9.0)", "", "Release 2\n(Release 1)", SPRINT_5, SPRINT_5, SPRINT_4_TO_SPRINT_5 },
-            { "6", "     6\n(NEW)", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
+            { "6", "     6\n(NEW)", "   2.0\n(NEW)", "Todo", "PBI 6", "Description 6", "  28.0\n(NEW)", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
     private static final TableViewContent VELOCITY_FORECAST_1 = new TableViewContent(new String[][] {
             { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "3.0", "", "", "" },
@@ -73,9 +73,33 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "Sprint 3", "27.04.2014", "27.04.2014", "6.0", "", "", "", "3.0", "4.8", "6.5", "", "19.0", "20.8", "22.5" },
             { "Sprint 4", "28.04.2014", "30.04.2014", "4.0", "", "", "", "2.0", "3.2", "4.3", "", "21.0", "24.0", "26.8" },
             { "Sprint 5", "01.05.2014", "04.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "27.0", "33.5", "39.8" },
-            { "Sprint 6", "05.05.2014", "11.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "33.0", "43.0", "52.8" },
-            { "Sprint 7", "12.05.2014", "18.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "39.0", "52.5", "65.8" },
-            { "Sprint 8", "19.05.2014", "25.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "45.0", "62.0", "78.8" } });
+            { "Sprint 6", "05.05.2014", "11.05.2014", "14.0", "", "", "", "7.0", "11.1", "15.2", "", "34.0", "44.6", "55.0" },
+            { "Sprint 7", "12.05.2014", "19.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "40.0", "54.1", "68.0" },
+            { "Sprint 8 New", "20.05.2014", "25.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "46.0", "63.6", "81.0" } });
+
+    private static final TableViewContent VELOCITY_FORECAST_1_COMPARED_TO_2 = new TableViewContent(new String[][] {
+            { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "3.0", "", "", "" },
+            { "Sprint 2", "26.04.2014", "26.04.2014", "8.0", "", "", "", "    4.0\n(-2.0)", "    4.0\n(-5.5)", "    4.0\n(-9.0)", "", "   7.0\n(NEW)", "   7.0\n(NEW)", "   7.0\n(NEW)" },
+            { "Sprint 3", "27.04.2014", "27.04.2014", "6.0", "", "", "", "3.0", "    3.0\n(-1.8)", "    3.0\n(-3.5)", "", "   10.0\n(-9.0)", "    10.0\n(-10.8)", "    10.0\n(-12.5)" },
+            { "Sprint 4", "28.04.2014", "30.04.2014", "4.0", "", "", "", "2.0", "    2.0\n(-1.2)", "    2.0\n(-2.3)", "", "   12.0\n(-9.0)", "    12.0\n(-12.0)", "    12.0\n(-14.8)" },
+            { "Sprint 5", "01.05.2014", "04.05.2014", "12.0", "", "", "", "6.0", "    6.0\n(-3.5)", "    6.0\n(-7.0)", "", "   18.0\n(-9.0)", "    18.0\n(-15.5)", "    18.0\n(-21.8)" },
+            { "Sprint 6", "05.05.2014", "11.05.2014", "   12.0\n(-2.0)", "", "", "", "    6.0\n(-1.0)", "    6.0\n(-5.1)", "    6.0\n(-9.2)", "", "    24.0\n(-10.0)", "    24.0\n(-20.6)",
+                    "    24.0\n(-31.0)" },
+            { "Sprint 7", "12.05.2014", "18.05.2014", "  12.0\n(NEW)", "", "", "", "   6.0\n(NEW)", "   6.0\n(NEW)", "   6.0\n(NEW)", "", "  30.0\n(NEW)", "  30.0\n(NEW)", "  30.0\n(NEW)" },
+            { "Sprint 8\n(Sprint 8 New)", "19.05.2014\n(-1d)", "25.05.2014", "12.0", "", "", "", "6.0", "    6.0\n(-3.5)", "    6.0\n(-7.0)", "", "    36.0\n(-10.0)", "    36.0\n(-27.6)",
+                    "    36.0\n(-45.0)" } });
+
+    private static final TableViewContent VELOCITY_FORECAST_2_COMPARED_TO_1 = new TableViewContent(new String[][] {
+            { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "3.0", "", "", "" },
+            { "Sprint 2", "26.04.2014", "26.04.2014", "8.0", "  13.0\n(NEW)", "  12.0\n(NEW)", "  13.0\n(NEW)", "    6.0\n(+2.0)", "    9.5\n(+5.5)", "   13.0\n(+9.0)", "  16.0\n(NEW)", "", "", "" },
+            { "Sprint 3", "27.04.2014", "27.04.2014", "6.0", "", "", "", "3.0", "    4.8\n(+1.8)", "    6.5\n(+3.5)", "", "   19.0\n(+9.0)", "    20.8\n(+10.8)", "    22.5\n(+12.5)" },
+            { "Sprint 4", "28.04.2014", "30.04.2014", "4.0", "", "", "", "2.0", "    3.2\n(+1.2)", "    4.3\n(+2.3)", "", "   21.0\n(+9.0)", "    24.0\n(+12.0)", "    26.8\n(+14.8)" },
+            { "Sprint 5", "01.05.2014", "04.05.2014", "12.0", "", "", "", "6.0", "    9.5\n(+3.5)", "   13.0\n(+7.0)", "", "   27.0\n(+9.0)", "    33.5\n(+15.5)", "    39.8\n(+21.8)" },
+            { "Sprint 6", "05.05.2014", "11.05.2014", "   14.0\n(+2.0)", "", "", "", "    7.0\n(+1.0)", "   11.1\n(+5.1)", "   15.2\n(+9.2)", "", "    34.0\n(+10.0)", "    44.6\n(+20.6)",
+                    "    55.0\n(+31.0)" },
+            { "Sprint 7", "12.05.2014", "19.05.2014", "  12.0\n(NEW)", "", "", "", "   6.0\n(NEW)", "   9.5\n(NEW)", "  13.0\n(NEW)", "", "  40.0\n(NEW)", "  54.1\n(NEW)", "  68.0\n(NEW)" },
+            { "Sprint 8 New\n(Sprint 8)", "20.05.2014\n(+1d)", "25.05.2014", "12.0", "", "", "", "6.0", "    9.5\n(+3.5)", "   13.0\n(+7.0)", "", "    46.0\n(+10.0)", "    63.6\n(+27.6)",
+                    "    81.0\n(+45.0)" } });
 
     private static final TableViewContent RELEASES_1 = new TableViewContent(new String[][] { { "Release 1", "plannedRelease=\nRelease 1", "17.0", SPRINT_5, SPRINT_5, SPRINT_5 },
             { "Release 2", "idOfPBI=2", "4.0", SPRINT_2, SPRINT_2, SPRINT_2 } });
@@ -101,15 +125,15 @@ public class ImportProductTimestampUITest extends BaseUITest {
         getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
         getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
         getMainAccessor().selectProductBacklogTab(this);
-        getMainAccessor().assertContentOfProductBacklogTableView(PBL_1_COMPARED_TO_PBL_2);
+        getMainAccessor().assertContentOfProductBacklogTableView(PBL_1_COMPARED_TO_2);
         getMainAccessor().selectVelocityForecastTab(this);
-        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_1);
+        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_1_COMPARED_TO_2);
 
         getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
         getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
         getMainAccessor().selectProductBacklogTab(this);
-        getMainAccessor().assertContentOfProductBacklogTableView(PBL_2_COMPARED_TO_PBL_1);
+        getMainAccessor().assertContentOfProductBacklogTableView(PBL_2_COMPARED_TO_1);
         getMainAccessor().selectVelocityForecastTab(this);
-        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2);
+        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2_COMPARED_TO_1);
     }
 }

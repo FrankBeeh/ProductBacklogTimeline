@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import java.time.LocalDate;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -21,51 +19,56 @@ public class SprintComparison {
 
     public SprintComparison(Sprint sprint, Sprint referenceSprint) {
         this.sprint = sprint;
-        this.referenceSprint = referenceSprint;
+        if (referenceSprint == null) {
+            this.referenceSprint = new Sprint(null, null, null, null, null, null, null);
+        } else {
+            this.referenceSprint = referenceSprint;
+        }
     }
 
-    public String getName() {
-        return sprint.getName();
-    }
-    
-    public LocalDate getStartDate() {
-        return sprint.getStartDate();
+    public String getComparedName() {
+        return DifferenceFormatter.formatTextualDifference(sprint.getName(), referenceSprint.getName());
     }
 
-    public LocalDate getEndDate() {
-        return sprint.getEndDate();
+    public String getComparedStartDate() {
+        return DifferenceFormatter.formatDateDifference(sprint.getStartDate(), referenceSprint.getStartDate());
     }
 
-    public Double getCapacityForecast() {
-        return sprint.getCapacityForecast();
+    public String getComparedEndDate() {
+        return DifferenceFormatter.formatDateDifference(sprint.getEndDate(), referenceSprint.getEndDate());
     }
 
-    public Double getEffortForecast() {
-        return sprint.getEffortForecast();
+    public String getComparedCapacityForecast() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getCapacityForecast(), referenceSprint.getCapacityForecast());
     }
 
-    public Double getCapacityDone() {
-        return sprint.getCapacityDone();
+    public String getComparedEffortForecast() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getEffortForecast(), referenceSprint.getEffortForecast());
     }
 
-    public Double getEffortDone() {
-        return sprint.getEffortDone();
+    public String getComparedCapacityDone() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getCapacityDone(), referenceSprint.getCapacityDone());
+    }
+
+    public String getComparedEffortDone() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getEffortDone(), referenceSprint.getEffortDone());
+    }
+
+    public String getComparedAccumulatedEffortDone() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getAccumulatedEffortDone(), referenceSprint.getAccumulatedEffortDone());
     }
 
     public Double getAccumulatedEffortDone() {
         return sprint.getAccumulatedEffortDone();
     }
 
-    public Double getProgressForecastBasedOnHistory(String progressForecastName) {
-        return sprint.getProgressForecastBasedOnHistory(progressForecastName);
+    public String getComparedProgressForecastBasedOnHistory(String progressForecastName) {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getProgressForecastBasedOnHistory(progressForecastName), referenceSprint.getProgressForecastBasedOnHistory(progressForecastName));
     }
 
-    public Double getAccumulatedProgressForecastBasedOnHistory(String progressForecastName) {
-        return sprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
-    }
-
-    public Double getAccumulatedEffortDoneOrProgressForcast(String progressForecastName) {
-        return sprint.getAccumulatedEffortDoneOrProgressForcast(progressForecastName);
+    public String getComparedAccumulatedProgressForecastBasedOnHistory(String progressForecastName) {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName),
+                referenceSprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName));
     }
 
     public State getState() {
