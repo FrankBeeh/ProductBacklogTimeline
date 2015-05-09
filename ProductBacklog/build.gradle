@@ -24,7 +24,10 @@ buildscript {
 
 apply plugin: 'nu.studer.jooq'
 
-sourceCompatibility = 1.8
+// Restricting to Java 7 is a workaround for a bug in cglib when creating a mock of ProductBacklogComparison
+// See http://stackoverflow.com/questions/27092857/cglib-throws-an-illegalargumentexception-when-enhancing-the-java-util-date-class
+sourceCompatibility = 1.7
+
 version = '0.1.1'
 mainClassName = 'de.frankbeeh.productbacklogtimeline.ProductBacklogTimelineApplication'
 

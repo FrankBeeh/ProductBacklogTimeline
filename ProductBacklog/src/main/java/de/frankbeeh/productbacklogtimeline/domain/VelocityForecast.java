@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -79,5 +80,14 @@ public class VelocityForecast {
             return Integer.MAX_VALUE;
         }
         return sortIndex;
+    }
+
+    public Sprint getSprintByEndDate(LocalDate endDate) {
+        for (Sprint sprint : sprints) {
+            if (endDate.equals(sprint.getEndDate())){
+                return sprint;
+            }
+        }
+        return null;
     }
 }

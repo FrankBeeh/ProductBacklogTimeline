@@ -7,14 +7,17 @@ package de.frankbeeh.productbacklogtimeline.domain;
  * </ul>
  */
 public class ProductTimestampComparison {
-    private ProductBacklogComparison productBacklogComparison =new ProductBacklogComparison();
+    private ProductBacklogComparison productBacklogComparison = new ProductBacklogComparison();
+    private VelocityForecastComparison velocityForecastComparison = new VelocityForecastComparison();
 
     public void setSelectedTimestamp(ProductTimestamp selectedProductTimestamp) {
-        productBacklogComparison.setSelectedProductBacklog(selectedProductTimestamp.getProductBacklog());
+        productBacklogComparison.setSelected(selectedProductTimestamp.getProductBacklog());
+        velocityForecastComparison.setSelected(selectedProductTimestamp.getVelocityForecast());
     }
 
     public void setReferenceTimestamp(ProductTimestamp referenceProductTimestamp) {
-        productBacklogComparison.setReferenceProductBacklog(referenceProductTimestamp.getProductBacklog());
+        productBacklogComparison.setReference(referenceProductTimestamp.getProductBacklog());
+        velocityForecastComparison.setReference(referenceProductTimestamp.getVelocityForecast());
     }
 
     public ProductBacklogComparison getProductBacklogComparision() {

@@ -48,7 +48,7 @@ public class ProductBacklogTableController {
 
     public void initModel(ProductBacklogComparison productBacklogComparison) {
         model.removeAll(model);
-        model.addAll(productBacklogComparison.getItems());
+        model.addAll(productBacklogComparison.getComparisons());
     }
 
     public void updateView() {
