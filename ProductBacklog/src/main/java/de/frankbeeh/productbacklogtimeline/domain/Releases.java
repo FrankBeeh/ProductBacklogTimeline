@@ -11,11 +11,11 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.ReleaseVisitor;
 
 public class Releases {
 
-    private final List<Release> releases = new ArrayList<Release>();
+    private final List<Release> releases;
     private final List<ReleaseVisitor> visitors;
 
     public Releases() {
-        this(Arrays.asList((ReleaseVisitor) new ComputeForecastForRelease()));
+        this(new ArrayList<Release>(), Arrays.asList((ReleaseVisitor) new ComputeForecastForRelease()));
     }
 
     public void addRelease(Release release) {
@@ -36,7 +36,8 @@ public class Releases {
     }
 
     @VisibleForTesting
-    Releases(List<ReleaseVisitor> visitorMocks) {
+    public Releases(List<Release> releases, List<ReleaseVisitor> visitorMocks) {
+        this.releases = releases;
         this.visitors = visitorMocks;
     }
 }

@@ -27,11 +27,9 @@ public class ReleasesTest extends EasyMockSupport {
     @Test
     public void updateAll() {
         final ProductBacklogComparison productBacklogComparison = new ProductBacklogComparison();
-        releases = new Releases(Arrays.asList(visitorMock1, visitorMock2));
         final Release release1 = new Release("Release 1", null);
-        releases.addRelease(release1);
         final Release release2 = new Release("Release 2", null);
-        releases.addRelease(release2);
+        releases = new Releases(Arrays.asList(release1, release2), Arrays.asList(visitorMock1, visitorMock2));
         visitorMock1.reset();
         visitorMock2.reset();
         visitorMock1.visit(same(release1), same(productBacklogComparison));

@@ -24,24 +24,28 @@ import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
 public class ProductTimestampMapper extends BaseMapper {
     private final ProductBacklogMapper productBacklogMapper;
     private final VelocityForecastMapper velocityForecastMapper;
+    private final ReleasesMapper releasesMapper;
 
     public ProductTimestampMapper(Connection connection) {
         super(connection);
         productBacklogMapper = new ProductBacklogMapper(connection);
         velocityForecastMapper = new VelocityForecastMapper(connection);
+        releasesMapper = new ReleasesMapper(connection);
     }
 
     public void insert(ProductTimestamp productTimestamp) {
         final LocalDateTime productTimestampId = productTimestamp.getDateTime();
         productBacklogMapper.insert(productTimestampId, productTimestamp.getProductBacklog());
         velocityForecastMapper.insert(productTimestampId, productTimestamp.getVelocityForecast());
+        releasesMapper.insert(productTimestampId, productTimestamp.getReleases());
         insertProductTimestamp(productTimestamp);
     }
 
     public ProductTimestamp get(LocalDateTime productTimestampId) {
         final Record2<Timestamp, String> record = getDslContext().select(PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).from(PRODUCT_TIMESTAMP).where(
                 PRODUCT_TIMESTAMP.ID.eq(ConvertUtility.getTimestamp(productTimestampId))).fetchOne();
-        return new ProductTimestamp(ConvertUtility.getLocalDateTime(record.getValue(PRODUCT_TIMESTAMP.ID)), record.getValue(PRODUCT_TIMESTAMP.NAME), productBacklogMapper.get(productTimestampId), velocityForecastMapper.get(ConvertUtility.getLocalDateTime(record.getValue(PRODUCT_TIMESTAMP.ID))), null);
+        return new ProductTimestamp(productTimestampId, record.getValue(PRODUCT_TIMESTAMP.NAME), productBacklogMapper.get(productTimestampId),
+                velocityForecastMapper.get(productTimestampId), releasesMapper.get(productTimestampId));
     }
 
     public List<LocalDateTime> getAllIds() {
@@ -52,7 +56,7 @@ public class ProductTimestampMapper extends BaseMapper {
         }
         return ids;
     }
-    
+
     private void insertProductTimestamp(ProductTimestamp productTimestamp) {
         getDslContext().insertInto(PRODUCT_TIMESTAMP, PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).values(ConvertUtility.getTimestamp(productTimestamp.getDateTime()), productTimestamp.getName()).execute();
     }

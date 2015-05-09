@@ -54,6 +54,6 @@ public class ProductBacklogMapper extends BaseMapper {
     }
 
     private void insertRelation(LocalDateTime productTimestampId, ProductBacklogItem item) {
-            getDslContext().insertInto(PBL, PBL.PT_ID, PBL.PBI_ID, PBL.PBI_HASH).values(ConvertUtility.getTimestamp(productTimestampId), item.getId(), item.getHash()).execute();
+        getDslContext().insertInto(PBL, PBL.PT_ID, PBL.PBI_ID, PBL.PBI_HASH).values(ConvertUtility.getTimestamp(productTimestampId), item.getId(), item.getHash()).execute();
     }
 }

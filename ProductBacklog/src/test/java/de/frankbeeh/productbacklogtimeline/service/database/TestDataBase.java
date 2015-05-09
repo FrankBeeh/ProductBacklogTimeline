@@ -34,6 +34,8 @@ public class TestDataBase {
             statement.executeUpdate("DROP TABLE IF EXISTS PBI");
             statement.executeUpdate("DROP TABLE IF EXISTS VELOCITY_FORECAST");
             statement.executeUpdate("DROP TABLE IF EXISTS SPRINT");
+            statement.executeUpdate("DROP TABLE IF EXISTS RELEASES");
+            statement.executeUpdate("DROP TABLE IF EXISTS RELEASE");
         }
     }
 
