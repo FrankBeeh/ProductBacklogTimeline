@@ -14,11 +14,11 @@ public class ProductTimeline {
     private final List<ProductTimestamp> productTimestamps = new ArrayList<ProductTimestamp>();
     private String selectedName = null;
     private String referenceName = null;
-    private final ProductBacklogComparison productBacklogComparison;
+    private final ProductTimestampComparison productTimestampComparison;
     private ProductTimestamp emptyProductTimestamp;
 
     public ProductTimeline() {
-        this(new ProductBacklogComparison());
+        this(new ProductTimestampComparison());
     }
 
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
@@ -26,8 +26,9 @@ public class ProductTimeline {
         updateAndAddProductTimestamp(productTimestamp);
     }
 
-    public ProductBacklog getSelectedProductBacklog() {
-        return getProductBacklogByFullName(selectedName);
+    @VisibleForTesting
+    ProductBacklog getSelectedProductBacklog() {
+        return getSelectedProductTimestamp().getProductBacklog();
     }
 
     public ProductTimestamp getSelectedProductTimestamp() {
@@ -36,24 +37,22 @@ public class ProductTimeline {
 
     public void selectProductTimestamp(String selectedName) {
         this.selectedName = selectedName;
-        productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
-        updateProductBacklogComparison();
+        productTimestampComparison.setSelectedTimestamp(getSelectedProductTimestamp());
         updateReleases();
     }
 
     public void selectReferenceProductTimestamp(String referenceName) {
         this.referenceName = referenceName;
-        productBacklogComparison.setReferenceProductBacklog(getReferenceProductBacklog());
-        updateProductBacklogComparison();
+        productTimestampComparison.setReferenceTimestamp(getReferenceProductTimestamp());
         updateReleases();
     }
 
     public VelocityForecast getSelectedVelocityForecast() {
-        return getProductTimestampByFullName(selectedName).getVelocityForecast();
+        return getSelectedProductTimestamp().getVelocityForecast();
     }
 
     public Releases getSelectedReleases() {
-        return getProductTimestampByFullName(selectedName).getReleases();
+        return getSelectedProductTimestamp().getReleases();
     }
 
     public List<String> getProductTimestampFullNames() {
@@ -65,7 +64,7 @@ public class ProductTimeline {
     }
 
     public ProductBacklogComparison getProductBacklogComparison() {
-        return productBacklogComparison;
+        return productTimestampComparison.getProductBacklogComparision();
     }
 
     public void loadFromDataBase() {
@@ -76,20 +75,8 @@ public class ProductTimeline {
         }
     }
 
-    private void updateProductBacklogComparison() {
-        productBacklogComparison.updateAllItems();
-    }
-
-    private ProductBacklog getReferenceProductBacklog() {
-        return getProductBacklogByFullName(referenceName);
-    }
-
     private void updateReleases() {
-        getSelectedReleases().updateAll(productBacklogComparison);
-    }
-
-    private ProductBacklog getProductBacklogByFullName(String fullName) {
-        return getProductTimestampByFullName(fullName).getProductBacklog();
+        getSelectedReleases().updateAll(productTimestampComparison.getProductBacklogComparision());
     }
 
     private ProductTimestamp getProductTimestampByFullName(String fullName) {
@@ -105,23 +92,16 @@ public class ProductTimeline {
     }
 
     @VisibleForTesting
-    void addProductBacklog(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast referenceVelocityForecast, Releases releases) {
-        productTimestamps.add(new ProductTimestamp(dateTime, name, productBacklog, referenceVelocityForecast, releases));
+    void insertProductTimestamp(ProductTimestamp productTimestamp) {
+        productTimestamps.add(productTimestamp);
     }
 
-    private ProductTimestamp getPreviousProductTimestamp() {
-        if (productTimestamps.isEmpty()) {
-            return emptyProductTimestamp;
-        }
-        return productTimestamps.get(productTimestamps.size() - 1);
+    private ProductTimestamp getReferenceProductTimestamp() {
+        return getProductTimestampByFullName(referenceName);
     }
 
     private void updateProductTimestamp(ProductTimestamp productTimestamp) {
         productTimestamp.updateVelocityForecast();
-        // TODO: Do not overwrite as soon as the releases are read from CSV or DB!
-        if (productTimestamp.getReleases() == null) {
-            productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
-        }
         productTimestamp.updateProductBacklog();
     }
 
@@ -129,13 +109,11 @@ public class ProductTimeline {
         updateProductTimestamp(productTimestamp);
         productTimestamps.add(productTimestamp);
     }
-    
+
     @VisibleForTesting
-    ProductTimeline(ProductBacklogComparison productBacklogComparison) {
-        this.productBacklogComparison = productBacklogComparison;
+    ProductTimeline(ProductTimestampComparison productTimestampComparison) {
+        this.productTimestampComparison = productTimestampComparison;
         this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new Releases());
-        this.productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
+        productTimestampComparison.setSelectedTimestamp(getSelectedProductTimestamp());
     }
-
-
 }

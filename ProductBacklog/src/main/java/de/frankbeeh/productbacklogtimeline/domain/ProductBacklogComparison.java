@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import com.google.common.annotations.VisibleForTesting;
 
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
@@ -16,32 +19,17 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
  */
 public class ProductBacklogComparison {
     private ProductBacklog referenceProductBacklog;
-    private ProductBacklog selectedProductBacklog;
+    private ProductBacklog selectedProductBacklog = new ProductBacklog();
     private final List<ProductBacklogItemComparison> productBacklogComparisonItems = new ArrayList<ProductBacklogItemComparison>();
 
-    @VisibleForTesting
-    ProductBacklogComparison(ProductBacklogItemComparison... productBacklogComparisonItems) {
-        this.productBacklogComparisonItems.addAll(Arrays.asList(productBacklogComparisonItems));
-    }
-
-    public void updateAllItems() {
-        productBacklogComparisonItems.clear();
-        for (ProductBacklogItem productBacklogItem : selectedProductBacklog.getItems()) {
-            if (referenceProductBacklog == null) {
-                productBacklogComparisonItems.add(new ProductBacklogItemComparison(productBacklogItem));
-            } else {
-                final ProductBacklogItem referenceProductBacklogItem = referenceProductBacklog.getItemById(productBacklogItem.getId());
-                productBacklogComparisonItems.add(new ProductBacklogItemComparison(productBacklogItem, referenceProductBacklogItem));
-            }
-        }
+    public void setSelectedProductBacklog(ProductBacklog selectedProductBacklog) {
+        this.selectedProductBacklog = selectedProductBacklog;
+        updateAllItems();
     }
 
     public void setReferenceProductBacklog(ProductBacklog referenceProductBacklog) {
         this.referenceProductBacklog = referenceProductBacklog;
-    }
-
-    public void setSelectedProductBacklog(ProductBacklog selectedProductBacklog) {
-        this.selectedProductBacklog = selectedProductBacklog;
+        updateAllItems();
     }
 
     public List<ProductBacklogItemComparison> getItems() {
@@ -56,5 +44,26 @@ public class ProductBacklogComparison {
             }
         }
         return matchingProductBacklogItems;
+    }
+
+    @Override
+    public String toString() {
+        return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+    
+    private void updateAllItems() {
+        productBacklogComparisonItems.clear();
+        for (ProductBacklogItem productBacklogItem : selectedProductBacklog.getItems()) {
+            if (referenceProductBacklog == null) {
+                productBacklogComparisonItems.add(new ProductBacklogItemComparison(productBacklogItem));
+            } else {
+                productBacklogComparisonItems.add(new ProductBacklogItemComparison(productBacklogItem, referenceProductBacklog.getItemById(productBacklogItem.getId())));
+            }
+        }
+    }
+
+    @VisibleForTesting
+    ProductBacklogComparison(ProductBacklogItemComparison... productBacklogComparisonItems) {
+        this.productBacklogComparisonItems.addAll(Arrays.asList(productBacklogComparisonItems));
     }
 }

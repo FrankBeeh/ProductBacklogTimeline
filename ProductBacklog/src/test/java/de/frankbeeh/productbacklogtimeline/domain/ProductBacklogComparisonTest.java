@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.easymock.EasyMock.expect;
 
 import java.util.ArrayList;
@@ -22,48 +22,74 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 public class ProductBacklogComparisonTest extends EasyMockSupport {
     @Mock
     private ReleaseCriteria criteriaMock;
-    private ProductBacklogItemComparison productBacklogItem1 = new ProductBacklogItemComparison(new ProductBacklogItem("ID 1", null, null, null, null, "", "1", null), null);
-    private ProductBacklogItemComparison productBacklogItem2 = new ProductBacklogItemComparison(new ProductBacklogItem("ID 2", null, null, null, null, "", "2", null), null);
+    private ProductBacklogItemComparison productBacklogItemComparison1 = new ProductBacklogItemComparison(new ProductBacklogItem("ID 1", null, null, null, null, "", "1", null), null);
+    private ProductBacklogItemComparison productBacklogItemComparison2 = new ProductBacklogItemComparison(new ProductBacklogItem("ID 2", null, null, null, null, "", "2", null), null);
+    private ProductBacklogComparison productBacklogComparisonWithProductBacklogItemComparisons;
     private ProductBacklogComparison productBacklogComparison;
 
     @Test
     public void getMatchingProductBacklogItems_noneIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(false);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(false);
+        expect(criteriaMock.isMatching(productBacklogItemComparison1)).andReturn(false);
+        expect(criteriaMock.isMatching(productBacklogItemComparison2)).andReturn(false);
         replayAll();
-        assertEquals(new ArrayList<ProductBacklogItem>(), productBacklogComparison.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(new ArrayList<ProductBacklogItem>(), productBacklogComparisonWithProductBacklogItemComparisons.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
     public void getMatchingProductBacklogItems_firstIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(true);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(false);
+        expect(criteriaMock.isMatching(productBacklogItemComparison1)).andReturn(true);
+        expect(criteriaMock.isMatching(productBacklogItemComparison2)).andReturn(false);
         replayAll();
-        assertEquals(Arrays.asList(productBacklogItem1), productBacklogComparison.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemComparison1), productBacklogComparisonWithProductBacklogItemComparisons.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
     public void getMatchingProductBacklogItems_secondIsMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(false);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(true);
+        expect(criteriaMock.isMatching(productBacklogItemComparison1)).andReturn(false);
+        expect(criteriaMock.isMatching(productBacklogItemComparison2)).andReturn(true);
         replayAll();
-        assertEquals(Arrays.asList(productBacklogItem2), productBacklogComparison.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemComparison2), productBacklogComparisonWithProductBacklogItemComparisons.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
     }
 
     @Test
     public void getMatchingProductBacklogItems_bothAreMatching() throws Exception {
-        expect(criteriaMock.isMatching(productBacklogItem1)).andReturn(true);
-        expect(criteriaMock.isMatching(productBacklogItem2)).andReturn(true);
+        expect(criteriaMock.isMatching(productBacklogItemComparison1)).andReturn(true);
+        expect(criteriaMock.isMatching(productBacklogItemComparison2)).andReturn(true);
         replayAll();
-        assertEquals(Arrays.asList(productBacklogItem1, productBacklogItem2), productBacklogComparison.getMatchingProductBacklogItems(criteriaMock));
+        assertEquals(Arrays.asList(productBacklogItemComparison1, productBacklogItemComparison2),
+                productBacklogComparisonWithProductBacklogItemComparisons.getMatchingProductBacklogItems(criteriaMock));
         verifyAll();
+    }
+
+    @Test
+    public void setReferenceProductBacklogWithoutSelectedProductBacklog() throws Exception {
+        productBacklogComparison.setReferenceProductBacklog(new ProductBacklog(Arrays.asList(new ProductBacklogItem("ID 1", "Title 1", "Description 1", 1d, State.Todo, "Sprint 1", "Rank 1",
+                "PlannedRelease 1"))));
+        assertEquals(0, productBacklogComparison.getItems().size());
+    }
+
+    @Test
+    public void setSelectedProductBacklog() throws Exception {
+        final ProductBacklogItem productBacklogItem1 = new ProductBacklogItem("ID 1", "Title 1", "Description 1", 1d, State.Todo, "Sprint 1", "Rank 1", "PlannedRelease 1");
+        final ProductBacklogItem referenceProductBacklogItem1 = new ProductBacklogItem("ID 1", "Changed Title 1", "Description 1", 1d, State.Todo, "Sprint 1", "Rank 1", "PlannedRelease 1");
+        final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem("ID 2", "Title 2", "Description 2", 2d, State.Canceled, "Sprint 2", "Rank 2", "PlannedRelease 2");
+        final ProductBacklogItem referenceProductBacklogItem3 = new ProductBacklogItem("ID 3", "Title 3", "Description 3", 3d, State.Canceled, "Sprint 3", "Rank 3", "PlannedRelease 3");
+
+        productBacklogComparison.setSelectedProductBacklog(new ProductBacklog(Arrays.asList(productBacklogItem1, productBacklogItem2)));
+        assertEquals(Arrays.asList(new ProductBacklogItemComparison(productBacklogItem1), new ProductBacklogItemComparison(productBacklogItem2)).toString(),
+                productBacklogComparison.getItems().toString());
+
+        productBacklogComparison.setReferenceProductBacklog(new ProductBacklog(Arrays.asList(referenceProductBacklogItem1, referenceProductBacklogItem3)));
+        assertEquals(Arrays.asList(new ProductBacklogItemComparison(productBacklogItem1, referenceProductBacklogItem1), new ProductBacklogItemComparison(productBacklogItem2, null)).toString(),
+                productBacklogComparison.getItems().toString());
     }
 
     @Before
     public void setUp() {
-        productBacklogComparison = new ProductBacklogComparison(productBacklogItem1, productBacklogItem2);
+        productBacklogComparison = new ProductBacklogComparison();
+        productBacklogComparisonWithProductBacklogItemComparisons = new ProductBacklogComparison(productBacklogItemComparison1, productBacklogItemComparison2);
     }
 }

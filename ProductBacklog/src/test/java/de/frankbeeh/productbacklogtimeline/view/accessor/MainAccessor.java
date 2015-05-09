@@ -57,6 +57,10 @@ public class MainAccessor extends BaseAccessor {
         selectTab(baseUITest, "Velocity Forecast");
     }
 
+    public void selectReleasesTab(BaseUITest baseUITest) {
+        selectTab(baseUITest, "Releases");
+    }
+    
     public void assertContentOfProductBacklogTableView(TableViewContent expectedContent) {
         assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, expectedContent);
     }
@@ -99,10 +103,11 @@ public class MainAccessor extends BaseAccessor {
     private ComboBox<String> getReferencedProductTimestampComboBox() {
         return getUniqueNode("#referencedProductTimestamp");
     }
-
+    
     private void selectTab(BaseUITest baseUITest, String tabTitle) {
         clickOn(getUniqueNode(tabTitle));
         assertEquals(tabTitle, baseUITest.getSelectedTabTitle());
     }
+
 
 }

@@ -1,5 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
+import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.same;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -26,9 +27,10 @@ public class ProductTimelineTest extends EasyMockSupport {
     private ProductBacklog referenceProductBacklogMock;
     private VelocityForecast referenceVelocityForecast;
     private VelocityForecast selectedVelocityForecast;
-    private ProductBacklogComparison productBacklogComparisonMock;
+    private ProductTimestampComparison productTimestampComparisonMock;
     private Releases referenceReleasesMock;
     private Releases selectedReleasesMock;
+    private ProductBacklogComparison productBacklogComparisonMock;
 
     @Test
     public void initalContent() {
@@ -39,12 +41,14 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     @Test
     public void addAndSelectProductBacklog() throws Exception {
-        productTimelineWithMockedReleases.addProductBacklog(REFERENCE_DATE_TIME, REFERENCE, referenceProductBacklogMock, referenceVelocityForecast, referenceReleasesMock);
-        productTimelineWithMockedReleases.addProductBacklog(SELECTEDT_DATE_TIME, SELECTED, selectedProductBacklogMock, selectedVelocityForecast, selectedReleasesMock);
+        final ProductTimestamp referenceProductTimestamp = new ProductTimestamp(REFERENCE_DATE_TIME, REFERENCE, referenceProductBacklogMock, referenceVelocityForecast, referenceReleasesMock);
+        final ProductTimestamp selectedProductTimestamp = new ProductTimestamp(SELECTEDT_DATE_TIME, SELECTED, selectedProductBacklogMock, selectedVelocityForecast, selectedReleasesMock);
+        productTimelineWithMockedReleases.insertProductTimestamp(referenceProductTimestamp);
+        productTimelineWithMockedReleases.insertProductTimestamp(selectedProductTimestamp);
 
         resetAll();
-        productBacklogComparisonMock.setSelectedProductBacklog(selectedProductBacklogMock);
-        productBacklogComparisonMock.updateAllItems();
+        productTimestampComparisonMock.setSelectedTimestamp(same(selectedProductTimestamp));
+        expect(productTimestampComparisonMock.getProductBacklogComparision()).andReturn(productBacklogComparisonMock);
         selectedReleasesMock.updateAll(productBacklogComparisonMock);
         replayAll();
         productTimelineWithMockedReleases.selectProductTimestamp(getProductTimelineFullName(SELECTEDT_DATE_TIME, SELECTED));
@@ -52,9 +56,9 @@ public class ProductTimelineTest extends EasyMockSupport {
         verifyAll();
 
         resetAll();
-        productBacklogComparisonMock.setReferenceProductBacklog(referenceProductBacklogMock);
-        productBacklogComparisonMock.updateAllItems();
-        selectedReleasesMock.updateAll(same(productBacklogComparisonMock));
+        productTimestampComparisonMock.setReferenceTimestamp(same(referenceProductTimestamp));
+        expect(productTimestampComparisonMock.getProductBacklogComparision()).andReturn(productBacklogComparisonMock);
+        selectedReleasesMock.updateAll(productBacklogComparisonMock);
         replayAll();
         productTimelineWithMockedReleases.selectReferenceProductTimestamp(getProductTimelineFullName(REFERENCE_DATE_TIME, REFERENCE));
         verifyAll();
@@ -65,13 +69,14 @@ public class ProductTimelineTest extends EasyMockSupport {
     public void setUp() {
         ServiceLocator.init(new MockedServiceRegistry());
         selectedProductBacklogMock = createMock("selectedProductBacklogMock", ProductBacklog.class);
+        productBacklogComparisonMock = createMock("selectedProductBacklogComparisonMock", ProductBacklogComparison.class);
         referenceProductBacklogMock = createMock("referenceProductBacklogMock", ProductBacklog.class);
         referenceVelocityForecast = new VelocityForecast();
         selectedVelocityForecast = new VelocityForecast();
         referenceReleasesMock = createMock("referenceReleasesMock", Releases.class);
         selectedReleasesMock = createMock("selectedReleasesMock", Releases.class);
-        productBacklogComparisonMock = createMock(ProductBacklogComparison.class);
-        productTimelineWithMockedReleases = new ProductTimeline(productBacklogComparisonMock);
+        productTimestampComparisonMock = createMock(ProductTimestampComparison.class);
+        productTimelineWithMockedReleases = new ProductTimeline(productTimestampComparisonMock);
     }
 
     @After
