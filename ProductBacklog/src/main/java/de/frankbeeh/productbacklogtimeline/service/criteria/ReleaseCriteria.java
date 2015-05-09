@@ -1,9 +1,9 @@
 package de.frankbeeh.productbacklogtimeline.service.criteria;
 
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemComparison;
 
 public interface ReleaseCriteria {
 
-    boolean isMatching(ProductBacklogComparisonItem productBacklogComparisonItem);
+    boolean isMatching(ProductBacklogItemComparison productBacklogComparisonItem);
 
 }

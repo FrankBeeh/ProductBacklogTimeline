@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemComparison;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
@@ -22,8 +22,8 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 public class ProductBacklogComparisonTest extends EasyMockSupport {
     @Mock
     private ReleaseCriteria criteriaMock;
-    private ProductBacklogComparisonItem productBacklogItem1 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 1", null, null, null, null, "", "1", null), null);
-    private ProductBacklogComparisonItem productBacklogItem2 = new ProductBacklogComparisonItem(new ProductBacklogItem("ID 2", null, null, null, null, "", "2", null), null);
+    private ProductBacklogItemComparison productBacklogItem1 = new ProductBacklogItemComparison(new ProductBacklogItem("ID 1", null, null, null, null, "", "1", null), null);
+    private ProductBacklogItemComparison productBacklogItem2 = new ProductBacklogItemComparison(new ProductBacklogItem("ID 2", null, null, null, null, "", "2", null), null);
     private ProductBacklogComparison productBacklogComparison;
 
     @Test

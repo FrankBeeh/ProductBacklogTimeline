@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.criteria;
 
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemComparison;
 
 public class ProductBacklogItemIdIsEqual implements ReleaseCriteria {
 
@@ -11,7 +11,7 @@ public class ProductBacklogItemIdIsEqual implements ReleaseCriteria {
     }
 
     @Override
-    public boolean isMatching(ProductBacklogComparisonItem productBacklogComparisonItem) {
+    public boolean isMatching(ProductBacklogItemComparison productBacklogComparisonItem) {
         return id.equals(productBacklogComparisonItem.getId());
     }
 

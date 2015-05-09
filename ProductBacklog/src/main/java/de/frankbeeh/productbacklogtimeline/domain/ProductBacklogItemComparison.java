@@ -7,15 +7,21 @@ import com.google.common.base.Strings;
 
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
-public class ProductBacklogComparisonItem {
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Immutable representation of the comparison of two {@link ProductBacklogItem}s.
+ * </ul>
+ */
+public class ProductBacklogItemComparison {
     private final ProductBacklogItem productBacklogItem;
     private final ProductBacklogItem referenceProductBacklogItem;
 
-    public ProductBacklogComparisonItem(ProductBacklogItem productBacklogItem) {
+    public ProductBacklogItemComparison(ProductBacklogItem productBacklogItem) {
         this(productBacklogItem, productBacklogItem);
     }
 
-    public ProductBacklogComparisonItem(ProductBacklogItem productBacklogItem, ProductBacklogItem referenceProductBacklogItem) {
+    public ProductBacklogItemComparison(ProductBacklogItem productBacklogItem, ProductBacklogItem referenceProductBacklogItem) {
         this.productBacklogItem = productBacklogItem;
         if (referenceProductBacklogItem == null) {
             this.referenceProductBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);

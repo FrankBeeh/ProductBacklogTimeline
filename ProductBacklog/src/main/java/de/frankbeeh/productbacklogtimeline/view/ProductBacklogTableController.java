@@ -10,11 +10,11 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemComparison;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ProductBacklogTableController {
-    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ProductBacklogComparisonItem, String>, ObservableValue<String>> {
+    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ProductBacklogItemComparison, String>, ObservableValue<String>> {
         private final String progressForecastName;
 
         public CompletionForecastPropertyValueFactory(String progressForecastName) {
@@ -22,21 +22,21 @@ public class ProductBacklogTableController {
         }
 
         @Override
-        public ObservableValue<String> call(CellDataFeatures<ProductBacklogComparisonItem, String> cellDataFeatures) {
+        public ObservableValue<String> call(CellDataFeatures<ProductBacklogItemComparison, String> cellDataFeatures) {
             return new SimpleStringProperty(cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName));
         }
     }
 
     @FXML
-    private TableView<ProductBacklogComparisonItem> productBacklogTable;
+    private TableView<ProductBacklogItemComparison> productBacklogTable;
     @FXML
-    private TableColumn<ProductBacklogComparisonItem, String> completionForecastByMinVelColumn;
+    private TableColumn<ProductBacklogItemComparison, String> completionForecastByMinVelColumn;
     @FXML
-    private TableColumn<ProductBacklogComparisonItem, String> completionForecastByAvgVelColumn;
+    private TableColumn<ProductBacklogItemComparison, String> completionForecastByAvgVelColumn;
     @FXML
-    private TableColumn<ProductBacklogComparisonItem, String> completionForecastByMaxVelColumn;
+    private TableColumn<ProductBacklogItemComparison, String> completionForecastByMaxVelColumn;
 
-    private final ObservableList<ProductBacklogComparisonItem> model = FXCollections.<ProductBacklogComparisonItem> observableArrayList();
+    private final ObservableList<ProductBacklogItemComparison> model = FXCollections.<ProductBacklogItemComparison> observableArrayList();
 
     @FXML
     private void initialize() {

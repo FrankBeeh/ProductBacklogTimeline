@@ -16,7 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparisonItem;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemComparison;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
@@ -49,7 +49,7 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         release.setCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST, AVG_VEL_SPRINT_NAME_1);
         release.setCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST, MAX_VEL_SPRINT_NAME_1);
 
-        final List<ProductBacklogComparisonItem> matchingProductacklogItems = new ArrayList<ProductBacklogComparisonItem>();
+        final List<ProductBacklogItemComparison> matchingProductacklogItems = new ArrayList<ProductBacklogItemComparison>();
         expect(productBacklogComparison.getMatchingProductBacklogItems(criteria)).andReturn(matchingProductacklogItems);
         replayAll();
         visitor.visit(release, productBacklogComparison);
@@ -64,9 +64,9 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     public void visit_singleMatch() throws Exception {
         final double accumulatedEstimate = 10d;
         final Release release = new Release(null, criteria);
-        final ProductBacklogComparisonItem productBacklogItem = createProductBacklogItem(accumulatedEstimate, MIN_VEL_SPRINT_NAME_1, AVG_VEL_SPRINT_NAME_1, MAX_VEL_SPRINT_NAME_1);
+        final ProductBacklogItemComparison productBacklogItem = createProductBacklogItem(accumulatedEstimate, MIN_VEL_SPRINT_NAME_1, AVG_VEL_SPRINT_NAME_1, MAX_VEL_SPRINT_NAME_1);
 
-        final List<ProductBacklogComparisonItem> matchingProductacklogItems = Arrays.asList(productBacklogItem);
+        final List<ProductBacklogItemComparison> matchingProductacklogItems = Arrays.asList(productBacklogItem);
         expect(productBacklogComparison.getMatchingProductBacklogItems(criteria)).andReturn(matchingProductacklogItems);
         replayAll();
         visitor.visit(release, productBacklogComparison);
@@ -80,7 +80,7 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
     @Test
     public void visit_twoMatches() throws Exception {
         final Release release = new Release(null, criteria);
-        final List<ProductBacklogComparisonItem> matchingProductacklogItems = Arrays.asList(
+        final List<ProductBacklogItemComparison> matchingProductacklogItems = Arrays.asList(
                 createProductBacklogItem(ACCUMULATED_ESTIMATE_1, MIN_VEL_SPRINT_NAME_1, AVG_VEL_SPRINT_NAME_1, MAX_VEL_SPRINT_NAME_1),
                 createProductBacklogItem(ACCUMULATED_ESTIMATE_2, MIN_VEL_SPRINT_NAME_2, AVG_VEL_SPRINT_NAME_2, MAX_VEL_SPRINT_NAME_2));
         expect(productBacklogComparison.getMatchingProductBacklogItems(criteria)).andReturn(matchingProductacklogItems);
@@ -102,12 +102,12 @@ public class ComputeForecastForReleaseTest extends EasyMockSupport {
         return new Sprint(sprintName, null, null, null, null, null, null);
     }
 
-    private ProductBacklogComparisonItem createProductBacklogItem(double accumulatedEstimate, String minVelSprintName, String avgVelSprintName, String maxVelSprintName) {
+    private ProductBacklogItemComparison createProductBacklogItem(double accumulatedEstimate, String minVelSprintName, String avgVelSprintName, String maxVelSprintName) {
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, null, null, null, null, null);
         productBacklogItem.setAccumulatedEstimate(accumulatedEstimate);
         productBacklogItem.setCompletionForecast(VelocityForecast.MINIMUM_VELOCITY_FORECAST, createSprintData(minVelSprintName));
         productBacklogItem.setCompletionForecast(VelocityForecast.AVERAGE_VELOCITY_FORECAST, createSprintData(avgVelSprintName));
         productBacklogItem.setCompletionForecast(VelocityForecast.MAXIMUM_VELOCITY_FORECAST, createSprintData(maxVelSprintName));
-        return new ProductBacklogComparisonItem(productBacklogItem, null);
+        return new ProductBacklogItemComparison(productBacklogItem, null);
     }
 }
