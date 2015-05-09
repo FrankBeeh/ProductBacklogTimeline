@@ -118,11 +118,4 @@
       </columns>
     </TableColumn>
   </columns>
-  <contextMenu>
-  	<ContextMenu>
-  		<items>
-  			<MenuItem text="edit Sprint" fx:id="editItem" onAction="#editItem" />
-  		</items>
-  	</ContextMenu>
-  </contextMenu>
 </TableView>

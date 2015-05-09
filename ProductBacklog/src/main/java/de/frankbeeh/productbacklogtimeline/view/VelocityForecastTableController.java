@@ -12,7 +12,6 @@ import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.domain.SprintData;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
-import de.frankbeeh.productbacklogtimeline.view.dialog.SprintEditDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.SprintDataViewModel;
 
 public class VelocityForecastTableController {
@@ -120,16 +119,6 @@ public class VelocityForecastTableController {
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, VelocityForecast.AVERAGE_VELOCITY_FORECAST);
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, VelocityForecast.MINIMUM_VELOCITY_FORECAST);
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, VelocityForecast.MAXIMUM_VELOCITY_FORECAST);
-    }
-
-    @FXML
-    private void editItem() {
-        final SprintDataViewModel selectedItem = velocityForecastTable.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            final BasicDialog<SprintDataViewModel> dialog = new SprintEditDialog();
-            dialog.initModel(selectedItem);
-            dialog.openDialog();
-        }
     }
 
     public void initModel(VelocityForecast velocityForecast) {
