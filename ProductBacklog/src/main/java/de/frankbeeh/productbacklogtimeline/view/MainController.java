@@ -17,9 +17,11 @@ import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
+import de.frankbeeh.productbacklogtimeline.domain.Releases;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
+import de.frankbeeh.productbacklogtimeline.service.importer.ReleasesFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.view.dialog.ImportProductTimestampDialog;
 import de.frankbeeh.productbacklogtimeline.view.model.ImportProductTimestampViewModel;
@@ -71,7 +73,7 @@ public class MainController {
         final VelocityForecast velocityForecast = importVelocityForecastFromCsv(result.getVelocityForecastFile());
         final String name = result.getName();
         final LocalDateTime dateTime = result.getDateTime();
-        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, null));
+        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, importReleaseFromCsv(new File("Releases1.csv"))));
         setSelectableProductBacklogNames();
         changeSelectedProductTimestamp(dateTime, name);
         updateProductBacklogAndReleaseTable();
@@ -89,12 +91,16 @@ public class MainController {
         updateProductBacklogAndReleaseTable();
     }
 
-    private ProductBacklog importProductBacklogFromCsv(final File selectedFile) throws IOException, FileNotFoundException {
-        return new ProductBacklogFromCsvImporter().importData(new FileReader(selectedFile));
+    private ProductBacklog importProductBacklogFromCsv(final File file) throws IOException, FileNotFoundException {
+        return new ProductBacklogFromCsvImporter().importData(new FileReader(file));
     }
 
-    private VelocityForecast importVelocityForecastFromCsv(final File selectedFile) throws IOException, FileNotFoundException {
-        return new VelocityForecastFromCsvImporter().importData(new FileReader(selectedFile));
+    private VelocityForecast importVelocityForecastFromCsv(final File file) throws IOException, FileNotFoundException {
+        return new VelocityForecastFromCsvImporter().importData(new FileReader(file));
+    }
+    
+    private Releases importReleaseFromCsv(File file) throws FileNotFoundException, IOException {
+        return new ReleasesFromCsvImporter().importData(new FileReader(file));
     }
 
     private void changeSelectedProductTimestamp(LocalDateTime dateTime, final String productBacklogName) {

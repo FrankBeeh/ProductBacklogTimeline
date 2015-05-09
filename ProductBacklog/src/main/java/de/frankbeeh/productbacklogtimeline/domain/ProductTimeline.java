@@ -110,7 +110,7 @@ public class ProductTimeline {
     }
 
     private ProductTimestamp getPreviousProductTimestamp() {
-        if (productTimestamps.isEmpty()){
+        if (productTimestamps.isEmpty()) {
             return emptyProductTimestamp;
         }
         return productTimestamps.get(productTimestamps.size() - 1);
@@ -138,10 +138,12 @@ public class ProductTimeline {
     private void updateProductTimestamp(ProductTimestamp productTimestamp) {
         productTimestamp.updateVelocityForecast();
         // TODO: Do not overwrite as soon as the releases are read from CSV or DB!
-        productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
+        if (productTimestamp.getReleases() == null) {
+            productTimestamp.setReleases(getPreviousProductTimestamp().getReleases());
+        }
         productTimestamp.updateProductBacklog();
     }
-    
+
     private void updateAndAddProductTimestamp(ProductTimestamp productTimestamp) {
         updateProductTimestamp(productTimestamp);
         productTimestamps.add(productTimestamp);

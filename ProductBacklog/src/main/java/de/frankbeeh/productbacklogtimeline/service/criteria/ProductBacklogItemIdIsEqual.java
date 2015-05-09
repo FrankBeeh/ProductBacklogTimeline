@@ -17,6 +17,6 @@ public class ProductBacklogItemIdIsEqual implements ReleaseCriteria {
 
     @Override
     public String toString() {
-        return "id=" + id;
+        return "idOfPBI=" + id;
     }
 }

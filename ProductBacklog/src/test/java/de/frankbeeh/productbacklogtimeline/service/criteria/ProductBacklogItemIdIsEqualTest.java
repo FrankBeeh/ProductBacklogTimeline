@@ -25,6 +25,6 @@ public class ProductBacklogItemIdIsEqualTest {
 
     @Test
     public void toStringRepresentation() throws Exception {
-        assertEquals("id=10", new ProductBacklogItemIdIsEqual("10").toString());
+        assertEquals("idOfPBI=10", new ProductBacklogItemIdIsEqual("10").toString());
     }
 }
