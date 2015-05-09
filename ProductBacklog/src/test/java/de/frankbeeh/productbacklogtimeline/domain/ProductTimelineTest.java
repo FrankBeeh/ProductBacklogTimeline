@@ -34,9 +34,11 @@ public class ProductTimelineTest extends EasyMockSupport {
 
     @Test
     public void initalContent() {
-        assertTrue(productTimelineWithMockedReleases.getSelectedVelocityForecast().getSprints().isEmpty());
-        assertTrue(productTimelineWithMockedReleases.getSelectedProductBacklog().getItems().isEmpty());
-        assertTrue(productTimelineWithMockedReleases.getSelectedReleases().getReleases().isEmpty());
+        final ProductTimeline productTimeline = new ProductTimeline();
+        final VelocityForecastComparison selectedVelocityForecastComparison = productTimeline.getSelectedVelocityForecastComparison();
+        assertTrue(selectedVelocityForecastComparison.getComparisons().isEmpty());
+        assertTrue(productTimeline.getSelectedProductBacklog().getItems().isEmpty());
+        assertTrue(productTimeline.getSelectedReleases().getReleases().isEmpty());
     }
 
     @Test

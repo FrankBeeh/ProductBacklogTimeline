@@ -9,6 +9,9 @@ import java.util.List;
  * </ul>
  */
 public class VelocityForecastComparison extends Comparison<VelocityForecast, Sprint, SprintComparison> {
+    public VelocityForecastComparison(){
+        setSelected(new VelocityForecast());
+    }
 
     @Override
     protected List<Sprint> getItems() {

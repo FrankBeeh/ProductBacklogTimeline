@@ -23,4 +23,8 @@ public class ProductTimestampComparison {
     public ProductBacklogComparison getProductBacklogComparision() {
         return productBacklogComparison;
     }
+
+    public VelocityForecastComparison getVelocityForecastComparison() {
+        return velocityForecastComparison;
+    }
 }

@@ -116,7 +116,7 @@ public class MainController {
     private void updateProductBacklogAndReleaseTable() {
         productBacklogTableController.initModel(productTimeline.getProductBacklogComparison());
         productBacklogTableController.updateView();
-        velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecast());
+        velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecastComparison());
         releaseBurndownController.initModel(productTimeline.getSelectedProductTimestamp());
         releaseTableController.initModel(productTimeline.getSelectedReleases());
         releaseTableController.updateView();

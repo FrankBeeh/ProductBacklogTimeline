@@ -47,8 +47,8 @@ public class ProductTimeline {
         updateReleases();
     }
 
-    public VelocityForecast getSelectedVelocityForecast() {
-        return getSelectedProductTimestamp().getVelocityForecast();
+    public VelocityForecastComparison getSelectedVelocityForecastComparison() {
+        return productTimestampComparison.getVelocityForecastComparison();
     }
 
     public Releases getSelectedReleases() {
