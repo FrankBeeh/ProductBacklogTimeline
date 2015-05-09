@@ -7,7 +7,6 @@ import java.util.List;
 import com.google.common.annotations.VisibleForTesting;
 
 import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
-import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
 public class ProductTimeline {
@@ -19,14 +18,7 @@ public class ProductTimeline {
     private ProductTimestamp emptyProductTimestamp;
 
     public ProductTimeline() {
-        this(createDummyReleases(), new ProductBacklogComparison());
-    }
-
-    @VisibleForTesting
-    ProductTimeline(Releases releases, ProductBacklogComparison productBacklogComparison) {
-        this.productBacklogComparison = productBacklogComparison;
-        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, releases);
-        this.productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
+        this(new ProductBacklogComparison());
     }
 
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
@@ -76,6 +68,14 @@ public class ProductTimeline {
         return productBacklogComparison;
     }
 
+    public void loadFromDataBase() {
+        final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
+        final List<LocalDateTime> allIds = service.getAllIds();
+        for (LocalDateTime localDateTime : allIds) {
+            updateAndAddProductTimestamp(service.get(localDateTime));
+        }
+    }
+
     private void updateProductBacklogComparison() {
         productBacklogComparison.updateAllItems();
     }
@@ -116,25 +116,6 @@ public class ProductTimeline {
         return productTimestamps.get(productTimestamps.size() - 1);
     }
 
-    private static Releases createDummyReleases() {
-        final Releases releases = new Releases();
-        releases.addRelease(new Release("TP1: Technical Preview Basis", new PlannedReleaseIsEqual("TP1: Technical Preview Basis")));
-        releases.addRelease(new Release("TP 2: Technical Preview Erweitert", new PlannedReleaseIsEqual("TP 2: Technical Preview Erweitert")));
-        releases.addRelease(new Release("CP: Consumer Preview", new PlannedReleaseIsEqual("CP: Consumer Preview")));
-        releases.addRelease(new Release("Full Launch", new PlannedReleaseIsEqual("Full Launch")));
-        releases.addRelease(new Release("Weiterentwicklung", new PlannedReleaseIsEqual("Weiterentwicklung")));
-        releases.addRelease(new Release("Phase Out bestehende App", new PlannedReleaseIsEqual("Phase Out bestehende App")));
-        return releases;
-    }
-
-    public void loadFromDataBase() {
-        final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
-        final List<LocalDateTime> allIds = service.getAllIds();
-        for (LocalDateTime localDateTime : allIds) {
-            updateAndAddProductTimestamp(service.get(localDateTime));
-        }
-    }
-
     private void updateProductTimestamp(ProductTimestamp productTimestamp) {
         productTimestamp.updateVelocityForecast();
         // TODO: Do not overwrite as soon as the releases are read from CSV or DB!
@@ -148,4 +129,13 @@ public class ProductTimeline {
         updateProductTimestamp(productTimestamp);
         productTimestamps.add(productTimestamp);
     }
+    
+    @VisibleForTesting
+    ProductTimeline(ProductBacklogComparison productBacklogComparison) {
+        this.productBacklogComparison = productBacklogComparison;
+        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new Releases());
+        this.productBacklogComparison.setSelectedProductBacklog(getSelectedProductBacklog());
+    }
+
+
 }

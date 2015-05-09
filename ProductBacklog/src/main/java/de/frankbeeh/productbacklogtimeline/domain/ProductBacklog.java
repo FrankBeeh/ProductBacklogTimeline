@@ -20,7 +20,6 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.RankProductBacklogIte
  * </ul>
  */
 public class ProductBacklog {
-
     private final LinkedList<ProductBacklogItem> items;
     private final ProductBacklogItemVisitor[] visitors;
     private final ProductBacklogSortingStrategy sortingStrategy;

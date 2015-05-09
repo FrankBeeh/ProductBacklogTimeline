@@ -29,13 +29,12 @@ public class ProductTimelineTest extends EasyMockSupport {
     private ProductBacklogComparison productBacklogComparisonMock;
     private Releases referenceReleasesMock;
     private Releases selectedReleasesMock;
-    private Releases initialReleasesMock;
 
     @Test
     public void initalContent() {
         assertTrue(productTimelineWithMockedReleases.getSelectedVelocityForecast().getSprints().isEmpty());
         assertTrue(productTimelineWithMockedReleases.getSelectedProductBacklog().getItems().isEmpty());
-        assertSame(initialReleasesMock, productTimelineWithMockedReleases.getSelectedReleases());
+        assertTrue(productTimelineWithMockedReleases.getSelectedReleases().getReleases().isEmpty());
     }
 
     @Test
@@ -69,11 +68,10 @@ public class ProductTimelineTest extends EasyMockSupport {
         referenceProductBacklogMock = createMock("referenceProductBacklogMock", ProductBacklog.class);
         referenceVelocityForecast = new VelocityForecast();
         selectedVelocityForecast = new VelocityForecast();
-        initialReleasesMock = createMock("initialReleasesMock", Releases.class);
         referenceReleasesMock = createMock("referenceReleasesMock", Releases.class);
         selectedReleasesMock = createMock("selectedReleasesMock", Releases.class);
         productBacklogComparisonMock = createMock(ProductBacklogComparison.class);
-        productTimelineWithMockedReleases = new ProductTimeline(initialReleasesMock, productBacklogComparisonMock);
+        productTimelineWithMockedReleases = new ProductTimeline(productBacklogComparisonMock);
     }
 
     @After
