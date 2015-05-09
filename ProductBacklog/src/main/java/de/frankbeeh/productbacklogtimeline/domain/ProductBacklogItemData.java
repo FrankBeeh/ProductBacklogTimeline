@@ -77,14 +77,21 @@ public class ProductBacklogItemData {
 
     public String getHash() {
         final HashFunction hashFunction = Hashing.sha1();
-        final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(id)).putUnencodedChars(Strings.nullToEmpty(title)).putUnencodedChars(Strings.nullToEmpty(description));
+        final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(id)).putUnencodedChars(nullToDefault(title)).putUnencodedChars(nullToDefault(description));
         if (estimate != null) {
             hasher.putDouble(estimate);
         }
         if (state != null) {
             hasher.putUnencodedChars(state.toString());
         }
-        hasher.putUnencodedChars(Strings.nullToEmpty(sprint)).putUnencodedChars(Strings.nullToEmpty(rank)).putUnencodedChars(Strings.nullToEmpty(plannedRelease));
+        hasher.putUnencodedChars(nullToDefault(sprint)).putUnencodedChars(nullToDefault(rank)).putUnencodedChars(nullToDefault(plannedRelease));
         return hasher.hash().toString();
+    }
+
+    private String nullToDefault(String string) {
+        if (string == null) {
+            return "-";
+        }
+        return string;
     }
 }

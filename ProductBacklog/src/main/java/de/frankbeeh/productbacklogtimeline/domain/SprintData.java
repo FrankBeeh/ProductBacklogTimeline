@@ -196,24 +196,28 @@ public class SprintData {
     public String getHash() {
         final HashFunction hashFunction = Hashing.sha1();
         final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(name.get()));
-        if (getStartDate() != null) {
-            hasher.putLong(getStartDate().toEpochDay());
-        }
-        if (getEndDate() != null) {
-            hasher.putLong(getEndDate().toEpochDay());
-        }
-        if (getCapacityForecast() != null){
-            hasher.putDouble(getCapacityForecast());
-        }
-        if (getEffortForecast() != null){
-            hasher.putDouble(getEffortForecast());
-        }
-        if (getCapacityDone() != null){
-            hasher.putDouble(getCapacityDone());
-        }
-        if (getEffortDone() != null){
-            hasher.putDouble(getEffortDone());
-        }
+        hashDate(hasher, getStartDate());
+        hashDate(hasher, getEndDate());
+        hashDouble(hasher, getCapacityForecast());
+        hashDouble(hasher, getEffortForecast());
+        hashDouble(hasher, getCapacityDone());
+        hashDouble(hasher, getEffortDone());
         return hasher.hash().toString();
+    }
+
+    private void hashDouble(final Hasher hasher, Double value) {
+        if (value == null) {
+            hasher.putChar('-');
+        } else {
+            hasher.putDouble(value);
+        }
+    }
+
+    private void hashDate(final Hasher hasher, final LocalDate localDate) {
+        if (localDate == null) {
+            hasher.putChar('-');
+        } else {
+            hasher.putLong(localDate.toEpochDay());
+        }
     }
 }

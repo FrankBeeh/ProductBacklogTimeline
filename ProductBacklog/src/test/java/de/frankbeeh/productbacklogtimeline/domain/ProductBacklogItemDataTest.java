@@ -53,6 +53,13 @@ public class ProductBacklogItemDataTest {
         assertEquals(newProductBacklogItemDataWithPlannedRelease("Release 1").getHash(), newProductBacklogItemDataWithPlannedRelease("Release 1").getHash());
         assertNotEquals(newProductBacklogItemDataWithPlannedRelease("Release 1").getHash(), newProductBacklogItemDataWithPlannedRelease("Release 2").getHash());
     }
+    
+    @Test
+    public void hashSameValueOfDifferentProperties() {
+        assertNotEquals(newProductBacklogItemDataWithTitle("Text").getHash(), newProductBacklogItemDataWithDescription("Text").getHash());
+        assertNotEquals(newProductBacklogItemDataWithSprint("Text").getHash(), newProductBacklogItemDataWithRank("Text").getHash());
+        assertNotEquals(newProductBacklogItemDataWithRank("Text").getHash(), newProductBacklogItemDataWithPlannedRelease("Text").getHash());
+    }
 
     private ProductBacklogItemData newProductBacklogItemDateWithId(String id) {
         return new ProductBacklogItemData(id, null, null, null, (State) null, null, null, null);

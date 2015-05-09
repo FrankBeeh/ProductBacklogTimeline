@@ -5,13 +5,15 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 
 import java.time.LocalDate;
+import java.time.Month;
 
 import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
 
 public class SprintDataTest {
-
+    private static final LocalDate DATE_1 = LocalDate.of(2001, Month.JANUARY, 1);
+    private static final LocalDate DATE_2 = LocalDate.of(2002, Month.FEBRUARY, 2);
     private static final String SPRINT_NAME_1 = "Sprint name 1";
     private static final String SPRINT_NAME_2 = "Sprint name 2";
     private static final String FORECAST_NAME = "forecast name";
@@ -102,14 +104,14 @@ public class SprintDataTest {
 
     @Test
     public void hashStartDate() {
-        assertEquals(newSprintDataWithStartDate(LocalDate.now()).getHash(), newSprintDataWithStartDate(LocalDate.now()).getHash());
-        assertNotEquals(newSprintDataWithStartDate(LocalDate.now()).getHash(), newSprintDataWithStartDate(LocalDate.now().plusDays(1)).getHash());
+        assertEquals(newSprintDataWithStartDate(DATE_1).getHash(), newSprintDataWithStartDate(DATE_1).getHash());
+        assertNotEquals(newSprintDataWithStartDate(DATE_1).getHash(), newSprintDataWithStartDate(DATE_2).getHash());
     }
 
     @Test
     public void hashEndDate() {
-        assertEquals(newSprintDataWithEndDate(LocalDate.now()).getHash(), newSprintDataWithEndDate(LocalDate.now()).getHash());
-        assertNotEquals(newSprintDataWithEndDate(LocalDate.now()).getHash(), newSprintDataWithEndDate(LocalDate.now().plusDays(1)).getHash());
+        assertEquals(newSprintDataWithEndDate(DATE_1).getHash(), newSprintDataWithEndDate(DATE_1).getHash());
+        assertNotEquals(newSprintDataWithEndDate(DATE_1).getHash(), newSprintDataWithEndDate(DATE_2).getHash());
     }
 
     @Test
@@ -134,6 +136,13 @@ public class SprintDataTest {
     public void hashEffortDone() {
         assertEquals(newSprintDataWithEffortDone(1d).getHash(), newSprintDataWithEffortDone(1d).getHash());
         assertNotEquals(newSprintDataWithEffortDone(1d).getHash(), newSprintDataWithEffortDone(2d).getHash());
+    }
+
+    @Test
+    public void hashSameValueOfDifferentProperties() {
+        assertNotEquals(newSprintDataWithStartDate(DATE_1).getHash(), newSprintDataWithEndDate(DATE_1).getHash());
+        assertNotEquals(newSprintDataWithCapacityDone(1d).getHash(), newSprintDataWithCapacityForecast(1d).getHash());
+        assertNotEquals(newSprintDataWithEffortDone(1d).getHash(), newSprintDataWithEffortForecast(1d).getHash());
     }
 
     private SprintData newSprintDataWithName(String name) {
