@@ -5,11 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -23,13 +18,13 @@ import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
 public class SprintData {
 
-    private final StringProperty name = new SimpleStringProperty();
-    private final ObjectProperty<LocalDate> startDate = new SimpleObjectProperty<LocalDate>();
-    private final ObjectProperty<LocalDate> endDate = new SimpleObjectProperty<LocalDate>();
-    private final ObjectProperty<Double> capacityForecast = new SimpleObjectProperty<Double>();
-    private final ObjectProperty<Double> effortForecast = new SimpleObjectProperty<Double>();
-    private final ObjectProperty<Double> capacityDone = new SimpleObjectProperty<Double>();;
-    private final ObjectProperty<Double> effortDone = new SimpleObjectProperty<Double>();;
+    private final String name;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
+    private final Double capacityForecast;
+    private final Double effortForecast;
+    private final Double capacityDone;
+    private final Double effortDone;
 
     private final Map<String, Double> progressForecastBasedOnHistory;
     private final Map<String, Double> accumulatedProgressForecastBasedOnHistory;
@@ -40,71 +35,42 @@ public class SprintData {
     }
 
     public SprintData(String name, LocalDate startDate, LocalDate endDate, Double capacityForecast, Double effortForecast, Double capacityDone, Double effortDone) {
-        this.name.set(name);
-        this.startDate.set(startDate);
-        this.endDate.set(endDate);
-        this.capacityForecast.set(capacityForecast);
-        this.effortForecast.set(effortForecast);
-        this.capacityDone.set(capacityDone);
-        this.effortDone.set(effortDone);
-        this.accumulatedEffortDone = null;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.capacityForecast = capacityForecast;
+        this.effortForecast = effortForecast;
+        this.capacityDone = capacityDone;
+        this.effortDone = effortDone;
         this.progressForecastBasedOnHistory = new HashMap<String, Double>();
         this.accumulatedProgressForecastBasedOnHistory = new HashMap<String, Double>();
     }
 
     public String getName() {
-        return name.get();
-    }
-
-    public StringProperty nameProperty() {
         return name;
     }
 
     public LocalDate getStartDate() {
-        return startDate.get();
-    }
-
-    public ObjectProperty<LocalDate> startDateProperty() {
         return startDate;
     }
 
     public LocalDate getEndDate() {
-        return endDate.get();
-    }
-
-    public ObjectProperty<LocalDate> endDateProperty() {
         return endDate;
     }
 
     public Double getCapacityForecast() {
-        return capacityForecast.get();
-    }
-
-    public ObjectProperty<Double> capacityForecastProperty() {
         return capacityForecast;
     }
 
     public Double getEffortForecast() {
-        return effortForecast.get();
-    }
-
-    public ObjectProperty<Double> effortForecastProperty() {
         return effortForecast;
     }
 
     public Double getCapacityDone() {
-        return capacityDone.get();
-    }
-
-    public ObjectProperty<Double> capacityDoneProperty() {
         return capacityDone;
     }
 
     public Double getEffortDone() {
-        return effortDone.get();
-    }
-
-    public ObjectProperty<Double> effortDoneProperty() {
         return effortDone;
     }
 
@@ -195,7 +161,7 @@ public class SprintData {
 
     public String getHash() {
         final HashFunction hashFunction = Hashing.sha1();
-        final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(name.get()));
+        final Hasher hasher = hashFunction.newHasher().putUnencodedChars(Strings.nullToEmpty(getName()));
         hashDate(hasher, getStartDate());
         hashDate(hasher, getEndDate());
         hashDouble(hasher, getCapacityForecast());
