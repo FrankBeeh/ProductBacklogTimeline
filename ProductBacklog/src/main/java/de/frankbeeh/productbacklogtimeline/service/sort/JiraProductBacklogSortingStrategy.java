@@ -18,9 +18,9 @@ public class JiraProductBacklogSortingStrategy implements ProductBacklogSortingS
 
         @Override
         public int compare(ProductBacklogItem productBacklogItem1, ProductBacklogItem productBacklogItem2) {
-            final int sortIndexDifference = velocityForecast.getSortIndex(productBacklogItem1.getSprint()) - velocityForecast.getSortIndex(productBacklogItem2.getSprint());
+            final int sortIndexDifference = velocityForecast.getSortIndex(productBacklogItem1.getJiraSprint()) - velocityForecast.getSortIndex(productBacklogItem2.getJiraSprint());
             if (sortIndexDifference == 0) {
-                return productBacklogItem1.getRank().compareTo(productBacklogItem2.getRank());
+                return productBacklogItem1.getJiraRank().compareTo(productBacklogItem2.getJiraRank());
             }
             return sortIndexDifference;
         }

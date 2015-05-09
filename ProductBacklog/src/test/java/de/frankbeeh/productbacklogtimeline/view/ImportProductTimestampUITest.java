@@ -28,34 +28,34 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String RELEASES_FILE_2 = "Releases2.csv";
 
     private static final TableViewContent PBL_1_WITH_FORECAST_1 = new TableViewContent(new String[][] {
-            { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "2", "1.0", "Todo", "PBI 2", "Description 2", "4.0", "Sprint 1", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "3", "5.0", "Todo", "PBI 3", "Description 3", "9.0", "", "Release 1", SPRINT_3, SPRINT_3, SPRINT_3 },
-            { "4", "8.0", "Todo", "PBI 4", "Description 4", "17.0", "", "Release 1", SPRINT_5, SPRINT_5, SPRINT_5 } });
+            { "1", "     1\n(NEW)", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
+            { "2", "     2\n(NEW)", "1.0", "Todo", "PBI 2", "Description 2", "4.0", "Sprint 1", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "3", "     3\n(NEW)", "5.0", "Todo", "PBI 3", "Description 3", "9.0", "", "Release 1", SPRINT_3, SPRINT_3, SPRINT_3 },
+            { "4", "     4\n(NEW)", "8.0", "Todo", "PBI 4", "Description 4", "17.0", "", "Release 1", SPRINT_5, SPRINT_5, SPRINT_5 } });
 
-    private static final TableViewContent PBL_1_COMPARED_TO_PBL_2 = new TableViewContent(
-            new String[][] {
-                    { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-                    { "2", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "     4.0\n(-12.0)", "Sprint 1\n(No Sprint)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-                    { "3", "5.0", "Todo", "PBI 3\n(New PBI 3)", "Description 3\n(New Description 3)", "     9.0\n(-12.0)", "", "Release 1\n(Release 2)", SPRINT_3_TO_SPRINT_4, SPRINT_3_TO_SPRINT_4,
-                            SPRINT_3 }, { "4", "    8.0\n(+3.0)", "Todo", "PBI 4", "Description 4", "   17.0\n(-9.0)", "", "Release 1\n(Release 2)", SPRINT_5, SPRINT_5, SPRINT_5_TO_SPRINT_4 } });
+    private static final TableViewContent PBL_1_COMPARED_TO_PBL_2 = new TableViewContent(new String[][] {
+            { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
+            { "2", "    2\n(-1)", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "     4.0\n(-12.0)", "Sprint 1\n(No Sprint)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "3", "    3\n(-1)", "5.0", "Todo", "PBI 3\n(New PBI 3)", "Description 3\n(New Description 3)", "     9.0\n(-12.0)", "", "Release 1\n(Release 2)", SPRINT_3_TO_SPRINT_4,
+                    SPRINT_3_TO_SPRINT_4, SPRINT_3 },
+            { "4", "    4\n(-1)", "    8.0\n(+3.0)", "Todo", "PBI 4", "Description 4", "   17.0\n(-9.0)", "", "Release 1\n(Release 2)", SPRINT_5, SPRINT_5, SPRINT_5_TO_SPRINT_4 } });
 
     private static final TableViewContent PBL_2_WITH_FORECAST_2 = new TableViewContent(new String[][] {
-            { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-            { "5", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "2", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "3", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", "Release 2", SPRINT_4, SPRINT_4, SPRINT_3 },
-            { "4", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", "Release 2", SPRINT_5, SPRINT_5, SPRINT_4 },
-            { "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
+            { "1", "     1\n(NEW)", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
+            { "5", "     2\n(NEW)", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "2", "     3\n(NEW)", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "3", "     4\n(NEW)", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", "Release 2", SPRINT_4, SPRINT_4, SPRINT_3 },
+            { "4", "     5\n(NEW)", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", "Release 2", SPRINT_5, SPRINT_5, SPRINT_4 },
+            { "6", "     6\n(NEW)", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
-    private static final TableViewContent PBL_2_COMPARED_TO_PBL_1 = new TableViewContent(
-            new String[][] {
-                    { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-                    { "5", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-                    { "2", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    16.0\n(+12.0)", "No Sprint\n(Sprint 1)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-                    { "3", "5.0", "Todo", "New PBI 3\n(PBI 3)", "New Description 3\n(Description 3)", "    21.0\n(+12.0)", "", "Release 2\n(Release 1)", SPRINT_4_TO_SPRINT_3, SPRINT_4_TO_SPRINT_3,
-                            SPRINT_3 }, { "4", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "   26.0\n(+9.0)", "", "Release 2\n(Release 1)", SPRINT_5, SPRINT_5, SPRINT_4_TO_SPRINT_5 },
-                    { "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
+    private static final TableViewContent PBL_2_COMPARED_TO_PBL_1 = new TableViewContent(new String[][] {
+            { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
+            { "5", "     2\n(NEW)", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "2", "    3\n(+1)", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    16.0\n(+12.0)", "No Sprint\n(Sprint 1)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "3", "    4\n(+1)", "5.0", "Todo", "New PBI 3\n(PBI 3)", "New Description 3\n(Description 3)", "    21.0\n(+12.0)", "", "Release 2\n(Release 1)", SPRINT_4_TO_SPRINT_3,
+                    SPRINT_4_TO_SPRINT_3, SPRINT_3 },
+            { "4", "    5\n(+1)", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "   26.0\n(+9.0)", "", "Release 2\n(Release 1)", SPRINT_5, SPRINT_5, SPRINT_4_TO_SPRINT_5 },
+            { "6", "     6\n(NEW)", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
 
     private static final TableViewContent VELOCITY_FORECAST_1 = new TableViewContent(new String[][] {
             { "Sprint 1", "25.04.2014", "25.04.2014", "4.0", "4.0", "6.0", "3.0", "3.0", "3.0", "3.0", "3.0", "", "", "" },
@@ -82,7 +82,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
 
     private static final TableViewContent RELEASES_2 = new TableViewContent(new String[][] { { "Release 1", "plannedRelease=\nRelease 1", "16.0", SPRINT_2, SPRINT_2, SPRINT_2 },
             { "Release 2", "plannedRelease=\nRelease 2", "28.0", SPRINT_6, SPRINT_5, SPRINT_5 } });
-    
+
     @Test
     public void selectProductTimestamp() throws Exception {
         getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1, PBL_FILE_1, VELOCITY_FORECAST_FILE_1, RELEASES_FILE_1);
@@ -97,7 +97,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
         getMainAccessor().assertContentOfProductBacklogTableView(PBL_2_WITH_FORECAST_2);
         getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2);
         getMainAccessor().assertContentOfReleasesTableView(RELEASES_2);
-        
+
         getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
         getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
         getMainAccessor().selectProductBacklogTab(this);

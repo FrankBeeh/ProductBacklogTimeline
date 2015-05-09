@@ -9,10 +9,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class ProductBacklogItem {
     private final Map<String, SprintData> completionForecast;
     private Double accumulatedEstimate;
+    private int productBacklogRank;
     private final ProductBacklogItemData data;
 
-    public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String sprint, String rank, String plannedRelease) {
-        this.data = new ProductBacklogItemData(id, title, description, estimate, state, sprint, rank, plannedRelease);
+    public ProductBacklogItem(String id, String title, String description, Double estimate, State state, String jiraSprint, String jiraRank, String plannedRelease) {
+        this.data = new ProductBacklogItemData(id, title, description, estimate, state, jiraSprint, jiraRank, plannedRelease);
         this.completionForecast = new HashMap<String, SprintData>();
     }
 
@@ -30,6 +31,14 @@ public class ProductBacklogItem {
 
     public void setCompletionForecast(String progressForecastName, SprintData sprintData) {
         completionForecast.put(progressForecastName, sprintData);
+    }
+
+    public void setProductBacklogRank(int productBacklogRank) {
+        this.productBacklogRank = productBacklogRank;
+    }
+
+    public int getProductBacklogRank() {
+        return productBacklogRank;
     }
 
     @Override
@@ -71,12 +80,12 @@ public class ProductBacklogItem {
         return data.getState();
     }
 
-    public String getSprint() {
-        return data.getSprint();
+    public String getJiraSprint() {
+        return data.getJiraSprint();
     }
 
-    public String getRank() {
-        return data.getRank();
+    public String getJiraRank() {
+        return data.getJiraRank();
     }
 
     public String getPlannedRelease() {

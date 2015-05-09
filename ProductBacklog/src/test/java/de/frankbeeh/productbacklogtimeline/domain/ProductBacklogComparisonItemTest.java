@@ -79,29 +79,29 @@ public class ProductBacklogComparisonItemTest {
 
     @Test
     public void getComparedSprint_valueNull() throws Exception {
-        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(null), null).getComparedSprint());
+        assertNull(new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(null), null).getComparedJiraSprint());
     }
 
     @Test
     public void getComparedSprint_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedSprint());
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedJiraSprint());
     }
 
     @Test
     public void getComparedSprint_referenceValueNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(null)).getComparedSprint());
+        assertEquals(STRING_VALUE_1, new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(null)).getComparedJiraSprint());
     }
 
     @Test
     public void getComparedSprint_equal() throws Exception {
         assertEquals(STRING_VALUE_1,
-                new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedSprint());
+                new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1), createProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedJiraSprint());
     }
 
     @Test
     public void getComparedSprint_notEqual() throws Exception {
         assertEquals(STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")", new ProductBacklogComparisonItem(createProductBacklogItemWithSprint(STRING_VALUE_1),
-                createProductBacklogItemWithSprint(STRING_VALUE_2)).getComparedSprint());
+                createProductBacklogItemWithSprint(STRING_VALUE_2)).getComparedJiraSprint());
     }
     
     @Test
@@ -279,6 +279,34 @@ public class ProductBacklogComparisonItemTest {
         productBacklogItem.setAccumulatedEstimate(123456d);
         referenceProductBacklogItem.setAccumulatedEstimate(123456.7d);
         assertEquals("123456.0\n    (-0.7)", productBacklogComparisonItem.getComparedAccumulatedEstimate());
+    }
+    
+
+    @Test
+    public void getComparedProductBacklogRank_referenceNull() throws Exception {
+        productBacklogItem.setProductBacklogRank(2);
+        assertEquals("     2\n(NEW)", new ProductBacklogComparisonItem(productBacklogItem, null).getComparedProductBacklogRank());
+    }
+
+    @Test
+    public void getComparedProductBacklogRank_equal() throws Exception {
+        productBacklogItem.setProductBacklogRank(2);
+        referenceProductBacklogItem.setProductBacklogRank(2);
+        assertEquals("2", productBacklogComparisonItem.getComparedProductBacklogRank());
+    }
+
+    @Test
+    public void getComparedProductBacklogRank_decrease() throws Exception {
+        productBacklogItem.setProductBacklogRank(2);
+        referenceProductBacklogItem.setProductBacklogRank(15);
+        assertEquals("     2\n(-13)", productBacklogComparisonItem.getComparedProductBacklogRank());
+    }
+
+    @Test
+    public void getComparedProductBacklogRank_increase() throws Exception {
+        productBacklogItem.setProductBacklogRank(10);
+        referenceProductBacklogItem.setProductBacklogRank(2);
+        assertEquals("   10\n(+8)", productBacklogComparisonItem.getComparedProductBacklogRank());
     }
 
     @Before

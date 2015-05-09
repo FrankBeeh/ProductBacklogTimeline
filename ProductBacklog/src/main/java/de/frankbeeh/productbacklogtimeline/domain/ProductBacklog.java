@@ -10,6 +10,7 @@ import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStr
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ForecastSprintOfCompletion;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ProductBacklogItemVisitor;
+import de.frankbeeh.productbacklogtimeline.service.visitor.RankProductBacklogItem;
 
 /**
  * Responsibility:
@@ -25,8 +26,8 @@ public class ProductBacklog {
     private final ProductBacklogSortingStrategy sortingStrategy;
 
     public ProductBacklog() {
-        this(new JiraProductBacklogSortingStrategy(), new AccumulateEstimate(), new ForecastSprintOfCompletion(VelocityForecast.AVERAGE_VELOCITY_FORECAST), new ForecastSprintOfCompletion(
-                VelocityForecast.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
+        this(new JiraProductBacklogSortingStrategy(), new RankProductBacklogItem(), new AccumulateEstimate(), new ForecastSprintOfCompletion(VelocityForecast.AVERAGE_VELOCITY_FORECAST),
+                new ForecastSprintOfCompletion(VelocityForecast.MINIMUM_VELOCITY_FORECAST), new ForecastSprintOfCompletion(VelocityForecast.MAXIMUM_VELOCITY_FORECAST));
     }
 
     @VisibleForTesting

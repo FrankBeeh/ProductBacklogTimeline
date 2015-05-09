@@ -15,22 +15,22 @@ public class ProductBacklogItemData {
     private final String description;
     private Double estimate;
     private final State state;
-    private final String sprint;
-    private final String rank;
+    private final String jiraSprint;
+    private final String jiraRank;
     private final String plannedRelease;
 
-    public ProductBacklogItemData(String id, String title, String description, Double estimate, String state, String sprint, String rank, String plannedRelease) {
-        this(id, title, description, estimate, State.valueOf(state), sprint, rank, plannedRelease);
+    public ProductBacklogItemData(String id, String title, String description, Double estimate, String state, String jiraSprint, String jiraRank, String plannedRelease) {
+        this(id, title, description, estimate, State.valueOf(state), jiraSprint, jiraRank, plannedRelease);
     }
 
-    public ProductBacklogItemData(String id, String title, String description, Double estimate, State state, String sprint, String rank, String plannedRelease) {
+    public ProductBacklogItemData(String id, String title, String description, Double estimate, State state, String jiraSprint, String jiraRank, String plannedRelease) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.estimate = estimate;
         this.state = state;
-        this.sprint = sprint;
-        this.rank = rank;
+        this.jiraSprint = jiraSprint;
+        this.jiraRank = jiraRank;
         this.plannedRelease = plannedRelease;
     }
 
@@ -58,12 +58,12 @@ public class ProductBacklogItemData {
         return state;
     }
 
-    public String getSprint() {
-        return sprint;
+    public String getJiraSprint() {
+        return jiraSprint;
     }
 
-    public String getRank() {
-        return rank;
+    public String getJiraRank() {
+        return jiraRank;
     }
 
     public String getPlannedRelease() {
@@ -84,7 +84,7 @@ public class ProductBacklogItemData {
         if (state != null) {
             hasher.putUnencodedChars(state.toString());
         }
-        hasher.putUnencodedChars(nullToDefault(sprint)).putUnencodedChars(nullToDefault(rank)).putUnencodedChars(nullToDefault(plannedRelease));
+        hasher.putUnencodedChars(nullToDefault(jiraSprint)).putUnencodedChars(nullToDefault(jiraRank)).putUnencodedChars(nullToDefault(plannedRelease));
         return hasher.hash().toString();
     }
 

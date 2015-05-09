@@ -45,7 +45,7 @@ public class ProductBacklogMapper extends BaseMapper {
         if (itemNotYetInserted(productBacklogItem)) {
             getDslContext().insertInto(PBI, PBI.HASH, PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).values(productBacklogItem.getHash(),
                     productBacklogItem.getId(), productBacklogItem.getTitle(), productBacklogItem.getDescription(), productBacklogItem.getEstimate(), productBacklogItem.getState().toString(),
-                    productBacklogItem.getSprint(), productBacklogItem.getRank(), productBacklogItem.getPlannedRelease()).execute();
+                    productBacklogItem.getJiraSprint(), productBacklogItem.getJiraRank(), productBacklogItem.getPlannedRelease()).execute();
         }
     }
 

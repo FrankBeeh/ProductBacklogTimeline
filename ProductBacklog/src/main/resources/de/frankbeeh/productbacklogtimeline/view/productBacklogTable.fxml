@@ -16,6 +16,14 @@
       	    <PropertyValueFactory property="id"/>
       	  </cellValueFactory>
 		</TableColumn>
+		<TableColumn editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="-1.0" resizable="true" sortable="false" text="Rank" fx:id="productBacklogRankColumn">
+          <cellFactory>
+            <AlignRightCellFactory />
+      	  </cellFactory>
+      	  <cellValueFactory>
+      	    <PropertyValueFactory property="comparedProductBacklogRank"/>
+      	  </cellValueFactory>
+		</TableColumn>
 		<TableColumn editable="false" maxWidth="60.0" minWidth="60.0" prefWidth="-1.0" resizable="true" sortable="false" text="Estimate" fx:id="estimateColumn" >
           <cellFactory>
             <AlignRightCellFactory />
@@ -49,7 +57,7 @@
         </TableColumn>
 		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Sprint" fx:id="sprintColumn" >
 		  <cellValueFactory>
-      	    <PropertyValueFactory property="comparedSprint"/>
+      	    <PropertyValueFactory property="comparedJiraSprint"/>
       	  </cellValueFactory>
         </TableColumn>
         <TableColumn editable="false" maxWidth="100.0" minWidth="100.0" prefWidth="-1.0" resizable="true" sortable="false" text="Planned Release" fx:id="plannedReleaseColumn" >

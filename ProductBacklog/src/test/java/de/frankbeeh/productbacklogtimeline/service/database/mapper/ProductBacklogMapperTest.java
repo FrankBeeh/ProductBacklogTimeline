@@ -48,8 +48,8 @@ public class ProductBacklogMapperTest extends DataBaseServiceTest {
         assertEquals(expectedItem.getDescription(), actualItem.getDescription());
         assertEquals(expectedItem.getEstimate(), actualItem.getEstimate());
         assertEquals(expectedItem.getState(), actualItem.getState());
-        assertEquals(expectedItem.getSprint(), actualItem.getSprint());
-        assertEquals(expectedItem.getRank(), actualItem.getRank());
+        assertEquals(expectedItem.getJiraSprint(), actualItem.getJiraSprint());
+        assertEquals(expectedItem.getJiraRank(), actualItem.getJiraRank());
         assertEquals(expectedItem.getPlannedRelease(), actualItem.getPlannedRelease());
     }
 
