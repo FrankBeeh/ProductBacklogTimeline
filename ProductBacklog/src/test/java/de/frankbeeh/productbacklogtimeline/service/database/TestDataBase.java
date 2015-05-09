@@ -29,9 +29,10 @@ public class TestDataBase {
     
     private void dropTables(Connection connection) throws Exception {
         try (Statement statement = connection.createStatement()) {
-            statement.executeUpdate("DROP TABLE IF EXISTS RELEASE_FORECAST");
+            statement.executeUpdate("DROP TABLE IF EXISTS PRODUCT_TIMESTAMP");
             statement.executeUpdate("DROP TABLE IF EXISTS PBL");
             statement.executeUpdate("DROP TABLE IF EXISTS PBI");
+            statement.executeUpdate("DROP TABLE IF EXISTS VELOCITY_FORECAST");
             statement.executeUpdate("DROP TABLE IF EXISTS SPRINT");
         }
     }

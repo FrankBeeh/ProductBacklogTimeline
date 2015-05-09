@@ -22,18 +22,19 @@ public class VelocityForecast {
     public static final List<String> COMPLETION_FORECASTS = Arrays.asList(MINIMUM_VELOCITY_FORECAST, AVERAGE_VELOCITY_FORECAST, MAXIMUM_VELOCITY_FORECAST);
 
     private final List<SprintData> sprints;
-    private final SprintDataVisitor[] visitors;
+    private final List<SprintDataVisitor> visitors;
     private final Map<String, Integer> sortIndexMap;
 
     public VelocityForecast() {
-        this(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()), new ComputeProgressForecastByVelocity(
-                MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST, new ComputeMaximumVelocityStrategy()));
+        this(new ArrayList<SprintData>(), Arrays.asList(new AccumulateEffortDone(), new ComputeProgressForecastByVelocity(AVERAGE_VELOCITY_FORECAST, new ComputeAverageVelocityStrategy()),
+                new ComputeProgressForecastByVelocity(MINIMUM_VELOCITY_FORECAST, new ComputeMinimumVelocityStrategy()), new ComputeProgressForecastByVelocity(MAXIMUM_VELOCITY_FORECAST,
+                        new ComputeMaximumVelocityStrategy())));
     }
 
     @VisibleForTesting
-    VelocityForecast(SprintDataVisitor... visitors) {
+    public VelocityForecast(List<SprintData> sprints, List<SprintDataVisitor> visitors) {
         this.visitors = visitors;
-        this.sprints = new ArrayList<SprintData>();
+        this.sprints = sprints;
         this.sortIndexMap = new HashMap<String, Integer>();
     }
 

@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.database.mapper;
 
-import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.RELEASE_FORECAST;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.PRODUCT_TIMESTAMP;
 
 import java.sql.Connection;
 import java.sql.Timestamp;
@@ -13,7 +13,6 @@ import org.jooq.Record2;
 import org.jooq.Result;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
-import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
 
 /**
@@ -24,30 +23,37 @@ import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
  */
 public class ProductTimestampMapper extends BaseMapper {
     private final ProductBacklogMapper productBacklogMapper;
+    private final VelocityForecastMapper velocityForecastMapper;
 
     public ProductTimestampMapper(Connection connection) {
         super(connection);
         productBacklogMapper = new ProductBacklogMapper(connection);
+        velocityForecastMapper = new VelocityForecastMapper(connection);
     }
 
     public void insert(ProductTimestamp productTimestamp) {
-        productBacklogMapper.insert(productTimestamp.getDateTime(), productTimestamp.getProductBacklog());
-        getDslContext().insertInto(RELEASE_FORECAST, RELEASE_FORECAST.ID, RELEASE_FORECAST.NAME).values(ConvertUtility.getTimestamp(productTimestamp.getDateTime()), productTimestamp.getName()).execute();
+        final LocalDateTime productTimestampId = productTimestamp.getDateTime();
+        productBacklogMapper.insert(productTimestampId, productTimestamp.getProductBacklog());
+        velocityForecastMapper.insert(productTimestampId, productTimestamp.getVelocityForecast());
+        insertProductTimestamp(productTimestamp);
     }
 
-    public ProductTimestamp get(LocalDateTime locatDateTime) {
-        final Record2<Timestamp, String> record = getDslContext().select(RELEASE_FORECAST.ID, RELEASE_FORECAST.NAME).from(RELEASE_FORECAST).where(
-                RELEASE_FORECAST.ID.eq(ConvertUtility.getTimestamp(locatDateTime))).fetchOne();
-        final LocalDateTime localDateTime = ConvertUtility.getLocalDateTime(record.getValue(RELEASE_FORECAST.ID));
-        return new ProductTimestamp(localDateTime, record.getValue(RELEASE_FORECAST.NAME), productBacklogMapper.get(locatDateTime), new VelocityForecast(), null);
+    public ProductTimestamp get(LocalDateTime productTimestampId) {
+        final Record2<Timestamp, String> record = getDslContext().select(PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).from(PRODUCT_TIMESTAMP).where(
+                PRODUCT_TIMESTAMP.ID.eq(ConvertUtility.getTimestamp(productTimestampId))).fetchOne();
+        return new ProductTimestamp(ConvertUtility.getLocalDateTime(record.getValue(PRODUCT_TIMESTAMP.ID)), record.getValue(PRODUCT_TIMESTAMP.NAME), productBacklogMapper.get(productTimestampId), velocityForecastMapper.get(ConvertUtility.getLocalDateTime(record.getValue(PRODUCT_TIMESTAMP.ID))), null);
     }
 
     public List<LocalDateTime> getAllIds() {
-        final Result<Record1<Timestamp>> results = getDslContext().select(RELEASE_FORECAST.ID).from(RELEASE_FORECAST).orderBy(RELEASE_FORECAST.ID).fetch();
+        final Result<Record1<Timestamp>> results = getDslContext().select(PRODUCT_TIMESTAMP.ID).from(PRODUCT_TIMESTAMP).orderBy(PRODUCT_TIMESTAMP.ID).fetch();
         final List<LocalDateTime> ids = new ArrayList<LocalDateTime>();
         for (Record1<Timestamp> record : results) {
-            ids.add(ConvertUtility.getLocalDateTime(record.getValue(RELEASE_FORECAST.ID)));
+            ids.add(ConvertUtility.getLocalDateTime(record.getValue(PRODUCT_TIMESTAMP.ID)));
         }
         return ids;
+    }
+    
+    private void insertProductTimestamp(ProductTimestamp productTimestamp) {
+        getDslContext().insertInto(PRODUCT_TIMESTAMP, PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).values(ConvertUtility.getTimestamp(productTimestamp.getDateTime()), productTimestamp.getName()).execute();
     }
 }

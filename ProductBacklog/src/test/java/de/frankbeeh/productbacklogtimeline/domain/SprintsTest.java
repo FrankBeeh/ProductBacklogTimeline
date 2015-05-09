@@ -2,6 +2,8 @@ package de.frankbeeh.productbacklogtimeline.domain;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+
 import org.easymock.EasyMockRunner;
 import org.easymock.EasyMockSupport;
 import org.easymock.Mock;
@@ -40,9 +42,7 @@ public class SprintsTest extends EasyMockSupport {
 
     @Test
     public void updateAllSprints() {
-        velocityForecast = new VelocityForecast(visitorMock1, visitorMock2);
-        velocityForecast.addItem(sprint1);
-        velocityForecast.addItem(sprint2);
+        velocityForecast = new VelocityForecast(Arrays.asList(sprint1, sprint2), Arrays.asList(visitorMock1, visitorMock2));
         visitorMock1.reset();
         visitorMock1.visit(sprint1);
         visitorMock1.visit(sprint2);

@@ -1,8 +1,9 @@
 package de.frankbeeh.productbacklogtimeline.service.database.mapper;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.Arrays;
 
 import org.junit.Before;
@@ -12,10 +13,10 @@ import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.service.database.DataBaseServiceTest;
 
 public class ProductTimestampMapperTest extends DataBaseServiceTest {
-    private static final LocalDateTime LOCAL_DATE_TIME_1 = LocalDateTime.now();
-    private static final LocalDateTime LOCAL_DATE_TIME_2 = LocalDateTime.now().plusYears(1);
-    private static final ProductTimestamp PRODUCT_TIMESTAMP_1 = new ProductTimestamp(LOCAL_DATE_TIME_1, "Name 1", ProductBacklogMapperTest.PRODUCT_BACKLOG_1, null, null);
-    private static final ProductTimestamp PRODUCT_TIMESTAMP_2 = new ProductTimestamp(LOCAL_DATE_TIME_2, "Name 2", ProductBacklogMapperTest.PRODUCT_BACKLOG_2, null, null);
+    static final LocalDateTime RELEASE_FORECAST_ID_1 = LocalDateTime.of(2001, Month.JANUARY, 1, 1, 1);
+    static final LocalDateTime RELEASE_FORECAST_ID_2 = LocalDateTime.of(2002, Month.FEBRUARY, 2, 2, 2);
+    private static final ProductTimestamp PRODUCT_TIMESTAMP_1 = new ProductTimestamp(RELEASE_FORECAST_ID_1, "Name 1", ProductBacklogMapperTest.PRODUCT_BACKLOG_1, VelocityForecastMapperTest.VELOCITY_FORECAST_1, null);
+    private static final ProductTimestamp PRODUCT_TIMESTAMP_2 = new ProductTimestamp(RELEASE_FORECAST_ID_2, "Name 2", ProductBacklogMapperTest.PRODUCT_BACKLOG_2, VelocityForecastMapperTest.VELOCITY_FORECAST_2, null);
     private ProductTimestampMapper mapper;
 
     @Test
@@ -29,7 +30,7 @@ public class ProductTimestampMapperTest extends DataBaseServiceTest {
     @Test
     public void getAllIds() throws Exception {
         insertAndGetTwoProductTimestamp();
-        assertEquals(Arrays.asList(LOCAL_DATE_TIME_1, LOCAL_DATE_TIME_2), mapper.getAllIds());
+        assertEquals(Arrays.asList(RELEASE_FORECAST_ID_1, RELEASE_FORECAST_ID_2), mapper.getAllIds());
     }
 
     @Before
@@ -41,5 +42,6 @@ public class ProductTimestampMapperTest extends DataBaseServiceTest {
         assertEquals(expectedProductTimestamp.getDateTime(), actualProductTimestamp.getDateTime());
         assertEquals(expectedProductTimestamp.getName(), actualProductTimestamp.getName());
         ProductBacklogMapperTest.assertProductBacklogEquals(expectedProductTimestamp.getProductBacklog(), actualProductTimestamp.getProductBacklog());
+        VelocityForecastMapperTest.assertVelocityForecastEquals(expectedProductTimestamp.getVelocityForecast(), actualProductTimestamp.getVelocityForecast());
     }
 }
