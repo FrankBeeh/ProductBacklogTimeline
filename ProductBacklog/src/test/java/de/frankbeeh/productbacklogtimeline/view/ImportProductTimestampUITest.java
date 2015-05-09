@@ -10,8 +10,6 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String SPRINT_4_TO_SPRINT_3 = "Sprint 4\n(Sprint 3)\n30.04.2014\n(+3d)";
     private static final String SPRINT_5_TO_SPRINT_4 = "Sprint 5\n(Sprint 4)\n04.05.2014\n(+4d)";
     private static final String SPRINT_3_TO_SPRINT_4 = "Sprint 3\n(Sprint 4)\n27.04.2014\n(-3d)";
-    private static final String VELOCITY_FORECAST_TABLE_ID = "#velocityForecastTable";
-    private static final String PRODUCT_BACKLOG_TABLE_ID = "#productBacklogTable";
     private static final String SPRINT_1 = "Sprint 1\n25.04.2014";
     private static final String SPRINT_2 = "Sprint 2\n26.04.2014";
     private static final String SPRINT_3 = "Sprint 3\n27.04.2014";
@@ -26,6 +24,8 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String PBL_FILE_2 = "PBL2.csv";
     private static final String VELOCITY_FORECAST_FILE_1 = "VelocityForecast1.csv";
     private static final String VELOCITY_FORECAST_FILE_2 = "VelocityForecast2.csv";
+    private static final String RELEASES_FILE_1 = "Releases1.csv";
+    private static final String RELEASES_FILE_2 = "Releases2.csv";
 
     private static final TableViewContent PBL_1_WITH_FORECAST_1 = new TableViewContent(new String[][] {
             { "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
@@ -77,29 +77,39 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "Sprint 7", "12.05.2014", "18.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "39.0", "52.5", "65.8" },
             { "Sprint 8", "19.05.2014", "25.05.2014", "12.0", "", "", "", "6.0", "9.5", "13.0", "", "45.0", "62.0", "78.8" } });
 
+    private static final TableViewContent RELEASES_1 = new TableViewContent(new String[][] { { "Release 1", "plannedRelease=\nRelease 1", "17.0", SPRINT_5, SPRINT_5, SPRINT_5 },
+            { "Release 2", "idOfPBI=2", "4.0", SPRINT_2, SPRINT_2, SPRINT_2 } });
+
+    private static final TableViewContent RELEASES_2 = new TableViewContent(new String[][] { { "Release 1", "plannedRelease=\nRelease 1", "16.0", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "Release 2", "plannedRelease=\nRelease 2", "28.0", SPRINT_6, SPRINT_5, SPRINT_5 } });
+    
     @Test
     public void selectProductTimestamp() throws Exception {
-        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1, PBL_FILE_1, VELOCITY_FORECAST_FILE_1);
+        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1, PBL_FILE_1, VELOCITY_FORECAST_FILE_1, RELEASES_FILE_1);
         getMainAccessor().assertSelectedProductTimestampEquals(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
         getMainAccessor().selectProductBacklogTab(this);
-        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_WITH_FORECAST_1);
+        getMainAccessor().assertContentOfProductBacklogTableView(PBL_1_WITH_FORECAST_1);
+        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_1);
+        getMainAccessor().assertContentOfReleasesTableView(RELEASES_1);
 
-        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2, PBL_FILE_2, VELOCITY_FORECAST_FILE_2);
+        getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2, PBL_FILE_2, VELOCITY_FORECAST_FILE_2, RELEASES_FILE_2);
         getMainAccessor().assertSelectedProductTimestampEquals(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
-        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_WITH_FORECAST_2);
-
+        getMainAccessor().assertContentOfProductBacklogTableView(PBL_2_WITH_FORECAST_2);
+        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2);
+        getMainAccessor().assertContentOfReleasesTableView(RELEASES_2);
+        
         getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
         getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
         getMainAccessor().selectProductBacklogTab(this);
-        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_1_COMPARED_TO_PBL_2);
+        getMainAccessor().assertContentOfProductBacklogTableView(PBL_1_COMPARED_TO_PBL_2);
         getMainAccessor().selectVelocityForecastTab(this);
-        getMainAccessor().assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_1);
+        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_1);
 
         getMainAccessor().referenceProductTimestamp(TIMESTAMP_NAME_1, TIMESTAMP_DATE_1);
         getMainAccessor().selectProductTimestamp(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
         getMainAccessor().selectProductBacklogTab(this);
-        getMainAccessor().assertContentOfTableView(PRODUCT_BACKLOG_TABLE_ID, PBL_2_COMPARED_TO_PBL_1);
+        getMainAccessor().assertContentOfProductBacklogTableView(PBL_2_COMPARED_TO_PBL_1);
         getMainAccessor().selectVelocityForecastTab(this);
-        getMainAccessor().assertContentOfTableView(VELOCITY_FORECAST_TABLE_ID, VELOCITY_FORECAST_2);
+        getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2);
     }
 }

@@ -8,56 +8,63 @@
 <?import javafx.scene.paint.*?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
 
-<BorderPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.frankbeeh.productbacklogtimeline.view.MainController">
-  <bottom>
-    <HBox prefHeight="24.0" prefWidth="1200.0">
-      <children>
-        <Label text="Selected Release Forecast" />
-        <ComboBox fx:id="selectedProductTimestamp" onAction="#selectProductTimestamp" prefHeight="21.0" prefWidth="293.0" />
-        <Label text="Referenced Release Forecast" />
-        <ComboBox fx:id="referencedProductTimestamp" onAction="#referenceProductTimestamp" prefHeight="21.0" prefWidth="293.0" />
-      </children>
-    </HBox>
-  </bottom>
-  <center>
-    <TabPane fx:id="mainTabPane" prefHeight="-1.0" prefWidth="-1.0" tabClosingPolicy="UNAVAILABLE">
-      <tabs>
-        <Tab text="PBL">
-          <content>
-            <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-              <content>
-                <fx:include fx:id="productBacklogTable" source="productBacklogTable.fxml" />
-              </content>
-            </ScrollPane>
-          </content>
-        </Tab>
-        <Tab text="Velocity Forecast">
-          <content>
-            <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-              <content>
-                <fx:include fx:id="velocityForecastTable" source="velocityForecastTable.fxml" />
-              </content>
-            </ScrollPane>
-          </content>
-        </Tab>
-        <Tab fx:id="releasesTab" text="Releases" />
-            <Tab text="Release Burndown">
-               <content>
-               		<fx:include fx:id="releaseBurndown" source="releaseBurndown.fxml" />
-               </content>
-            </Tab>
-      </tabs>
-    </TabPane>
-  </center>
-  <top>
-    <MenuBar>
-      <menus>
-        <Menu mnemonicParsing="false" text="File">
-          <items>
-            <MenuItem mnemonicParsing="false" onAction="#importProductTimestamp" text="Import Product Timestamp" />
-          </items>
-        </Menu>
-      </menus>
-    </MenuBar>
-  </top>
+<BorderPane maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0"
+	minWidth="-1.0" prefHeight="800.0" prefWidth="1200.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.frankbeeh.productbacklogtimeline.view.MainController">
+	<bottom>
+		<HBox prefHeight="24.0" prefWidth="1200.0">
+			<children>
+				<Label text="Selected Release Forecast" />
+				<ComboBox fx:id="selectedProductTimestamp" onAction="#selectProductTimestamp"
+					prefHeight="21.0" prefWidth="293.0" />
+				<Label text="Referenced Release Forecast" />
+				<ComboBox fx:id="referencedProductTimestamp" onAction="#referenceProductTimestamp"
+					prefHeight="21.0" prefWidth="293.0" />
+			</children>
+		</HBox>
+	</bottom>
+	<center>
+		<TabPane fx:id="mainTabPane" prefHeight="-1.0" prefWidth="-1.0"
+			tabClosingPolicy="UNAVAILABLE">
+			<tabs>
+				<Tab text="PBL">
+					<content>
+						<ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+							<content>
+								<fx:include fx:id="productBacklogTable" source="productBacklogTable.fxml" />
+							</content>
+						</ScrollPane>
+					</content>
+				</Tab>
+				<Tab text="Velocity Forecast">
+					<content>
+						<ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+							<content>
+								<fx:include fx:id="velocityForecastTable" source="velocityForecastTable.fxml" />
+							</content>
+						</ScrollPane>
+					</content>
+				</Tab>
+				<Tab fx:id="releasesTab" text="Releases" />
+				<Tab text="Release Burndown">
+					<content>
+						<fx:include fx:id="releaseBurndown" source="releaseBurndown.fxml" />
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+	</center>
+	<top>
+		<MenuBar>
+			<menus>
+				<Menu mnemonicParsing="false" text="File">
+					<items>
+						<MenuItem mnemonicParsing="false" onAction="#importProductTimestamp"
+							text="Import Product Timestamp" />
+					</items>
+				</Menu>
+			</menus>
+		</MenuBar>
+	</top>
 </BorderPane>

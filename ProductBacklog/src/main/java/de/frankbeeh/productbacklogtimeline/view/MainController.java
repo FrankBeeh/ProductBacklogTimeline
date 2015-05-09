@@ -71,9 +71,10 @@ public class MainController {
         final ImportProductTimestampViewModel result = dialog.openDialog();
         final ProductBacklog productBacklog = importProductBacklogFromCsv(result.getProductBacklogFile());
         final VelocityForecast velocityForecast = importVelocityForecastFromCsv(result.getVelocityForecastFile());
+        final Releases releases = importReleaseFromCsv(result.getReleasesFile());
         final String name = result.getName();
         final LocalDateTime dateTime = result.getDateTime();
-        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, importReleaseFromCsv(new File("Releases1.csv"))));
+        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, releases));
         setSelectableProductBacklogNames();
         changeSelectedProductTimestamp(dateTime, name);
         updateProductBacklogAndReleaseTable();

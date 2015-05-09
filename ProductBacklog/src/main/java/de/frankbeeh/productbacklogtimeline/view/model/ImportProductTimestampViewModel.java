@@ -13,6 +13,7 @@ public class ImportProductTimestampViewModel {
     private File velocityForecastFile;
     private final StringProperty nameProperty = new SimpleStringProperty();
     private final ReadOnlyObjectWrapper<LocalDate> dateProperty = new ReadOnlyObjectWrapper<LocalDate>(LocalDate.now());
+    private File releasesFile;
 
     public void setProductBacklogFile(File productBacklogFile) {
         this.productBacklogFile = productBacklogFile;
@@ -28,6 +29,15 @@ public class ImportProductTimestampViewModel {
 
     public File getVelocityForecastFile() {
         return velocityForecastFile;
+    }
+    
+
+    public void setReleasesFile(File releasesFile) {
+        this.releasesFile = releasesFile;
+    }
+    
+    public File getReleasesFile() {
+        return releasesFile;
     }
 
     public StringProperty nameProperty() {
@@ -45,4 +55,5 @@ public class ImportProductTimestampViewModel {
     public LocalDateTime getDateTime() {
         return dateProperty.get().atStartOfDay();
     }
+
 }

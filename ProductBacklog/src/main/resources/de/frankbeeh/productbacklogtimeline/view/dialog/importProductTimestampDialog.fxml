@@ -35,7 +35,12 @@
 				<Label text="Velocity Forecast File" GridPane.rowIndex="3" />
 				<TextField fx:id="velocityForecastFile" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
 				<Button fx:id="chooseVelocityForecast" mnemonicParsing="false" onAction="#chooseVelocityForecastFile" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-				<Button fx:id="okDialog" mnemonicParsing="false" onAction="#ok" text="OK" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+
+				<Label text="Releases File" GridPane.rowIndex="4" />
+				<TextField fx:id="releasesFile" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
+				<Button fx:id="chooseReleases" mnemonicParsing="false" onAction="#chooseReleasesFile" text="Choose" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+
+				<Button fx:id="okDialog" mnemonicParsing="false" onAction="#ok" text="OK" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
 			</children>
 		</GridPane>
 	</children>

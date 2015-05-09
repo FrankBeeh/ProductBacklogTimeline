@@ -25,9 +25,13 @@ public class ImportProductTimestampDialogController extends AnchorPane {
     @FXML
     private Button chooseVelocityForecast;
     @FXML
+    private Button chooseReleases;
+    @FXML
     private TextField productBacklogFile;
     @FXML
     private TextField velocityForecastFile;
+    @FXML
+    private TextField releasesFile;
 
     private BasicDialog<ImportProductTimestampViewModel> dialog;
 
@@ -57,6 +61,13 @@ public class ImportProductTimestampDialogController extends AnchorPane {
         final File file = selectCsvFileForImport();
         viewModel.setVelocityForecastFile(file);
         velocityForecastFile.setText(file.getAbsolutePath());
+    }
+    
+    @FXML
+    private void chooseReleasesFile() {
+        final File file = selectCsvFileForImport();
+        viewModel.setReleasesFile(file);
+        releasesFile.setText(file.getAbsolutePath());
     }
 
     public ImportProductTimestampViewModel getDialogResult() {

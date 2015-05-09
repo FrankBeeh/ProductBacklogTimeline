@@ -17,11 +17,12 @@ public class ImportProductTimestampDialogAccessor extends BaseAccessor {
         super(fxRobot);
     }
 
-    public void enter(String timestampName, LocalDate timestampDate, String productBacklogFileName, String velocityForecastFileName) {
+    public void enter(String timestampName, LocalDate timestampDate, String productBacklogFileName, String velocityForecastFileName, String releasesFileName) {
         enterTimestampName(timestampName);
         enterTimestampDate(timestampDate);
         enterProductBacklogFileName(productBacklogFileName);
         enterVelocityForecastFileName(velocityForecastFileName);
+        enterReleasesFileName(releasesFileName);
         clickOk();
     }
 
@@ -45,6 +46,12 @@ public class ImportProductTimestampDialogAccessor extends BaseAccessor {
         assertEquals(getExpectedAbsolutePath(productBacklogFileName), this.<TextField> getUniqueNode("#productBacklogFile").getText());
     }
 
+    private void enterReleasesFileName(String releasesFileName) {
+        clickOn(getUniqueNode("#chooseReleases"));
+        enterFileName(releasesFileName);
+        assertEquals(getExpectedAbsolutePath(releasesFileName), this.<TextField> getUniqueNode("#releasesFile").getText());
+    }
+
     private void clickOk() {
         clickOn(getUniqueNode("#okDialog"));
     }
@@ -53,7 +60,7 @@ public class ImportProductTimestampDialogAccessor extends BaseAccessor {
         typeString(fileName);
         typeKeyCode(KeyCode.ENTER);
     }
-    
+
     private String getExpectedAbsolutePath(String velocityForecastFileName) {
         return System.getProperty("user.dir") + "\\" + velocityForecastFileName;
     }
