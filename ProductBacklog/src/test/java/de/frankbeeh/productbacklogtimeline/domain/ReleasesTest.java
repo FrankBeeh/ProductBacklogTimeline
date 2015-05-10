@@ -34,7 +34,7 @@ public class ReleasesTest extends EasyMockSupport {
         visitorMock2.visit(same(release1), same(productBacklog));
         visitorMock2.visit(same(release2), same(productBacklog));
         replayAll();
-        releaseForecast.updateAll(productBacklog);
+        releaseForecast.updateAllReleases(productBacklog);
         verifyAll();
     }
 }

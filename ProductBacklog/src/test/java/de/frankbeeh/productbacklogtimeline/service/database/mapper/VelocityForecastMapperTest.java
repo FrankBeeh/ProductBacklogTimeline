@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,10 +14,11 @@ import org.junit.Test;
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.database.DataBaseServiceTest;
+import de.frankbeeh.productbacklogtimeline.service.visitor.SprintDataVisitor;
 
-public class VelocityForecastMapperTest extends DataBaseServiceTest {
-    static final VelocityForecast VELOCITY_FORECAST_1 = new VelocityForecast(Arrays.asList(newFirstSprintData(), newSecondSprintData()), null);
-    static final VelocityForecast VELOCITY_FORECAST_2 = new VelocityForecast(Arrays.asList(newFirstSprintData_nameChanged(), newSecondSprintData()), null);
+public class VelocityForecastMapperTest extends DataBaseServiceTest { 
+    static final VelocityForecast VELOCITY_FORECAST_1 = new VelocityForecast(Arrays.asList(newFirstSprintData(), newSecondSprintData()), new ArrayList<SprintDataVisitor>());
+    static final VelocityForecast VELOCITY_FORECAST_2 = new VelocityForecast(Arrays.asList(newFirstSprintData_nameChanged(), newSecondSprintData()), new ArrayList<SprintDataVisitor>());
     private VelocityForecastMapper mapper;
 
     @Test

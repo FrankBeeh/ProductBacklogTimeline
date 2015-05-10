@@ -32,7 +32,7 @@ public class ReleaseForecast {
         return releases;
     }
 
-    public void updateAll(ProductBacklog productBacklog) {
+    public void updateAllReleases(ProductBacklog productBacklog) {
         for (final ReleaseVisitor visitor : visitors) {
             visitor.reset();
             for (final Release release : releases) {

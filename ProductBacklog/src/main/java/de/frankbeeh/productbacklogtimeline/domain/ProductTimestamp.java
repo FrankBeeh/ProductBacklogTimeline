@@ -2,16 +2,21 @@ package de.frankbeeh.productbacklogtimeline.domain;
 
 import java.time.LocalDateTime;
 
-import com.google.common.annotations.VisibleForTesting;
-
 import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Represent the {@link ProductBacklog}, the {@link VelocityForecast} and the {@link ReleaseForecast} of one point in time.
+ * <li>Updates the {@link VelocityForecast} and updates the {@link ProductBacklog} and {@link ReleaseForecast} base on the forecast on creation.
+ * </ul>
+ */
 public class ProductTimestamp {
     private final LocalDateTime dateTime;
     private final String name;
     private final ProductBacklog productBacklog;
-    private VelocityForecast velocityForecast;
-    private ReleaseForecast releaseForecast;
+    private final VelocityForecast velocityForecast;
+    private final ReleaseForecast releaseForecast;
 
     public ProductTimestamp(LocalDateTime dateTime, String name, ProductBacklog productBacklog, ProductTimestamp previousProductTimestamp) {
         this(dateTime, name, productBacklog, previousProductTimestamp.getVelocityForecast(), previousProductTimestamp.getReleaseForecast());
@@ -23,17 +28,13 @@ public class ProductTimestamp {
         this.productBacklog = productBacklog;
         this.velocityForecast = velocityForecast;
         this.releaseForecast = releaseForecast;
-    }
-
-    @VisibleForTesting
-    ProductTimestamp(LocalDateTime dateTime, String name, ReleaseForecast releaseForecast) {
-        this(dateTime, name, new ProductBacklog(), new VelocityForecast(), releaseForecast);
+        update();
     }
 
     public String getName() {
         return name;
     }
-    
+
     public String getFullName() {
         return DateConverter.formatLocalDateTime(dateTime) + " - " + name;
     }
@@ -50,33 +51,13 @@ public class ProductTimestamp {
         return releaseForecast;
     }
 
-    public void setVelocityForecast(VelocityForecast velocityForecast) {
-        this.velocityForecast = velocityForecast;
-    }
-
-    public void setReleaseForecast(ReleaseForecast releaseForecast) {
-        this.releaseForecast = releaseForecast;
-    }
-
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void update() {
-        updateVelocityForecast();
-        updateProductBacklog();
-        updateReleaseForecast();
-    }
-
-    private void updateProductBacklog() {
-        productBacklog.updateAllItems(velocityForecast);
-    }
-
-    private void updateVelocityForecast() {
+    private void update() {
         velocityForecast.updateForecast();
-    }
-
-    private void updateReleaseForecast() { 
-        releaseForecast.updateAll(productBacklog);
+        productBacklog.updateAllItems(velocityForecast);
+        releaseForecast.updateAllReleases(productBacklog);
     }
 }

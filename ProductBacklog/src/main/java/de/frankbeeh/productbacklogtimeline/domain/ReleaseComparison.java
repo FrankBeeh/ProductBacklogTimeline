@@ -2,6 +2,12 @@ package de.frankbeeh.productbacklogtimeline.domain;
 
 import de.frankbeeh.productbacklogtimeline.service.DifferenceFormatter;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Immutable representation of the comparison of two {@link Release}s.
+ * </ul>
+ */
 public class ReleaseComparison {
     private final Release release;
     private Release referenceRelease;

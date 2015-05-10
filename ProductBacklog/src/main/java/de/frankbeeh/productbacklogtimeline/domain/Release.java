@@ -13,6 +13,16 @@ import com.google.common.hash.Hashing;
 
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Represent the data of an item of a {@link ReleaseForecast}:
+ * <ul>
+ * <li>Data that is independent from the {@link VelocityForecast} and persisted.
+ * <li>Data that is dependent on the {@link VelocityForecast} and is computed online.
+ * </ul>
+ * </ul>
+ */
 public class Release {
     private final String name;
     private final ReleaseCriteria criteria;

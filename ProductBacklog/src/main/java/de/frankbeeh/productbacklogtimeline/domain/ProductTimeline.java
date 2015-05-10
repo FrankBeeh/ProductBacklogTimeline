@@ -9,13 +9,20 @@ import com.google.common.annotations.VisibleForTesting;
 import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Compares the selected and the reference {@link ProductTimestamp} using ({@link ProductTimestampComparison}.
+ * <li>Load and store {@link ProductTimestamp}s from/into the data base.
+ * </ul>
+ */
 public class ProductTimeline {
-    private static final String INITIAL_NAME = "Initial";
+    private static final String INITIAL_NAME = "<Empty>";
     private final List<ProductTimestamp> productTimestamps = new ArrayList<ProductTimestamp>();
     private String selectedName = null;
     private String referenceName = null;
     private final ProductTimestampComparison productTimestampComparison;
-    private ProductTimestamp emptyProductTimestamp;
+    private final ProductTimestamp emptyProductTimestamp;
 
     public ProductTimeline() {
         this(new ProductTimestampComparison());
@@ -23,16 +30,7 @@ public class ProductTimeline {
 
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
         ServiceLocator.getService(ProductTimestampService.class).insert(productTimestamp);
-        updateAndAddProductTimestamp(productTimestamp);
-    }
-
-    @VisibleForTesting
-    ProductBacklog getSelectedProductBacklog() {
-        return getSelectedProductTimestamp().getProductBacklog();
-    }
-
-    public ProductTimestamp getSelectedProductTimestamp() {
-        return getProductTimestampByFullName(selectedName);
+        productTimestamps.add(productTimestamp);
     }
 
     public void selectProductTimestamp(String selectedName) {
@@ -45,11 +43,19 @@ public class ProductTimeline {
         productTimestampComparison.setReferenceTimestamp(getReferenceProductTimestamp());
     }
 
-    public VelocityForecastComparison getSelectedVelocityForecastComparison() {
+    public ProductTimestamp getSelectedProductTimestamp() {
+        return getProductTimestampByFullName(selectedName);
+    }
+
+    public ProductBacklogComparison getProductBacklogComparison() {
+        return productTimestampComparison.getProductBacklogComparision();
+    }
+
+    public VelocityForecastComparison getVelocityForecastComparison() {
         return productTimestampComparison.getVelocityForecastComparison();
     }
 
-    public ReleaseForecastComparison getSelectedReleaseForecastComparison() {
+    public ReleaseForecastComparison getReleaseForecastComparison() {
         return productTimestampComparison.getReleaseForecastComparison();
     }
 
@@ -61,15 +67,12 @@ public class ProductTimeline {
         return names;
     }
 
-    public ProductBacklogComparison getProductBacklogComparison() {
-        return productTimestampComparison.getProductBacklogComparision();
-    }
-
     public void loadFromDataBase() {
         final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
         final List<LocalDateTime> allIds = service.getAllIds();
         for (LocalDateTime localDateTime : allIds) {
-            updateAndAddProductTimestamp(service.get(localDateTime));
+            ProductTimestamp productTimestamp = service.get(localDateTime);
+            productTimestamps.add(productTimestamp);
         }
     }
 
@@ -94,19 +97,10 @@ public class ProductTimeline {
         return getProductTimestampByFullName(referenceName);
     }
 
-    private void updateProductTimestamp(ProductTimestamp productTimestamp) {
-        productTimestamp.update();
-    }
-
-    private void updateAndAddProductTimestamp(ProductTimestamp productTimestamp) {
-        updateProductTimestamp(productTimestamp);
-        productTimestamps.add(productTimestamp);
-    }
-
     @VisibleForTesting
     ProductTimeline(ProductTimestampComparison productTimestampComparison) {
         this.productTimestampComparison = productTimestampComparison;
-        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new ReleaseForecast());
-        productTimestampComparison.setSelectedTimestamp(getSelectedProductTimestamp());
+        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new ProductBacklog(), new VelocityForecast(), new ReleaseForecast());
+        productTimestampComparison.setSelectedTimestamp(emptyProductTimestamp);
     }
 }
