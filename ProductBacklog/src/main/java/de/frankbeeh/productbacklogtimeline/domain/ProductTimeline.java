@@ -38,21 +38,19 @@ public class ProductTimeline {
     public void selectProductTimestamp(String selectedName) {
         this.selectedName = selectedName;
         productTimestampComparison.setSelectedTimestamp(getSelectedProductTimestamp());
-        updateReleases();
     }
 
     public void selectReferenceProductTimestamp(String referenceName) {
         this.referenceName = referenceName;
         productTimestampComparison.setReferenceTimestamp(getReferenceProductTimestamp());
-        updateReleases();
     }
 
     public VelocityForecastComparison getSelectedVelocityForecastComparison() {
         return productTimestampComparison.getVelocityForecastComparison();
     }
 
-    public ReleaseForecast getSelectedReleaseForecast() {
-        return getSelectedProductTimestamp().getReleaseForecast();
+    public ReleaseForecastComparison getSelectedReleaseForecastComparison() {
+        return productTimestampComparison.getReleaseForecastComparison();
     }
 
     public List<String> getProductTimestampFullNames() {
@@ -73,10 +71,6 @@ public class ProductTimeline {
         for (LocalDateTime localDateTime : allIds) {
             updateAndAddProductTimestamp(service.get(localDateTime));
         }
-    }
-
-    private void updateReleases() {
-        getSelectedReleaseForecast().updateAll(productTimestampComparison.getProductBacklogComparision());
     }
 
     private ProductTimestamp getProductTimestampByFullName(String fullName) {
@@ -101,8 +95,7 @@ public class ProductTimeline {
     }
 
     private void updateProductTimestamp(ProductTimestamp productTimestamp) {
-        productTimestamp.updateVelocityForecast();
-        productTimestamp.updateProductBacklog();
+        productTimestamp.update();
     }
 
     private void updateAndAddProductTimestamp(ProductTimestamp productTimestamp) {

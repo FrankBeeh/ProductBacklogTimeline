@@ -16,7 +16,7 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 public class Release {
     private final String name;
     private final ReleaseCriteria criteria;
-    private final Map<String, String> completionForecast = new HashMap<String, String>();
+    private final Map<String, Sprint> completionForecast = new HashMap<String, Sprint>();
     private Double accumulatedEstimate;
 
     public Release(String name, ReleaseCriteria criteria) {
@@ -40,12 +40,12 @@ public class Release {
         this.accumulatedEstimate = accumulatedEstimate;
     }
 
-    public String getCompletionForecast(String progressForecastName) {
+    public Sprint getCompletionForecast(String progressForecastName) {
         return completionForecast.get(progressForecastName);
     }
 
-    public void setCompletionForecast(String progressForecastName, String completionForecast) {
-        this.completionForecast.put(progressForecastName, completionForecast);
+    public void setCompletionForecast(String progressForecastName, Sprint sprint) {
+        this.completionForecast.put(progressForecastName, sprint);
     }
 
     @Override

@@ -39,8 +39,8 @@ public class ProductBacklogItem {
         return completionForecast.get(progressForecastName);
     }
 
-    public void setCompletionForecast(String progressForecastName, Sprint sprintData) {
-        completionForecast.put(progressForecastName, sprintData);
+    public void setCompletionForecast(String progressForecastName, Sprint sprint) {
+        completionForecast.put(progressForecastName, sprint);
     }
 
     public void setProductBacklogRank(int productBacklogRank) {

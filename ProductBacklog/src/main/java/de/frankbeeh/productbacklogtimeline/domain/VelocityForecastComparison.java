@@ -14,7 +14,7 @@ public class VelocityForecastComparison extends Comparison<VelocityForecast, Spr
     }
 
     @Override
-    protected List<Sprint> getItems() {
+    protected List<Sprint> getSelectedItems() {
         return getSelected().getSprints();
     }
 

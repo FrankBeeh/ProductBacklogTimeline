@@ -8,6 +8,7 @@ import com.google.common.base.Strings;
 
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.State;
+import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 /**
  * Responsibility:
@@ -106,6 +107,10 @@ public class DifferenceFormatter {
         return formatTextualDifference(state == null ? null : state.toString(), referenceState == null ? null : referenceState.toString());
     }
 
+    public static String formatReleaseCriteriaDifference(ReleaseCriteria releaseCriteria, ReleaseCriteria referenceReleaseCriteria) {
+        return formatTextualDifference(releaseCriteria == null ? null : releaseCriteria.toString(), referenceReleaseCriteria == null ? null : referenceReleaseCriteria.toString());
+    }
+
     private static void rigthAllign(final StringBuilder stringBuilder, final String formattedEstimate, final String formattedDifference) {
         int count = formattedDifference.length() - formattedEstimate.length() + 1;
         if (count > 0) {
@@ -116,4 +121,5 @@ public class DifferenceFormatter {
         }
         stringBuilder.append(formattedDifference);
     }
+
 }

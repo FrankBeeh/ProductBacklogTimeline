@@ -58,7 +58,7 @@ public class MainController {
     private void initialize() throws IOException {
         releaseTableController = controllerFactory.createReleaseTableController();
         releasesTab.setContent(this.releaseTableController.getView());
-        releaseTableController.initModel(productTimeline.getSelectedReleaseForecast());
+        releaseTableController.initModel(productTimeline.getSelectedReleaseForecastComparison());
         selectedProductTimestamp.itemsProperty().bind(selectProductBacklogItems);
         referencedProductTimestamp.itemsProperty().bind(selectProductBacklogItems);
         selectProductBacklogItems.set(FXCollections.<String> observableArrayList());
@@ -118,7 +118,7 @@ public class MainController {
         productBacklogTableController.updateView();
         velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecastComparison());
         releaseBurndownController.initModel(productTimeline.getSelectedProductTimestamp());
-        releaseTableController.initModel(productTimeline.getSelectedReleaseForecast());
+        releaseTableController.initModel(productTimeline.getSelectedReleaseForecastComparison());
         releaseTableController.updateView();
     }
 

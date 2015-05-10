@@ -36,10 +36,6 @@ public class ProductBacklogItemComparison {
         return productBacklogItem.getAccumulatedEstimate();
     }
 
-    public String getPlannedRelease() {
-        return productBacklogItem.getPlannedRelease();
-    }
-
     public String getComparedPlannedRelease() {
         return DifferenceFormatter.formatTextualDifference(productBacklogItem.getPlannedRelease(), referenceProductBacklogItem.getPlannedRelease());
     }

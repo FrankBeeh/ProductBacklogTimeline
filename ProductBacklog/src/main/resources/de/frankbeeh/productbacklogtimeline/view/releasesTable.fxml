@@ -14,12 +14,12 @@
 		<columns>
 			<TableColumn editable="false" maxWidth="400.0" minWidth="80.0" prefWidth="200.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn">
               <cellValueFactory>
-                <PropertyValueFactory property="name"/>
+                <PropertyValueFactory property="comparedName"/>
               </cellValueFactory>
             </TableColumn>
 			<TableColumn editable="false" maxWidth="400.0" minWidth="80.0" prefWidth="200.0" resizable="true" sortable="false" text="Criteria" fx:id="criteriaColumn">
               <cellValueFactory>
-                <PropertyValueFactory property="criteria"/>
+                <PropertyValueFactory property="comparedCriteria"/>
               </cellValueFactory>
             </TableColumn>
 			<TableColumn editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est." fx:id="accumulatedEstimateColumn">
@@ -27,7 +27,7 @@
 		        <AlignRightCellFactory />
 			  </cellFactory>
               <cellValueFactory>
-                <PropertyValueFactory property="accumulatedEstimate"/>
+                <PropertyValueFactory property="comparedAccumulatedEstimate"/>
               </cellValueFactory>
 			</TableColumn>
 			<TableColumn prefWidth="240.0" minWidth="240" text="Completion Forecast">

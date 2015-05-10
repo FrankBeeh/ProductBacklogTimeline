@@ -45,7 +45,7 @@ public abstract class Comparison<L, I, C> {
     }
 
     private void updateComparisons() {
-        for (I item : getItems()) {
+        for (I item : getSelectedItems()) {
             if (getReference() == null) {
                 addComparison(createComparisonWithSelf(item));
             } else {
@@ -54,7 +54,7 @@ public abstract class Comparison<L, I, C> {
         }
     }
 
-    protected abstract List<I> getItems();
+    protected abstract List<I> getSelectedItems();
 
     protected abstract C createComparison(I item);
 

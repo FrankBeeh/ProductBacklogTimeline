@@ -10,12 +10,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-import de.frankbeeh.productbacklogtimeline.domain.Release;
-import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseComparison;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecastComparison;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ReleaseTableController {
-    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<Release, String>, ObservableValue<String>> {
+    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ReleaseComparison, String>, ObservableValue<String>> {
         private final String progressForecastName;
 
         public CompletionForecastPropertyValueFactory(String progressForecastName) {
@@ -23,21 +23,21 @@ public class ReleaseTableController {
         }
 
         @Override
-        public ObservableValue<String> call(CellDataFeatures<Release, String> cellDataFeatures) {
-            return new SimpleStringProperty(cellDataFeatures.getValue().getCompletionForecast(progressForecastName));
+        public ObservableValue<String> call(CellDataFeatures<ReleaseComparison, String> cellDataFeatures) {
+            return new SimpleStringProperty(cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName));
         }
     }
 
     @FXML
-    private TableView<Release> releasesTable;
+    private TableView<ReleaseComparison> releasesTable;
     @FXML
-    private TableColumn<Release, String> completionForecastByMinVelColumn;
+    private TableColumn<ReleaseComparison, String> completionForecastByMinVelColumn;
     @FXML
-    private TableColumn<Release, String> completionForecastByAvgVelColumn;
+    private TableColumn<ReleaseComparison, String> completionForecastByAvgVelColumn;
     @FXML
-    private TableColumn<Release, String> completionForecastByMaxVelColumn;
+    private TableColumn<ReleaseComparison, String> completionForecastByMaxVelColumn;
 
-    private final ObservableList<Release> model = FXCollections.<Release> observableArrayList();
+    private final ObservableList<ReleaseComparison> model = FXCollections.<ReleaseComparison> observableArrayList();
 
     @FXML
     private void initialize() {
@@ -47,9 +47,9 @@ public class ReleaseTableController {
         releasesTable.setItems(model);
     }
 
-    public void initModel(ReleaseForecast releaseForecast) {
+    public void initModel(ReleaseForecastComparison releaseForecastComparison) {
         model.removeAll(model);
-        model.addAll(releaseForecast.getReleases());
+        model.addAll(releaseForecastComparison.getComparisons());
     }
 
     public Parent getView() {

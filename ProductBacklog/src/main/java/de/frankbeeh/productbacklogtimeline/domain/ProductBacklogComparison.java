@@ -1,12 +1,9 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
-
-import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 
 /**
  * Responsibility:
@@ -17,16 +14,6 @@ import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 public class ProductBacklogComparison extends Comparison<ProductBacklog, ProductBacklogItem, ProductBacklogItemComparison> {
     public ProductBacklogComparison() {
         setSelected(new ProductBacklog());
-    }
-
-    public List<ProductBacklogItemComparison> getMatchingProductBacklogItems(ReleaseCriteria criteria) {
-        final List<ProductBacklogItemComparison> matchingProductBacklogItems = new ArrayList<ProductBacklogItemComparison>();
-        for (final ProductBacklogItemComparison comparisons : getComparisons()) {
-            if (criteria.isMatching(comparisons)) {
-                matchingProductBacklogItems.add(comparisons);
-            }
-        }
-        return matchingProductBacklogItems;
     }
 
     @VisibleForTesting
@@ -45,7 +32,7 @@ public class ProductBacklogComparison extends Comparison<ProductBacklog, Product
     }
 
     @Override
-    protected List<ProductBacklogItem> getItems() {
+    protected List<ProductBacklogItem> getSelectedItems() {
         return getSelected().getItems();
     }
 }

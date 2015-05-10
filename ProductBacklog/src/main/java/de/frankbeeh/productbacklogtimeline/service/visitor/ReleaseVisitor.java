@@ -1,6 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
-import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
 
 /**
@@ -12,5 +12,5 @@ import de.frankbeeh.productbacklogtimeline.domain.Release;
 public interface ReleaseVisitor {
     void reset();
 
-    void visit(Release release, ProductBacklogComparison productBacklogComparison);
+    void visit(Release release, ProductBacklog productBacklog);
 }

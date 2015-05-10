@@ -9,15 +9,18 @@ package de.frankbeeh.productbacklogtimeline.domain;
 public class ProductTimestampComparison {
     private ProductBacklogComparison productBacklogComparison = new ProductBacklogComparison();
     private VelocityForecastComparison velocityForecastComparison = new VelocityForecastComparison();
+    private ReleaseForecastComparison releaseForecastComparison = new ReleaseForecastComparison();
 
     public void setSelectedTimestamp(ProductTimestamp selectedProductTimestamp) {
         productBacklogComparison.setSelected(selectedProductTimestamp.getProductBacklog());
         velocityForecastComparison.setSelected(selectedProductTimestamp.getVelocityForecast());
+        releaseForecastComparison.setSelected(selectedProductTimestamp.getReleaseForecast());
     }
 
     public void setReferenceTimestamp(ProductTimestamp referenceProductTimestamp) {
         productBacklogComparison.setReference(referenceProductTimestamp.getProductBacklog());
         velocityForecastComparison.setReference(referenceProductTimestamp.getVelocityForecast());
+        releaseForecastComparison.setReference(referenceProductTimestamp.getReleaseForecast());
     }
 
     public ProductBacklogComparison getProductBacklogComparision() {
@@ -26,5 +29,9 @@ public class ProductTimestampComparison {
 
     public VelocityForecastComparison getVelocityForecastComparison() {
         return velocityForecastComparison;
+    }
+    
+    public ReleaseForecastComparison getReleaseForecastComparison() {
+        return releaseForecastComparison;
     }
 }

@@ -62,11 +62,21 @@ public class ProductTimestamp {
         return dateTime;
     }
 
-    public void updateProductBacklog() {
+    public void update() {
+        updateVelocityForecast();
+        updateProductBacklog();
+        updateReleaseForecast();
+    }
+
+    private void updateProductBacklog() {
         productBacklog.updateAllItems(velocityForecast);
     }
 
-    public void updateVelocityForecast() {
+    private void updateVelocityForecast() {
         velocityForecast.updateForecast();
+    }
+
+    private void updateReleaseForecast() { 
+        releaseForecast.updateAll(productBacklog);
     }
 }

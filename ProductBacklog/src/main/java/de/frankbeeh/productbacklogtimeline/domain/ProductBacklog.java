@@ -1,10 +1,12 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.annotations.VisibleForTesting;
 
+import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
 import de.frankbeeh.productbacklogtimeline.service.sort.JiraProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.sort.ProductBacklogSortingStrategy;
 import de.frankbeeh.productbacklogtimeline.service.visitor.AccumulateEstimate;
@@ -87,5 +89,15 @@ public class ProductBacklog {
 
     public int size() {
         return items.size();
+    }
+    
+    public List<ProductBacklogItem> getMatchingProductBacklogItems(ReleaseCriteria criteria) {
+        final List<ProductBacklogItem> matchingProductBacklogItems = new ArrayList<ProductBacklogItem>();
+        for (final ProductBacklogItem item : getItems()) {
+            if (criteria.isMatching(item)) {
+                matchingProductBacklogItems.add(item);
+            }
+        }
+        return matchingProductBacklogItems;
     }
 }
