@@ -1,7 +1,6 @@
 package de.frankbeeh.productbacklogtimeline.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -9,6 +8,7 @@ import java.time.Month;
 import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
+import de.frankbeeh.productbacklogtimeline.domain.State;
 
 public class DifferenceFormatterTest {
     private static final LocalDate END_DATE = LocalDate.of(2001, Month.JANUARY, 1);
@@ -27,7 +27,7 @@ public class DifferenceFormatterTest {
 
     @Test
     public void formatTextualDifference_referenceValueNull() throws Exception {
-        assertEquals(STRING_VALUE_1, DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, null));
+        assertEquals(STRING_VALUE_1 + "\n(NEW)", DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, null));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class DifferenceFormatterTest {
         final Sprint sprint = newSprint(SPRINT_NAME_1, END_DATE);
         assertNull(DifferenceFormatter.formatSprintDifference(null, sprint));
     }
-    
+
     @Test
     public void formatSprintDifference_withEndDate() throws Exception {
         final Sprint sprint = newSprint(SPRINT_NAME_1, END_DATE);
@@ -77,12 +77,12 @@ public class DifferenceFormatterTest {
         final Sprint referenceSprint = newSprint(SPRINT_NAME_2, EARLIER_END_DATE);
         assertEquals(SPRINT_NAME_1 + "\n(" + SPRINT_NAME_2 + ")\n" + FORMATED_END_DATE_1 + "\n(+20d)", DifferenceFormatter.formatSprintDifference(sprint, referenceSprint));
     }
-    
+
     @Test
     public void formatLocalDateDifference_referenceValueNull() throws Exception {
-        assertEquals(FORMATED_END_DATE_1, DifferenceFormatter.formatLocalDateDifference(END_DATE, null));
+        assertEquals(FORMATED_END_DATE_1 + "\n(NEW)", DifferenceFormatter.formatLocalDateDifference(END_DATE, null));
     }
-    
+
     @Test
     public void formatDoubleDifference_valueNull() throws Exception {
         assertNull(DifferenceFormatter.formatDoubleDifference(null, 2d));
@@ -114,25 +114,45 @@ public class DifferenceFormatterTest {
     }
 
     @Test
-    public void getComparedProductBacklogRank_referenceNull() throws Exception {
+    public void formatProductBacklogRankDifference_referenceNull() throws Exception {
         assertEquals("     2\n(NEW)", DifferenceFormatter.formatProductBacklogRankDifference(2, null));
     }
 
     @Test
-    public void getComparedProductBacklogRank_equal() throws Exception {
+    public void formatProductBacklogRankDifference_equal() throws Exception {
         assertEquals("2", DifferenceFormatter.formatProductBacklogRankDifference(2, 2));
     }
 
     @Test
-    public void getComparedProductBacklogRank_decrease() throws Exception {
+    public void formatProductBacklogRankDifference_decrease() throws Exception {
         assertEquals("     2\n(-13)", DifferenceFormatter.formatProductBacklogRankDifference(2, 15));
     }
 
     @Test
-    public void getComparedProductBacklogRank_increase() throws Exception {
+    public void formatProductBacklogRankDifference_increase() throws Exception {
         assertEquals("   10\n(+8)", DifferenceFormatter.formatProductBacklogRankDifference(10, 2));
     }
-    
+
+    @Test
+    public void formatStateDifference_valueNull() throws Exception {
+        assertNull(DifferenceFormatter.formatStateDifference(null, State.Canceled));
+    }
+
+    @Test
+    public void formatStateDifference_referenceValueNull() throws Exception {
+        assertEquals("Canceled\n(NEW)", DifferenceFormatter.formatStateDifference(State.Canceled, null));
+    }
+
+    @Test
+    public void formatStateDifference_Equal() throws Exception {
+        assertEquals("Todo", DifferenceFormatter.formatStateDifference(State.Todo, State.Todo));
+    }
+
+    @Test
+    public void formatStateDifference_notEqual() throws Exception {
+        assertEquals("Todo\n(Done)", DifferenceFormatter.formatStateDifference(State.Todo, State.Done));
+    }
+
     private Sprint newSprint(String name, LocalDate endDate) {
         return new Sprint(name, null, endDate, null, null, null, null);
     }

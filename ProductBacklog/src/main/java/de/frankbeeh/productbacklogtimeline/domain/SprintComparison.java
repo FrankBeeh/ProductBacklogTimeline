@@ -73,8 +73,8 @@ public class SprintComparison {
                 referenceSprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName));
     }
 
-    public State getState() {
-        return sprint.getState();
+    public String getComparedState() {
+        return DifferenceFormatter.formatStateDifference(sprint.getState(), referenceSprint.getState());
     }
 
     @Override

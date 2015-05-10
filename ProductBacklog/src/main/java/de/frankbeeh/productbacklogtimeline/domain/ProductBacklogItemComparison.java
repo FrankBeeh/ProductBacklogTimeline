@@ -61,8 +61,7 @@ public class ProductBacklogItemComparison {
     }
 
     public String getComparedState() {
-        return DifferenceFormatter.formatTextualDifference(productBacklogItem.getState() == null ? null : productBacklogItem.getState().toString(),
-                referenceProductBacklogItem.getState() == null ? null : referenceProductBacklogItem.getState().toString());
+        return DifferenceFormatter.formatStateDifference(productBacklogItem.getState(), referenceProductBacklogItem.getState());
     }
 
     public String getComparedEstimate() {

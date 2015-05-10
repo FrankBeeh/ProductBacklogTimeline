@@ -36,6 +36,12 @@
 				<PropertyValueFactory property="comparedEndDate" />
 			</cellValueFactory>
 		</TableColumn>
+		<TableColumn editable="false" maxWidth="65.0" minWidth="40.0"
+			prefWidth="65.0" resizable="true" sortable="false" text="State">
+			<cellValueFactory>
+				<PropertyValueFactory property="comparedState" />
+			</cellValueFactory>
+		</TableColumn>
 		<TableColumn prefWidth="75.0" text="Per Sprint">
 			<columns>
 				<TableColumn prefWidth="75.0" text="Planned">

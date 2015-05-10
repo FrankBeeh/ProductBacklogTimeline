@@ -21,7 +21,7 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedTitle_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithTitle(STRING_VALUE_1), null).getComparedTitle());
+        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithTitle(STRING_VALUE_1), null).getComparedTitle());
     }
 
     @Test
@@ -31,7 +31,7 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedDescription_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithDescription(STRING_VALUE_1), null).getComparedDescription());
+        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithDescription(STRING_VALUE_1), null).getComparedDescription());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedSprint_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedJiraSprint());
+        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedJiraSprint());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedPlannedRelease_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithPlannedRelease(STRING_VALUE_1), null).getComparedPlannedRelease());
+        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithPlannedRelease(STRING_VALUE_1), null).getComparedPlannedRelease());
     }
 
     @Test
@@ -76,12 +76,12 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedState_referenceNull() throws Exception {
-        assertEquals(State.Todo.toString(), new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo), null).getComparedState());
+        assertEquals(State.Todo.toString() + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo), null).getComparedState());
     }
 
     @Test
     public void getComparedState_referenceValueNull() throws Exception {
-        assertEquals(State.Todo.toString(), new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo), newProductBacklogItemWithState(null)).getComparedState());
+        assertEquals(State.Todo.toString() + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo), newProductBacklogItemWithState(null)).getComparedState());
     }
 
     @Test

@@ -7,6 +7,7 @@ import java.time.temporal.ChronoUnit;
 import com.google.common.base.Strings;
 
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
+import de.frankbeeh.productbacklogtimeline.domain.State;
 
 /**
  * Responsibility:
@@ -24,8 +25,12 @@ public class DifferenceFormatter {
         }
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(value.toString());
-        if (referenceValue != null && !value.equals(referenceValue)) {
-            stringBuilder.append("\n(").append(referenceValue).append(")");
+        if (referenceValue != null) {
+            if (!value.equals(referenceValue)) {
+                stringBuilder.append("\n(").append(referenceValue).append(")");
+            }
+        } else {
+            stringBuilder.append("\n(NEW)");
         }
         return stringBuilder.toString();
     }
@@ -90,9 +95,15 @@ public class DifferenceFormatter {
                 if (diffDays != 0) {
                     stringBuilder.append("\n(").append(DIFFERENCE_LONG_FORMAT.format(diffDays)).append("d)");
                 }
+            } else {
+                stringBuilder.append("\n(NEW)");
             }
         }
         return stringBuilder.toString();
+    }
+
+    public static String formatStateDifference(State state, State referenceState) {
+        return formatTextualDifference(state == null ? null : state.toString(), referenceState == null ? null : referenceState.toString());
     }
 
     private static void rigthAllign(final StringBuilder stringBuilder, final String formattedEstimate, final String formattedDifference) {
