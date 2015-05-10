@@ -7,6 +7,13 @@ import java.sql.SQLException;
 import de.frankbeeh.productbacklogtimeline.service.database.DatabaseService;
 import de.frankbeeh.productbacklogtimeline.service.database.ProductTimestampService;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Init the DB connection.
+ * <li>Create the tables that are missing in the DB ({@link DatabaseService}).
+ * </ul>
+ */
 public class RealServiceRegistry extends ServiceRegistry {
 	private static final String PRODUCT_TIMELINE_DB = "productTimeline.db";
     private final Connection connection;

@@ -9,7 +9,7 @@ import javafx.scene.input.KeyCode;
 
 import org.testfx.api.FxRobot;
 
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.view.BaseAccessor;
 
 public class ImportProductTimestampDialogAccessor extends BaseAccessor {
@@ -27,7 +27,7 @@ public class ImportProductTimestampDialogAccessor extends BaseAccessor {
     }
 
     private void enterTimestampDate(LocalDate timestampDate) {
-        enterText("#datePicker", FormatUtility.formatLocalDate(timestampDate));
+        enterText("#datePicker", DateConverter.formatLocalDate(timestampDate));
     }
 
     private void enterTimestampName(String timestampName) {

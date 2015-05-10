@@ -3,6 +3,8 @@ package de.frankbeeh.productbacklogtimeline.domain;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import de.frankbeeh.productbacklogtimeline.service.DifferenceFormatter;
+
 /**
  * Responsibility:
  * <ul>
@@ -55,13 +57,12 @@ public class ProductBacklogItemComparison {
     }
 
     public String getComparedCompletionForecast(String progressForecastName) {
-        final Sprint sprintData = productBacklogItem.getCompletionForecast(progressForecastName);
-        return DifferenceFormatter.formatSprintDifference(sprintData, referenceProductBacklogItem.getCompletionForecast(progressForecastName));
+        return DifferenceFormatter.formatSprintDifference(productBacklogItem.getCompletionForecast(progressForecastName), referenceProductBacklogItem.getCompletionForecast(progressForecastName));
     }
 
     public String getComparedState() {
-        return DifferenceFormatter.formatTextualDifference(productBacklogItem.getState() == null ? null : productBacklogItem.getState().toString(), referenceProductBacklogItem.getState() == null ? null
-        : referenceProductBacklogItem.getState().toString());
+        return DifferenceFormatter.formatTextualDifference(productBacklogItem.getState() == null ? null : productBacklogItem.getState().toString(),
+                referenceProductBacklogItem.getState() == null ? null : referenceProductBacklogItem.getState().toString());
     }
 
     public String getComparedEstimate() {

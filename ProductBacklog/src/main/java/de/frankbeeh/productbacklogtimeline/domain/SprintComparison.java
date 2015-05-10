@@ -3,6 +3,8 @@ package de.frankbeeh.productbacklogtimeline.domain;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import de.frankbeeh.productbacklogtimeline.service.DifferenceFormatter;
+
 /**
  * Responsibility:
  * <ul>
@@ -31,11 +33,11 @@ public class SprintComparison {
     }
 
     public String getComparedStartDate() {
-        return DifferenceFormatter.formatDateDifference(sprint.getStartDate(), referenceSprint.getStartDate());
+        return DifferenceFormatter.formatLocalDateDifference(sprint.getStartDate(), referenceSprint.getStartDate());
     }
 
     public String getComparedEndDate() {
-        return DifferenceFormatter.formatDateDifference(sprint.getEndDate(), referenceSprint.getEndDate());
+        return DifferenceFormatter.formatLocalDateDifference(sprint.getEndDate(), referenceSprint.getEndDate());
     }
 
     public String getComparedCapacityForecast() {

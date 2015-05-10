@@ -9,7 +9,7 @@ import java.util.List;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
-import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 
 /**
  * Responsibility:
@@ -33,7 +33,7 @@ public class ProductBacklogMapper extends BaseMapper {
     public ProductBacklog get(LocalDateTime productTimestampId) {
         final ProductBacklog productBacklog = new ProductBacklog();
         final List<ProductBacklogItem> itemDataList = getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(
-                PBL.join(PBI).on(PBL.PBI_ID.eq(PBI.ID).and(PBL.PBI_HASH.eq(PBI.HASH)))).where(PBL.PT_ID.eq(ConvertUtility.getTimestamp(productTimestampId))).fetch().into(ProductBacklogItem.class);
+                PBL.join(PBI).on(PBL.PBI_ID.eq(PBI.ID).and(PBL.PBI_HASH.eq(PBI.HASH)))).where(PBL.PT_ID.eq(DateConverter.getTimestamp(productTimestampId))).fetch().into(ProductBacklogItem.class);
         for (ProductBacklogItem itemData : itemDataList) {
             productBacklog.addItem(itemData);
         }
@@ -54,6 +54,6 @@ public class ProductBacklogMapper extends BaseMapper {
     }
 
     private void insertRelation(LocalDateTime productTimestampId, ProductBacklogItem item) {
-        getDslContext().insertInto(PBL, PBL.PT_ID, PBL.PBI_ID, PBL.PBI_HASH).values(ConvertUtility.getTimestamp(productTimestampId), item.getId(), item.getHash()).execute();
+        getDslContext().insertInto(PBL, PBL.PT_ID, PBL.PBI_ID, PBL.PBI_HASH).values(DateConverter.getTimestamp(productTimestampId), item.getId(), item.getHash()).execute();
     }
 }

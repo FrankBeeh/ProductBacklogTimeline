@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 
 @RunWith(EasyMockRunner.class)
 public class ForecastSprintCompletionTest extends EasyMockSupport {
@@ -32,7 +32,7 @@ public class ForecastSprintCompletionTest extends EasyMockSupport {
     public void visit() throws Exception {
         final String sprintName = "Sprint 1";
         final String date = "01.02.2003";
-        final Sprint sprintData = new Sprint(sprintName, null, FormatUtility.parseLocalDate(date), null, null, null, null);
+        final Sprint sprintData = new Sprint(sprintName, null, DateConverter.parseLocalDate(date), null, null, null, null);
         final double accumulatedEstimate = 10d;
         final ProductBacklogItem productBacklogItem = createProductBacklogItem(accumulatedEstimate);
 

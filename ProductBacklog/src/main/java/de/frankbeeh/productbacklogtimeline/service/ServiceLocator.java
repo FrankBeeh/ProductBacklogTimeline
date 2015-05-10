@@ -1,5 +1,12 @@
 package de.frankbeeh.productbacklogtimeline.service;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Returns registered services by their class ({@link ServiceRegistry}).
+ * <li>Closes the {@link ServiceRegistry}.
+ * </ul>
+ */
 public class ServiceLocator {
     private static ServiceRegistry registry;
 

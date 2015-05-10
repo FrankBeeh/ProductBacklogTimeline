@@ -1,13 +1,23 @@
-package de.frankbeeh.productbacklogtimeline.domain;
+package de.frankbeeh.productbacklogtimeline.service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import com.google.common.base.Strings;
 
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 
+/**
+ * Responsibility:
+ * <ul>
+ * <li>Formats the differences between two values for different types.
+ * </ul>
+ */
 public class DifferenceFormatter {
+    private static final DecimalFormat DIFFERENCE_DOUBLE_FORMAT = new DecimalFormat("+0.0;-0.0");
+    private static final DecimalFormat DIFFERENCE_LONG_FORMAT = new DecimalFormat("+0;-0");
+
     public static String formatTextualDifference(String value, String referenceValue) {
         if (value == null) {
             return null;
@@ -27,7 +37,7 @@ public class DifferenceFormatter {
         if (referenceRank != null) {
             final Integer difference = rank - referenceRank;
             if (difference != 0) {
-                final String formattedDifference = "(" + FormatUtility.formatDifferenceLong(difference) + ")";
+                final String formattedDifference = "(" + DIFFERENCE_LONG_FORMAT.format((long) difference) + ")";
                 rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
             }
         } else {
@@ -46,7 +56,7 @@ public class DifferenceFormatter {
         if (referenceValue != null) {
             final Double difference = value - referenceValue;
             if (difference != 0) {
-                final String formattedDifference = "(" + FormatUtility.formatDifferenceDouble(difference) + ")";
+                final String formattedDifference = "(" + DIFFERENCE_DOUBLE_FORMAT.format(difference) + ")";
                 rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
             }
         } else {
@@ -66,20 +76,19 @@ public class DifferenceFormatter {
         stringBuilder.append(formatTextualDifference(sprint.getName(), referenceSprint.getName()));
         if (sprint.getEndDate() != null) {
             stringBuilder.append("\n");
-
         }
-        stringBuilder.append(formatDateDifference(sprint.getEndDate(), referenceSprint.getEndDate()));
+        stringBuilder.append(formatLocalDateDifference(sprint.getEndDate(), referenceSprint.getEndDate()));
         return stringBuilder.toString();
     }
 
-    public static String formatDateDifference(final LocalDate endDate, final LocalDate referenceEndDate) {
+    public static String formatLocalDateDifference(final LocalDate endDate, final LocalDate referenceEndDate) {
         final StringBuilder stringBuilder = new StringBuilder();
         if (endDate != null) {
-            stringBuilder.append(FormatUtility.formatLocalDate(endDate));
+            stringBuilder.append(DateConverter.formatLocalDate(endDate));
             if (referenceEndDate != null) {
                 final long diffDays = ChronoUnit.DAYS.between(referenceEndDate, endDate);
                 if (diffDays != 0) {
-                    stringBuilder.append("\n(").append(FormatUtility.formatDifferenceLong(diffDays)).append("d)");
+                    stringBuilder.append("\n(").append(DIFFERENCE_LONG_FORMAT.format(diffDays)).append("d)");
                 }
             }
         }
@@ -96,5 +105,4 @@ public class DifferenceFormatter {
         }
         stringBuilder.append(formattedDifference);
     }
-
 }

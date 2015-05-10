@@ -12,7 +12,7 @@ import java.util.Map;
 
 import au.com.bytecode.opencsv.CSVReader;
 import de.frankbeeh.productbacklogtimeline.domain.State;
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 
 public abstract class DataFromCsvImporter<T> {
 
@@ -92,7 +92,7 @@ public abstract class DataFromCsvImporter<T> {
         if (value.isEmpty()) {
             return null;
         }
-        return FormatUtility.parseLocalDate(value);
+        return DateConverter.parseLocalDate(value);
     }
 
     protected final State getState(String columnName) {

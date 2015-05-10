@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import com.google.common.annotations.VisibleForTesting;
 
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 
 public class ProductTimestamp {
     private final LocalDateTime dateTime;
@@ -35,7 +35,7 @@ public class ProductTimestamp {
     }
     
     public String getFullName() {
-        return FormatUtility.formatLocalDateTime(dateTime) + " - " + name;
+        return DateConverter.formatLocalDateTime(dateTime) + " - " + name;
     }
 
     public ProductBacklog getProductBacklog() {

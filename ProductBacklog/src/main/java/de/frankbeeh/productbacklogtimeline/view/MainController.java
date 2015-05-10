@@ -19,7 +19,7 @@ import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.domain.Releases;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.ReleasesFromCsvImporter;
 import de.frankbeeh.productbacklogtimeline.service.importer.VelocityForecastFromCsvImporter;
@@ -105,7 +105,7 @@ public class MainController {
     }
 
     private void changeSelectedProductTimestamp(LocalDateTime dateTime, final String productBacklogName) {
-        selectedProductTimestamp.selectionModelProperty().get().select(FormatUtility.formatLocalDateTime(dateTime) + " - " + productBacklogName);
+        selectedProductTimestamp.selectionModelProperty().get().select(DateConverter.formatLocalDateTime(dateTime) + " - " + productBacklogName);
     }
 
     private void setSelectableProductBacklogNames() {

@@ -12,7 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.database.MockedServiceRegistry;
 
@@ -87,6 +87,6 @@ public class ProductTimelineTest extends EasyMockSupport {
     }
     
     private String getProductTimelineFullName(LocalDateTime productTimestampDate, String productTimestampName) {
-        return FormatUtility.formatLocalDateTime(productTimestampDate) + " - " + productTimestampName;
+        return DateConverter.formatLocalDateTime(productTimestampDate) + " - " + productTimestampName;
     }
 }

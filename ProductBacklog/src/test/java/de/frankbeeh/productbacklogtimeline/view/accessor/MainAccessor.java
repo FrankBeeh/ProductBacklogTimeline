@@ -13,7 +13,7 @@ import org.testfx.service.support.WaitUntilSupport;
 
 import com.google.common.base.Predicate;
 
-import de.frankbeeh.productbacklogtimeline.service.FormatUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.view.BaseAccessor;
 import de.frankbeeh.productbacklogtimeline.view.BaseUITest;
 import de.frankbeeh.productbacklogtimeline.view.TableViewContent;
@@ -93,7 +93,7 @@ public class MainAccessor extends BaseAccessor {
     }
 
     private String getProductTimestampName(final String productTimestampName, final LocalDate productTimestampDate) {
-        return FormatUtility.formatLocalDateTime(productTimestampDate.atStartOfDay()) + " - " + productTimestampName;
+        return DateConverter.formatLocalDateTime(productTimestampDate.atStartOfDay()) + " - " + productTimestampName;
     }
 
     private ComboBox<String> getSelectedProductTimestampComboBox() {

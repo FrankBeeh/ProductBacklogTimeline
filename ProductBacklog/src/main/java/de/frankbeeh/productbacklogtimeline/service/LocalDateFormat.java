@@ -15,7 +15,7 @@ public class LocalDateFormat extends Format {
         if (value == null) {
             return stringBuffer.append("");
         } else {
-            return stringBuffer.append(FormatUtility.formatLocalDate(value));
+            return stringBuffer.append(DateConverter.formatLocalDate(value));
         }
     }
 

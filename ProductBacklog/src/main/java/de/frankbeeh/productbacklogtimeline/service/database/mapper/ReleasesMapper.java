@@ -11,7 +11,7 @@ import org.jooq.Result;
 
 import de.frankbeeh.productbacklogtimeline.domain.Release;
 import de.frankbeeh.productbacklogtimeline.domain.Releases;
-import de.frankbeeh.productbacklogtimeline.service.ConvertUtility;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteriaFactory;
 
 public class ReleasesMapper extends BaseMapper {
@@ -28,13 +28,13 @@ public class ReleasesMapper extends BaseMapper {
     }
 
     private void insertRelation(LocalDateTime productTimestampId, Release release) {
-        getDslContext().insertInto(RELEASES, RELEASES.PT_ID, RELEASES.RELEASE_HASH).values(ConvertUtility.getTimestamp(productTimestampId), release.getHash()).execute();
+        getDslContext().insertInto(RELEASES, RELEASES.PT_ID, RELEASES.RELEASE_HASH).values(DateConverter.getTimestamp(productTimestampId), release.getHash()).execute();
     }
 
     public Releases get(LocalDateTime productTimestampId) {
         final Releases releases = new Releases();
         Result<Record2<String, String>> result = getDslContext().select(RELEASE.NAME, RELEASE.CRITERIA).from(
-                RELEASES.join(RELEASE).on(RELEASES.RELEASE_HASH.eq(RELEASE.HASH))).where(RELEASES.PT_ID.eq(ConvertUtility.getTimestamp(productTimestampId))).fetch();
+                RELEASES.join(RELEASE).on(RELEASES.RELEASE_HASH.eq(RELEASE.HASH))).where(RELEASES.PT_ID.eq(DateConverter.getTimestamp(productTimestampId))).fetch();
         for (Record2<String, String> record : result) {
             Release release = new Release(record.getValue(RELEASE.NAME), ReleaseCriteriaFactory.getReleaseCriteria(record.getValue(RELEASE.CRITERIA)));
             releases.addRelease(release);
