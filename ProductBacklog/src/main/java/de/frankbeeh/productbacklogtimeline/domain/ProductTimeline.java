@@ -51,8 +51,8 @@ public class ProductTimeline {
         return productTimestampComparison.getVelocityForecastComparison();
     }
 
-    public Releases getSelectedReleases() {
-        return getSelectedProductTimestamp().getReleases();
+    public ReleaseForecast getSelectedReleaseForecast() {
+        return getSelectedProductTimestamp().getReleaseForecast();
     }
 
     public List<String> getProductTimestampFullNames() {
@@ -76,7 +76,7 @@ public class ProductTimeline {
     }
 
     private void updateReleases() {
-        getSelectedReleases().updateAll(productTimestampComparison.getProductBacklogComparision());
+        getSelectedReleaseForecast().updateAll(productTimestampComparison.getProductBacklogComparision());
     }
 
     private ProductTimestamp getProductTimestampByFullName(String fullName) {
@@ -113,7 +113,7 @@ public class ProductTimeline {
     @VisibleForTesting
     ProductTimeline(ProductTimestampComparison productTimestampComparison) {
         this.productTimestampComparison = productTimestampComparison;
-        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new Releases());
+        this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new ReleaseForecast());
         productTimestampComparison.setSelectedTimestamp(getSelectedProductTimestamp());
     }
 }

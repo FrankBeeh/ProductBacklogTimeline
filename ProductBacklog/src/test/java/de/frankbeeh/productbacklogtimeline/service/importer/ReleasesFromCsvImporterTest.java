@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.frankbeeh.productbacklogtimeline.domain.Release;
-import de.frankbeeh.productbacklogtimeline.domain.Releases;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemIdIsEqual;
 
@@ -22,20 +22,20 @@ public class ReleasesFromCsvImporterTest {
     private static final String CRITERIA_1 = "plannedRelease=Release 1";
     private static final String CRITERIA_2 = "idOfPBI=ID 2";
     private static final String HEADER = "Release;Criteria\r\n";
-    private DataFromCsvImporter<Releases> importer;
+    private DataFromCsvImporter<ReleaseForecast> importer;
 
     @Test
     public void importEmptyReleases() throws Exception {
-        final Releases releases = importer.importData(new StringReader(""));
-        final List<Release> listOfReleases = releases.getReleases();
-        assertTrue(listOfReleases.isEmpty());
+        final ReleaseForecast releaseForecast = importer.importData(new StringReader(""));
+        final List<Release> releases = releaseForecast.getReleases();
+        assertTrue(releases.isEmpty());
     }
 
     @Test
     public void importMultipleReleases() throws Exception {
-        final Releases releases = importer.importData(new StringReader(HEADER + RELEASE_NAME_1 + ";" + CRITERIA_1 + ";\r\n" + RELEASE_NAME_2 + ";" + CRITERIA_2 + ";\r\n"));
+        final ReleaseForecast releaseForecast = importer.importData(new StringReader(HEADER + RELEASE_NAME_1 + ";" + CRITERIA_1 + ";\r\n" + RELEASE_NAME_2 + ";" + CRITERIA_2 + ";\r\n"));
         assertEquals(Arrays.asList(new Release(RELEASE_NAME_1, new PlannedReleaseIsEqual(RELEASE_NAME_1)), new Release(RELEASE_NAME_2, new ProductBacklogItemIdIsEqual("ID 2"))).toString(),
-                releases.getReleases().toString());
+                releaseForecast.getReleases().toString());
     }
 
     @Test

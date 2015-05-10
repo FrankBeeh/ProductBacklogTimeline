@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimeline;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
-import de.frankbeeh.productbacklogtimeline.domain.Releases;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.service.importer.ProductBacklogFromCsvImporter;
@@ -58,7 +58,7 @@ public class MainController {
     private void initialize() throws IOException {
         releaseTableController = controllerFactory.createReleaseTableController();
         releasesTab.setContent(this.releaseTableController.getView());
-        releaseTableController.initModel(productTimeline.getSelectedReleases());
+        releaseTableController.initModel(productTimeline.getSelectedReleaseForecast());
         selectedProductTimestamp.itemsProperty().bind(selectProductBacklogItems);
         referencedProductTimestamp.itemsProperty().bind(selectProductBacklogItems);
         selectProductBacklogItems.set(FXCollections.<String> observableArrayList());
@@ -71,10 +71,10 @@ public class MainController {
         final ImportProductTimestampViewModel result = dialog.openDialog();
         final ProductBacklog productBacklog = importProductBacklogFromCsv(result.getProductBacklogFile());
         final VelocityForecast velocityForecast = importVelocityForecastFromCsv(result.getVelocityForecastFile());
-        final Releases releases = importReleaseFromCsv(result.getReleasesFile());
+        final ReleaseForecast releaseForecast = importReleaseFromCsv(result.getReleasesFile());
         final String name = result.getName();
         final LocalDateTime dateTime = result.getDateTime();
-        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, releases));
+        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, releaseForecast));
         setSelectableProductBacklogNames();
         changeSelectedProductTimestamp(dateTime, name);
         updateProductBacklogAndReleaseTable();
@@ -100,7 +100,7 @@ public class MainController {
         return new VelocityForecastFromCsvImporter().importData(new FileReader(file));
     }
     
-    private Releases importReleaseFromCsv(File file) throws FileNotFoundException, IOException {
+    private ReleaseForecast importReleaseFromCsv(File file) throws FileNotFoundException, IOException {
         return new ReleasesFromCsvImporter().importData(new FileReader(file));
     }
 
@@ -118,7 +118,7 @@ public class MainController {
         productBacklogTableController.updateView();
         velocityForecastTableController.initModel(productTimeline.getSelectedVelocityForecastComparison());
         releaseBurndownController.initModel(productTimeline.getSelectedProductTimestamp());
-        releaseTableController.initModel(productTimeline.getSelectedReleases());
+        releaseTableController.initModel(productTimeline.getSelectedReleaseForecast());
         releaseTableController.updateView();
     }
 

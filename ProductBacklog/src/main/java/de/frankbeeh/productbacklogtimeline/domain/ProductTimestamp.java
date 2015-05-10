@@ -11,23 +11,23 @@ public class ProductTimestamp {
     private final String name;
     private final ProductBacklog productBacklog;
     private VelocityForecast velocityForecast;
-    private Releases releases;
+    private ReleaseForecast releaseForecast;
 
     public ProductTimestamp(LocalDateTime dateTime, String name, ProductBacklog productBacklog, ProductTimestamp previousProductTimestamp) {
-        this(dateTime, name, productBacklog, previousProductTimestamp.getVelocityForecast(), previousProductTimestamp.getReleases());
+        this(dateTime, name, productBacklog, previousProductTimestamp.getVelocityForecast(), previousProductTimestamp.getReleaseForecast());
     }
 
-    public ProductTimestamp(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast velocityForecast, Releases releases) {
+    public ProductTimestamp(LocalDateTime dateTime, String name, ProductBacklog productBacklog, VelocityForecast velocityForecast, ReleaseForecast releaseForecast) {
         this.dateTime = dateTime;
         this.name = name;
         this.productBacklog = productBacklog;
         this.velocityForecast = velocityForecast;
-        this.releases = releases;
+        this.releaseForecast = releaseForecast;
     }
 
     @VisibleForTesting
-    ProductTimestamp(LocalDateTime dateTime, String name, Releases releases) {
-        this(dateTime, name, new ProductBacklog(), new VelocityForecast(), releases);
+    ProductTimestamp(LocalDateTime dateTime, String name, ReleaseForecast releaseForecast) {
+        this(dateTime, name, new ProductBacklog(), new VelocityForecast(), releaseForecast);
     }
 
     public String getName() {
@@ -46,16 +46,16 @@ public class ProductTimestamp {
         return velocityForecast;
     }
 
-    public Releases getReleases() {
-        return releases;
+    public ReleaseForecast getReleaseForecast() {
+        return releaseForecast;
     }
 
     public void setVelocityForecast(VelocityForecast velocityForecast) {
         this.velocityForecast = velocityForecast;
     }
 
-    public void setReleases(Releases releases) {
-        this.releases = releases;
+    public void setReleaseForecast(ReleaseForecast releaseForecast) {
+        this.releaseForecast = releaseForecast;
     }
 
     public LocalDateTime getDateTime() {

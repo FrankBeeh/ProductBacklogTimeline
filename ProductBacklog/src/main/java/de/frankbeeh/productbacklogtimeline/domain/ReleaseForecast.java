@@ -9,12 +9,12 @@ import com.google.common.annotations.VisibleForTesting;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ComputeForecastForRelease;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ReleaseVisitor;
 
-public class Releases {
+public class ReleaseForecast {
 
     private final List<Release> releases;
     private final List<ReleaseVisitor> visitors;
 
-    public Releases() {
+    public ReleaseForecast() {
         this(new ArrayList<Release>(), Arrays.asList((ReleaseVisitor) new ComputeForecastForRelease()));
     }
 
@@ -36,7 +36,7 @@ public class Releases {
     }
 
     @VisibleForTesting
-    public Releases(List<Release> releases, List<ReleaseVisitor> visitorMocks) {
+    public ReleaseForecast(List<Release> releases, List<ReleaseVisitor> visitorMocks) {
         this.releases = releases;
         this.visitors = visitorMocks;
     }

@@ -11,7 +11,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
-import de.frankbeeh.productbacklogtimeline.domain.Releases;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ReleaseTableController {
@@ -47,9 +47,9 @@ public class ReleaseTableController {
         releasesTable.setItems(model);
     }
 
-    public void initModel(Releases releases) {
+    public void initModel(ReleaseForecast releaseForecast) {
         model.removeAll(model);
-        model.addAll(releases.getReleases());
+        model.addAll(releaseForecast.getReleases());
     }
 
     public Parent getView() {

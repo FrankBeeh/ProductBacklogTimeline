@@ -10,7 +10,7 @@ import org.jooq.Record2;
 import org.jooq.Result;
 
 import de.frankbeeh.productbacklogtimeline.domain.Release;
-import de.frankbeeh.productbacklogtimeline.domain.Releases;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteriaFactory;
 
@@ -20,8 +20,8 @@ public class ReleasesMapper extends BaseMapper {
         super(connection);
     }
 
-    public void insert(LocalDateTime productTimestampId, Releases releases) {
-        for (Release release : releases.getReleases()) {
+    public void insert(LocalDateTime productTimestampId, ReleaseForecast releaseForecast) {
+        for (Release release : releaseForecast.getReleases()) {
             insertRelease(release);
             insertRelation(productTimestampId, release);
         }
@@ -31,15 +31,15 @@ public class ReleasesMapper extends BaseMapper {
         getDslContext().insertInto(RELEASES, RELEASES.PT_ID, RELEASES.RELEASE_HASH).values(DateConverter.getTimestamp(productTimestampId), release.getHash()).execute();
     }
 
-    public Releases get(LocalDateTime productTimestampId) {
-        final Releases releases = new Releases();
+    public ReleaseForecast get(LocalDateTime productTimestampId) {
+        final ReleaseForecast releaseForecast = new ReleaseForecast();
         Result<Record2<String, String>> result = getDslContext().select(RELEASE.NAME, RELEASE.CRITERIA).from(
                 RELEASES.join(RELEASE).on(RELEASES.RELEASE_HASH.eq(RELEASE.HASH))).where(RELEASES.PT_ID.eq(DateConverter.getTimestamp(productTimestampId))).fetch();
         for (Record2<String, String> record : result) {
             Release release = new Release(record.getValue(RELEASE.NAME), ReleaseCriteriaFactory.getReleaseCriteria(record.getValue(RELEASE.CRITERIA)));
-            releases.addRelease(release);
+            releaseForecast.addRelease(release);
         }
-        return releases;
+        return releaseForecast;
     }
     
     private void insertRelease(Release release) {

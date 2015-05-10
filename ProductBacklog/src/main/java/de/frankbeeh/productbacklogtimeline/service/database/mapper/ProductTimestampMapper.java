@@ -37,7 +37,7 @@ public class ProductTimestampMapper extends BaseMapper {
         final LocalDateTime productTimestampId = productTimestamp.getDateTime();
         productBacklogMapper.insert(productTimestampId, productTimestamp.getProductBacklog());
         velocityForecastMapper.insert(productTimestampId, productTimestamp.getVelocityForecast());
-        releasesMapper.insert(productTimestampId, productTimestamp.getReleases());
+        releasesMapper.insert(productTimestampId, productTimestamp.getReleaseForecast());
         insertProductTimestamp(productTimestamp);
     }
 

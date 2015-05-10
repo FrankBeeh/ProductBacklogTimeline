@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
-import de.frankbeeh.productbacklogtimeline.domain.Releases;
+import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
 import de.frankbeeh.productbacklogtimeline.service.visitor.ReleaseVisitor;
 
 @RunWith(EasyMockRunner.class)
@@ -22,14 +22,14 @@ public class ReleasesTest extends EasyMockSupport {
     @Mock
     private ReleaseVisitor visitorMock2;
 
-    private Releases releases;
+    private ReleaseForecast releaseForecast;
 
     @Test
     public void updateAll() {
         final ProductBacklogComparison productBacklogComparison = new ProductBacklogComparison();
         final Release release1 = new Release("Release 1", null);
         final Release release2 = new Release("Release 2", null);
-        releases = new Releases(Arrays.asList(release1, release2), Arrays.asList(visitorMock1, visitorMock2));
+        releaseForecast = new ReleaseForecast(Arrays.asList(release1, release2), Arrays.asList(visitorMock1, visitorMock2));
         visitorMock1.reset();
         visitorMock2.reset();
         visitorMock1.visit(same(release1), same(productBacklogComparison));
@@ -37,7 +37,7 @@ public class ReleasesTest extends EasyMockSupport {
         visitorMock2.visit(same(release1), same(productBacklogComparison));
         visitorMock2.visit(same(release2), same(productBacklogComparison));
         replayAll();
-        releases.updateAll(productBacklogComparison);
+        releaseForecast.updateAll(productBacklogComparison);
         verifyAll();
     }
 }
