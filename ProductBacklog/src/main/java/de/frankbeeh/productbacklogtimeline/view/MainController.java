@@ -69,27 +69,30 @@ public class MainController {
         final BasicDialog<ImportProductTimestampViewModel> dialog = new ImportProductTimestampDialog(primaryStage);
         dialog.initModel(new ImportProductTimestampViewModel());
         final ImportProductTimestampViewModel result = dialog.openDialog();
+        
         final ProductBacklog productBacklog = importProductBacklogFromCsv(result.getProductBacklogFile());
         final VelocityForecast velocityForecast = importVelocityForecastFromCsv(result.getVelocityForecastFile());
         final ReleaseForecast releaseForecast = importReleaseFromCsv(result.getReleasesFile());
         final String name = result.getName();
         final LocalDateTime dateTime = result.getDateTime();
-        productTimeline.addProductTimestamp(new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, releaseForecast));
+        final ProductTimestamp productTimestamp = new ProductTimestamp(dateTime, name, productBacklog, velocityForecast, releaseForecast);
+        
+        productTimeline.addProductTimestamp(productTimestamp);
         setSelectableProductBacklogNames();
         changeSelectedProductTimestamp(dateTime, name);
-        updateProductBacklogAndReleaseTable();
+        updateAllControllers();
     }
 
     @FXML
     private void selectProductTimestamp() {
         productTimeline.selectProductTimestamp(selectedProductTimestamp.selectionModelProperty().get().getSelectedItem());
-        updateProductBacklogAndReleaseTable();
+        updateAllControllers();
     }
 
     @FXML
     private void referenceProductTimestamp() {
         productTimeline.selectReferenceProductTimestamp(referencedProductTimestamp.selectionModelProperty().get().getSelectedItem());
-        updateProductBacklogAndReleaseTable();
+        updateAllControllers();
     }
 
     private ProductBacklog importProductBacklogFromCsv(final File file) throws IOException, FileNotFoundException {
@@ -113,13 +116,11 @@ public class MainController {
         selectProductBacklogItems.getValue().addAll(productTimeline.getProductTimestampFullNames());
     }
 
-    private void updateProductBacklogAndReleaseTable() {
+    private void updateAllControllers() {
         productBacklogTableController.initModel(productTimeline.getProductBacklogComparison());
-        productBacklogTableController.updateView();
         velocityForecastTableController.initModel(productTimeline.getVelocityForecastComparison());
-        releaseBurndownController.initModel(productTimeline.getSelectedProductTimestamp());
         releaseTableController.initModel(productTimeline.getReleaseForecastComparison());
-        releaseTableController.updateView();
+        releaseBurndownController.initModel(productTimeline.getSelectedProductTimestamp());
     }
 
     private void loadFromDataBase() {

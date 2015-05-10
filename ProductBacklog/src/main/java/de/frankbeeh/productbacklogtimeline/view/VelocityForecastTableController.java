@@ -64,8 +64,9 @@ public class VelocityForecastTableController {
     private TableColumn<SprintComparison, String> accumulatedForecastByMinVelColumn;
     @FXML
     private TableColumn<SprintComparison, String> accumulatedForecastByMaxVelColumn;
+    
+    private final ObservableList<SprintComparison> model = FXCollections.<SprintComparison> observableArrayList();
 
-    private ObservableList<SprintComparison> model;
 
     @FXML
     private void initialize() {
@@ -75,18 +76,12 @@ public class VelocityForecastTableController {
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByAvgVelColumn, VelocityForecast.AVERAGE_VELOCITY_FORECAST);
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMinVelColumn, VelocityForecast.MINIMUM_VELOCITY_FORECAST);
         setCellValueFactoryForAccumulatedForecast(accumulatedForecastByMaxVelColumn, VelocityForecast.MAXIMUM_VELOCITY_FORECAST);
-    }
-
-    public void initModel(VelocityForecastComparison velocityForecastComparison) {
-        createModel(velocityForecastComparison);
         velocityForecastTable.setItems(model);
     }
 
-    private void createModel(VelocityForecastComparison velocityForecastComparison) {
-        model = FXCollections.<SprintComparison> observableArrayList();
-        for (SprintComparison sprintDataComparison : velocityForecastComparison.getComparisons()) {
-            model.add(sprintDataComparison);
-        }
+    public void initModel(VelocityForecastComparison velocityForecastComparison) {
+        model.removeAll(model);
+        model.addAll(velocityForecastComparison.getComparisons());
     }
 
     private void setCellValueFactoryForForecast(TableColumn<SprintComparison, String> tableColumn, String historyForecastName) {

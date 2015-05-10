@@ -50,9 +50,4 @@ public class ProductBacklogTableController {
         model.removeAll(model);
         model.addAll(productBacklogComparison.getComparisons());
     }
-
-    public void updateView() {
-        productBacklogTable.getColumns().get(0).setVisible(false);
-        productBacklogTable.getColumns().get(0).setVisible(true);
-    }
 }
