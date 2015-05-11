@@ -28,7 +28,7 @@ apply plugin: 'nu.studer.jooq'
 // See http://stackoverflow.com/questions/27092857/cglib-throws-an-illegalargumentexception-when-enhancing-the-java-util-date-class
 sourceCompatibility = 1.7
 
-version = '0.2.0'
+version = '0.2.1'
 mainClassName = 'de.frankbeeh.productbacklogtimeline.ProductBacklogTimelineApplication'
 
 javafx {
