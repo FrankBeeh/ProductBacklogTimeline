@@ -1,7 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,12 +10,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
+import de.frankbeeh.productbacklogtimeline.domain.ComparedValue;
 import de.frankbeeh.productbacklogtimeline.domain.ReleaseComparison;
 import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecastComparison;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ReleaseTableController {
-    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ReleaseComparison, String>, ObservableValue<String>> {
+    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ReleaseComparison, ComparedValue>, ObservableValue<ComparedValue>> {
         private final String progressForecastName;
 
         public CompletionForecastPropertyValueFactory(String progressForecastName) {
@@ -23,19 +24,24 @@ public class ReleaseTableController {
         }
 
         @Override
-        public ObservableValue<String> call(CellDataFeatures<ReleaseComparison, String> cellDataFeatures) {
-            return new SimpleStringProperty(cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName));
+        public ObservableValue<ComparedValue> call(final CellDataFeatures<ReleaseComparison, ComparedValue> cellDataFeatures) {
+            return new ObservableValueBase<ComparedValue>() {
+                @Override
+                public ComparedValue getValue() {
+                    return cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName);
+                }
+            };
         }
     }
 
     @FXML
     private TableView<ReleaseComparison> releasesTable;
     @FXML
-    private TableColumn<ReleaseComparison, String> completionForecastByMinVelColumn;
+    private TableColumn<ReleaseComparison, ComparedValue> completionForecastByMinVelColumn;
     @FXML
-    private TableColumn<ReleaseComparison, String> completionForecastByAvgVelColumn;
+    private TableColumn<ReleaseComparison, ComparedValue> completionForecastByAvgVelColumn;
     @FXML
-    private TableColumn<ReleaseComparison, String> completionForecastByMaxVelColumn;
+    private TableColumn<ReleaseComparison, ComparedValue> completionForecastByMaxVelColumn;
 
     private final ObservableList<ReleaseComparison> model = FXCollections.<ReleaseComparison> observableArrayList();
 

@@ -21,6 +21,8 @@ import de.frankbeeh.productbacklogtimeline.view.accessor.MainAccessor;
 import de.frankbeeh.productbacklogtimeline.view.accessor.MenuAccessor;
 
 public class BaseUITest extends ApplicationTest {
+    private static final String CSS_FILE = "../css/productbacklog.css";
+    
     private final MenuAccessor menuAccessor;
     private final MainAccessor mainAccessor;
 
@@ -36,7 +38,7 @@ public class BaseUITest extends ApplicationTest {
         final Parent root = (Parent) loader.load();
 
         final Scene scene = new Scene(root, 1200, 800);
-
+        scene.getStylesheets().add(getClass().getResource(CSS_FILE).toExternalForm());
         stage.setScene(scene);
         stage.show();
 

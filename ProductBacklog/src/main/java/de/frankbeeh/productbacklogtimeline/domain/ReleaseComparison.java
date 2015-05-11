@@ -33,11 +33,11 @@ public class ReleaseComparison {
         return DifferenceFormatter.formatReleaseCriteriaDifference(release.getCriteria(), referenceRelease.getCriteria());
     }
 
-    public String getComparedAccumulatedEstimate() {
-        return DifferenceFormatter.formatDoubleDifference(release.getAccumulatedEstimate(), referenceRelease.getAccumulatedEstimate());
+    public ComparedValue getComparedAccumulatedEstimate() {
+        return DifferenceFormatter.formatDoubleDifference(release.getAccumulatedEstimate(), referenceRelease.getAccumulatedEstimate(), true);
     }
 
-    public String getComparedCompletionForecast(String progressForecastName) {
+    public ComparedValue getComparedCompletionForecast(String progressForecastName) {
         return DifferenceFormatter.formatSprintDifference(release.getCompletionForecast(progressForecastName), referenceRelease.getCompletionForecast(progressForecastName));
     }
 }

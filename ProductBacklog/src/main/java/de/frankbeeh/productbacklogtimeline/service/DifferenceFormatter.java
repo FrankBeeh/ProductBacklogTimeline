@@ -6,6 +6,8 @@ import java.time.temporal.ChronoUnit;
 
 import com.google.common.base.Strings;
 
+import de.frankbeeh.productbacklogtimeline.domain.ComparedValue;
+import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogDirection;
 import de.frankbeeh.productbacklogtimeline.domain.Sprint;
 import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
@@ -36,44 +38,58 @@ public class DifferenceFormatter {
         return stringBuilder.toString();
     }
 
-    public static String formatProductBacklogRankDifference(Integer rank, Integer referenceRank) {
+    public static ComparedValue formatProductBacklogRankDifference(Integer rank, Integer referenceRank) {
         final StringBuilder stringBuilder = new StringBuilder();
         final String formattedEstimate = rank.toString();
         stringBuilder.append(formattedEstimate);
+        ProductBacklogDirection direction = ProductBacklogDirection.Same;
         if (referenceRank != null) {
             final Integer difference = rank - referenceRank;
             if (difference != 0) {
                 final String formattedDifference = "(" + DIFFERENCE_LONG_FORMAT.format((long) difference) + ")";
                 rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
+                if (difference < 0) {
+                    direction = ProductBacklogDirection.Earlier;
+                } else {
+                    direction = ProductBacklogDirection.Later;
+                }
             }
         } else {
+            direction = ProductBacklogDirection.New;
             rigthAllign(stringBuilder, formattedEstimate, "(NEW)");
         }
-        return stringBuilder.toString();
+        return new ComparedValue(direction, stringBuilder.toString());
     }
 
-    public static String formatDoubleDifference(Double value, Double referenceValue) {
+    public static ComparedValue formatDoubleDifference(Double value, Double referenceValue, boolean smallerIsEarlier) {
         if (value == null) {
-            return null;
+            return new ComparedValue(ProductBacklogDirection.Same, null);
         }
         final StringBuilder stringBuilder = new StringBuilder();
         final String formattedEstimate = value.toString();
         stringBuilder.append(formattedEstimate);
+        ProductBacklogDirection direction = ProductBacklogDirection.Same;
         if (referenceValue != null) {
             final Double difference = value - referenceValue;
             if (difference != 0) {
                 final String formattedDifference = "(" + DIFFERENCE_DOUBLE_FORMAT.format(difference) + ")";
                 rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
+                if (difference < 0) {
+                    direction = smallerIsEarlier ? ProductBacklogDirection.Earlier : ProductBacklogDirection.Later;
+                } else {
+                    direction = smallerIsEarlier ? ProductBacklogDirection.Later : ProductBacklogDirection.Earlier;
+                }
             }
         } else {
             rigthAllign(stringBuilder, formattedEstimate, "(NEW)");
+            direction = ProductBacklogDirection.New;
         }
-        return stringBuilder.toString();
+        return new ComparedValue(direction, stringBuilder.toString());
     }
 
-    public static String formatSprintDifference(Sprint sprint, Sprint referenceSprint) {
+    public static ComparedValue formatSprintDifference(Sprint sprint, Sprint referenceSprint) {
         if (sprint == null) {
-            return null;
+            return new ComparedValue(ProductBacklogDirection.Same, null);
         }
         if (referenceSprint == null) {
             referenceSprint = sprint;
@@ -82,25 +98,36 @@ public class DifferenceFormatter {
         stringBuilder.append(formatTextualDifference(sprint.getName(), referenceSprint.getName()));
         if (sprint.getEndDate() != null) {
             stringBuilder.append("\n");
+            if (sprint.getEndDate().isAfter(referenceSprint.getEndDate())) {
+            } else if (sprint.getEndDate().isBefore(referenceSprint.getEndDate())) {
+            }
         }
-        stringBuilder.append(formatLocalDateDifference(sprint.getEndDate(), referenceSprint.getEndDate()));
-        return stringBuilder.toString();
+        final ComparedValue comparedLocalDate = formatLocalDateDifference(sprint.getEndDate(), referenceSprint.getEndDate());
+        stringBuilder.append(comparedLocalDate.getComparedValue());
+        return new ComparedValue(comparedLocalDate.getDirection(), stringBuilder.toString());
     }
 
-    public static String formatLocalDateDifference(final LocalDate endDate, final LocalDate referenceEndDate) {
+    public static ComparedValue formatLocalDateDifference(final LocalDate endDate, final LocalDate referenceEndDate) {
         final StringBuilder stringBuilder = new StringBuilder();
+        ProductBacklogDirection direction = ProductBacklogDirection.Same;
         if (endDate != null) {
             stringBuilder.append(DateConverter.formatLocalDate(endDate));
             if (referenceEndDate != null) {
                 final long diffDays = ChronoUnit.DAYS.between(referenceEndDate, endDate);
                 if (diffDays != 0) {
                     stringBuilder.append("\n(").append(DIFFERENCE_LONG_FORMAT.format(diffDays)).append("d)");
+                    if (endDate.isAfter(referenceEndDate)) {
+                        direction = ProductBacklogDirection.Later;
+                    } else if (endDate.isBefore(referenceEndDate)) {
+                        direction = ProductBacklogDirection.Earlier;
+                    }
                 }
             } else {
                 stringBuilder.append("\n(NEW)");
+                direction = ProductBacklogDirection.New;
             }
         }
-        return stringBuilder.toString();
+        return new ComparedValue(direction, stringBuilder.toString());
     }
 
     public static String formatStateDifference(State state, State referenceState) {
@@ -121,5 +148,4 @@ public class DifferenceFormatter {
         }
         stringBuilder.append(formattedDifference);
     }
-
 }

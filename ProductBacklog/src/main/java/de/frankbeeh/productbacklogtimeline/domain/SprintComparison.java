@@ -32,45 +32,46 @@ public class SprintComparison {
         return DifferenceFormatter.formatTextualDifference(sprint.getName(), referenceSprint.getName());
     }
 
-    public String getComparedStartDate() {
+    public ComparedValue getComparedStartDate() {
         return DifferenceFormatter.formatLocalDateDifference(sprint.getStartDate(), referenceSprint.getStartDate());
     }
 
-    public String getComparedEndDate() {
+    public ComparedValue getComparedEndDate() {
         return DifferenceFormatter.formatLocalDateDifference(sprint.getEndDate(), referenceSprint.getEndDate());
     }
 
-    public String getComparedCapacityForecast() {
-        return DifferenceFormatter.formatDoubleDifference(sprint.getCapacityForecast(), referenceSprint.getCapacityForecast());
+    public ComparedValue getComparedCapacityForecast() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getCapacityForecast(), referenceSprint.getCapacityForecast(), false);
     }
 
-    public String getComparedEffortForecast() {
-        return DifferenceFormatter.formatDoubleDifference(sprint.getEffortForecast(), referenceSprint.getEffortForecast());
+    public ComparedValue getComparedEffortForecast() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getEffortForecast(), referenceSprint.getEffortForecast(), false);
     }
 
-    public String getComparedCapacityDone() {
-        return DifferenceFormatter.formatDoubleDifference(sprint.getCapacityDone(), referenceSprint.getCapacityDone());
+    public ComparedValue getComparedCapacityDone() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getCapacityDone(), referenceSprint.getCapacityDone(), false);
     }
 
-    public String getComparedEffortDone() {
-        return DifferenceFormatter.formatDoubleDifference(sprint.getEffortDone(), referenceSprint.getEffortDone());
+    public ComparedValue getComparedEffortDone() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getEffortDone(), referenceSprint.getEffortDone(), false);
     }
 
-    public String getComparedAccumulatedEffortDone() {
-        return DifferenceFormatter.formatDoubleDifference(sprint.getAccumulatedEffortDone(), referenceSprint.getAccumulatedEffortDone());
+    public ComparedValue getComparedAccumulatedEffortDone() {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getAccumulatedEffortDone(), referenceSprint.getAccumulatedEffortDone(), false);
     }
 
     public Double getAccumulatedEffortDone() {
         return sprint.getAccumulatedEffortDone();
     }
 
-    public String getComparedProgressForecastBasedOnHistory(String progressForecastName) {
-        return DifferenceFormatter.formatDoubleDifference(sprint.getProgressForecastBasedOnHistory(progressForecastName), referenceSprint.getProgressForecastBasedOnHistory(progressForecastName));
+    public ComparedValue getComparedProgressForecastBasedOnHistory(String progressForecastName) {
+        return DifferenceFormatter.formatDoubleDifference(sprint.getProgressForecastBasedOnHistory(progressForecastName), referenceSprint.getProgressForecastBasedOnHistory(progressForecastName),
+                false);
     }
 
-    public String getComparedAccumulatedProgressForecastBasedOnHistory(String progressForecastName) {
+    public ComparedValue getComparedAccumulatedProgressForecastBasedOnHistory(String progressForecastName) {
         return DifferenceFormatter.formatDoubleDifference(sprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName),
-                referenceSprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName));
+                referenceSprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName), false);
     }
 
     public String getComparedState() {

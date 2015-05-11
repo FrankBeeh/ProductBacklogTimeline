@@ -17,3 +17,16 @@
 .InProgress {
 	-fx-background-color: Silver;
 }
+
+.Earlier {
+	-fx-background-color: linear-gradient(to top, White 0%, RoyalBlue 100%); 
+	
+}
+
+.Later {
+	-fx-background-color: linear-gradient(to bottom, White 0%, Red 100%);
+}
+
+.New {
+	-fx-background-color: Yellow;
+}

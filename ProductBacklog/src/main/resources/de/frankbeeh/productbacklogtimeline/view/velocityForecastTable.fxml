@@ -26,18 +26,24 @@
 		</TableColumn>
 		<TableColumn editable="false" maxWidth="65.0" minWidth="40.0"
 			prefWidth="65.0" resizable="true" sortable="false" text="Start Date">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedStartDate" />
 			</cellValueFactory>
 		</TableColumn>
 		<TableColumn editable="false" maxWidth="65.0" minWidth="40.0"
 			prefWidth="65.0" resizable="true" sortable="false" text="End Date">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedEndDate" />
 			</cellValueFactory>
 		</TableColumn>
-		<TableColumn editable="false" maxWidth="65.0" minWidth="40.0"
-			prefWidth="65.0" resizable="true" sortable="false" text="State">
+		<TableColumn editable="false" maxWidth="75.0" minWidth="40.0"
+			prefWidth="75.0" resizable="true" sortable="false" text="State">
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedState" />
 			</cellValueFactory>
@@ -50,7 +56,7 @@
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Capacity">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 							<cellValueFactory>
 								<PropertyValueFactory property="comparedCapacityForecast" />
@@ -60,7 +66,7 @@
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Effort">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 							<cellValueFactory>
 								<PropertyValueFactory property="comparedEffortForecast" />
@@ -74,7 +80,7 @@
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Capacity">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 							<cellValueFactory>
 								<PropertyValueFactory property="comparedCapacityDone" />
@@ -84,7 +90,7 @@
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Effort">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 							<cellValueFactory>
 								<PropertyValueFactory property="comparedEffortDone" />
@@ -98,21 +104,21 @@
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Min. Vel." fx:id="forecastPerSprintByMinVelColumn">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 						</TableColumn>
 						<TableColumn editable="false" maxWidth="60.0"
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Avg. Vel." fx:id="forecastPerSprintByAvgVelColumn">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 						</TableColumn>
 						<TableColumn editable="false" maxWidth="60.0"
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Max. Vel." fx:id="forecastPerSprintByMaxVelColumn">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 						</TableColumn>
 					</columns>
@@ -124,7 +130,7 @@
 				<TableColumn editable="false" maxWidth="60.0" minWidth="20.0"
 					prefWidth="60.0" resizable="true" sortable="false" text="Done">
 					<cellFactory>
-						<AlignRightCellFactory />
+						<ComparedValueCellFactory alignRight="true" />
 					</cellFactory>
 					<cellValueFactory>
 						<PropertyValueFactory property="comparedAccumulatedEffortDone" />
@@ -136,21 +142,21 @@
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Min. Vel." fx:id="accumulatedForecastByMinVelColumn">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 						</TableColumn>
 						<TableColumn editable="false" maxWidth="60.0"
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Avg. Vel." fx:id="accumulatedForecastByAvgVelColumn">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 						</TableColumn>
 						<TableColumn editable="false" maxWidth="60.0"
 							minWidth="20.0" prefWidth="60.0" resizable="true" sortable="false"
 							text="Max. Vel." fx:id="accumulatedForecastByMaxVelColumn">
 							<cellFactory>
-								<AlignRightCellFactory />
+								<ComparedValueCellFactory alignRight="true" />
 							</cellFactory>
 						</TableColumn>
 					</columns>

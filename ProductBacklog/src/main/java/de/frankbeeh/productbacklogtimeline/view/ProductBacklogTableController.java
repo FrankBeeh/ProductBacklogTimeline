@@ -1,7 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.view;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.beans.value.ObservableValueBase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,12 +9,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
+import de.frankbeeh.productbacklogtimeline.domain.ComparedValue;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogComparison;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItemComparison;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ProductBacklogTableController {
-    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ProductBacklogItemComparison, String>, ObservableValue<String>> {
+    private static final class CompletionForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<ProductBacklogItemComparison, ComparedValue>, ObservableValue<ComparedValue>> {
         private final String progressForecastName;
 
         public CompletionForecastPropertyValueFactory(String progressForecastName) {
@@ -22,19 +23,24 @@ public class ProductBacklogTableController {
         }
 
         @Override
-        public ObservableValue<String> call(CellDataFeatures<ProductBacklogItemComparison, String> cellDataFeatures) {
-            return new SimpleStringProperty(cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName));
+        public ObservableValue<ComparedValue> call(final CellDataFeatures<ProductBacklogItemComparison, ComparedValue> cellDataFeatures) {
+            return new ObservableValueBase<ComparedValue>() {
+                @Override
+                public ComparedValue getValue() {
+                    return cellDataFeatures.getValue().getComparedCompletionForecast(progressForecastName);
+                }
+            };
         }
     }
 
     @FXML
     private TableView<ProductBacklogItemComparison> productBacklogTable;
     @FXML
-    private TableColumn<ProductBacklogItemComparison, String> completionForecastByMinVelColumn;
+    private TableColumn<ProductBacklogItemComparison, ComparedValue> completionForecastByMinVelColumn;
     @FXML
-    private TableColumn<ProductBacklogItemComparison, String> completionForecastByAvgVelColumn;
+    private TableColumn<ProductBacklogItemComparison, ComparedValue> completionForecastByAvgVelColumn;
     @FXML
-    private TableColumn<ProductBacklogItemComparison, String> completionForecastByMaxVelColumn;
+    private TableColumn<ProductBacklogItemComparison, ComparedValue> completionForecastByMaxVelColumn;
 
     private final ObservableList<ProductBacklogItemComparison> model = FXCollections.<ProductBacklogItemComparison> observableArrayList();
 

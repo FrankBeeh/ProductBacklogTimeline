@@ -9,12 +9,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
+import de.frankbeeh.productbacklogtimeline.domain.ComparedValue;
 import de.frankbeeh.productbacklogtimeline.domain.SprintComparison;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecastComparison;
 
 public class VelocityForecastTableController {
-    private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintComparison, String>, ObservableValue<String>> {
+    private static final class ProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintComparison, ComparedValue>, ObservableValue<ComparedValue>> {
         private final String progressForecastName;
 
         public ProgressForecastPropertyValueFactory(String progressForecastName) {
@@ -22,17 +23,17 @@ public class VelocityForecastTableController {
         }
 
         @Override
-        public ObservableValue<String> call(final CellDataFeatures<SprintComparison, String> cellDataFeatures) {
-            return new ObservableValueBase<String>() {
+        public ObservableValue<ComparedValue> call(final CellDataFeatures<SprintComparison, ComparedValue> cellDataFeatures) {
+            return new ObservableValueBase<ComparedValue>() {
                 @Override
-                public String getValue() {
+                public ComparedValue getValue() {
                     return cellDataFeatures.getValue().getComparedProgressForecastBasedOnHistory(progressForecastName);
                 }
             };
         }
     }
 
-    private static final class AccumulatedProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintComparison, String>, ObservableValue<String>> {
+    private static final class AccumulatedProgressForecastPropertyValueFactory implements Callback<TableColumn.CellDataFeatures<SprintComparison, ComparedValue>, ObservableValue<ComparedValue>> {
         private final String progressForecastName;
 
         public AccumulatedProgressForecastPropertyValueFactory(String progressForecastName) {
@@ -40,10 +41,10 @@ public class VelocityForecastTableController {
         }
 
         @Override
-        public ObservableValue<String> call(final CellDataFeatures<SprintComparison, String> cellDataFeatures) {
-            return new ObservableValueBase<String>() {
+        public ObservableValue<ComparedValue> call(final CellDataFeatures<SprintComparison, ComparedValue> cellDataFeatures) {
+            return new ObservableValueBase<ComparedValue>() {
                 @Override
-                public String getValue() {
+                public ComparedValue getValue() {
                     return cellDataFeatures.getValue().getComparedAccumulatedProgressForecastBasedOnHistory(progressForecastName);
                 }
             };
@@ -53,20 +54,19 @@ public class VelocityForecastTableController {
     @FXML
     private TableView<SprintComparison> velocityForecastTable;
     @FXML
-    private TableColumn<SprintComparison, String> forecastPerSprintByAvgVelColumn;
+    private TableColumn<SprintComparison, ComparedValue> forecastPerSprintByAvgVelColumn;
     @FXML
-    private TableColumn<SprintComparison, String> forecastPerSprintByMinVelColumn;
+    private TableColumn<SprintComparison, ComparedValue> forecastPerSprintByMinVelColumn;
     @FXML
-    private TableColumn<SprintComparison, String> forecastPerSprintByMaxVelColumn;
+    private TableColumn<SprintComparison, ComparedValue> forecastPerSprintByMaxVelColumn;
     @FXML
-    private TableColumn<SprintComparison, String> accumulatedForecastByAvgVelColumn;
+    private TableColumn<SprintComparison, ComparedValue> accumulatedForecastByAvgVelColumn;
     @FXML
-    private TableColumn<SprintComparison, String> accumulatedForecastByMinVelColumn;
+    private TableColumn<SprintComparison, ComparedValue> accumulatedForecastByMinVelColumn;
     @FXML
-    private TableColumn<SprintComparison, String> accumulatedForecastByMaxVelColumn;
-    
-    private final ObservableList<SprintComparison> model = FXCollections.<SprintComparison> observableArrayList();
+    private TableColumn<SprintComparison, ComparedValue> accumulatedForecastByMaxVelColumn;
 
+    private final ObservableList<SprintComparison> model = FXCollections.<SprintComparison> observableArrayList();
 
     @FXML
     private void initialize() {
@@ -84,11 +84,11 @@ public class VelocityForecastTableController {
         model.addAll(velocityForecastComparison.getComparisons());
     }
 
-    private void setCellValueFactoryForForecast(TableColumn<SprintComparison, String> tableColumn, String historyForecastName) {
+    private void setCellValueFactoryForForecast(TableColumn<SprintComparison, ComparedValue> tableColumn, String historyForecastName) {
         tableColumn.setCellValueFactory(new ProgressForecastPropertyValueFactory(historyForecastName));
     }
 
-    private void setCellValueFactoryForAccumulatedForecast(TableColumn<SprintComparison, String> tableColumn, String historyForecastName) {
+    private void setCellValueFactoryForAccumulatedForecast(TableColumn<SprintComparison, ComparedValue> tableColumn, String historyForecastName) {
         tableColumn.setCellValueFactory(new AccumulatedProgressForecastPropertyValueFactory(historyForecastName));
     }
 }

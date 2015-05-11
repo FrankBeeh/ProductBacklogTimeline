@@ -8,6 +8,8 @@ import java.time.Month;
 
 import org.junit.Test;
 
+import de.frankbeeh.productbacklogtimeline.service.DifferenceFormatterTest;
+
 public class ProductBacklogItemComparisonTest {
     private static final String VELOCITY_FORECAST = VelocityForecast.AVERAGE_VELOCITY_FORECAST;
     private static final String STRING_VALUE_1 = "Value 1";
@@ -56,12 +58,14 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedCompletionForecast_noReference() throws Exception {
-        assertEquals(SPRINT_1_REPRESENTATION, new ProductBacklogItemComparison(newProductBacklogItemWithCompletionForecast(SPRINT_1)).getComparedCompletionForecast(VELOCITY_FORECAST));
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, SPRINT_1_REPRESENTATION), new ProductBacklogItemComparison(
+                newProductBacklogItemWithCompletionForecast(SPRINT_1)).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
     public void getComparedCompletionForecast_referenceNull() throws Exception {
-        assertEquals(SPRINT_1_REPRESENTATION, new ProductBacklogItemComparison(newProductBacklogItemWithCompletionForecast(SPRINT_1), null).getComparedCompletionForecast(VELOCITY_FORECAST));
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, SPRINT_1_REPRESENTATION), new ProductBacklogItemComparison(
+                newProductBacklogItemWithCompletionForecast(SPRINT_1), null).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
@@ -86,32 +90,38 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedEstimate_noReference() throws Exception {
-        assertEquals("2.0", new ProductBacklogItemComparison(newProductBacklogItemWithEstimate(2d)).getComparedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "2.0"),
+                new ProductBacklogItemComparison(newProductBacklogItemWithEstimate(2d)).getComparedEstimate());
     }
 
     @Test
     public void getComparedEstimate_referenceNull() throws Exception {
-        assertEquals("   2.0\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithEstimate(2d), null).getComparedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "   2.0\n(NEW)"),
+                new ProductBacklogItemComparison(newProductBacklogItemWithEstimate(2d), null).getComparedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_noReference() throws Exception {
-        assertEquals("2.0", new ProductBacklogItemComparison(newProductBacklogItemWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "2.0"),
+                new ProductBacklogItemComparison(newProductBacklogItemWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_referenceNull() throws Exception {
-        assertEquals("   2.0\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithAccumulatedEstimate(2d), null).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "   2.0\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithAccumulatedEstimate(2d), null).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedProductBacklogRank_noReference() throws Exception {
-        assertEquals("2", new ProductBacklogItemComparison(newProductBacklogItemWithRank(2)).getComparedProductBacklogRank());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "2"),
+                new ProductBacklogItemComparison(newProductBacklogItemWithRank(2)).getComparedProductBacklogRank());
     }
 
     @Test
     public void getComparedProductBacklogRank_referenceNull() throws Exception {
-        assertEquals("     2\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithRank(2), null).getComparedProductBacklogRank());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "     2\n(NEW)"),
+                new ProductBacklogItemComparison(newProductBacklogItemWithRank(2), null).getComparedProductBacklogRank());
     }
 
     private ProductBacklogItem newProductBacklogItem() {

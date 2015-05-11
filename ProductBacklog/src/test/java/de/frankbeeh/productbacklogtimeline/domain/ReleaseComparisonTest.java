@@ -7,6 +7,7 @@ import java.time.Month;
 
 import org.junit.Test;
 
+import de.frankbeeh.productbacklogtimeline.service.DifferenceFormatterTest;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemIdIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ReleaseCriteria;
@@ -80,44 +81,50 @@ public class ReleaseComparisonTest {
 
     @Test
     public void getComparedAccumulatedEstimate_referenceNull() {
-        assertEquals("   2.0\n(NEW)", new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d), null).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "   2.0\n(NEW)"),
+                new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d), null).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_noReference() {
-        assertEquals("2.0", new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "2.0"),
+                new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_valueNull() {
-        assertNull(new ReleaseComparison(newReleaseWithAccumulatedEstimate(null), newReleaseWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, null), new ReleaseComparison(newReleaseWithAccumulatedEstimate(null),
+                newReleaseWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_referenceValueNull() {
-        assertEquals("   2.0\n(NEW)", new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d), newReleaseWithAccumulatedEstimate(null)).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "   2.0\n(NEW)"), new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d),
+                newReleaseWithAccumulatedEstimate(null)).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_equal() {
-        assertEquals("2.0", new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d), newReleaseWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "2.0"), new ReleaseComparison(newReleaseWithAccumulatedEstimate(2d),
+                newReleaseWithAccumulatedEstimate(2d)).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedAccumulatedEstimate_notEqual() {
-        assertEquals("    1.0\n(-9.0)", new ReleaseComparison(newReleaseWithAccumulatedEstimate(1d), newReleaseWithAccumulatedEstimate(10d)).getComparedAccumulatedEstimate());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Earlier, "    1.0\n(-9.0)"), new ReleaseComparison(newReleaseWithAccumulatedEstimate(1d),
+                newReleaseWithAccumulatedEstimate(10d)).getComparedAccumulatedEstimate());
     }
 
     @Test
     public void getComparedCompletionForecast_noReference() {
-        assertEquals("Sprint 1\n01.01.2001",
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "Sprint 1\n01.01.2001"),
                 new ReleaseComparison(newReleaseWithCompletionForecast("Sprint 1", LocalDate.of(2001, Month.JANUARY, 1))).getComparedCompletionForecast(PROGRESS_FORECAST_NAME));
     }
 
     @Test
     public void getComparedCompletionForecast_notEqual() {
-        assertEquals(
-                "Sprint 1\n(Sprint 2)\n01.01.2001\n(-397d)",
+        DifferenceFormatterTest.assertComparedValueEquals(
+                new ComparedValue(ProductBacklogDirection.Earlier, "Sprint 1\n(Sprint 2)\n01.01.2001\n(-397d)"),
                 new ReleaseComparison(newReleaseWithCompletionForecast("Sprint 1", LocalDate.of(2001, Month.JANUARY, 1)), newReleaseWithCompletionForecast("Sprint 2",
                         LocalDate.of(2002, Month.FEBRUARY, 2))).getComparedCompletionForecast(PROGRESS_FORECAST_NAME));
     }
