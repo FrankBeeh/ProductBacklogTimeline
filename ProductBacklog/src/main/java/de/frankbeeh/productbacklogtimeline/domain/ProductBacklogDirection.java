@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum ProductBacklogDirection {
-    Earlier, Later, Same, New;
+    Earlier, Later, Same, New, Changed;
 
     public static List<String> getAllStyleClasses() {
         final List<String> styles = new ArrayList<String>();

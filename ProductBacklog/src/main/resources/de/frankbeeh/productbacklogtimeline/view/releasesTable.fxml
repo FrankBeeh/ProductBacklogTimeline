@@ -17,6 +17,9 @@
 			<TableColumn editable="false" maxWidth="400.0" minWidth="80.0"
 				prefWidth="200.0" resizable="true" sortable="false" text="Name"
 				fx:id="nameColumn">
+				<cellFactory>
+					<ComparedValueCellFactory />
+				</cellFactory>
 				<cellValueFactory>
 					<PropertyValueFactory property="comparedName" />
 				</cellValueFactory>
@@ -24,9 +27,12 @@
 			<TableColumn editable="false" maxWidth="400.0" minWidth="80.0"
 				prefWidth="200.0" resizable="true" sortable="false" text="Criteria"
 				fx:id="criteriaColumn">
-              <cellValueFactory>
-                <PropertyValueFactory property="comparedCriteria"/>
-              </cellValueFactory>
+				<cellFactory>
+					<ComparedValueCellFactory />
+				</cellFactory>
+				<cellValueFactory>
+					<PropertyValueFactory property="comparedCriteria" />
+				</cellValueFactory>
 			</TableColumn>
 			<TableColumn editable="false" maxWidth="80.0" minWidth="80.0"
 				prefWidth="-1.0" resizable="true" sortable="false" text="Accum. Est."

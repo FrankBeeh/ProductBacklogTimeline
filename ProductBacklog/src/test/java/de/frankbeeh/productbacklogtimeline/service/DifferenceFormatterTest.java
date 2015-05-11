@@ -24,22 +24,23 @@ public class DifferenceFormatterTest {
 
     @Test
     public void formatTextualDifference_valueNull() throws Exception {
-        assertNull(DifferenceFormatter.formatTextualDifference(null, STRING_VALUE_1));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, null), DifferenceFormatter.formatTextualDifference(null, STRING_VALUE_1));
     }
 
     @Test
     public void formatTextualDifference_referenceValueNull() throws Exception {
-        assertEquals(STRING_VALUE_1 + "\n(NEW)", DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, null));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, STRING_VALUE_1 + "\n(NEW)"), DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, null));
     }
 
     @Test
     public void formatTextualDifference_equal() throws Exception {
-        assertEquals(STRING_VALUE_1, DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, STRING_VALUE_1));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, STRING_VALUE_1), DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, STRING_VALUE_1));
     }
 
     @Test
     public void formatTextualDifference_notEqual() throws Exception {
-        assertEquals(STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")", DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, STRING_VALUE_2));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Changed, STRING_VALUE_1 + "\n(" + STRING_VALUE_2 + ")"),
+                DifferenceFormatter.formatTextualDifference(STRING_VALUE_1, STRING_VALUE_2));
     }
 
     @Test
@@ -51,7 +52,7 @@ public class DifferenceFormatterTest {
     @Test
     public void formatSprintDifference_withEndDate() throws Exception {
         final Sprint sprint = newSprint(SPRINT_NAME_1, END_DATE);
-        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, SPRINT_NAME_1 + "\n" + FORMATED_END_DATE_1), DifferenceFormatter.formatSprintDifference(sprint, null));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, SPRINT_NAME_1 + "\n" + FORMATED_END_DATE_1 + "\n(NEW)"), DifferenceFormatter.formatSprintDifference(sprint, null));
     }
 
     @Test
@@ -139,22 +140,22 @@ public class DifferenceFormatterTest {
 
     @Test
     public void formatStateDifference_valueNull() throws Exception {
-        assertNull(DifferenceFormatter.formatStateDifference(null, State.Canceled));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, null), DifferenceFormatter.formatStateDifference(null, State.Canceled));
     }
 
     @Test
     public void formatStateDifference_referenceValueNull() throws Exception {
-        assertEquals("Canceled\n(NEW)", DifferenceFormatter.formatStateDifference(State.Canceled, null));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "Canceled\n(NEW)"), DifferenceFormatter.formatStateDifference(State.Canceled, null));
     }
 
     @Test
     public void formatStateDifference_Equal() throws Exception {
-        assertEquals("Todo", DifferenceFormatter.formatStateDifference(State.Todo, State.Todo));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "Todo"), DifferenceFormatter.formatStateDifference(State.Todo, State.Todo));
     }
 
     @Test
     public void formatStateDifference_notEqual() throws Exception {
-        assertEquals("Todo\n(Done)", DifferenceFormatter.formatStateDifference(State.Todo, State.Done));
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Changed, "Todo\n(Done)"), DifferenceFormatter.formatStateDifference(State.Todo, State.Done));
     }
 
     private Sprint newSprint(String name, LocalDate endDate) {

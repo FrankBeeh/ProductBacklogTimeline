@@ -36,19 +36,19 @@ public class ProductBacklogItemComparison {
         return productBacklogItem.getAccumulatedEstimate();
     }
 
-    public String getComparedPlannedRelease() {
+    public ComparedValue getComparedPlannedRelease() {
         return DifferenceFormatter.formatTextualDifference(productBacklogItem.getPlannedRelease(), referenceProductBacklogItem.getPlannedRelease());
     }
 
-    public String getComparedJiraSprint() {
+    public ComparedValue getComparedJiraSprint() {
         return DifferenceFormatter.formatTextualDifference(productBacklogItem.getJiraSprint(), referenceProductBacklogItem.getJiraSprint());
     }
 
-    public String getComparedTitle() {
+    public ComparedValue getComparedTitle() {
         return DifferenceFormatter.formatTextualDifference(productBacklogItem.getTitle(), referenceProductBacklogItem.getTitle());
     }
 
-    public String getComparedDescription() {
+    public ComparedValue getComparedDescription() {
         return DifferenceFormatter.formatTextualDifference(productBacklogItem.getDescription(), referenceProductBacklogItem.getDescription());
     }
 
@@ -56,7 +56,7 @@ public class ProductBacklogItemComparison {
         return DifferenceFormatter.formatSprintDifference(productBacklogItem.getCompletionForecast(progressForecastName), referenceProductBacklogItem.getCompletionForecast(progressForecastName));
     }
 
-    public String getComparedState() {
+    public ComparedValue getComparedState() {
         return DifferenceFormatter.formatStateDifference(productBacklogItem.getState(), referenceProductBacklogItem.getState());
     }
 

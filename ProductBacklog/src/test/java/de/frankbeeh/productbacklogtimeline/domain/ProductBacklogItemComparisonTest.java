@@ -1,8 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -18,42 +15,50 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedTitle_noReference() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithTitle(STRING_VALUE_1)).getComparedTitle());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, STRING_VALUE_1), new ProductBacklogItemComparison(
+                newProductBacklogItemWithTitle(STRING_VALUE_1)).getComparedTitle());
     }
 
     @Test
     public void getComparedTitle_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithTitle(STRING_VALUE_1), null).getComparedTitle());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, STRING_VALUE_1 + "\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithTitle(STRING_VALUE_1), null).getComparedTitle());
     }
 
     @Test
     public void getComparedDescription_noReference() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithDescription(STRING_VALUE_1)).getComparedDescription());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, STRING_VALUE_1), new ProductBacklogItemComparison(
+                newProductBacklogItemWithDescription(STRING_VALUE_1)).getComparedDescription());
     }
 
     @Test
     public void getComparedDescription_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithDescription(STRING_VALUE_1), null).getComparedDescription());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, STRING_VALUE_1 + "\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithDescription(STRING_VALUE_1), null).getComparedDescription());
     }
 
     @Test
     public void getComparedSprint_noReference() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedJiraSprint());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, STRING_VALUE_1), new ProductBacklogItemComparison(
+                newProductBacklogItemWithSprint(STRING_VALUE_1)).getComparedJiraSprint());
     }
 
     @Test
     public void getComparedSprint_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedJiraSprint());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, STRING_VALUE_1 + "\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithSprint(STRING_VALUE_1), null).getComparedJiraSprint());
     }
 
     @Test
     public void getComparedPlannedRelease_noReference() throws Exception {
-        assertEquals(STRING_VALUE_1, new ProductBacklogItemComparison(newProductBacklogItemWithPlannedRelease(STRING_VALUE_1)).getComparedPlannedRelease());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, STRING_VALUE_1), new ProductBacklogItemComparison(
+                newProductBacklogItemWithPlannedRelease(STRING_VALUE_1)).getComparedPlannedRelease());
     }
 
     @Test
     public void getComparedPlannedRelease_referenceNull() throws Exception {
-        assertEquals(STRING_VALUE_1 + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithPlannedRelease(STRING_VALUE_1), null).getComparedPlannedRelease());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, STRING_VALUE_1 + "\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithPlannedRelease(STRING_VALUE_1), null).getComparedPlannedRelease());
     }
 
     @Test
@@ -64,28 +69,32 @@ public class ProductBacklogItemComparisonTest {
 
     @Test
     public void getComparedCompletionForecast_referenceNull() throws Exception {
-        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, SPRINT_1_REPRESENTATION), new ProductBacklogItemComparison(
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, SPRINT_1_REPRESENTATION + "\n(NEW)"), new ProductBacklogItemComparison(
                 newProductBacklogItemWithCompletionForecast(SPRINT_1), null).getComparedCompletionForecast(VELOCITY_FORECAST));
     }
 
     @Test
     public void getComparedState_valueNull() throws Exception {
-        assertNull(new ProductBacklogItemComparison(newProductBacklogItemWithState(null)).getComparedState());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, null),
+                new ProductBacklogItemComparison(newProductBacklogItemWithState(null)).getComparedState());
     }
 
     @Test
     public void getComparedState_noReference() throws Exception {
-        assertEquals(State.Todo.toString(), new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo)).getComparedState());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, State.Todo.toString()), new ProductBacklogItemComparison(
+                newProductBacklogItemWithState(State.Todo)).getComparedState());
     }
 
     @Test
     public void getComparedState_referenceNull() throws Exception {
-        assertEquals(State.Todo.toString() + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo), null).getComparedState());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, State.Todo.toString() + "\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithState(State.Todo), null).getComparedState());
     }
 
     @Test
     public void getComparedState_referenceValueNull() throws Exception {
-        assertEquals(State.Todo.toString() + "\n(NEW)", new ProductBacklogItemComparison(newProductBacklogItemWithState(State.Todo), newProductBacklogItemWithState(null)).getComparedState());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, State.Todo.toString() + "\n(NEW)"), new ProductBacklogItemComparison(
+                newProductBacklogItemWithState(State.Todo), newProductBacklogItemWithState(null)).getComparedState());
     }
 
     @Test

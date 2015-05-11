@@ -20,7 +20,6 @@
 
 .Earlier {
 	-fx-background-color: linear-gradient(to top, White 0%, RoyalBlue 100%); 
-	
 }
 
 .Later {
@@ -29,4 +28,8 @@
 
 .New {
 	-fx-background-color: Yellow;
+}
+
+.Changed {
+	-fx-background-color: #FFFFCC;
 }

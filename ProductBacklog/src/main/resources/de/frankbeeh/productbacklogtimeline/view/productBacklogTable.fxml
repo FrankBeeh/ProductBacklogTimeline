@@ -43,6 +43,9 @@
 		<TableColumn editable="false" maxWidth="70.0" minWidth="70.0"
 			prefWidth="-1.0" resizable="true" sortable="false" text="State"
 			fx:id="stateColumn">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedState" />
 			</cellValueFactory>
@@ -50,6 +53,9 @@
 		<TableColumn editable="false" maxWidth="5000.0" minWidth="100.0"
 			prefWidth="250.0" resizable="true" sortable="false" text="Title"
 			fx:id="titleColumn">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedTitle" />
 			</cellValueFactory>
@@ -57,6 +63,9 @@
 		<TableColumn editable="false" maxWidth="5000.0" minWidth="200.0"
 			prefWidth="-1.0" resizable="true" sortable="false" text="Description"
 			fx:id="descriptionColumn">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<LimitDescriptionLinesValueFactory />
 			</cellValueFactory>
@@ -74,6 +83,9 @@
 		<TableColumn editable="false" maxWidth="80.0" minWidth="80.0"
 			prefWidth="-1.0" resizable="true" sortable="false" text="Sprint"
 			fx:id="sprintColumn">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedJiraSprint" />
 			</cellValueFactory>
@@ -81,6 +93,9 @@
 		<TableColumn editable="false" maxWidth="100.0" minWidth="100.0"
 			prefWidth="-1.0" resizable="true" sortable="false" text="Planned Release"
 			fx:id="plannedReleaseColumn">
+			<cellFactory>
+				<ComparedValueCellFactory />
+			</cellFactory>
 			<cellValueFactory>
 				<PropertyValueFactory property="comparedPlannedRelease" />
 			</cellValueFactory>

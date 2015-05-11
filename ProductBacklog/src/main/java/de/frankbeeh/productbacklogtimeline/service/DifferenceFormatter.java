@@ -22,20 +22,23 @@ public class DifferenceFormatter {
     private static final DecimalFormat DIFFERENCE_DOUBLE_FORMAT = new DecimalFormat("+0.0;-0.0");
     private static final DecimalFormat DIFFERENCE_LONG_FORMAT = new DecimalFormat("+0;-0");
 
-    public static String formatTextualDifference(String value, String referenceValue) {
+    public static ComparedValue formatTextualDifference(String value, String referenceValue) {
         if (value == null) {
-            return null;
+            return new ComparedValue(ProductBacklogDirection.Same, null);
         }
         final StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(value.toString());
+        ProductBacklogDirection direction = ProductBacklogDirection.Same;
         if (referenceValue != null) {
             if (!value.equals(referenceValue)) {
                 stringBuilder.append("\n(").append(referenceValue).append(")");
+                direction = ProductBacklogDirection.Changed;
             }
         } else {
+            direction = ProductBacklogDirection.New;
             stringBuilder.append("\n(NEW)");
         }
-        return stringBuilder.toString();
+        return new ComparedValue(direction, stringBuilder.toString());
     }
 
     public static ComparedValue formatProductBacklogRankDifference(Integer rank, Integer referenceRank) {
@@ -91,18 +94,12 @@ public class DifferenceFormatter {
         if (sprint == null) {
             return new ComparedValue(ProductBacklogDirection.Same, null);
         }
-        if (referenceSprint == null) {
-            referenceSprint = sprint;
-        }
         final StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(formatTextualDifference(sprint.getName(), referenceSprint.getName()));
+        stringBuilder.append(formatTextualDifference(sprint.getName(), referenceSprint == null ? sprint.getName() : referenceSprint.getName()).getComparedValue());
         if (sprint.getEndDate() != null) {
             stringBuilder.append("\n");
-            if (sprint.getEndDate().isAfter(referenceSprint.getEndDate())) {
-            } else if (sprint.getEndDate().isBefore(referenceSprint.getEndDate())) {
-            }
         }
-        final ComparedValue comparedLocalDate = formatLocalDateDifference(sprint.getEndDate(), referenceSprint.getEndDate());
+        final ComparedValue comparedLocalDate = formatLocalDateDifference(sprint.getEndDate(), referenceSprint == null ? null : referenceSprint.getEndDate());
         stringBuilder.append(comparedLocalDate.getComparedValue());
         return new ComparedValue(comparedLocalDate.getDirection(), stringBuilder.toString());
     }
@@ -130,11 +127,11 @@ public class DifferenceFormatter {
         return new ComparedValue(direction, stringBuilder.toString());
     }
 
-    public static String formatStateDifference(State state, State referenceState) {
+    public static ComparedValue formatStateDifference(State state, State referenceState) {
         return formatTextualDifference(state == null ? null : state.toString(), referenceState == null ? null : referenceState.toString());
     }
 
-    public static String formatReleaseCriteriaDifference(ReleaseCriteria releaseCriteria, ReleaseCriteria referenceReleaseCriteria) {
+    public static ComparedValue formatReleaseCriteriaDifference(ReleaseCriteria releaseCriteria, ReleaseCriteria referenceReleaseCriteria) {
         return formatTextualDifference(releaseCriteria == null ? null : releaseCriteria.toString(), referenceReleaseCriteria == null ? null : referenceReleaseCriteria.toString());
     }
 

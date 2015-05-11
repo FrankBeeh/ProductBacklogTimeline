@@ -28,7 +28,7 @@ public class SprintComparison {
         }
     }
 
-    public String getComparedName() {
+    public ComparedValue getComparedName() {
         return DifferenceFormatter.formatTextualDifference(sprint.getName(), referenceSprint.getName());
     }
 
@@ -74,7 +74,7 @@ public class SprintComparison {
                 referenceSprint.getAccumulatedProgressForecastBasedOnHistory(progressForecastName), false);
     }
 
-    public String getComparedState() {
+    public ComparedValue getComparedState() {
         return DifferenceFormatter.formatStateDifference(sprint.getState(), referenceSprint.getState());
     }
 

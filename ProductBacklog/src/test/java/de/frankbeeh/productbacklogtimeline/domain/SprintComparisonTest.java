@@ -1,28 +1,19 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import de.frankbeeh.productbacklogtimeline.service.DifferenceFormatterTest;
 
 public class SprintComparisonTest {
     @Test
-    public void getComparedState_referenceNull() {
-        assertEquals("Todo", new SprintComparison(newTodoSprint(), null).getComparedState());
-    }
-    
-    @Test
-    public void getComparedState_referenceValueNull() {
-        assertEquals("Todo", new SprintComparison(newTodoSprint()).getComparedState());
-    }
-    
-    @Test
     public void getComparedState_equal() {
-        assertEquals("Todo", new SprintComparison(newTodoSprint(), newTodoSprint()).getComparedState());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, "Todo"), new SprintComparison(newTodoSprint(), newTodoSprint()).getComparedState());
     }
 
     @Test
     public void getComparedState_notEqual() {
-        assertEquals("Todo\n(InProgress)", new SprintComparison(newTodoSprint(), newOngoingSprint()).getComparedState());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Changed, "Todo\n(InProgress)"),
+                new SprintComparison(newTodoSprint(), newOngoingSprint()).getComparedState());
     }
 
     private Sprint newOngoingSprint() {

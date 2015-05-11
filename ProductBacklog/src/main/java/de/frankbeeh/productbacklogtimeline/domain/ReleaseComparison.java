@@ -25,11 +25,11 @@ public class ReleaseComparison {
         }
     }
 
-    public String getComparedName() {
+    public ComparedValue getComparedName() {
         return DifferenceFormatter.formatTextualDifference(release.getName(), referenceRelease.getName());
     }
 
-    public String getComparedCriteria() {
+    public ComparedValue getComparedCriteria() {
         return DifferenceFormatter.formatReleaseCriteriaDifference(release.getCriteria(), referenceRelease.getCriteria());
     }
 

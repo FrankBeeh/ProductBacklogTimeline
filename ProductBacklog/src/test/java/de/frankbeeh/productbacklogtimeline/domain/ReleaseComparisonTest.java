@@ -1,7 +1,5 @@
 package de.frankbeeh.productbacklogtimeline.domain;
 
-import static org.junit.Assert.*;
-
 import java.time.LocalDate;
 import java.time.Month;
 
@@ -21,62 +19,73 @@ public class ReleaseComparisonTest {
 
     @Test
     public void getComparedName_referenceNull() {
-        assertEquals(RELEASE_NAME_1 + "\n(NEW)", new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1), null).getComparedName());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, RELEASE_NAME_1 + "\n(NEW)"),
+                new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1), null).getComparedName());
     }
 
     @Test
     public void getComparedName_noReference() {
-        assertEquals(RELEASE_NAME_1, new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1)).getComparedName());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, RELEASE_NAME_1), new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1)).getComparedName());
     }
 
     @Test
     public void getComparedName_valueNull() {
-        assertNull(new ReleaseComparison(newReleaseWithName(null), newReleaseWithName(RELEASE_NAME_2)).getComparedName());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, null),
+                new ReleaseComparison(newReleaseWithName(null), newReleaseWithName(RELEASE_NAME_2)).getComparedName());
     }
 
     @Test
     public void getComparedName_referenceValueNull() {
-        assertEquals(RELEASE_NAME_1 + "\n(NEW)", new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1), newReleaseWithName(null)).getComparedName());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, RELEASE_NAME_1 + "\n(NEW)"), new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1),
+                newReleaseWithName(null)).getComparedName());
     }
 
     @Test
     public void getComparedName_equal() {
-        assertEquals(RELEASE_NAME_1, new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1), newReleaseWithName(RELEASE_NAME_1)).getComparedName());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, RELEASE_NAME_1), new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1),
+                newReleaseWithName(RELEASE_NAME_1)).getComparedName());
     }
 
     @Test
     public void getComparedName_notEqual() {
-        assertEquals(RELEASE_NAME_1 + "\n(" + RELEASE_NAME_2 + ")", new ReleaseComparison(newReleaseWithName(RELEASE_NAME_1), newReleaseWithName(RELEASE_NAME_2)).getComparedName());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Changed, RELEASE_NAME_1 + "\n(" + RELEASE_NAME_2 + ")"), new ReleaseComparison(
+                newReleaseWithName(RELEASE_NAME_1), newReleaseWithName(RELEASE_NAME_2)).getComparedName());
     }
 
     @Test
     public void getComparedCriteria_referenceNull() {
-        assertEquals(CRITERIA_1 + "\n(NEW)", new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1), null).getComparedCriteria());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, CRITERIA_1 + "\n(NEW)"),
+                new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1), null).getComparedCriteria());
     }
 
     @Test
     public void getComparedCriteria_noReference() {
-        assertEquals(CRITERIA_1.toString(), new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1)).getComparedCriteria());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, CRITERIA_1.toString()),
+                new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1)).getComparedCriteria());
     }
 
     @Test
     public void getComparedCriteria_valueNull() {
-        assertNull(new ReleaseComparison(newReleaseWithCriteria(null), newReleaseWithCriteria(CRITERIA_2)).getComparedCriteria());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, null),
+                new ReleaseComparison(newReleaseWithCriteria(null), newReleaseWithCriteria(CRITERIA_2)).getComparedCriteria());
     }
 
     @Test
     public void getComparedCriteria_referenceValueNull() {
-        assertEquals(CRITERIA_1 + "\n(NEW)", new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1), newReleaseWithCriteria(null)).getComparedCriteria());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, CRITERIA_1 + "\n(NEW)"), new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1),
+                newReleaseWithCriteria(null)).getComparedCriteria());
     }
 
     @Test
     public void getComparedCriteria_equal() {
-        assertEquals(CRITERIA_1.toString(), new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1), newReleaseWithCriteria(CRITERIA_1)).getComparedCriteria());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, CRITERIA_1.toString()), new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1),
+                newReleaseWithCriteria(CRITERIA_1)).getComparedCriteria());
     }
 
     @Test
     public void getComparedCriteria_notEqual() {
-        assertEquals(CRITERIA_1.toString() + "\n(" + CRITERIA_2.toString() + ")", new ReleaseComparison(newReleaseWithCriteria(CRITERIA_1), newReleaseWithCriteria(CRITERIA_2)).getComparedCriteria());
+        DifferenceFormatterTest.assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Changed, CRITERIA_1.toString() + "\n(" + CRITERIA_2.toString() + ")"), new ReleaseComparison(
+                newReleaseWithCriteria(CRITERIA_1), newReleaseWithCriteria(CRITERIA_2)).getComparedCriteria());
     }
 
     @Test
