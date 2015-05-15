@@ -100,7 +100,6 @@ public class Sprint {
         return getAccumulatedProgressForecastBasedOnHistory(progressForecastName);
     }
 
-
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
@@ -114,6 +113,9 @@ public class Sprint {
     }
 
     public State getState() {
+        if (getEndDate() == null) {
+            return null;
+        }
         if (getEffortDone() != null) {
             return State.Done;
         }

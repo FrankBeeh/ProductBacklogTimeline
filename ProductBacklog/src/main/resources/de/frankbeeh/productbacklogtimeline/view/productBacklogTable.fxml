@@ -16,8 +16,11 @@
 	<columns>
 		<TableColumn editable="false" maxWidth="70.0" minWidth="70.0"
 			prefWidth="-1.0" resizable="true" sortable="false" text="Id" fx:id="idColumn">
+			<cellFactory>
+				<ComparedValueCellFactory alignRight="true" />
+			</cellFactory>
 			<cellValueFactory>
-				<PropertyValueFactory property="id" />
+				<PropertyValueFactory property="comparedId" />
 			</cellValueFactory>
 		</TableColumn>
 		<TableColumn editable="false" maxWidth="50.0" minWidth="50.0"

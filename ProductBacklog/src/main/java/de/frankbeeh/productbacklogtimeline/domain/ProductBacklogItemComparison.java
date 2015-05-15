@@ -28,12 +28,8 @@ public class ProductBacklogItemComparison {
         }
     }
 
-    public String getId() {
-        return productBacklogItem.getId();
-    }
-
-    public Double getAccumulatedEstimate() {
-        return productBacklogItem.getAccumulatedEstimate();
+    public ComparedValue getComparedId() {
+        return DifferenceFormatter.formatTextualDifference(productBacklogItem.getId(), referenceProductBacklogItem.getId());
     }
 
     public ComparedValue getComparedPlannedRelease() {

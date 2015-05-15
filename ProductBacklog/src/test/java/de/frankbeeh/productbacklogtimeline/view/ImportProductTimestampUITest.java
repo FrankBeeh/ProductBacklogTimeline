@@ -49,15 +49,15 @@ public class ImportProductTimestampUITest extends BaseUITest {
 
     private static final TableViewContent PBL_2_COMPARED_TO_1 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", "Sprint 1\n25.04.2014", "Sprint 1\n25.04.2014", "Sprint 1\n25.04.2014" },
-            { "5", "     2\n(NEW)", "  13.0\n(NEW)", "Done\n(NEW)", "PBI 5\n(NEW)", "Description 5\n(NEW)", "  16.0\n(NEW)", "Sprint 2\n(NEW)", "Release 1\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)",
-                    "Sprint 2\n26.04.2014\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)" },
+            { "5\n(NEW)", "     2\n(NEW)", "  13.0\n(NEW)", "Done\n(NEW)", "PBI 5\n(NEW)", "Description 5\n(NEW)", "  16.0\n(NEW)", "Sprint 2\n(NEW)", "Release 1\n(NEW)",
+                    "Sprint 2\n26.04.2014\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)" },
             { "2", "    3\n(+1)", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    16.0\n(+12.0)", "No Sprint\n(Sprint 1)", "Release 1", "Sprint 2\n26.04.2014", "Sprint 2\n26.04.2014",
                     "Sprint 2\n26.04.2014" },
             { "3", "    4\n(+1)", "5.0", "Todo", "New PBI 3\n(PBI 3)", "New Description 3\n(Description 3)", "    21.0\n(+12.0)", "", "Release 2\n(Release 1)",
                     "Sprint 4\n(Sprint 3)\n30.04.2014\n(+3d)", "Sprint 3\n27.04.2014", "Sprint 3\n27.04.2014" },
             { "4", "    5\n(+1)", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "   26.0\n(+9.0)", "", "Release 2\n(Release 1)", "Sprint 5\n04.05.2014", "Sprint 5\n04.05.2014",
                     "Sprint 4\n(Sprint 5)\n30.04.2014\n(-4d)" },
-            { "6", "     6\n(NEW)", "   2.0\n(NEW)", "Todo\n(NEW)", "PBI 6\n(NEW)", "Description 6\n(NEW)", "  28.0\n(NEW)", "\n(NEW)", "Release 2\n(NEW)", "Sprint 6\n11.05.2014\n(NEW)",
+            { "6\n(NEW)", "     6\n(NEW)", "   2.0\n(NEW)", "Todo\n(NEW)", "PBI 6\n(NEW)", "Description 6\n(NEW)", "  28.0\n(NEW)", "\n(NEW)", "Release 2\n(NEW)", "Sprint 6\n11.05.2014\n(NEW)",
                     "Sprint 5\n04.05.2014\n(NEW)", "Sprint 5\n04.05.2014\n(NEW)" } });
 
     private static final TableViewContent VELOCITY_FORECAST_1 = new TableViewContent(new String[][] {
@@ -91,7 +91,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
                     { "Sprint 5", "01.05.2014", "04.05.2014", "Todo", "12.0", "", "", "", "6.0", "    6.0\n(-4.7)", "    6.0\n(-7.0)", "", "   18.0\n(-9.0)", "    18.0\n(-17.6)", "    18.0\n(-21.8)" },
                     { "Sprint 6", "05.05.2014", "11.05.2014", "Todo", "   12.0\n(-2.0)", "", "", "", "    6.0\n(-1.0)", "    6.0\n(-6.4)", "    6.0\n(-9.2)", "", "    24.0\n(-10.0)",
                             "    24.0\n(-24.0)", "    24.0\n(-31.0)" },
-                    { "Sprint 7\n(NEW)", "12.05.2014\n(NEW)", "18.05.2014\n(NEW)", "Todo", "  12.0\n(NEW)", "", "", "", "   6.0\n(NEW)", "   6.0\n(NEW)", "   6.0\n(NEW)", "", "  30.0\n(NEW)",
+                    { "Sprint 7\n(NEW)", "12.05.2014\n(NEW)", "18.05.2014\n(NEW)", "Todo\n(NEW)", "  12.0\n(NEW)", "", "", "", "   6.0\n(NEW)", "   6.0\n(NEW)", "   6.0\n(NEW)", "", "  30.0\n(NEW)",
                             "  30.0\n(NEW)", "  30.0\n(NEW)" },
                     { "Sprint 8\n(Sprint 8 New)", "19.05.2014\n(-1d)", "25.05.2014", "Todo", "12.0", "", "", "", "6.0", "    6.0\n(-4.7)", "    6.0\n(-7.0)", "", "    36.0\n(-10.0)",
                             "    36.0\n(-33.4)", "    36.0\n(-45.0)" } });
@@ -100,7 +100,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "Sprint 5", "01.05.2014", "04.05.2014", "Todo", "12.0", "", "", "", "6.0", "   10.7\n(+4.7)", "   13.0\n(+7.0)", "", "   27.0\n(+9.0)", "    35.6\n(+17.6)", "    39.8\n(+21.8)" },
             { "Sprint 6", "05.05.2014", "11.05.2014", "Todo", "   14.0\n(+2.0)", "", "", "", "    7.0\n(+1.0)", "   12.4\n(+6.4)", "   15.2\n(+9.2)", "", "    34.0\n(+10.0)", "    48.0\n(+24.0)",
                     "    55.0\n(+31.0)" },
-            { "Sprint 7\n(NEW)", "12.05.2014\n(NEW)", "19.05.2014\n(NEW)", "Todo", "  12.0\n(NEW)", "", "", "", "   6.0\n(NEW)", "  10.7\n(NEW)", "  13.0\n(NEW)", "", "  40.0\n(NEW)",
+            { "Sprint 7\n(NEW)", "12.05.2014\n(NEW)", "19.05.2014\n(NEW)", "Todo\n(NEW)", "  12.0\n(NEW)", "", "", "", "   6.0\n(NEW)", "  10.7\n(NEW)", "  13.0\n(NEW)", "", "  40.0\n(NEW)",
                     "  58.7\n(NEW)", "  68.0\n(NEW)" },
             { "Sprint 8 New\n(Sprint 8)", "20.05.2014\n(+1d)", "25.05.2014", "Todo", "12.0", "", "", "", "6.0", "   10.7\n(+4.7)", "   13.0\n(+7.0)", "", "    46.0\n(+10.0)", "    69.4\n(+33.4)",
                     "    81.0\n(+45.0)" },
