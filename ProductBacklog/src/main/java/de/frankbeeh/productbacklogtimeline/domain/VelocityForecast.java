@@ -66,7 +66,7 @@ public class VelocityForecast {
     public Sprint getCompletionSprintForecast(String progressForecastName, Double accumulatedEstimate) {
         for (final Sprint sprint : sprints) {
             final Double accumulatedEffortDoneOrProgressForcast = sprint.getAccumulatedEffortDoneOrProgressForcast(progressForecastName);
-            if (accumulatedEffortDoneOrProgressForcast != null && accumulatedEstimate <= accumulatedEffortDoneOrProgressForcast) {
+            if (accumulatedEffortDoneOrProgressForcast != null && accumulatedEstimate != null && accumulatedEstimate <= accumulatedEffortDoneOrProgressForcast) {
                 return sprint;
             }
         }
@@ -84,7 +84,7 @@ public class VelocityForecast {
 
     public Sprint getSprintByEndDate(LocalDate endDate) {
         for (Sprint sprint : sprints) {
-            if (endDate.equals(sprint.getEndDate())){
+            if (endDate.equals(sprint.getEndDate())) {
                 return sprint;
             }
         }

@@ -5,6 +5,7 @@ import java.util.List;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
+import de.frankbeeh.productbacklogtimeline.domain.State;
 import de.frankbeeh.productbacklogtimeline.domain.VelocityForecast;
 
 public class ComputeForecastForRelease implements ReleaseVisitor {
@@ -32,6 +33,11 @@ public class ComputeForecastForRelease implements ReleaseVisitor {
     }
 
     private ProductBacklogItem getLastMatchingProductBacklogItem(final List<ProductBacklogItem> matchingProductBacklogItems) {
-        return matchingProductBacklogItems.get(matchingProductBacklogItems.size() - 1);
+        for (int index = matchingProductBacklogItems.size() - 1; index >= 0; index--) {
+            if (!State.Canceled.equals(matchingProductBacklogItems.get(index).getState())) {
+                return matchingProductBacklogItems.get(index);
+            }
+        }
+        return matchingProductBacklogItems.get(0);
     }
 }

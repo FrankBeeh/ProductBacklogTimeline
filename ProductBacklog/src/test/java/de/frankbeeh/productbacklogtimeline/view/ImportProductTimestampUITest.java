@@ -34,7 +34,8 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final TableViewContent PBL_1_COMPARED_TO_2 = new TableViewContent(
             new String[][] {
                     { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
-                    { "2", "    2\n(-1)", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "     4.0\n(-12.0)", "Sprint 1\n(No Sprint)", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+                    { "2", "    2\n(-1)", "1.0", "Todo\n(Canceled)", "PBI 2", "Description 2", "   4.0\n(NEW)", "Sprint 1\n(No Sprint)", "Release 1", "Sprint 2\n26.04.2014\n(NEW)",
+                            "Sprint 2\n26.04.2014\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)" },
                     { "3", "    3\n(-1)", "5.0", "Todo", "PBI 3\n(New PBI 3)", "Description 3\n(New Description 3)", "     9.0\n(-12.0)", "", "Release 1\n(Release 2)", SPRINT_3_TO_SPRINT_4, SPRINT_3,
                             SPRINT_3 },
                     { "4", "    4\n(-1)", "    8.0\n(+3.0)", "Todo", "PBI 4", "Description 4", "   17.0\n(-9.0)", "", "Release 1\n(Release 2)", SPRINT_5, SPRINT_5, SPRINT_5_TO_SPRINT_4 } });
@@ -42,7 +43,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final TableViewContent PBL_2_WITH_FORECAST_2 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
             { "5", "2", "13.0", "Done", "PBI 5", "Description 5", "16.0", "Sprint 2", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
-            { "2", "3", "1.0", "Canceled", "PBI 2", "Description 2", "16.0", "No Sprint", "Release 1", SPRINT_2, SPRINT_2, SPRINT_2 },
+            { "2", "3", "1.0", "Canceled", "PBI 2", "Description 2", "", "No Sprint", "Release 1", "", "", "" },
             { "3", "4", "5.0", "Todo", "New PBI 3", "New Description 3", "21.0", "", "Release 2", SPRINT_4, SPRINT_3, SPRINT_3 },
             { "4", "5", "5.0", "Todo", "PBI 4", "Description 4", "26.0", "", "Release 2", SPRINT_5, SPRINT_5, SPRINT_4 },
             { "6", "6", "2.0", "Todo", "PBI 6", "Description 6", "28.0", "", "Release 2", SPRINT_6, SPRINT_5, SPRINT_5 } });
@@ -51,8 +52,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", "Sprint 1\n25.04.2014", "Sprint 1\n25.04.2014", "Sprint 1\n25.04.2014" },
             { "5\n(NEW)", "     2\n(NEW)", "  13.0\n(NEW)", "Done\n(NEW)", "PBI 5\n(NEW)", "Description 5\n(NEW)", "  16.0\n(NEW)", "Sprint 2\n(NEW)", "Release 1\n(NEW)",
                     "Sprint 2\n26.04.2014\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)", "Sprint 2\n26.04.2014\n(NEW)" },
-            { "2", "    3\n(+1)", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "    16.0\n(+12.0)", "No Sprint\n(Sprint 1)", "Release 1", "Sprint 2\n26.04.2014", "Sprint 2\n26.04.2014",
-                    "Sprint 2\n26.04.2014" },
+            { "2", "    3\n(+1)", "1.0", "Canceled\n(Todo)", "PBI 2", "Description 2", "", "No Sprint\n(Sprint 1)", "Release 1", "", "", "" },
             { "3", "    4\n(+1)", "5.0", "Todo", "New PBI 3\n(PBI 3)", "New Description 3\n(Description 3)", "    21.0\n(+12.0)", "", "Release 2\n(Release 1)",
                     "Sprint 4\n(Sprint 3)\n30.04.2014\n(+3d)", "Sprint 3\n27.04.2014", "Sprint 3\n27.04.2014" },
             { "4", "    5\n(+1)", "    5.0\n(-3.0)", "Todo", "PBI 4", "Description 4", "   26.0\n(+9.0)", "", "Release 2\n(Release 1)", "Sprint 5\n04.05.2014", "Sprint 5\n04.05.2014",

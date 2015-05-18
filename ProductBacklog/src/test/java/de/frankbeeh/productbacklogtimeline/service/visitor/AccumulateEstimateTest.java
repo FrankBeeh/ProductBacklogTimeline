@@ -1,6 +1,7 @@
 package de.frankbeeh.productbacklogtimeline.service.visitor;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class AccumulateEstimateTest {
         final Double estimate = Double.valueOf(1d);
         final ProductBacklogItem productBacklogItem = new ProductBacklogItem(null, null, null, estimate, State.Canceled, null, null, null);
         visitor.visit(productBacklogItem, null);
-        assertEquals(new Double(0d), productBacklogItem.getAccumulatedEstimate());
+        assertNull(productBacklogItem.getAccumulatedEstimate());
     }
 
     @Test
@@ -56,7 +57,7 @@ public class AccumulateEstimateTest {
         final Double estimate2 = Double.valueOf(2d);
         final ProductBacklogItem productBacklogItem2 = new ProductBacklogItem(null, null, null, estimate2, State.Canceled, null, null, null);
         visitor.visit(productBacklogItem2, null);
-        assertEquals(estimate1, productBacklogItem2.getAccumulatedEstimate());
+        assertNull(productBacklogItem2.getAccumulatedEstimate());
     }
 
     @Test
