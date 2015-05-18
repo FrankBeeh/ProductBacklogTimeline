@@ -43,23 +43,30 @@ public class DifferenceFormatter {
 
     public static ComparedValue formatProductBacklogRankDifference(Integer rank, Integer referenceRank) {
         final StringBuilder stringBuilder = new StringBuilder();
-        final String formattedEstimate = rank.toString();
-        stringBuilder.append(formattedEstimate);
+        String formattedEstimate = "";
         ProductBacklogDirection direction = ProductBacklogDirection.Same;
-        if (referenceRank != null) {
-            final Integer difference = rank - referenceRank;
-            if (difference != 0) {
-                final String formattedDifference = "(" + DIFFERENCE_LONG_FORMAT.format((long) difference) + ")";
-                rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
-                if (difference < 0) {
-                    direction = ProductBacklogDirection.Earlier;
-                } else {
-                    direction = ProductBacklogDirection.Later;
+        if (rank != null) {
+            formattedEstimate = rank.toString();
+            stringBuilder.append(formattedEstimate);
+            if (referenceRank != null) {
+                final Integer difference = rank - referenceRank;
+                if (difference != 0) {
+                    final String formattedDifference = "(" + DIFFERENCE_LONG_FORMAT.format((long) difference) + ")";
+                    rigthAllign(stringBuilder, formattedEstimate, formattedDifference);
+                    if (difference < 0) {
+                        direction = ProductBacklogDirection.Earlier;
+                    } else {
+                        direction = ProductBacklogDirection.Later;
+                    }
                 }
+            } else {
+                direction = ProductBacklogDirection.New;
+                rigthAllign(stringBuilder, formattedEstimate, "(NEW)");
             }
         } else {
-            direction = ProductBacklogDirection.New;
-            rigthAllign(stringBuilder, formattedEstimate, "(NEW)");
+            if (referenceRank != null) {
+                direction = ProductBacklogDirection.Changed;
+            }
         }
         return new ComparedValue(direction, stringBuilder.toString());
     }

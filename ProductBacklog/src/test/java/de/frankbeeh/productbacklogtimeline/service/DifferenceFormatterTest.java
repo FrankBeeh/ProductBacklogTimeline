@@ -119,6 +119,17 @@ public class DifferenceFormatterTest {
     }
 
     @Test
+    public void formatProductBacklogRankDifference_valueNull_referenceNull() throws Exception {
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Same, ""), DifferenceFormatter.formatProductBacklogRankDifference(null, null));
+    }
+    
+    @Test
+    public void formatProductBacklogRankDifference_valueNull_referenceNotNull() throws Exception {
+        assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.Changed, ""), DifferenceFormatter.formatProductBacklogRankDifference(null, 2));
+    }
+
+
+    @Test
     public void formatProductBacklogRankDifference_referenceNull() throws Exception {
         assertComparedValueEquals(new ComparedValue(ProductBacklogDirection.New, "     2\n(NEW)"), DifferenceFormatter.formatProductBacklogRankDifference(2, null));
     }
