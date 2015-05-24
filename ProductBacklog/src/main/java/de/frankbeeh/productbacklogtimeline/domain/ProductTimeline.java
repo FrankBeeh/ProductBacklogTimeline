@@ -3,6 +3,8 @@ package de.frankbeeh.productbacklogtimeline.domain;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -23,6 +25,7 @@ public class ProductTimeline {
     private String referenceName = null;
     private final ProductTimestampComparison productTimestampComparison;
     private final ProductTimestamp emptyProductTimestamp;
+    private SortedSet<ProductTimestampData> timestampData;
 
     public ProductTimeline() {
         this(new ProductTimestampComparison());
@@ -30,7 +33,7 @@ public class ProductTimeline {
 
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
         ServiceLocator.getService(ProductTimestampService.class).insert(productTimestamp);
-        productTimestamps.add(productTimestamp);
+        insertProductTimestamp(productTimestamp);
     }
 
     public void selectProductTimestamp(String selectedName) {
@@ -67,12 +70,16 @@ public class ProductTimeline {
         return names;
     }
 
+    public SortedSet<ProductTimestampData> getTimestamps() {
+        return timestampData;
+    }
+
     public void loadFromDataBase() {
         final ProductTimestampService service = ServiceLocator.getService(ProductTimestampService.class);
         final List<LocalDateTime> allIds = service.getAllIds();
         for (LocalDateTime localDateTime : allIds) {
             ProductTimestamp productTimestamp = service.get(localDateTime);
-            productTimestamps.add(productTimestamp);
+            insertProductTimestamp(productTimestamp);
         }
     }
 
@@ -90,6 +97,7 @@ public class ProductTimeline {
 
     @VisibleForTesting
     void insertProductTimestamp(ProductTimestamp productTimestamp) {
+        timestampData.add(new ProductTimestampData(productTimestamp.getDateTime(), productTimestamp.getName()));
         productTimestamps.add(productTimestamp);
     }
 
@@ -101,6 +109,7 @@ public class ProductTimeline {
     ProductTimeline(ProductTimestampComparison productTimestampComparison) {
         this.productTimestampComparison = productTimestampComparison;
         this.emptyProductTimestamp = new ProductTimestamp(null, INITIAL_NAME, new ProductBacklog(), new VelocityForecast(), new ReleaseForecast());
+        this.timestampData = new TreeSet<ProductTimestampData>(new ProductTimestampDataComparator());
         productTimestampComparison.setSelectedTimestamp(emptyProductTimestamp);
     }
 }

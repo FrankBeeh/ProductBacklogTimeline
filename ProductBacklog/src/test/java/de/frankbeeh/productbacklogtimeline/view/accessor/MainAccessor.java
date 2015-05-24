@@ -19,6 +19,7 @@ import de.frankbeeh.productbacklogtimeline.view.BaseUITest;
 import de.frankbeeh.productbacklogtimeline.view.TableViewContent;
 
 public class MainAccessor extends BaseAccessor {
+    private static final String TIMELINE_TABLE_ID = "#timelineTable";
     private static final String VELOCITY_FORECAST_TABLE_ID = "#velocityForecastTable";
     private static final String PRODUCT_BACKLOG_TABLE_ID = "#productBacklogTable";
     private static final String RELEASES_TABLE_ID = "#releasesTable";
@@ -59,6 +60,10 @@ public class MainAccessor extends BaseAccessor {
 
     public void selectReleasesTab(BaseUITest baseUITest) {
         selectTab(baseUITest, "Releases");
+    }
+    
+    public void assertContentOfTimelineTableView(TableViewContent expectedContent) {
+        assertContentOfTableView(TIMELINE_TABLE_ID, expectedContent);  
     }
     
     public void assertContentOfProductBacklogTableView(TableViewContent expectedContent) {
@@ -108,6 +113,4 @@ public class MainAccessor extends BaseAccessor {
         clickOn(getUniqueNode(tabTitle));
         assertEquals(tabTitle, baseUITest.getSelectedTabTitle());
     }
-
-
 }

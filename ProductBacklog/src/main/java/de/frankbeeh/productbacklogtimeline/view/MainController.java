@@ -28,6 +28,8 @@ import de.frankbeeh.productbacklogtimeline.view.model.ImportProductTimestampView
 
 public class MainController {
     @FXML
+    private TimelineTableController timelineTableController;
+    @FXML
     private VelocityForecastTableController velocityForecastTableController;
     @FXML
     private ProductBacklogTableController productBacklogTableController;
@@ -52,6 +54,7 @@ public class MainController {
         this.primaryStage = primaryStage;
         loadFromDataBase();
         setSelectableProductBacklogNames();
+        timelineTableController.initModel(productTimeline.getTimestamps());
     }
 
     @FXML
@@ -117,6 +120,7 @@ public class MainController {
     }
 
     private void updateAllControllers() {
+        timelineTableController.initModel(productTimeline.getTimestamps());
         productBacklogTableController.initModel(productTimeline.getProductBacklogComparison());
         velocityForecastTableController.initModel(productTimeline.getVelocityForecastComparison());
         releaseTableController.initModel(productTimeline.getReleaseForecastComparison());

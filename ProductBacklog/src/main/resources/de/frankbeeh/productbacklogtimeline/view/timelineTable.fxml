@@ -9,25 +9,26 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
 
-<ScrollPane fx:id="timelineTab" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="de.frankbeeh.productbacklogtimeline.view.TimelineTableController">
-  <TableView fx:id="timelineTable" prefHeight="719" prefWidth="1198">
-	<columns>
-      <TableColumn editable="true" maxWidth="200.0" minWidth="120.0" prefWidth="-1.0" resizable="true" sortable="false" text="Name" fx:id="nameColumn">
-        <cellValueFactory>
-          <PropertyValueFactory property="name" />
-        </cellValueFactory>
-      </TableColumn>
-      <TableColumn editable="true" maxWidth="200.0" minWidth="80.0" prefWidth="-1.0" resizable="true" sortable="false" text="Date" fx:id="dateColumn"/>
-      <TableColumn maxWidth="240.0" minWidth="0.0" prefWidth="199.0" text="Product Backlog" fx:id="productBacklogColumn">
-        <cellValueFactory>
-          <PropertyValueFactory property="productBacklogName" />
-        </cellValueFactory>
-      </TableColumn>
-      <TableColumn maxWidth="240.0" minWidth="0.0" prefWidth="200.0" text="Sprints" fx:id="sprintsColumn" >
-        <cellValueFactory>
-          <PropertyValueFactory property="sprintsName" />
-        </cellValueFactory>
-      </TableColumn>
-    </columns>
-  </TableView>
+<ScrollPane fx:id="timelineTab" prefHeight="-1.0" prefWidth="-1.0"
+	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+	fx:controller="de.frankbeeh.productbacklogtimeline.view.TimelineTableController">
+	<TableView fx:id="timelineTable" prefHeight="719" prefWidth="1198">
+		<columns>
+			<TableColumn editable="false" maxWidth="200.0" minWidth="120.0"
+				prefWidth="-1.0" resizable="true" sortable="false" text="Date">
+				<cellFactory>
+					<LocalDateTimeCellFactory />
+				</cellFactory>
+				<cellValueFactory>
+					<PropertyValueFactory property="dateTime" />
+				</cellValueFactory>
+			</TableColumn>
+			<TableColumn editable="false" maxWidth="200.0" minWidth="120.0"
+				prefWidth="-1.0" resizable="true" sortable="false" text="Name">
+				<cellValueFactory>
+					<PropertyValueFactory property="name" />
+				</cellValueFactory>
+			</TableColumn>
+		</columns>
+	</TableView>
 </ScrollPane>

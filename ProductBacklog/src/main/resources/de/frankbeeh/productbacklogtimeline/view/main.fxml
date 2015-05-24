@@ -28,6 +28,15 @@
 		<TabPane fx:id="mainTabPane" prefHeight="-1.0" prefWidth="-1.0"
 			tabClosingPolicy="UNAVAILABLE">
 			<tabs>
+				<Tab text="Timeline">
+					<content>
+						<ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+							<content>
+								<fx:include fx:id="timelineTable" source="timelineTable.fxml" />
+							</content>
+						</ScrollPane>
+					</content>
+				</Tab>
 				<Tab text="PBL">
 					<content>
 						<ScrollPane prefHeight="-1.0" prefWidth="-1.0">
