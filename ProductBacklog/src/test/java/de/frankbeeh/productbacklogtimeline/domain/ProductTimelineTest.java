@@ -18,8 +18,10 @@ import de.frankbeeh.productbacklogtimeline.service.ServiceLocator;
 import de.frankbeeh.productbacklogtimeline.service.database.MockedServiceRegistry;
 
 public class ProductTimelineTest extends EasyMockSupport {
-    private static final IntegerByState COUNT_BY_STATE_1 = new IntegerByState(1,2,3,4);
-    private static final IntegerByState COUNT_BY_STATE_2 = new IntegerByState(5,6,7,8);
+    private static final IntegerByState COUNT_BY_STATE_1 = new IntegerByState(1, 2, 3, 4);
+    private static final IntegerByState COUNT_BY_STATE_2 = new IntegerByState(5, 6, 7, 8);
+    private static final DoubleByState ESTIMATE_BY_STATE_1 = new DoubleByState(11d, 12d, 13d, 14d);
+    private static final DoubleByState ESTIMATE_BY_STATE_2 = new DoubleByState(25d, 26d, 27d, 28d);
     private static final LocalDateTime REFERENCE_DATE_TIME = LocalDateTime.now();
     private static final LocalDateTime SELECTEDT_DATE_TIME = REFERENCE_DATE_TIME.minusYears(1);
     private static final String REFERENCE = "reference";
@@ -49,8 +51,8 @@ public class ProductTimelineTest extends EasyMockSupport {
         insertProductTimestamps();
 
         assertEquals(
-                Arrays.asList(new ProductTimestampData(SELECTEDT_DATE_TIME, SELECTED, COUNT_BY_STATE_1),
-                        new ProductTimestampData(REFERENCE_DATE_TIME, REFERENCE, COUNT_BY_STATE_2)).toString(), productTimelineWithMockedComparison.getTimestamps().toString());
+                Arrays.asList(new ProductTimestampData(SELECTEDT_DATE_TIME, SELECTED, COUNT_BY_STATE_1, ESTIMATE_BY_STATE_1),
+                        new ProductTimestampData(REFERENCE_DATE_TIME, REFERENCE, COUNT_BY_STATE_2, ESTIMATE_BY_STATE_2)).toString(), productTimelineWithMockedComparison.getTimestamps().toString());
     }
 
     @Test
@@ -97,7 +99,9 @@ public class ProductTimelineTest extends EasyMockSupport {
     private void insertProductTimestamps() {
         resetAll();
         expect(selectedProductBacklogMock.getCountByState()).andReturn(COUNT_BY_STATE_1);
+        expect(selectedProductBacklogMock.getEstimateByState()).andReturn(ESTIMATE_BY_STATE_1);
         expect(referenceProductBacklogMock.getCountByState()).andReturn(COUNT_BY_STATE_2);
+        expect(referenceProductBacklogMock.getEstimateByState()).andReturn(ESTIMATE_BY_STATE_2);
         replayAll();
         productTimelineWithMockedComparison.insertProductTimestamp(referenceProductTimestamp);
         productTimelineWithMockedComparison.insertProductTimestamp(selectedProductTimestamp);

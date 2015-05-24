@@ -9,11 +9,13 @@ public class ProductTimestampData {
     private final LocalDateTime dateTime;
     private final String name;
     private final NumberByState<Integer> countByState;
+    private final NumberByState<Double> estimateByState;
 
-    public ProductTimestampData(LocalDateTime dateTime, String name, NumberByState<Integer> countByState) {
+    public ProductTimestampData(LocalDateTime dateTime, String name, NumberByState<Integer> countByState, NumberByState<Double> estimateByState) {
         this.dateTime = dateTime;
         this.name = name;
         this.countByState = countByState;
+        this.estimateByState = estimateByState;
     }
     
     public LocalDateTime getDateTime() {
@@ -29,11 +31,19 @@ public class ProductTimestampData {
     }
 
     public Integer getTotalCount() {
-        return countByState.getTotalCount();
+        return countByState.getTotalValue();
     }
     
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+    
+    public Double getEstimateByState(State state) {
+        return estimateByState.getValue(state);
+    }
+
+    public Double getTotalEstimate() {
+        return estimateByState.getTotalValue();
     }
 }

@@ -103,13 +103,19 @@ public class ProductBacklog {
 
     public IntegerByState getCountByState() {
         final IntegerByState countByState = new IntegerByState();
-        for (State state : State.values()) {
-            countByState.setValue(state, 0);
-        }
         for (ProductBacklogItem item : getItems()) {
             final State state = item.getState();
-            countByState.setValue(state, countByState.getValue(state).intValue() + 1);
+            countByState.add(state, 1);
         }
         return countByState;
+    }
+
+    public NumberByState<Double> getEstimateByState() {
+        final DoubleByState estimateByState = new DoubleByState();
+        for (ProductBacklogItem item : getItems()) {
+            final State state = item.getState();
+            estimateByState.add(state, item.getEstimate());
+        }
+        return estimateByState;
     }
 }

@@ -24,11 +24,11 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String RELEASES_FILE_1 = "Releases1.csv";
     private static final String RELEASES_FILE_2 = "Releases2.csv";
 
-    private static final String[] TIMESTAMP_1 = { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_1.atStartOfDay()), "Name 1", "4", "0", "3", "0", "1" };
+    private static final String[] TIMESTAMP_1 = { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_1.atStartOfDay()), "Name 1", "4", "0", "3", "0", "1", "17.0", "0.0", "14.0", "0.0", "3.0" };
     private static final TableViewContent TIMELINE_1 = new TableViewContent(new String[][] { TIMESTAMP_1 });
 
     private static final TableViewContent TIMELINE_2 = new TableViewContent(new String[][] { TIMESTAMP_1,
-            { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_2.atStartOfDay()), "Name 2", "6", "1", "3", "0", "2" } });
+            { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_2.atStartOfDay()), "Name 2", "6", "1", "3", "0", "2", "29.0", "1.0", "12.0", "0.0", "16.0" } });
 
     private static final TableViewContent PBL_1_WITH_FORECAST_1 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },

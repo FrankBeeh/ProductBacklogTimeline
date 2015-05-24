@@ -64,4 +64,8 @@ public class ProductTimestamp {
     public NumberByState<Integer> getCountByState() {
         return productBacklog.getCountByState();
     }
+
+    public NumberByState<Double> getEstimateByState() {
+        return productBacklog.getEstimateByState();
+    }
 }

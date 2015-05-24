@@ -8,7 +8,7 @@ public class IntegerByState extends NumberByState<Integer> {
     }
 
     @Override
-    public Integer getTotalCount() {
+    public Integer getTotalValue() {
         int totalCount = 0;
         for (State state : State.values()) {
             totalCount += getValue(state);
@@ -19,5 +19,9 @@ public class IntegerByState extends NumberByState<Integer> {
     @VisibleForTesting
     public IntegerByState(int canceled, int todo, int inProgress, int done) {
         super(canceled, todo, inProgress, done);
+    }
+
+    public void add(State state, Integer value) {
+        setValue(state, getValue(state) + value);
     }
 }

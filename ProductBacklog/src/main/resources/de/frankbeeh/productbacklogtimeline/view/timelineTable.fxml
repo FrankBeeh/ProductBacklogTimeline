@@ -33,8 +33,9 @@
 			<TableColumn editable="false" maxWidth="200.0" minWidth="120.0"
 				prefWidth="-1.0" resizable="true" sortable="false" text="PBIs">
 				<columns>
-					<TableColumn editable="false" maxWidth="100.0" minWidth="30.0"
-						prefWidth="40.0" resizable="true" sortable="false" text="Total">
+					<TableColumn editable="false" maxWidth="100.0"
+						minWidth="30.0" prefWidth="40.0" resizable="true" sortable="false"
+						text="Total">
 						<cellValueFactory>
 							<TotalCountValueFactory />
 						</cellValueFactory>
@@ -61,6 +62,46 @@
 						prefWidth="30.0" resizable="true" sortable="false" text="D">
 						<cellValueFactory>
 							<CountByStateValueFactory state="Done" />
+						</cellValueFactory>
+					</TableColumn>
+				</columns>
+			</TableColumn>
+			<TableColumn editable="false" maxWidth="200.0" minWidth="120.0"
+				prefWidth="-1.0" resizable="true" sortable="false" text="Estimate">
+				<columns>
+					<TableColumn editable="false" maxWidth="100.0"
+						minWidth="30.0" prefWidth="40.0" resizable="true" sortable="false"
+						text="Total">
+						<cellValueFactory>
+							<TotalValueFactory />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="100.0"
+						minWidth="30.0" prefWidth="40.0" resizable="true" sortable="false"
+						text="C">
+						<cellValueFactory>
+							<DoubleByStateValueFactory state="Canceled" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="100.0"
+						minWidth="30.0" prefWidth="40.0" resizable="true" sortable="false"
+						text="T">
+						<cellValueFactory>
+							<DoubleByStateValueFactory state="Todo" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="100.0"
+						minWidth="30.0" prefWidth="40.0" resizable="true" sortable="false"
+						text="P">
+						<cellValueFactory>
+							<DoubleByStateValueFactory state="InProgress" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="100.0"
+						minWidth="30.0" prefWidth="40.0" resizable="true" sortable="false"
+						text="D">
+						<cellValueFactory>
+							<DoubleByStateValueFactory state="Done" />
 						</cellValueFactory>
 					</TableColumn>
 				</columns>

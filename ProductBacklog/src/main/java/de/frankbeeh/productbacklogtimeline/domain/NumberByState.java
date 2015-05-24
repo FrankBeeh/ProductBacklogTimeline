@@ -22,18 +22,20 @@ public abstract class NumberByState<T extends Number> {
         setValue(State.Done, done);
     }
 
-    public void setValue(State state, T value) {
-        countByValue.put(state, value);
-    }
-
     public T getValue(State state) {
         return countByValue.get(state);
     }
 
-    public abstract T getTotalCount();
+    public abstract void add(State state, T value);
+    
+    public abstract T getTotalValue();
 
     @Override
     public String toString() {
         return new ReflectionToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).toString();
+    }
+
+    protected void setValue(State state, T value) {
+        countByValue.put(state, value);
     }
 }
