@@ -60,4 +60,8 @@ public class ProductTimestamp {
         productBacklog.updateAllItems(velocityForecast);
         releaseForecast.updateAllReleases(productBacklog);
     }
+
+    public NumberByState<Integer> getCountByState() {
+        return productBacklog.getCountByState();
+    }
 }

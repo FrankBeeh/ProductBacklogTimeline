@@ -97,7 +97,7 @@ public class ProductTimeline {
 
     @VisibleForTesting
     void insertProductTimestamp(ProductTimestamp productTimestamp) {
-        timestampData.add(new ProductTimestampData(productTimestamp.getDateTime(), productTimestamp.getName()));
+        timestampData.add(new ProductTimestampData(productTimestamp.getDateTime(), productTimestamp.getName(), productTimestamp.getCountByState()));
         productTimestamps.add(productTimestamp);
     }
 

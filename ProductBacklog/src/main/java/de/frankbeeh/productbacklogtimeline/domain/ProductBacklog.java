@@ -100,4 +100,16 @@ public class ProductBacklog {
         }
         return matchingProductBacklogItems;
     }
+
+    public IntegerByState getCountByState() {
+        final IntegerByState countByState = new IntegerByState();
+        for (State state : State.values()) {
+            countByState.setValue(state, 0);
+        }
+        for (ProductBacklogItem item : getItems()) {
+            final State state = item.getState();
+            countByState.setValue(state, countByState.getValue(state).intValue() + 1);
+        }
+        return countByState;
+    }
 }

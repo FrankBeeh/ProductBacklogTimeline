@@ -8,6 +8,7 @@
 <?import de.frankbeeh.productbacklogtimeline.view.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?scenebuilder-classpath-element ../../../../../../bin?>
+<?import de.frankbeeh.productbacklogtimeline.view.TotalCountValueFactory?>
 
 <ScrollPane fx:id="timelineTab" prefHeight="-1.0" prefWidth="-1.0"
 	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
@@ -28,6 +29,41 @@
 				<cellValueFactory>
 					<PropertyValueFactory property="name" />
 				</cellValueFactory>
+			</TableColumn>
+			<TableColumn editable="false" maxWidth="200.0" minWidth="120.0"
+				prefWidth="-1.0" resizable="true" sortable="false" text="PBIs">
+				<columns>
+					<TableColumn editable="false" maxWidth="100.0" minWidth="30.0"
+						prefWidth="40.0" resizable="true" sortable="false" text="Total">
+						<cellValueFactory>
+							<TotalCountValueFactory />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="30.0" minWidth="30.0"
+						prefWidth="30.0" resizable="true" sortable="false" text="C">
+						<cellValueFactory>
+							<CountByStateValueFactory state="Canceled" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="30.0" minWidth="30.0"
+						prefWidth="30.0" resizable="true" sortable="false" text="T">
+						<cellValueFactory>
+							<CountByStateValueFactory state="Todo" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="30.0" minWidth="30.0"
+						prefWidth="30.0" resizable="true" sortable="false" text="P">
+						<cellValueFactory>
+							<CountByStateValueFactory state="InProgress" />
+						</cellValueFactory>
+					</TableColumn>
+					<TableColumn editable="false" maxWidth="30.0" minWidth="30.0"
+						prefWidth="30.0" resizable="true" sortable="false" text="D">
+						<cellValueFactory>
+							<CountByStateValueFactory state="Done" />
+						</cellValueFactory>
+					</TableColumn>
+				</columns>
 			</TableColumn>
 		</columns>
 	</TableView>

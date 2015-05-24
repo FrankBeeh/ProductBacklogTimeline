@@ -33,3 +33,7 @@
 .Changed {
 	-fx-background-color: #FFFFCC;
 }
+
+.header-vertical {
+	-fx-rotate: 270;
+}
