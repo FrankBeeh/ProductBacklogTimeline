@@ -1,6 +1,11 @@
 package de.frankbeeh.productbacklogtimeline.service.database.mapper;
-
 import static org.junit.Assert.assertEquals;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.PBI;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.PBL;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.SPRINT;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.VELOCITY_FORECAST;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.RELEASE;
+import static de.frankbeeh.productbacklogtimeline.service.database.generated.Tables.RELEASES;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -14,6 +19,7 @@ import org.junit.Test;
 import de.frankbeeh.productbacklogtimeline.domain.ProductTimestamp;
 import de.frankbeeh.productbacklogtimeline.domain.Release;
 import de.frankbeeh.productbacklogtimeline.domain.ReleaseForecast;
+import de.frankbeeh.productbacklogtimeline.service.DateConverter;
 import de.frankbeeh.productbacklogtimeline.service.criteria.PlannedReleaseIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.criteria.ProductBacklogItemIdIsEqual;
 import de.frankbeeh.productbacklogtimeline.service.database.DataBaseServiceTest;
@@ -33,16 +39,30 @@ public class ProductTimestampMapperTest extends DataBaseServiceTest {
     private ProductTimestampMapper mapper;
 
     @Test
-    public void insertAndGetTwoProductTimestamp() throws Exception {
+    public void insertAndGetTwoProductTimestamps() throws Exception {
         mapper.insert(PRODUCT_TIMESTAMP_2);
         mapper.insert(PRODUCT_TIMESTAMP_1);
         assertProductTimestampEquals(PRODUCT_TIMESTAMP_1, mapper.get(PRODUCT_TIMESTAMP_1.getDateTime()));
         assertProductTimestampEquals(PRODUCT_TIMESTAMP_2, mapper.get(PRODUCT_TIMESTAMP_2.getDateTime()));
     }
+    
+    @Test
+    public void delete() throws Exception {
+        insertAndGetTwoProductTimestamps();
+        mapper.delete(PRODUCT_TIMESTAMP_1.getDateTime());
+        assertEquals(Arrays.asList(RELEASE_FORECAST_ID_2), mapper.getAllIds());
+        assertProductTimestampEquals(PRODUCT_TIMESTAMP_2, mapper.get(PRODUCT_TIMESTAMP_2.getDateTime()));
+        assertEquals(0, getDslContext().fetchCount(getDslContext().selectFrom(PBL).where(PBL.PT_ID.eq(DateConverter.getTimestamp(PRODUCT_TIMESTAMP_1.getDateTime())))));
+        assertEquals(2, getDslContext().fetchCount(getDslContext().selectFrom(PBI)));
+        assertEquals(0, getDslContext().fetchCount(getDslContext().selectFrom(VELOCITY_FORECAST).where(VELOCITY_FORECAST.PT_ID.eq(DateConverter.getTimestamp(PRODUCT_TIMESTAMP_1.getDateTime())))));
+        assertEquals(2, getDslContext().fetchCount(getDslContext().selectFrom(SPRINT)));
+        assertEquals(0, getDslContext().fetchCount(getDslContext().selectFrom(RELEASES).where(RELEASES.PT_ID.eq(DateConverter.getTimestamp(PRODUCT_TIMESTAMP_1.getDateTime())))));
+        assertEquals(2, getDslContext().fetchCount(getDslContext().selectFrom(RELEASE)));
+    }
 
     @Test
     public void getAllIds() throws Exception {
-        insertAndGetTwoProductTimestamp();
+        insertAndGetTwoProductTimestamps();
         assertEquals(Arrays.asList(RELEASE_FORECAST_ID_1, RELEASE_FORECAST_ID_2), mapper.getAllIds());
     }
 

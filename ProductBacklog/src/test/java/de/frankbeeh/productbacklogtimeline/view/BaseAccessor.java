@@ -42,6 +42,10 @@ public class BaseAccessor {
         fxRobot.clickOn(node);
     }
     
+    protected void rightClickOn(Node node) {
+        fxRobot.rightClickOn(node);
+    }
+    
     protected void enterText(String selector, String text) {
         clickOn(getUniqueNode(selector));
         fxRobot.write(text);

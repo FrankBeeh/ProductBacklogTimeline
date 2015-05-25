@@ -11,8 +11,8 @@ import de.frankbeeh.productbacklogtimeline.domain.ProductTimestampData;
 public class TimelineTableController {
     @FXML
     private TableView<ProductTimestampData> timelineTable;
-
     private final ObservableList<ProductTimestampData> model = FXCollections.<ProductTimestampData> observableArrayList();
+    private MainController mainController;
 
     @FXML
     private void initialize() {
@@ -22,5 +22,14 @@ public class TimelineTableController {
     public void initModel(SortedSet<ProductTimestampData> productTimestampData) {
         model.removeAll(model);
         model.addAll(productTimestampData);
+    }
+
+    @FXML
+    private void deleteProductTimestamp() {
+        mainController.deleteProductTimestamp(timelineTable.getSelectionModel().getSelectedItem().getDateTime());
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
     }
 }

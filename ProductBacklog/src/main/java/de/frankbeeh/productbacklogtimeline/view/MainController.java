@@ -54,6 +54,7 @@ public class MainController {
         this.primaryStage = primaryStage;
         loadFromDataBase();
         setSelectableProductBacklogNames();
+        timelineTableController.setMainController(this);
         timelineTableController.initModel(productTimeline.getTimestamps());
     }
 
@@ -83,6 +84,12 @@ public class MainController {
         productTimeline.addProductTimestamp(productTimestamp);
         setSelectableProductBacklogNames();
         changeSelectedProductTimestamp(dateTime, name);
+        updateAllControllers();
+    }
+    
+    public void deleteProductTimestamp(LocalDateTime productTimestampId) {
+        productTimeline.deleteProductTimestamp(productTimestampId);
+        setSelectableProductBacklogNames();
         updateAllControllers();
     }
 

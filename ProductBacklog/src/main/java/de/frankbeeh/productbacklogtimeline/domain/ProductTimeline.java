@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.function.Predicate;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -34,6 +35,23 @@ public class ProductTimeline {
     public void addProductTimestamp(ProductTimestamp productTimestamp) {
         ServiceLocator.getService(ProductTimestampService.class).insert(productTimestamp);
         insertProductTimestamp(productTimestamp);
+    }
+
+    public void deleteProductTimestamp(final LocalDateTime productTimestampId) {
+        ServiceLocator.getService(ProductTimestampService.class).delete(productTimestampId);
+        productTimestamps.removeIf(new Predicate<ProductTimestamp>() {
+            @Override
+            public boolean test(ProductTimestamp productTimestamp) {
+                return productTimestamp.getDateTime().equals(productTimestampId);
+            }
+        });
+
+        timestampData.removeIf(new Predicate<ProductTimestampData>() {
+            @Override
+            public boolean test(ProductTimestampData productTimestampData) {
+                return productTimestampData.getDateTime().equals(productTimestampId);
+            }
+        });
     }
 
     public void selectProductTimestamp(String selectedName) {

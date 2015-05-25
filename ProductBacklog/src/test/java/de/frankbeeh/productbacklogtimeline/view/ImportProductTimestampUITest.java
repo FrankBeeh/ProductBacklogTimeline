@@ -2,6 +2,7 @@ package de.frankbeeh.productbacklogtimeline.view;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -25,10 +26,11 @@ public class ImportProductTimestampUITest extends BaseUITest {
     private static final String RELEASES_FILE_2 = "Releases2.csv";
 
     private static final String[] TIMESTAMP_1 = { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_1.atStartOfDay()), "Name 1", "4", "0", "3", "0", "1", "17.0", "0.0", "14.0", "0.0", "3.0" };
-    private static final TableViewContent TIMELINE_1 = new TableViewContent(new String[][] { TIMESTAMP_1 });
+    private static final String[] TIMESTAMP_2 = { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_2.atStartOfDay()), "Name 2", "6", "1", "3", "0", "2", "29.0", "1.0", "12.0", "0.0", "16.0" };
 
-    private static final TableViewContent TIMELINE_2 = new TableViewContent(new String[][] { TIMESTAMP_1,
-            { DateConverter.formatLocalDateTime(TIMESTAMP_DATE_2.atStartOfDay()), "Name 2", "6", "1", "3", "0", "2", "29.0", "1.0", "12.0", "0.0", "16.0" } });
+    private static final TableViewContent TIMELINE_1 = new TableViewContent(new String[][] { TIMESTAMP_1 });
+    private static final TableViewContent TIMELINE_2 = new TableViewContent(new String[][] { TIMESTAMP_2 });
+    private static final TableViewContent TIMELINE_1_2 = new TableViewContent(new String[][] { TIMESTAMP_1, TIMESTAMP_2 });
 
     private static final TableViewContent PBL_1_WITH_FORECAST_1 = new TableViewContent(new String[][] {
             { "1", "1", "3.0", "Done", "PBI 1", "Description 1", "3.0", "Sprint 1", "Release 1", SPRINT_1, SPRINT_1, SPRINT_1 },
@@ -146,7 +148,7 @@ public class ImportProductTimestampUITest extends BaseUITest {
 
         getMenuAccessor().openProductTimelineImportDialog().enter(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2, PBL_FILE_2, VELOCITY_FORECAST_FILE_2, RELEASES_FILE_2);
         getMainAccessor().assertSelectedProductTimestampEquals(TIMESTAMP_NAME_2, TIMESTAMP_DATE_2);
-        getMainAccessor().assertContentOfTimelineTableView(TIMELINE_2);
+        getMainAccessor().assertContentOfTimelineTableView(TIMELINE_1_2);
         getMainAccessor().assertContentOfProductBacklogTableView(PBL_2_WITH_FORECAST_2);
         getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2);
         getMainAccessor().assertContentOfReleasesTableView(RELEASE_FORECAST_2);
@@ -166,5 +168,11 @@ public class ImportProductTimestampUITest extends BaseUITest {
         getMainAccessor().selectVelocityForecastTab(this);
         getMainAccessor().assertContentOfVelocityForecastTableView(VELOCITY_FORECAST_2_COMPARED_TO_1);
         getMainAccessor().assertContentOfReleasesTableView(RELEASE_FORECAST_2_COMPARED_TO_1);
+
+        getMainAccessor().selectProductTimelineTab(this);
+        getMainAccessor().deleteProductTimestamp(TIMESTAMP_DATE_1);
+
+        getMainAccessor().assertSelectableProductTimestampsEquals(Arrays.asList(TIMESTAMP_NAME_2), Arrays.asList(TIMESTAMP_DATE_2));
+        getMainAccessor().assertContentOfTimelineTableView(TIMELINE_2);
     }
 }

@@ -3,8 +3,10 @@ package de.frankbeeh.productbacklogtimeline.view.accessor;
 import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 
@@ -49,6 +51,11 @@ public class MainAccessor extends BaseAccessor {
             }
         });
     }
+    
+    public void deleteProductTimestamp(LocalDate timestampDate) {
+        rightClickOn(getUniqueNode(DateConverter.formatLocalDateTime(timestampDate.atStartOfDay())));
+        clickOn(getUniqueNode("#deleteProductTimestamp"));
+    }
 
     public void selectProductBacklogTab(BaseUITest baseUITest) {
         selectTab(baseUITest, "PBL");
@@ -60,6 +67,10 @@ public class MainAccessor extends BaseAccessor {
 
     public void selectReleasesTab(BaseUITest baseUITest) {
         selectTab(baseUITest, "Releases");
+    }
+    
+    public void selectProductTimelineTab(BaseUITest baseUITest) {
+        selectTab(baseUITest, "Timeline");
     }
     
     public void assertContentOfTimelineTableView(TableViewContent expectedContent) {
@@ -76,6 +87,14 @@ public class MainAccessor extends BaseAccessor {
     
     public void assertContentOfReleasesTableView(TableViewContent expectedContent) {
         assertContentOfTableView(RELEASES_TABLE_ID, expectedContent);
+    }
+    
+    public void assertSelectableProductTimestampsEquals(List<String> names, List<LocalDate> dates) {
+        final ObservableList<String> items = getSelectedProductTimestampComboBox().getItems();
+        assertEquals(names.size(), items.size());
+        for (int index = 0; index < items.size(); index++) {
+            assertEquals(items.get(index),getProductTimestampName(names.get(index), dates.get(index)));
+        }
     }
     
     private void assertContentOfTableView(String selector, TableViewContent expectedContent) {

@@ -7,6 +7,10 @@ import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.jooq.Condition;
+import org.jooq.Record2;
+import org.jooq.Result;
+
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklog;
 import de.frankbeeh.productbacklogtimeline.domain.ProductBacklogItem;
 import de.frankbeeh.productbacklogtimeline.service.DateConverter;
@@ -19,6 +23,8 @@ import de.frankbeeh.productbacklogtimeline.service.DateConverter;
  */
 public class ProductBacklogMapper extends BaseMapper {
 
+    private static final Condition JOIN_CONDITION = PBL.PBI_ID.eq(PBI.ID).and(PBL.PBI_HASH.eq(PBI.HASH));
+
     public ProductBacklogMapper(Connection connection) {
         super(connection);
     }
@@ -30,10 +36,19 @@ public class ProductBacklogMapper extends BaseMapper {
         }
     }
 
+    public void delete(LocalDateTime productTimestampId) {
+        deleteRelations(productTimestampId);
+        // FIXME Is there a way to use it directly in the deleteFrom?
+        final Result<Record2<String, String>> records = getDslContext().select(PBI.ID, PBI.HASH).from(PBI.leftOuterJoin(PBL).on(JOIN_CONDITION)).where(PBL.PBI_ID.isNull()).fetch();
+        for (Record2<String, String> record : records) {
+            getDslContext().deleteFrom(PBI).where(pbiPrimaryKeyIs(record.getValue(PBI.ID), record.getValue(PBI.HASH))).execute();
+        }
+    }
+
     public ProductBacklog get(LocalDateTime productTimestampId) {
         final ProductBacklog productBacklog = new ProductBacklog();
         final List<ProductBacklogItem> itemDataList = getDslContext().select(PBI.ID, PBI.TITLE, PBI.DESCRIPTION, PBI.ESTIMATE, PBI.STATE, PBI.SPRINT, PBI.RANK, PBI.PLANNED_RELEASE).from(
-                PBL.join(PBI).on(PBL.PBI_ID.eq(PBI.ID).and(PBL.PBI_HASH.eq(PBI.HASH)))).where(PBL.PT_ID.eq(DateConverter.getTimestamp(productTimestampId))).fetch().into(ProductBacklogItem.class);
+                PBL.join(PBI).on(JOIN_CONDITION)).where(PBL.PT_ID.eq(DateConverter.getTimestamp(productTimestampId))).fetch().into(ProductBacklogItem.class);
         for (ProductBacklogItem itemData : itemDataList) {
             productBacklog.addItem(itemData);
         }
@@ -50,10 +65,18 @@ public class ProductBacklogMapper extends BaseMapper {
     }
 
     private boolean itemNotYetInserted(ProductBacklogItem productBacklogItem) {
-        return getDslContext().select(PBI.HASH).from(PBI).where(PBI.ID.eq(productBacklogItem.getId()).and(PBI.HASH.eq(productBacklogItem.getHash()))).fetchOne() == null;
+        return getDslContext().select(PBI.HASH).from(PBI).where(pbiPrimaryKeyIs(productBacklogItem.getId(), productBacklogItem.getHash())).fetchOne() == null;
     }
 
     private void insertRelation(LocalDateTime productTimestampId, ProductBacklogItem item) {
         getDslContext().insertInto(PBL, PBL.PT_ID, PBL.PBI_ID, PBL.PBI_HASH).values(DateConverter.getTimestamp(productTimestampId), item.getId(), item.getHash()).execute();
+    }
+
+    private void deleteRelations(LocalDateTime productTimestampId) {
+        getDslContext().deleteFrom(PBL).where(PBL.PT_ID.eq(DateConverter.getTimestamp(productTimestampId))).execute();
+    }
+    
+    private Condition pbiPrimaryKeyIs(final String id, final String hash) {
+        return PBI.ID.eq(id).and(PBI.HASH.eq(hash));
     }
 }

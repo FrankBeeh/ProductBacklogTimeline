@@ -17,9 +17,13 @@ public class ProductTimestampService {
     public void insert(ProductTimestamp productTimestamp) {
         productTimestampMapper.insert(productTimestamp);
     }
+    
+    public void delete(LocalDateTime productTimestampId){
+        productTimestampMapper.delete(productTimestampId);
+    }
 
-    public ProductTimestamp get(LocalDateTime localDateTime) {
-        return productTimestampMapper.get(localDateTime);
+    public ProductTimestamp get(LocalDateTime productTimestampId) {
+        return productTimestampMapper.get(productTimestampId);
     }
 
     public List<LocalDateTime> getAllIds() {

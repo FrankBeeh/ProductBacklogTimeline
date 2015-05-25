@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jooq.Condition;
 import org.jooq.Record1;
 import org.jooq.Record2;
 import org.jooq.Result;
@@ -41,11 +42,17 @@ public class ProductTimestampMapper extends BaseMapper {
         insertProductTimestamp(productTimestamp);
     }
 
+    public void delete(LocalDateTime productTimestampId) {
+        deleteProductTimestamp(productTimestampId);
+        productBacklogMapper.delete(productTimestampId);
+        velocityForecastMapper.delete(productTimestampId);
+        releasesMapper.delete(productTimestampId);
+    }
+
     public ProductTimestamp get(LocalDateTime productTimestampId) {
-        final Record2<Timestamp, String> record = getDslContext().select(PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).from(PRODUCT_TIMESTAMP).where(
-                PRODUCT_TIMESTAMP.ID.eq(DateConverter.getTimestamp(productTimestampId))).fetchOne();
-        return new ProductTimestamp(productTimestampId, record.getValue(PRODUCT_TIMESTAMP.NAME), productBacklogMapper.get(productTimestampId),
-                velocityForecastMapper.get(productTimestampId), releasesMapper.get(productTimestampId));
+        final Record2<Timestamp, String> record = getDslContext().select(PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).from(PRODUCT_TIMESTAMP).where(productTimestampIdEquals(productTimestampId)).fetchOne();
+        return new ProductTimestamp(productTimestampId, record.getValue(PRODUCT_TIMESTAMP.NAME), productBacklogMapper.get(productTimestampId), velocityForecastMapper.get(productTimestampId),
+                releasesMapper.get(productTimestampId));
     }
 
     public List<LocalDateTime> getAllIds() {
@@ -59,5 +66,13 @@ public class ProductTimestampMapper extends BaseMapper {
 
     private void insertProductTimestamp(ProductTimestamp productTimestamp) {
         getDslContext().insertInto(PRODUCT_TIMESTAMP, PRODUCT_TIMESTAMP.ID, PRODUCT_TIMESTAMP.NAME).values(DateConverter.getTimestamp(productTimestamp.getDateTime()), productTimestamp.getName()).execute();
+    }
+
+    private void deleteProductTimestamp(LocalDateTime productTimestampId) {
+        getDslContext().deleteFrom(PRODUCT_TIMESTAMP).where(productTimestampIdEquals(productTimestampId)).execute();
+    }
+
+    private Condition productTimestampIdEquals(LocalDateTime productTimestampId) {
+        return PRODUCT_TIMESTAMP.ID.eq(DateConverter.getTimestamp(productTimestampId));
     }
 }
