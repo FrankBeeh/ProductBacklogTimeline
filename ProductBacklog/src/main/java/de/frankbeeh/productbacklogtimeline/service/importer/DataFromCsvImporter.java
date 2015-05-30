@@ -24,17 +24,19 @@ public abstract class DataFromCsvImporter<T> {
     private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.UK);
     private static final char SPLIT_BY = ';';
 
-    private final Map<String, State> stateMap;
+    private static final Map<String, State> stateMap = new HashMap<String, State>();
 
     private Map<String, Integer> mapColumnNameToColumnIndex;
     private String[] values;
 
-    protected DataFromCsvImporter() {
-        stateMap = new HashMap<String, State>();
+    static{
         stateMap.put(RESOLUTION_FIXED, State.Done);
         stateMap.put(RESOLUTION_UNRESOLVED, State.Todo);
         stateMap.put(RESOLUTION_WONT_FIX, State.Canceled);
         stateMap.put(RESOLUTION_DUPLICATE, State.Canceled);
+    }
+
+    protected DataFromCsvImporter() {
     }
 
     protected abstract T createContainer();
@@ -96,8 +98,12 @@ public abstract class DataFromCsvImporter<T> {
     }
 
     protected final State getState(String columnName) {
-        return stateMap.get(getString(columnName));
+        return parseState(getString(columnName));
     }
+
+	public static State parseState(final String string) {
+		return stateMap.get(string);
+	}
 
     private Map<String, Integer> mapColumnNameToColumnIndex(String[] columnNames) {
         final Map<String, Integer> map = new HashMap<String, Integer>();
