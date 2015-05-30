@@ -27,9 +27,14 @@ import de.frankbeeh.productbacklogtimeline.service.importer.DataFromCsvImporter;
  */
 public class JiraImporter {
 
-    public List<ProductBacklogItem> importProductBacklogItems(final String jiraBaseUrl, final String jql) throws URISyntaxException {
+    public List<ProductBacklogItem> importProductBacklogItems(final String jiraBaseUrl, final String username, final String password, final String jql) throws URISyntaxException {
         final JerseyJiraRestClientFactory f = new JerseyJiraRestClientFactory();
-        final JiraRestClient jc = f.create(new URI(jiraBaseUrl), new AnonymousAuthenticationHandler());
+        JiraRestClient jc;
+        if (username == null) {
+            jc = f.create(new URI(jiraBaseUrl), new AnonymousAuthenticationHandler());
+        } else {
+            jc = f.createWithBasicHttpAuthentication(new URI(jiraBaseUrl), username, password);
+        }
 
         final SearchResult r = jc.getSearchClient().searchJql(jql, 10, 0, null);
 
